@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" width="640" height="160">
+  <!-- UzLeeder Academy — gorizontal lockup (belgi + so'z belgisi). Shriftlar: Outfit (nom), Manrope (ACADEMY).
+       Shrift o'rnatilmagan bo'lsa tizim sans-serif ishlatiladi. -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1c2233"/><stop offset="1" stop-color="#141a29"/></linearGradient>
+  </defs>
+  <rect x="16" y="16" width="128" height="128" rx="34" fill="url(#g)"/>
+  <g transform="translate(40 40) scale(3.3333)" fill="none" stroke="#f0384e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 18 L9 8 L13 14 L20 5"/>
+    <circle cx="20" cy="5" r="2.3" fill="#f0384e" stroke="none"/>
+  </g>
+  <text x="172" y="88" font-family="Outfit, Manrope, system-ui, sans-serif" font-weight="800" font-size="64" letter-spacing="-2" fill="#f2f4f8">Uz<tspan fill="#f0384e">Leeder</tspan></text>
+  <text x="176" y="126" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="18" letter-spacing="9" fill="#9098a8">ACADEMY</text>
+</svg>

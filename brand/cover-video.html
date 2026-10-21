@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UzLeeder Academy — Cover video 1920×1080</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="brand.css">
+<!--
+  Cover video (8 s, 16:9). Animatsiya CSS keyframe emas — VAQTDAN hisoblanadi:
+    ?t=2.5   → aynan 2.5-soniyadagi kadr (headless Chrome shu bilan kadrlarni oladi)
+    ?play=1  → jonli ijro (brauzerda ko'rish / ekran yozib olish uchun), tugagach qaytadan
+  Vaqt jadvali:
+    0.0–1.0  to'r va halqalar paydo bo'ladi, skan chizig'i pastga
+    0.6–2.0  belgi kattalashadi, chiziq chiziladi, nuqta yonadi
+    2.0–3.4  "UzLeeder" harflari ko'tariladi, ACADEMY ochiladi
+    3.4–4.2  "Personal Learning OS"
+    4.2–6.0  Learn → Practice → Master → Build ketma-ket yonadi
+    6.0–7.2  burchak yozuvlari, "by UzLeeder"
+    7.2–8.0  ushlab turish (glow nafas oladi)
+-->
+<style>
+  .stage { opacity: 1; }
+  .name { display: flex; gap: 0; }
+  .name i { display: inline-block; font-style: normal; will-change: transform, opacity; }
+  .name i.c { color: var(--b-cyan); }
+  .mark svg path { stroke-dasharray: 40; stroke-dashoffset: 40; }
+  .flow b, .flow em { opacity: .18; }
+  .flow b.on { opacity: 1; } .flow em.on { opacity: 1; }
+  .flow b i { opacity: 0; transform: scale(.4); } .flow b.on i { opacity: 1; transform: scale(1); }
+  .end { position: absolute; left: 50%; bottom: 150px; transform: translateX(-50%); font: 600 20px var(--b-mono); letter-spacing: .34em; text-transform: uppercase; color: var(--b-muted); opacity: 0; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="grid" id="grid"></div>
+  <div class="scan" id="scan" style="top:0"></div>
+  <div class="ring" id="r1" style="width:620px;height:620px"></div>
+  <div class="ring" id="r2" style="width:900px;height:900px;opacity:.6"></div>
+  <div class="ring" id="r3" style="width:1240px;height:1240px;opacity:.35"></div>
+  <span class="hud tl"></span><span class="hud tr"></span><span class="hud bl"></span><span class="hud br"></span>
+  <div class="tag tl" id="tg1">Personal · Private</div>
+  <div class="tag tr" id="tg2">AI Engineering Path</div>
+  <div class="tag bl" id="tg3">Python · English · IELTS</div>
+  <div class="tag br" id="tg4">by <b>UzLeeder</b></div>
+  <div class="center">
+    <div class="mark" id="mark"><svg viewBox="0 0 24 24" fill="none"><path id="mp" d="M4 18 L9 8 L13 14 L20 5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle id="md" cx="20" cy="5" r="2.3"/></svg></div>
+    <div class="name" id="name"><i>U</i><i>z</i><i class="c">L</i><i class="c">e</i><i class="c">e</i><i class="c">d</i><i class="c">e</i><i class="c">r</i></div>
+    <div class="acad" id="acad">Academy</div>
+    <div class="sub" id="sub">Personal Learning OS</div>
+    <div class="flow" id="flow"><b><i></i>Learn</b><em>→</em><b><i></i>Practice</b><em>→</em><b><i></i>Master</b><em>→</em><b><i></i>Build</b></div>
+  </div>
+</div>
+<script>
+(function () {
+  var DUR = 8;
+  var $ = function (id) { return document.getElementById(id); };
+  function clamp(x) { return Math.max(0, Math.min(1, x)); }
+  function ease(x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }     // in-out cubic
+  function out(x) { return 1 - Math.pow(1 - x, 3); }                                        // out cubic
+  function back(x) { var c = 1.70158; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }
+  function seg(t, a, b) { return clamp((t - a) / (b - a)); }
+
+  function render(t) {
+    /* fon */
+    var g = out(seg(t, 0, 1.0)); $('grid').style.opacity = g;
+    $('scan').style.top = (seg(t, 0.1, 1.6) * 1080) + 'px'; $('scan').style.opacity = t < 1.7 ? 1 : 0;
+    [['r1', 0.2], ['r2', 0.35], ['r3', 0.5]].forEach(function (r) { var k = out(seg(t, r[1], r[1] + 1)); var el = $(r[0]); el.style.transform = 'translate(-50%,-50%) scale(' + (0.6 + 0.4 * k) + ')'; el.style.opacity = k * (r[0] === 'r1' ? 1 : r[0] === 'r2' ? .6 : .35); });
+    /* belgi */
+    var m = seg(t, 0.6, 1.5), mk = $('mark');
+    mk.style.opacity = out(m); mk.style.transform = 'scale(' + (0.55 + 0.45 * back(m)) + ')';
+    var breathe = t > 7 ? 1 + 0.06 * Math.sin((t - 7) * Math.PI * 2) : 1;
+    mk.style.boxShadow = '0 0 0 1px rgba(255,255,255,.25) inset, 0 40px 120px rgba(78,200,216,' + (0.35 * breathe * out(m)) + '), 0 0 0 18px rgba(78,200,216,.06), 0 0 0 40px rgba(78,200,216,.03)';
+    $('mp').style.strokeDashoffset = 40 * (1 - ease(seg(t, 0.9, 1.9)));
+    var d = seg(t, 1.8, 2.1); $('md').style.opacity = d; $('md').setAttribute('r', (2.3 * back(d)).toFixed(2));
+    /* nom — harflar */
+    var letters = $('name').children;
+    for (var i = 0; i < letters.length; i++) { var k = out(seg(t, 2.0 + i * 0.07, 2.5 + i * 0.07)); letters[i].style.opacity = k; letters[i].style.transform = 'translateY(' + (28 * (1 - k)) + 'px)'; }
+    var a = out(seg(t, 2.7, 3.5)); $('acad').style.opacity = a; $('acad').style.letterSpacing = (1.2 - 0.64 * a) + 'em';
+    var s = out(seg(t, 3.4, 4.2)); $('sub').style.opacity = s; $('sub').style.filter = 'blur(' + (8 * (1 - s)) + 'px)'; $('sub').style.transform = 'translateY(' + (10 * (1 - s)) + 'px)';
+    /* oqim */
+    var fl = $('flow'); fl.style.opacity = out(seg(t, 4.0, 4.4));
+    var nodes = fl.querySelectorAll('b'), arrows = fl.querySelectorAll('em');
+    for (var j = 0; j < nodes.length; j++) { var on = t >= 4.2 + j * 0.5; nodes[j].classList.toggle('on', on); if (j < arrows.length) arrows[j].classList.toggle('on', t >= 4.45 + j * 0.5); }
+    /* burchak yozuvlari */
+    ['tg1', 'tg2', 'tg3', 'tg4'].forEach(function (id, i) { $(id).style.opacity = out(seg(t, 6.0 + i * 0.15, 6.6 + i * 0.15)); });
+    document.querySelectorAll('.hud').forEach(function (h, i) { h.style.opacity = .55 * out(seg(t, 0.3 + i * 0.1, 1.0 + i * 0.1)); });
+  }
+
+  /* ?t= yoki #t= — file:// yo'llarida hash ishonchliroq */
+  var q = new URLSearchParams(location.search.replace(/^\?/, '') || location.hash.replace(/^#/, ''));
+  if (q.has('t')) { document.fonts.ready.then(function () { render(Number(q.get('t')) || 0); }); render(Number(q.get('t')) || 0); }
+  else {
+    var t0 = null;
+    function loop(ts) { if (t0 === null) t0 = ts; var t = ((ts - t0) / 1000) % (DUR + 1.2); render(Math.min(DUR, t)); requestAnimationFrame(loop); }
+    document.fonts.ready.then(function () { requestAnimationFrame(loop); });
+  }
+  window.UZ_RENDER = render;
+})();
+</script>
+</body>
+</html>

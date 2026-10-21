@@ -1,0 +1,69 @@
+/* ==========================================================================
+   UzLeeder Academy — vizual identity (brand)
+   --------------------------------------------------------------------------
+   Personal Learning OS. Public LMS emas — "mening shaxsiy o'quv tizimim".
+   Ranglar: chuqur navy fon, cyan texnologik aksent, oq/kumush matn.
+   Uch asset (cover, thumbnail, cover video) shu tokenlardan chiziladi.
+   ========================================================================== */
+:root {
+  --b-bg: #07090d;          /* fon — chuqur navy-qora */
+  --b-bg2: #10141c;         /* markaziy nurlanish */
+  --b-cyan: #f0384e;        /* asosiy aksent */
+  --b-cyan2: #ff5468;       /* yorug' aksent (glow, highlight) */
+  --b-cyan-dim: rgba(240, 56, 78, .18);
+  --b-ink: #f2f4f8;         /* matn */
+  --b-muted: #9098a8;       /* ikkilamchi matn */
+  --b-line: rgba(255, 84, 104, .14);
+  --b-grid: rgba(242, 244, 248, .04);
+  --b-display: Outfit, Manrope, system-ui, sans-serif;
+  --b-mono: 'Cascadia Mono', Consolas, ui-monospace, monospace;
+  --b-body: Manrope, system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; background: var(--b-bg); color: var(--b-ink); font-family: var(--b-body); -webkit-font-smoothing: antialiased; overflow: hidden; }
+
+/* 16:9 sahna — hamma asset shu sahnada */
+.stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background:
+  radial-gradient(900px 620px at 50% 44%, var(--b-bg2), transparent 70%),
+  radial-gradient(700px 400px at 50% 110%, rgba(240, 56, 78, .10), transparent 65%),
+  var(--b-bg); }
+.stage.thumb { width: 1280px; height: 720px; }
+
+/* texnologik to'r + gorizont chizig'i */
+.grid { position: absolute; inset: 0; background:
+  linear-gradient(var(--b-grid) 1px, transparent 1px) 0 0 / 60px 60px,
+  linear-gradient(90deg, var(--b-grid) 1px, transparent 1px) 0 0 / 60px 60px;
+  mask-image: radial-gradient(70% 70% at 50% 50%, #000 40%, transparent 100%); -webkit-mask-image: radial-gradient(70% 70% at 50% 50%, #000 40%, transparent 100%); }
+.scan { position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--b-cyan-dim), transparent); }
+
+/* HUD burchak qavslari — "command center" */
+.hud { position: absolute; width: 56px; height: 56px; border: 2px solid var(--b-cyan); opacity: .55; }
+.hud.tl { left: 48px; top: 48px; border-right: 0; border-bottom: 0; } .hud.tr { right: 48px; top: 48px; border-left: 0; border-bottom: 0; }
+.hud.bl { left: 48px; bottom: 48px; border-right: 0; border-top: 0; } .hud.br { right: 48px; bottom: 48px; border-left: 0; border-top: 0; }
+.tag { position: absolute; font: 600 15px var(--b-mono); letter-spacing: .3em; text-transform: uppercase; color: var(--b-muted); }
+.tag.tl { left: 122px; top: 60px; } .tag.tr { right: 122px; top: 60px; text-align: right; }
+.tag.bl { left: 122px; bottom: 62px; } .tag.br { right: 122px; bottom: 62px; text-align: right; color: var(--b-ink); }
+.tag.br b { color: var(--b-cyan); font-weight: 700; }
+
+/* markaziy blok */
+.center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -52%); display: grid; justify-items: center; gap: 0; text-align: center; }
+.mark { width: 220px; height: 220px; border-radius: 52px; background: #1c2233; display: grid; place-items: center; position: relative;
+  box-shadow: 0 40px 120px rgba(0,0,0,.5), 0 0 0 18px rgba(240, 56, 78, .06), 0 0 0 40px rgba(240, 56, 78, .03); }
+.mark svg { width: 128px; height: 128px; }
+.mark svg path { stroke: var(--b-cyan); } .mark svg circle { fill: var(--b-cyan); }
+.ring { position: absolute; left: 50%; top: 50%; border-radius: 50%; border: 1px solid var(--b-line); transform: translate(-50%, -50%); pointer-events: none; }
+.name { margin-top: 44px; font: 800 96px/1 var(--b-display); letter-spacing: -.03em; color: var(--b-ink); }
+.name span { color: var(--b-cyan); }
+.acad { margin-top: 14px; font: 700 26px var(--b-body); letter-spacing: .56em; padding-left: .56em; text-transform: uppercase; color: var(--b-muted); }
+.sub { margin-top: 30px; font: 500 30px var(--b-body); color: var(--b-ink); opacity: .9; }
+.flow { margin-top: 34px; display: flex; align-items: center; gap: 22px; font: 600 24px var(--b-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--b-muted); }
+.flow b { display: inline-flex; align-items: center; gap: 12px; color: var(--b-ink); font-weight: 600; }
+.flow b i { width: 10px; height: 10px; border-radius: 50%; background: var(--b-cyan); box-shadow: 0 0 14px var(--b-cyan); }
+.flow em { font-style: normal; color: var(--b-cyan); }
+
+/* thumbnail — kattaroq, kamroq matn */
+.thumb .hud { width: 44px; height: 44px; } .thumb .hud.tl, .thumb .hud.bl { left: 36px; } .thumb .hud.tr, .thumb .hud.br { right: 36px; } .thumb .hud.tl, .thumb .hud.tr { top: 36px; } .thumb .hud.bl, .thumb .hud.br { bottom: 36px; }
+.thumb .tag { font-size: 13px; } .thumb .tag.tl, .thumb .tag.bl { left: 96px; } .thumb .tag.tr, .thumb .tag.br { right: 96px; } .thumb .tag.tl, .thumb .tag.tr { top: 44px; } .thumb .tag.bl, .thumb .tag.br { bottom: 46px; }
+.thumb .center { transform: translate(-50%, -50%); }
+.thumb .mark { width: 196px; height: 196px; border-radius: 46px; } .thumb .mark svg { width: 112px; height: 112px; }
+.thumb .name { font-size: 88px; margin-top: 36px; } .thumb .acad { font-size: 22px; } .thumb .sub { font-size: 26px; margin-top: 22px; }

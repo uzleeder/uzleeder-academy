@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- UzLeeder Academy — belgi (mark). Cyan gradient plita + o'sish chizig'i. -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1c2233"/><stop offset="1" stop-color="#141a29"/></linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="64" fill="url(#g)"/>
+  <rect x="1" y="1" width="254" height="254" rx="63" fill="none" stroke="#ffffff" stroke-opacity=".25" stroke-width="2"/>
+  <g transform="translate(48 48) scale(6.6667)" fill="none" stroke="#f0384e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 18 L9 8 L13 14 L20 5"/>
+    <circle cx="20" cy="5" r="2.3" fill="#f0384e" stroke="none"/>
+  </g>
+</svg>

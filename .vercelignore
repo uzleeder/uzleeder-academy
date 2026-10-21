@@ -1,0 +1,9 @@
+tools
+README.md
+.gitignore
+brand/out/frames
+brand/out/tour
+
+# Sirlar — deployga hech qachon yuklanmasin
+.env
+.env.*

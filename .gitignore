@@ -1,0 +1,26 @@
+# Vercel
+.vercel
+
+# Sirlar — hech qachon repoga kirmasin
+.env
+.env.*
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Muharrir
+.vscode/
+.idea/
+
+# Node (agar keyinchalik qo'shilsa)
+node_modules/
+npm-debug.log*
+
+.vercel
+.env*
+
+# Brand video kadrlari (oraliq, ~115 MB) — MP4 yetarli
+brand/out/frames/
+brand/out/tour

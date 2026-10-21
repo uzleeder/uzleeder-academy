@@ -1,0 +1,8 @@
+{
+  "name": "uzleeder-academy",
+  "private": true,
+  "version": "1.0.0",
+  "description": "UzLeeder Academy - static site + 3 serverless functions for cross-device sync",
+  "type": "module",
+  "engines": { "node": "24.x" }
+}

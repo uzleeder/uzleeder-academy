@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Xatolik — UzLeeder Academy</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%23d97757'/><path d='M4 18 L9 8 L13 14 L20 5' stroke='%232a160c' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<!-- ==========================================================================
+     Xatolik sahifasi — Vercel'ning standart oq sahifasi o'rniga.
+     Mustaqil fayl: ilovaning CSS/JS'iga bog'liq emas (middleware ularni
+     kirmaganlarga bermaydi). Foydalanish:
+       /error                    → umumiy xato
+       /error?code=500           → kod bilan
+       /error?code=503&msg=...   → o'z xabari bilan
+     404.html — shu dizaynning nusxasi, kodi 404 ga qotirilgan; Vercel uni
+     topilmagan sahifalar uchun avtomatik beradi.
+     ========================================================================== -->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07090d;--surface:#10141c;--surface2:#151a25;--line:#232935;--text:#f2f4f8;--muted:#9098a8;--brand:#f0384e;--ink:#ffffff;--red:#ff5468;--glow1:rgba(240,56,78,.13);--glow2:rgba(28,34,51,.55)}
+body[data-theme="light"]{--bg:#f6f7f9;--surface:#ffffff;--surface2:#f1f3f6;--line:#e4e6eb;--text:#1c2233;--muted:#5e6b7d;--brand:#e01e37;--ink:#ffffff;--glow1:rgba(224,30,55,.07);--glow2:rgba(28,34,51,.05)}
+body{min-height:100vh;display:grid;font-family:Manrope,"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);padding:24px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(900px 560px at 85% -10%,var(--glow1),transparent 68%),radial-gradient(700px 460px at -8% 10%,var(--glow2),transparent 62%)}
+.orb{position:fixed;z-index:-1;border-radius:50%;filter:blur(90px);opacity:.22;pointer-events:none;background:var(--brand);animation:orb 18s ease-in-out infinite alternate}
+.orb.a{width:520px;height:520px;left:-160px;bottom:-200px}.orb.b{width:380px;height:380px;right:-120px;top:-120px;animation-delay:-9s;opacity:.14}
+@keyframes orb{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,-40px) scale(1.12)}}
+.wrap{margin:auto;width:100%;max-width:640px;text-align:center;animation:up .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.brand{display:inline-flex;align-items:center;gap:11px;margin-bottom:34px;text-decoration:none;color:inherit}
+.mark{width:40px;height:40px;border-radius:10px;background:#1c2233;display:grid;place-items:center}
+.mark svg{width:22px;height:22px}
+.brand b{display:block;font-family:Outfit,Manrope,system-ui;font-size:17px;letter-spacing:-.01em;text-align:left}
+.brand small{display:block;color:var(--muted);font-size:10.5px;letter-spacing:.14em;font-weight:700;text-align:left}
+/* katta kod — fon sifatida, xira gradient */
+.code{font-family:Outfit,Manrope,system-ui;font-weight:800;font-size:clamp(96px,22vw,168px);line-height:.9;letter-spacing:-.05em;background:linear-gradient(160deg,var(--brand),color-mix(in srgb,var(--brand) 30%,var(--text)));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;opacity:.95}
+.badge{display:inline-flex;align-items:center;gap:8px;margin:18px 0 12px;padding:6px 12px;border-radius:99px;border:1px solid color-mix(in srgb,var(--red) 45%,transparent);background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red);font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red)}
+h1{font-family:Outfit,Manrope,system-ui;font-size:clamp(22px,3.4vw,30px);letter-spacing:-.02em;margin-bottom:10px}
+p{color:var(--muted);font-size:15px;line-height:1.6;max-width:480px;margin:0 auto}
+.path[hidden]{display:none}.path{display:inline-block;margin-top:12px;padding:5px 10px;border-radius:8px;background:var(--surface2);border:1px solid var(--line);font-family:"Cascadia Mono",Consolas,ui-monospace,monospace;font-size:12px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:700 14px Inter,system-ui;cursor:pointer;text-decoration:none;transition:.16s}
+.btn:hover{transform:translateY(-1px);border-color:var(--brand)}
+.btn.p{background:var(--brand);color:var(--ink);border-color:transparent;box-shadow:0 10px 26px color-mix(in srgb,var(--brand) 40%,transparent)}
+.btn svg{width:16px;height:16px}
+.foot{margin-top:36px;font-size:12px;color:var(--muted)}
+.foot a{color:var(--muted)}
+@media(prefers-reduced-motion:reduce){.orb,.wrap{animation:none}}
+</style>
+</head>
+<body>
+<div class="orb a"></div><div class="orb b"></div>
+<main class="wrap" role="alert">
+  <a class="brand" href="/"><span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18 L9 8 L13 14 L20 5" stroke="#f0384e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="5" r="2.3" fill="#f0384e"/></svg></span><span><b>Uz<i style="font-style:normal;color:var(--brand)">Leeder</i></b><small>ACADEMY</small></span></a>
+  <div class="code" id="code">500</div>
+  <div class="badge" id="badge">Xatolik</div>
+  <h1 id="title">Nimadir noto'g'ri ketdi</h1>
+  <p id="msg">Server kutilmagan xatoga uchradi. Bir daqiqadan keyin qayta urinib ko'ring — muammo takrorlansa, bu vaqtinchalik emas.</p>
+  <div class="path" id="path" hidden></div>
+  <div class="actions">
+    <a class="btn p" href="/" id="bHome"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/></svg><span id="tHome">Bosh sahifa</span></a>
+    <button class="btn" type="button" id="bRetry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-1.5 5.5"/><path d="M20 5v6h-6"/></svg><span id="tRetry">Qayta urinish</span></button>
+    <button class="btn" type="button" id="bBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span id="tBack">Orqaga</span></button>
+  </div>
+  <div class="foot" id="foot">Holatni tekshirish: <a href="/api/health">/api/health</a></div>
+</main>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var code=String(q.get('code')||document.getElementById('code').textContent||'500').replace(/[^0-9]/g,'').slice(0,3)||'500';
+  var custom=q.get('msg');
+  var prefs={};try{prefs=JSON.parse(localStorage.getItem('uzla.loginPrefs')||'{}')||{}}catch(_){}
+  var lang=prefs.lang==='en'?'en':'uz';
+  if(prefs.theme==='light'||prefs.theme==='sand'||prefs.theme==='mono')document.body.setAttribute('data-theme','light');
+  var T={
+    uz:{badge:'Xatolik',home:'Bosh sahifa',retry:'Qayta urinish',back:'Orqaga',foot:'Holatni tekshirish: ',
+      404:['Bunday sahifa yo\'q','Manzil noto\'g\'ri yozilgan yoki sahifa ko\'chirilgan bo\'lishi mumkin. Bosh sahifadan davom eting.'],
+      401:['Kirish talab qilinadi','Bu sahifa faqat kirgan foydalanuvchi uchun. Login sahifasiga o\'ting.'],
+      403:['Ruxsat yo\'q','Bu bo\'limga kirish huquqingiz yo\'q.'],
+      429:['Juda ko\'p so\'rov','Bir necha daqiqa kutib, qayta urinib ko\'ring.'],
+      500:['Nimadir noto\'g\'ri ketdi','Server kutilmagan xatoga uchradi. Bir daqiqadan keyin qayta urinib ko\'ring — muammo takrorlansa, bu vaqtinchalik emas.'],
+      502:['Server javob bermadi','Ulanishda uzilish bo\'ldi. Qayta urinib ko\'ring.'],
+      503:['Xizmat vaqtincha ishlamayapti','Texnik ishlar yoki yuklama. Birozdan keyin qaytib keling.'],
+      x:['Xatolik yuz berdi','Kutilmagan holat. Qayta urinib ko\'ring yoki bosh sahifaga qayting.']},
+    en:{badge:'Error',home:'Home',retry:'Try again',back:'Go back',foot:'Check status: ',
+      404:['Page not found','The address may be mistyped or the page has moved. Continue from the home page.'],
+      401:['Sign-in required','This page is only for signed-in users. Go to the login page.'],
+      403:['Access denied','You do not have permission to open this section.'],
+      429:['Too many requests','Wait a few minutes and try again.'],
+      500:['Something went wrong','The server hit an unexpected error. Try again in a minute — if it keeps happening, it is not temporary.'],
+      502:['No response from server','The connection dropped. Please try again.'],
+      503:['Service temporarily unavailable','Maintenance or heavy load. Come back shortly.'],
+      x:['An error occurred','Unexpected state. Try again or return to the home page.']}
+  }[lang];
+  var pair=T[code]||T.x;
+  document.documentElement.lang=lang;
+  document.title=(code+' — '+pair[0]+' — UzLeeder Academy');
+  document.getElementById('code').textContent=code;
+  document.getElementById('badge').textContent=T.badge+' '+code;
+  document.getElementById('title').textContent=pair[0];
+  document.getElementById('msg').textContent=custom?custom.slice(0,300):pair[1];
+  document.getElementById('tHome').textContent=T.home;
+  document.getElementById('tRetry').textContent=T.retry;
+  document.getElementById('tBack').textContent=T.back;
+  document.getElementById('foot').firstChild.textContent=T.foot;
+  if(code==='401'){document.getElementById('bHome').href='/login';document.getElementById('tHome').textContent=lang==='en'?'Sign in':'Kirish'}
+  /* Qaysi manzilda xato bo'lgani — 404 da foydali */
+  var from=q.get('from')||(code==='404'&&location.pathname!=='/404'&&location.pathname!=='/404.html'?location.pathname:'');
+  if(from){var p=document.getElementById('path');p.textContent=from.slice(0,120);p.hidden=false}
+  document.getElementById('bRetry').addEventListener('click',function(){if(from&&code!=='404')location.href=from;else location.reload()});
+  document.getElementById('bBack').addEventListener('click',function(){if(history.length>1)history.back();else location.href='/'});
+})();
+</script>
+</body>
+</html>

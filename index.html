@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="UzLeeder Academy — noldan AI muhandisligigacha. 30 kunlik Python kursi, cheatsheet, karyera rejasi va amaliy testlar.">
+<meta name="theme-color" content="#07090d">
+<link rel="manifest" href="manifest.json" crossorigin="use-credentials">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>UzLeeder Academy — AI Engineering Path</title>
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='5.5' fill='%231c2233'/><path d='M4 18 L9 8 L13 14 L20 5' stroke='%23f0384e' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,500&family=Outfit:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css?v=2026092601">
+<link rel="stylesheet" href="css/layout.css?v=2026092802">
+<link rel="stylesheet" href="css/components.css?v=2026092601">
+<link rel="stylesheet" href="css/pages.css?v=2026092704">
+<style>
+/* ====================== INTRO (kirish oynasi) ====================== */
+#intro{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:var(--bg,#07090d);color:var(--text,var(--ink,#f2f4f8));transition:opacity .45s ease,visibility .45s;overflow:hidden}
+#intro.out{opacity:0;visibility:hidden;pointer-events:none}
+#intro::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 460px at 50% 40%,color-mix(in srgb,var(--brand,#f0384e) 16%,transparent),transparent 70%)}
+.in-box{position:relative;display:grid;justify-items:center;gap:14px;text-align:center;animation:inUp .7s cubic-bezier(.2,.8,.2,1) both}
+/* Brend "app icon": yumaloq ink plita, akademiya belgisi qizilda */
+.in-mark{width:86px;height:86px;border-radius:22px;background:#1c2233;display:grid;place-items:center;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.in-mark svg{width:48px;height:48px}.in-mark svg path{stroke:var(--brand,#f0384e)}.in-mark svg circle{fill:var(--brand,#f0384e)}
+.in-name{font-family:Outfit,Manrope,system-ui,sans-serif;font-weight:800;font-size:38px;letter-spacing:-.02em;line-height:1;margin-top:6px}
+.in-name i{font-style:normal;color:var(--brand,#f0384e)}
+.in-acad{font-family:"Cascadia Mono",Consolas,ui-monospace,monospace;font-weight:700;font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted,#9098a8);padding-left:.42em}
+.in-bar{width:220px;height:3px;border-radius:99px;background:color-mix(in srgb,var(--text,var(--ink,#fff)) 12%,transparent);overflow:hidden;margin-top:22px}
+.in-bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--brand,#f0384e);transition:width .18s ease-out}
+.in-pct{font-family:"Cascadia Mono",Consolas,ui-monospace,monospace;font-size:12px;color:var(--muted,#9098a8);letter-spacing:.08em;min-height:16px}
+.in-by{position:absolute;left:0;right:0;bottom:max(28px,env(safe-area-inset-bottom));text-align:center;font-family:"Cascadia Mono",Consolas,ui-monospace,monospace;font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--text,var(--ink,#f2f4f8));opacity:.75}
+.in-by b{color:var(--brand,#f0384e)}
+@keyframes inUp{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.in-box{animation:none}#intro{transition:none}}
+html.intro-on{overflow:hidden}</style>
+</head>
+<body>
+<div id="intro" role="status" aria-live="polite" aria-label="UzLeeder Academy">
+  <div class="in-box">
+    <span class="in-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18 L9 8 L13 14 L20 5" stroke="#f0384e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="5" r="2.3" fill="#f0384e"/></svg></span>
+    <div class="in-name">Uz<i>Leeder</i></div>
+    <div class="in-acad">Academy</div>
+    <div class="in-bar"><i id="inBar"></i></div>
+    <div class="in-pct" id="inPct">0%</div>
+  </div>
+  <div class="in-by">by <b>UzLeeder</b></div>
+</div>
+<script>
+(function(){var el=document.getElementById('intro'),bar=document.getElementById('inBar'),pct=document.getElementById('inPct');if(!el)return;
+/* Foiz REAL yuklanishni ko'rsatadi: skriptlar soni (har <script src> yuklanishi = qadam),
+   90% — hammasi yuklandi, 100% — App.render tugadi (UZ_APP_READY). Soxta kutish yo'q,
+   faqat 600 ms minimal ko'rinish (miltillamasin). Skript xato bersa ham qadam sanaladi. */
+var t0=Date.now(),p=0,done=false,total=0,got=0,ready=false;
+document.addEventListener('load',function(e){if(e.target&&e.target.tagName==='SCRIPT'&&e.target.src){got++;}},true);
+document.addEventListener('error',function(e){if(e.target&&e.target.tagName==='SCRIPT'&&e.target.src){got++;}},true);
+window.addEventListener('load',function(){ready=true});
+window.UZ_APP_READY=function(){ready=true;got=total||1};
+function paint(v){if(v<=p)return;p=v;bar.style.width=v+'%';pct.textContent=Math.round(v)+'%'}
+function tick(){if(done)return;if(!total)total=document.querySelectorAll('script[src]').length||1;var e=Date.now()-t0;var target=Math.min(90,got/total*90);if(ready)target=100;if(e>8000)target=100;if(e<600)target=Math.min(target,e/600*90);paint(target);if(p>=100){done=true;clearInterval(iv);setTimeout(function(){el.classList.add('out');document.documentElement.classList.remove('intro-on');setTimeout(function(){el.remove()},500)},180);return}}
+document.documentElement.classList.add('intro-on');var iv=setInterval(tick,40);
+window.UZ_INTRO_DONE=function(cb){if(done)cb();else{var i=setInterval(function(){if(done){clearInterval(i);cb()}},60)}};
+})();</script>
+<a class="skip-link" href="#content">Asosiy mazmunga o'tish · Skip to content</a>
+
+<!-- ====================== YUQORI PANEL ====================== -->
+<header class="topbar">
+  <button class="icon-btn" id="menuBtn" aria-label="Menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+
+  <a class="brand" href="#/dashboard">
+    <span class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 18 L9 8 L13 14 L20 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="5" r="2.3" fill="currentColor"/></svg>
+    </span>
+    <span class="brand-text"><b>Uz<i>Leeder</i></b><small>ACADEMY</small></span>
+  </a>
+
+  <div class="topbar-spacer"></div>
+
+  <button class="search-trigger" id="searchBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <span id="searchLabel">Qidirish</span>
+    <span class="kbd kbd-hint">Ctrl K</span>
+  </button>
+
+  <div class="ring-wrap" style="width:38px;height:38px" title="Progress">
+    <svg width="38" height="38" aria-hidden="true">
+      <circle cx="19" cy="19" r="15" fill="none" stroke="var(--line)" stroke-width="3.5"/>
+      <circle id="ringFill" class="fill" cx="19" cy="19" r="15" fill="none" stroke="var(--brand)"
+              stroke-width="3.5" stroke-linecap="round" stroke-dasharray="94.2" stroke-dashoffset="94.2"/>
+    </svg>
+    <span class="ring-label" id="ringLabel">0%</span>
+  </div>
+
+  <button class="streak-pill cold" id="streakPill" type="button"></button>
+
+  <button class="topclock" id="topClock" type="button" title="Flip clock" aria-label="Clock">--:--</button>
+
+  <div class="segmented" id="langSeg">
+    <button data-lang-set="uz" class="on">UZ</button>
+    <button data-lang-set="en">EN</button>
+  </div>
+
+  <div class="notif-wrap">
+    <button class="icon-btn notif-btn" id="notifBtn" type="button" aria-label="Notifications" aria-haspopup="true" aria-expanded="false" hidden></button>
+    <div class="notif-pop" id="notifPop" role="region" aria-label="Notifications" hidden></div>
+  </div>
+  <div class="profile-wrap">
+    <button class="profile-btn" id="profileBtn" type="button" aria-label="Profile" aria-haspopup="menu" aria-expanded="false"></button>
+    <div class="profile-menu" id="profileMenu" role="menu">
+      <div class="pm-head"><b id="pmName"></b><span id="pmSub"></span></div>
+      <button class="pm-item" role="menuitem" data-go="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg><span id="pmProfileT">Profil</span></button>
+      <button class="pm-item" role="menuitem" data-go="comm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span id="pmChatT">Nazorat va chat</span><span class="badge hot" id="pmChatBadge"></span></button>
+      <button class="pm-item" role="menuitem" data-go="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span id="pmSettingsT">Sozlamalar</span></button>
+      <div class="pm-divider"></div>
+      <button class="pm-item danger" role="menuitem" id="pmLogout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M13 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg><span id="pmLogoutT">Chiqish</span></button>
+    </div>
+  </div>
+  <button class="icon-btn" id="themeBtn" aria-label="Theme" aria-expanded="false"></button>
+  <div class="theme-pop" id="themePop" hidden></div>
+</header>
+
+<!-- ====================== ASOSIY QOBIQ ====================== -->
+<div class="shell">
+  <aside class="sidebar" id="sidebar" aria-label="Navigation">
+    <nav id="navGroups"></nav>
+  </aside>
+
+  <main class="content" id="content" tabindex="-1"></main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="site-foot">
+  <div class="links">
+    <button id="footSettings" data-go="settings">Sozlamalar</button>
+    <button id="footReset">Progressni o'chirish</button>
+  </div>
+  <!-- Eng pastdagi yozuv — markazda, oxirgi matnning tagida -->
+  <div class="foot-tag">UzLeeder Academy · AI Engineering Path · <span id="footTag">30 kunlik Python kursi</span></div>
+  <a class="foot-by" href="https://uzleeder.netlify.app" target="_blank" rel="noopener">by <b>UzLeeder</b></a>
+</footer>
+
+<!-- ====================== QIDIRUV PANELI ====================== -->
+<div class="palette-overlay" id="paletteOverlay">
+  <div class="palette" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="palette-input">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="paletteInput" type="text" autocomplete="off" spellcheck="false" placeholder="…">
+    </div>
+    <div class="palette-results" id="palResults"></div>
+    <div class="palette-foot">
+      <span><span class="kbd">↑↓</span> <span id="palHintNav">yurish</span></span>
+      <span><span class="kbd">↵</span> <span id="palHintOpen">ochish</span></span>
+      <span><span class="kbd">Esc</span> <span id="palHintClose">yopish</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ====================== SERTIFIKAT OYNASI ====================== -->
+<div class="overlay" id="certOverlay">
+  <div class="modal wide" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <h3 id="certTitle">Sertifikat</h3>
+      <button class="icon-btn" id="certX" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="cert-frame" id="certFrame"></div>
+    <div class="modal-foot">
+      <button class="btn btn-primary" id="certDownload"></button>
+      <button class="btn btn-ghost" id="certClose"></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-host" id="toastHost"></div>
+
+<!-- ====================== SKRIPTLAR ======================
+     Tartib muhim: ma'lumot → yordamchilar → sahifalar → app.
+     Klassik <script> ishlatilgan (ES module emas) — shunda fayl
+     file:// dan ochilganda ham CORS to'sig'isiz ishlaydi.        -->
+<script src="js/data/course.js?v=2026092004"></script>
+
+<!-- Ingliz tili kursi: meta → ma'lumotnomalar → kunlar (qismlarga bo'lingan) -->
+<script src="js/data/english.js?v=2026092004"></script>
+<script src="js/data/eng-grammar.js?v=2026092004"></script>
+<script src="js/data/eng-grammar-2.js?v=2026092004"></script>
+<script src="js/data/eng-vocab.js?v=2026092004"></script>
+<script src="js/data/eng-skills.js?v=2026092004"></script>
+<script src="js/data/eng-days-1.js?v=2026092004"></script>
+<script src="js/data/eng-days-2.js?v=2026092004"></script>
+<script src="js/data/eng-days-3.js?v=2026092004"></script>
+<script src="js/data/eng-days-4.js?v=2026092004"></script>
+<script src="js/data/eng-days-5.js?v=2026092004"></script>
+<script src="js/data/eng-days-6.js?v=2026092004"></script>
+
+<!-- Manba kitoblar: lug'at ro'yxati, IELTS matnlari va tinglash bo'limlari -->
+<script src="js/data/eng-book.js?v=2026092004"></script>
+<script src="js/data/eng-book-vocab-1.js?v=2026092004"></script>
+<script src="js/data/eng-book-vocab-2.js?v=2026092004"></script>
+<script src="js/data/eng-book-vocab-3.js?v=2026092004"></script>
+<script src="js/data/eng-reading-1.js?v=2026092004"></script>
+<script src="js/data/eng-reading-2.js?v=2026092004"></script>
+<script src="js/data/eng-reading-3.js?v=2026092004"></script>
+<script src="js/data/eng-reading-4.js?v=2026092004"></script>
+<script src="js/data/eng-reading-ext.js?v=2026092004"></script>
+<script src="js/data/eng-read-rel-1.js?v=2026092004"></script>
+<script src="js/data/eng-read-rel-2.js?v=2026092004"></script>
+<script src="js/data/eng-read-hist-1.js?v=2026092004"></script>
+<script src="js/data/eng-read-hist-2.js?v=2026092004"></script>
+<script src="js/data/eng-read-sources.js?v=2026092004"></script>
+<script src="js/data/eng-listening-1.js?v=2026092004"></script>
+<script src="js/data/eng-listening-2.js?v=2026092004"></script>
+<script src="js/data/eng-dictation.js?v=2026092004"></script>
+<script src="js/data/eng-dest-b2.js?v=2026092004"></script>
+
+<script src="js/data/speaking30.js?v=2026092004"></script>
+<script src="js/data/eng-writing.js?v=2026092004"></script>
+<script src="js/data/habit.js?v=2026092703"></script>
+<script src="js/data/duas.js?v=2026092703"></script>
+<script src="js/data/projects.js?v=2026092004"></script>
+<script src="js/data/masterplan.js?v=2026092004"></script>
+
+<script src="js/data/roadmap.js?v=2026092004"></script>
+<script src="js/data/dual.js?v=2026092004"></script>
+<script src="js/data/plan.js?v=2026092004"></script>
+<script src="js/data/datacamp.js?v=2026092004"></script>
+<script src="js/data/quick10.js?v=2026092004"></script>
+<script src="js/data/deep.js?v=2026092004"></script>
+<script src="js/data/explain.js?v=2026092004"></script>
+<script src="js/data/quiz-l10n.js?v=2026092004"></script>
+
+<script src="js/icons.js?v=2026092102"></script>
+<script src="js/store.js?v=2026092702"></script>
+<script src="js/sync.js?v=2026092702"></script>
+<script src="js/ctrl.js?v=2026092004"></script>
+<script src="js/clock.js?v=2026092004"></script>
+<script src="js/i18n.js?v=2026092801"></script>
+<script src="js/utils.js?v=2026092004"></script>
+
+<script src="js/prayer.js?v=2026092004"></script>
+<script src="js/habit.js?v=2026092701"></script>
+<script src="js/focus.js?v=2026092803"></script>
+<script src="js/goal.js?v=2026092702"></script>
+<script src="js/engine.js?v=2026092004"></script>
+<script src="js/gen.js?v=2026092004"></script>
+<script src="js/goalmap.js?v=2026092004"></script>
+
+<script src="js/quiz.js?v=2026092004"></script>
+<script src="js/playground.js?v=2026092004"></script>
+<script src="js/certificate.js?v=2026092602"></script>
+<script src="js/search.js?v=2026092004"></script>
+
+<script src="js/pages/habit.js?v=2026092004"></script>
+<script src="js/pages/dashboard.js?v=2026092802"></script>
+<script src="js/pages/course.js?v=2026092004"></script>
+<script src="js/pages/lesson.js?v=2026092004"></script>
+<script src="js/pages/english.js?v=2026092004"></script>
+<script src="js/pages/books.js?v=2026092102"></script>
+<script src="js/pages/books2.js?v=2026092004"></script>
+<script src="js/pages/speaking.js?v=2026092004"></script>
+<script src="js/pages/bbc.js?v=2026092004"></script>
+<script src="js/pages/writing.js?v=2026092004"></script>
+<script src="js/pages/goal.js?v=2026092004"></script>
+<script src="js/pages/roadmap.js?v=2026092004"></script>
+<script src="js/pages/plan.js?v=2026092004"></script>
+<script src="js/pages/datacamp.js?v=2026092004"></script>
+<script src="js/pages/quick.js?v=2026092004"></script>
+<script src="js/pages/career.js?v=2026092004"></script>
+<script src="js/pages/misc.js?v=2026092004"></script>
+<script src="js/pages/profile.js?v=2026092004"></script>
+<script src="js/pages/copybook.js?v=2026092004"></script>
+<script src="js/pages/dua.js?v=2026092110"></script>
+<script src="js/pages/week.js?v=2026092703"></script>
+<script src="js/pages/today.js?v=2026092703"></script>
+<script src="js/pages/review.js?v=2026092004"></script>
+<script src="js/pages/practice.js?v=2026092004"></script>
+<script src="js/pages/projects.js?v=2026092004"></script>
+<script src="js/pages/analytics.js?v=2026092801"></script>
+<script src="js/pages/chat.js?v=2026092004"></script>
+<script src="js/pages/movies.js?v=2026092102"></script>
+<script src="js/pages/flash.js?v=2026092004"></script>
+<script src="js/pages/etch.js?v=2026092004"></script>
+
+<script src="js/app.js?v=2026092802"></script>
+</body>
+</html>
