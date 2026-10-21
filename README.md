@@ -1362,3 +1362,4 @@ shuning uchun migratsiyada eski progress tozalanadi (mock ballari saqlanadi).
 tayyorgarlik tugatilganini tasdiqlaydi, xolos — sertifikatning o'zida ham
 shu izoh yozilgan. Oxirgi mock natijasi bo'lsa, band ballari ham chiziladi.
 "# uzleeder-academy" 
+"# uzleeder-academy" 
