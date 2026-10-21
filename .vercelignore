@@ -7,3 +7,6 @@ brand/out/tour
 # Sirlar — deployga hech qachon yuklanmasin
 .env
 .env.*
+
+# CI
+.github
