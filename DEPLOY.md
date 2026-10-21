@@ -52,36 +52,6 @@ Tekshirish: `https://<sayt>/api/health` → `ok: true`, `https://<sayt>/api/medi
 ## 6. Keyingi o'zgarishlar
 Faylni tahrirla → `index.html` va `controller.html` dagi `?v=…` versiyani oshir (kesh) → `vercel --prod`.
 
-## 7. Avtomatik deploy — GitHub Actions
-
-`.github/workflows/deploy.yml` — `main` ga har push'da production deploy (qo'lda: Actions → **Deploy (Vercel production)** → Run workflow).
-
-Bir marta sozlash: **GitHub → Settings → Secrets and variables → Actions → New repository secret**
-
-| Secret | Qayerdan olinadi |
-|---|---|
-| `VERCEL_TOKEN` | Vercel → Account Settings → **Tokens** → Create Token |
-| `VERCEL_ORG_ID` | mahalliy `vercel link` → `.vercel/project.json` → `orgId` (yoki Vercel → Settings → General) |
-| `VERCEL_PROJECT_ID` | o'sha fayldagi `projectId` |
-
-Workflow nima qiladi: `vercel pull` → `vercel build --prod` → `vercel deploy --prebuilt --prod` → `academy.uzleeder.uz` domenini loyihaga ulaydi (idempotent) → `/api/health` ni tekshirib natijani job summary'ga yozadi.
-
-Sayt sirlari (`AUTH_USER`, `SESSION_SECRET`, `DATABASE_URL`, `BLOB_READ_WRITE_TOKEN` …) GitHub'da emas — faqat Vercel → Settings → Environment Variables da (3-bo'lim). `/api/health` `ok:false` qaytarsa, workflow log'ida yetishmayotgan o'zgaruvchi ko'rinadi.
-
-## 8. Domen — academy.uzleeder.uz
-
-1. Vercel → Project → Settings → **Domains** → Add → `academy.uzleeder.uz` (yoki workflow buni o'zi qo'shadi).
-2. `uzleeder.uz` DNS'ida (domen registratori yoki Cloudflare panelida) subdomen yozuvi:
-
-   | Turi | Nomi | Qiymati |
-   |---|---|---|
-   | `CNAME` | `academy` | `cname.vercel-dns.com` |
-
-   `uzleeder.uz` ning o'zi ham Vercel'da bo'lsa — nameserver'lar allaqachon Vercel'da, bu holda 1-qadam yetarli.
-   Cloudflare ishlatilsa, yozuv **DNS only** (to'q sariq bulut o'chirilgan) bo'lishi kerak — aks holda Vercel sertifikat bera olmaydi.
-3. Vercel → Domains da yozuv **Valid Configuration** bo'lishini kuting (TLS sertifikati avtomatik, bir necha daqiqa).
-4. Tekshirish: `https://academy.uzleeder.uz/api/health` → `{"ok":true,…}`, `https://academy.uzleeder.uz/` → `/login` ga yo'naltirishi kerak (middleware butun saytni yopadi).
-
 ## Qayerda nima saqlanadi (halol)
 | Ma'lumot | Joy |
 |---|---|
