@@ -33,7 +33,7 @@ const COOKIE = 'uzla_session';
 /* Sessiya muddati SOZLANADI: SESSION_DAYS (kun, standart 90). Ilgari 10 yil
    edi — ko'p rolli tizimda bu haddan ortiq: cookie o'g'irlansa yillar davomida
    ishlaydi. Parol yoki SESSION_SECRET yangilansa sessiya darhol bekor bo'ladi.
-   Xodimlar (controller/teacher/english): STAFF_SESSION_DAYS, standart 30.  */
+   Xodim (controller): STAFF_SESSION_DAYS, standart 30.  */
 function daysEnv(name, def) { const n = parseInt(process.env[name], 10); return n > 0 && n <= 3650 ? n : def; }
 const SESSION_DAYS = daysEnv('SESSION_DAYS', 90);
 
@@ -46,6 +46,11 @@ function env(name, alt) {
    postgres:// qiymatli o'zgaruvchi. *_UNPOOLED va *_PRISMA_URL emas —
    HTTP endpoint uchun oddiy (pooled) URL kerak.                            */
 function pgUrl() {
+  // Netlify Database: only its own connection (injected by Netlify) — never fall back to another Postgres address
+  if (process.env.ACADEMY_DATABASE === 'netlify') {
+    const u = env('NETLIFY_DB_URL', 'NETLIFY_DATABASE_URL');
+    return /^postgres(ql)?:\/\//.test(u) ? u : '';
+  }
   const known = ['DATABASE_URL', 'STORAGE_URL', 'POSTGRES_URL', 'NEON_DATABASE_URL'];
   for (const k of known) if (/^postgres(ql)?:\/\//.test(env(k))) return env(k);
   for (const k of Object.keys(process.env)) {
@@ -63,7 +68,8 @@ function redisCfg() {
 function missingEnv() {
   const out = [];
   ['AUTH_USER', 'AUTH_PASSWORD_HASH', 'SESSION_SECRET'].forEach(k => { if (!env(k)) out.push(k); });
-  if (!pgUrl() && !redisCfg()) out.push('DATABASE_URL (Postgres) yoki KV_REST_API_URL+TOKEN (Redis)');
+  if (process.env.ACADEMY_DATABASE === 'netlify') { if (!pgUrl()) out.push('NETLIFY_DB_URL (Netlify Database ulanmagan)'); }
+  else if (!pgUrl() && !redisCfg()) out.push('DATABASE_URL (Postgres) yoki KV_REST_API_URL+TOKEN (Redis)');
   return out;
 }
 
@@ -170,30 +176,46 @@ function clearSessionCookie(res) {
   ]);
 }
 
-/* ---------- xodimlar: controller · teacher · english ------------------------
-   Uchta xodim roli, har birining O'Z logini va paroli (env yoki bazadagi
-   hash). Bitta cookie (uzla_ctrl — nomi tarixiy, tarkibida role bor).
+/* ---------- xodimlar: faqat controller ------------------------------------
+   Faol xodim roli bitta: controller (MONITORING: sessiya, faollik, chat,
+   shaxsiy eslatma). Bitta cookie (uzla_ctrl — nomi tarixiy, tarkibida role).
    Xodim o'quvchi ilovasiga kira olmaydi (middleware faqat uzla_session ni
    kiritadi) — u faqat /controller (staff paneli) va /api/ctrl/* ni ko'radi.
 
-     controller — MONITORING: sessiya, faollik, chat, shaxsiy eslatma
-     teacher    — O'QITISH: progress, topshiriq, feedback, writing/speaking
-                  tekshiruvi, loyiha, chat
-     english    — FAQAT INGLIZ TILI: teacher bilan bir xil, lekin Python
-                  ma'lumotlari serverda filtrlanadi (filterStateForRole)
+   2026-10: teacher va english ("English support teacher") rollari OLIB
+   TASHLANDI (RETIRED_ROLES). Ular STAFF da yo'q — demak ularning logini
+   ishlamaydi va eski uzla_ctrl cookie'si (role: teacher|english) hech qayerda
+   qabul qilinmaydi. Ularning hash kalitlari va env o'zgaruvchilari O'CHIRIL-
+   MAYDI va hech qaysi rolga aylantirilmaydi: retiredAccounts() ularni faqat
+   ko'rsatadi, qaror — egasining aniq ruxsati bilan (docs/UPGRADE-2026-10.md).
 
-   Env: CTRL_USER/CTRL_PASSWORD_HASH · TEACHER_USER/TEACHER_PASSWORD_HASH ·
-        ENG_USER/ENG_PASSWORD_HASH. Bazadagi hash env'dan ustun (panelda
-        parol almashtirilganda). Rol yo'q bo'lsa (hash berilmagan) — u rol
-        oddiygina mavjud emas; login 401 qaytaradi.                          */
+   Env: CTRL_USER/CTRL_PASSWORD_HASH. Bazadagi hash env'dan ustun (panelda
+   parol almashtirilganda). Hash berilmagan bo'lsa — rol mavjud emas; login 401. */
 const CTRL_COOKIE = 'uzla_ctrl';
 const CTRL_DAYS = daysEnv('STAFF_SESSION_DAYS', 30);
 const CTRL_HASH_KEY = 'uzla:ctrl:hash';
 const STAFF = {
-  controller: { userEnv: 'CTRL_USER',    defUser: 'controller', hashEnv: 'CTRL_PASSWORD_HASH',    hashKey: CTRL_HASH_KEY },
-  teacher:    { userEnv: 'TEACHER_USER', defUser: 'teacher',    hashEnv: 'TEACHER_PASSWORD_HASH', hashKey: 'uzla:staff:teacher:hash' },
-  english:    { userEnv: 'ENG_USER',     defUser: 'english',    hashEnv: 'ENG_PASSWORD_HASH',     hashKey: 'uzla:staff:english:hash' }
+  controller: { userEnv: 'CTRL_USER', defUser: 'controller', hashEnv: 'CTRL_PASSWORD_HASH', hashKey: CTRL_HASH_KEY }
 };
+/* Olib tashlangan rollar — FAQAT aniqlash va tarixiy yozuvlarni ko'rsatish uchun.
+   Bu ro'yxatdagi rol hech qachon autentifikatsiya qilinmaydi. */
+const RETIRED_ROLES = {
+  teacher: { userEnv: 'TEACHER_USER', hashEnv: 'TEACHER_PASSWORD_HASH', hashKey: 'uzla:staff:teacher:hash' },
+  english: { userEnv: 'ENG_USER',     hashEnv: 'ENG_PASSWORD_HASH',     hashKey: 'uzla:staff:english:hash' }
+};
+/* Qaysi olib tashlangan rol hisobi hali sozlangan (env yoki bazada hash bor) —
+   faqat hisobot: hech narsa o'chirilmaydi va aylantirilmaydi. */
+async function retiredAccounts() {
+  const out = [];
+  for (const r of Object.keys(RETIRED_ROLES)) {
+    const d = RETIRED_ROLES[r];
+    let db = false;
+    try { const h = await store.get(d.hashKey); db = !!(h && /^pbkdf2\$/.test(h)); } catch (e) {}
+    const envSet = !!env(d.hashEnv);
+    if (db || envSet) out.push({ role: r, source: [envSet ? 'env:' + d.hashEnv : '', db ? 'db:' + d.hashKey : ''].filter(Boolean), access: 'revoked', decision: 'pending-owner' });
+  }
+  return out;
+}
 const STAFF_ROLES = Object.keys(STAFF);
 function isStaffRole(r) { return STAFF_ROLES.indexOf(r) >= 0; }
 async function staffHash(role) {
@@ -223,7 +245,7 @@ function setStaffCookie(res, user, role, remember) {
 }
 function setCtrlCookie(res, user) { return setStaffCookie(res, user, 'controller'); }
 function clearCtrlCookie(res) { clearSessionCookie(res); }   // yagona chiqish — ikkalasi ham
-/* Kim so'rayapti: 'learner' (uzla_session) | 'controller' | 'teacher' | 'english' | null.
+/* Kim so'rayapti: 'learner' (uzla_session) | 'controller' | null.
    O'quvchi cookie'si ustun: ikkalasi bir brauzerda bo'lsa ham rol aralashmaydi. */
 function roleOf(req) {
   if (sessionOf(req)) return 'learner';
@@ -233,41 +255,22 @@ function roleOf(req) {
 
 /* ---------- RUXSATLAR MATRITSASI ----------------------------------------------
    Har /api/ctrl/io amali uchun qaysi rol ruxsatli. Yashirin tugma emas —
-   server tekshiradi. English roli faqat ingliz tili refs bilan ishlaydi
-   (io ichida qo'shimcha tekshiruv: englishOnly).                              */
+   server tekshiradi. teacher/english olib tashlangan: assignment va review
+   amallarini endi hech kim yaratmaydi (tarixiy yozuvlar faqat o'qiladi);
+   o'quvchi eski topshiriq holatini yopishi mumkin (astatus).                  */
 const PERMS = {
   heartbeat: ['learner'],
   session:   ['learner', 'controller'],
-  message:   ['learner', 'controller', 'teacher', 'english'],
-  read:      ['learner', 'controller', 'teacher', 'english'],
-  notes:     ['controller', 'teacher', 'english'],
-  assignment:['teacher', 'english'],
-  astatus:   ['learner', 'teacher', 'english'],       // topshiriq holati (o'quvchi: in_progress/completed)
-  feedback:  ['teacher', 'english', 'controller'],    // controller: faqat private note (visibility=private)
-  review:    ['learner', 'teacher', 'english'],       // writing/speaking tekshiruv bosqichlari
-  notif:     ['learner', 'controller', 'teacher', 'english'],
-  state:     ['controller', 'teacher', 'english']
+  message:   ['learner', 'controller'],
+  read:      ['learner', 'controller'],
+  notes:     ['controller'],
+  astatus:   ['learner'],                 // tarixiy topshiriq: o'quvchi holatini yopadi/qayta ochadi
+  feedback:  ['controller'],              // faqat shaxsiy eslatma (visibility=private)
+  notif:     ['learner', 'controller'],
+  state:     ['controller']
 };
 function can(role, op) { return !!(PERMS[op] && PERMS[op].indexOf(role) >= 0); }
 
-/* English roli uchun o'quvchi holatini FILTRLASH: Python/DataCamp/coding
-   ma'lumotlari chiqarib tashlanadi. Ro'yxat — store.js DEFAULTS bo'yicha.   */
-const ENGLISH_STRIP = ['scores', 'best', 'notes', 'activity'];
-function filterStateForRole(state, role) {
-  if (!state || role !== 'english') return state;
-  const out = Object.assign({}, state);
-  ENGLISH_STRIP.forEach(k => { delete out[k]; });
-  out.mistakes = (state.mistakes || []).filter(m => m.cat && m.cat !== 'python' && m.cat !== 'coding' && m.cat !== 'datacamp');
-  out.quiz = {}; Object.keys(state.quiz || {}).forEach(k => { if (!/^(py|dc|code|q10|lesson)/.test(k)) out.quiz[k] = state.quiz[k]; });
-  out.review = {}; Object.keys(state.review || {}).forEach(k => { if (!/^(py|dc|code|lesson)/.test(k)) out.review[k] = state.review[k]; });
-  out.copy = Object.assign({}, state.copy || {}); delete out.copy.coding;
-  out.read = {}; Object.keys(state.read || {}).forEach(k => { if (!/^(codetest|dc)/.test(k)) out.read[k] = state.read[k]; });
-  out.done = {}; Object.keys(state.done || {}).forEach(k => { if (!/^(dc|q10|py)/.test(k)) out.done[k] = state.done[k]; });
-  out.plan = {}; Object.keys(state.plan || {}).forEach(k => { if (/^wr/.test(k)) out.plan[k] = state.plan[k]; });
-  out.events = (state.events || []).filter(e => !/^(py|dc|code)/.test(e.type || ''));
-  out._filtered = 'english';
-  return out;
-}
 /* JSON kalitni o'qish/yozish — nazorat ma'lumotlari uchun qisqa yordamchilar */
 async function getJSON(key, fallback) {
   try { const raw = await store.get(key); return raw ? JSON.parse(raw) : fallback; } catch (e) { return fallback; }
@@ -357,7 +360,7 @@ const pgStore = {
   }
 };
 
-const store = pgUrl() ? pgStore : redisStore;
+const store = process.env.ACADEMY_DATABASE === 'netlify' || pgUrl() ? pgStore : redisStore;
 
 /* ---------- so'rov tanasi ----------------------------------------------- */
 function readJSON(req, limitBytes) {
@@ -396,6 +399,6 @@ function clientIp(req) {
 module.exports = {
   env, missingEnv, verifyPassword, hashPassword, currentHash, HASH_KEY, currentUser, USER_KEY, sessionOf, setSessionCookie, clearSessionCookie,
   ctrlHash, ctrlUser, CTRL_HASH_KEY, ctrlSessionOf, setCtrlCookie, clearCtrlCookie, roleOf, getJSON, setJSON,
-  STAFF, STAFF_ROLES, isStaffRole, staffHash, staffUser, staffRolesAvailable, staffSessionOf, setStaffCookie, PERMS, can, filterStateForRole, SESSION_DAYS, CTRL_DAYS,
-  store, backend: pgUrl() ? 'postgres' : 'redis', readJSON, json, clientIp
+  STAFF, STAFF_ROLES, RETIRED_ROLES, retiredAccounts, isStaffRole, staffHash, staffUser, staffRolesAvailable, staffSessionOf, setStaffCookie, PERMS, can, SESSION_DAYS, CTRL_DAYS,
+  store, backend: process.env.ACADEMY_DATABASE === 'netlify' ? 'netlify-postgres' : pgUrl() ? 'postgres' : 'redis', readJSON, json, clientIp
 };

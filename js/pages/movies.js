@@ -69,6 +69,15 @@
     /* Yuklash: ≤ 20 MB — bitta PUT; katta — multipart (16 MB bo'laklar). onProgress(0..1) */
     upload: function (file, onProgress) {
       return Cloud.token(file).then(function (t) {
+        if(t.backend==='netlify') {
+          var i=0;
+          function nextPart(){
+            if(i>=t.parts)return fetch('/api/media',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({op:'complete',id:t.id})}).then(function(r){if(!r.ok)throw new Error('complete '+r.status);return r.json();});
+            var idx=i++, chunk=file.slice(idx*t.partSize,Math.min(file.size,(idx+1)*t.partSize));
+            return putXHR('/api/media?id='+t.id+'&part='+idx,chunk,{'Content-Type':'application/octet-stream'},function(p){if(onProgress)onProgress((idx+p)/t.parts);}).then(nextPart);
+          }
+          return nextPart();
+        }
         var base = { authorization: 'Bearer ' + t.token, 'x-api-version': '11' };
         var ctype = file.type || 'application/octet-stream';
         var url = t.api + '/' + t.pathname;

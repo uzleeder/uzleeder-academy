@@ -19,7 +19,7 @@
 const L = require('./_lib');
 
 const KEY = 'uzla:state';
-const MAX_BYTES = 1024 * 1024;   // 1 MB — real holat ~50 KB
+const MAX_BYTES = 3 * 1024 * 1024;   // 3 MB — real holat ~50 KB; Mission/Python yo'li qo'shilgach zaxira
 
 module.exports = async function (req, res) {
   const missing = L.missingEnv();

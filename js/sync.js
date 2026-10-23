@@ -153,6 +153,9 @@
     Object.keys(L.sessions || {}).forEach(function (k) { out.sessions[k] = { min: Math.max((out.sessions[k] || {}).min || 0, L.sessions[k].min || 0) }; });
     out.copy = { vocab: newerMap((R.copy || {}).vocab, (L.copy || {}).vocab), english: newerMap((R.copy || {}).english, (L.copy || {}).english), coding: newerMap((R.copy || {}).coding, (L.copy || {}).coding),
       free: newerMap((R.copy || {}).free, (L.copy || {}).free) };   // erkin daftarlar (matematika va h.k.)
+    /* 2026-10: IELTS Mission va Python & AI yo'li — o'z birlashtirish qoidalari bilan */
+    if (window.Mission && (L.mission || R.mission)) out.mission = Mission.merge(L.mission, R.mission);
+    if (window.PyAI && (L.pyai || R.pyai)) out.pyai = PyAI.merge(L.pyai, R.pyai);
     /* Soatlar: har kun uchun maksimum — ikki qurilmada yozilgani yo'qolmasin */
     out.hours = {};
     Object.keys(R.hours || {}).forEach(function (k) { out.hours[k] = { eng: R.hours[k].eng || 0, code: R.hours[k].code || 0 }; });

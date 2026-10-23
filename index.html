@@ -17,10 +17,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,500&family=Outfit:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/tokens.css?v=2026092601">
-<link rel="stylesheet" href="css/layout.css?v=2026092802">
-<link rel="stylesheet" href="css/components.css?v=2026092601">
-<link rel="stylesheet" href="css/pages.css?v=2026092704">
+<link rel="stylesheet" href="css/tokens.css?v=2026102323">
+<link rel="stylesheet" href="css/layout.css?v=2026102323">
+<link rel="stylesheet" href="css/components.css?v=2026102323">
+<link rel="stylesheet" href="css/pages.css?v=2026102323">
+<link rel="stylesheet" href="css/mission.css?v=2026102323">
 <style>
 /* ====================== INTRO (kirish oynasi) ====================== */
 #intro{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:var(--bg,#07090d);color:var(--text,var(--ink,#f2f4f8));transition:opacity .45s ease,visibility .45s;overflow:hidden}
@@ -189,109 +190,125 @@ window.UZ_INTRO_DONE=function(cb){if(done)cb();else{var i=setInterval(function()
      Tartib muhim: ma'lumot → yordamchilar → sahifalar → app.
      Klassik <script> ishlatilgan (ES module emas) — shunda fayl
      file:// dan ochilganda ham CORS to'sig'isiz ishlaydi.        -->
-<script src="js/data/course.js?v=2026092004"></script>
+<script src="js/data/course.js?v=2026102323"></script>
 
 <!-- Ingliz tili kursi: meta → ma'lumotnomalar → kunlar (qismlarga bo'lingan) -->
-<script src="js/data/english.js?v=2026092004"></script>
-<script src="js/data/eng-grammar.js?v=2026092004"></script>
-<script src="js/data/eng-grammar-2.js?v=2026092004"></script>
-<script src="js/data/eng-vocab.js?v=2026092004"></script>
-<script src="js/data/eng-skills.js?v=2026092004"></script>
-<script src="js/data/eng-days-1.js?v=2026092004"></script>
-<script src="js/data/eng-days-2.js?v=2026092004"></script>
-<script src="js/data/eng-days-3.js?v=2026092004"></script>
-<script src="js/data/eng-days-4.js?v=2026092004"></script>
-<script src="js/data/eng-days-5.js?v=2026092004"></script>
-<script src="js/data/eng-days-6.js?v=2026092004"></script>
+<script src="js/data/english.js?v=2026102323"></script>
+<script src="js/data/eng-grammar.js?v=2026102323"></script>
+<script src="js/data/eng-grammar-2.js?v=2026102323"></script>
+<script src="js/data/eng-vocab.js?v=2026102323"></script>
+<script src="js/data/eng-skills.js?v=2026102323"></script>
+<script src="js/data/eng-days-1.js?v=2026102323"></script>
+<script src="js/data/eng-days-2.js?v=2026102323"></script>
+<script src="js/data/eng-days-3.js?v=2026102323"></script>
+<script src="js/data/eng-days-4.js?v=2026102323"></script>
+<script src="js/data/eng-days-5.js?v=2026102323"></script>
+<script src="js/data/eng-days-6.js?v=2026102323"></script>
 
 <!-- Manba kitoblar: lug'at ro'yxati, IELTS matnlari va tinglash bo'limlari -->
-<script src="js/data/eng-book.js?v=2026092004"></script>
-<script src="js/data/eng-book-vocab-1.js?v=2026092004"></script>
-<script src="js/data/eng-book-vocab-2.js?v=2026092004"></script>
-<script src="js/data/eng-book-vocab-3.js?v=2026092004"></script>
-<script src="js/data/eng-reading-1.js?v=2026092004"></script>
-<script src="js/data/eng-reading-2.js?v=2026092004"></script>
-<script src="js/data/eng-reading-3.js?v=2026092004"></script>
-<script src="js/data/eng-reading-4.js?v=2026092004"></script>
-<script src="js/data/eng-reading-ext.js?v=2026092004"></script>
-<script src="js/data/eng-read-rel-1.js?v=2026092004"></script>
-<script src="js/data/eng-read-rel-2.js?v=2026092004"></script>
-<script src="js/data/eng-read-hist-1.js?v=2026092004"></script>
-<script src="js/data/eng-read-hist-2.js?v=2026092004"></script>
-<script src="js/data/eng-read-sources.js?v=2026092004"></script>
-<script src="js/data/eng-listening-1.js?v=2026092004"></script>
-<script src="js/data/eng-listening-2.js?v=2026092004"></script>
-<script src="js/data/eng-dictation.js?v=2026092004"></script>
-<script src="js/data/eng-dest-b2.js?v=2026092004"></script>
+<script src="js/data/eng-book.js?v=2026102323"></script>
+<script src="js/data/eng-book-vocab-1.js?v=2026102323"></script>
+<script src="js/data/eng-book-vocab-2.js?v=2026102323"></script>
+<script src="js/data/eng-book-vocab-3.js?v=2026102323"></script>
+<script src="js/data/eng-reading-1.js?v=2026102323"></script>
+<script src="js/data/eng-reading-2.js?v=2026102323"></script>
+<script src="js/data/eng-reading-3.js?v=2026102323"></script>
+<script src="js/data/eng-reading-4.js?v=2026102323"></script>
+<script src="js/data/eng-reading-ext.js?v=2026102323"></script>
+<script src="js/data/eng-read-rel-1.js?v=2026102323"></script>
+<script src="js/data/eng-read-rel-2.js?v=2026102323"></script>
+<script src="js/data/eng-read-hist-1.js?v=2026102323"></script>
+<script src="js/data/eng-read-hist-2.js?v=2026102323"></script>
+<script src="js/data/eng-read-sources.js?v=2026102323"></script>
+<script src="js/data/eng-listening-1.js?v=2026102323"></script>
+<script src="js/data/eng-listening-2.js?v=2026102323"></script>
+<script src="js/data/eng-dictation.js?v=2026102323"></script>
+<script src="js/data/eng-dest-b2.js?v=2026102323"></script>
 
-<script src="js/data/speaking30.js?v=2026092004"></script>
-<script src="js/data/eng-writing.js?v=2026092004"></script>
-<script src="js/data/habit.js?v=2026092703"></script>
-<script src="js/data/duas.js?v=2026092703"></script>
-<script src="js/data/projects.js?v=2026092004"></script>
-<script src="js/data/masterplan.js?v=2026092004"></script>
+<script src="js/data/speaking30.js?v=2026102323"></script>
+<script src="js/data/eng-writing.js?v=2026102323"></script>
+<script src="js/data/habit.js?v=2026102323"></script>
+<script src="js/data/duas.js?v=2026102323"></script>
+<script src="js/data/projects.js?v=2026102323"></script>
+<script src="js/data/masterplan.js?v=2026102323"></script>
 
-<script src="js/data/roadmap.js?v=2026092004"></script>
-<script src="js/data/dual.js?v=2026092004"></script>
-<script src="js/data/plan.js?v=2026092004"></script>
-<script src="js/data/datacamp.js?v=2026092004"></script>
-<script src="js/data/quick10.js?v=2026092004"></script>
-<script src="js/data/deep.js?v=2026092004"></script>
-<script src="js/data/explain.js?v=2026092004"></script>
-<script src="js/data/quiz-l10n.js?v=2026092004"></script>
+<script src="js/data/roadmap.js?v=2026102323"></script>
+<script src="js/data/dual.js?v=2026102323"></script>
+<script src="js/data/plan.js?v=2026102323"></script>
+<script src="js/data/datacamp.js?v=2026102323"></script>
+<script src="js/data/quick10.js?v=2026102323"></script>
+<script src="js/data/deep.js?v=2026102323"></script>
+<script src="js/data/explain.js?v=2026102323"></script>
+<script src="js/data/quiz-l10n.js?v=2026102323"></script>
+<script src="js/data/mission.js?v=2026102323"></script>
+<script src="js/data/pyai-1.js?v=2026102323"></script>
+<script src="js/data/pyai-m1.js?v=2026102323"></script>
+<script src="js/data/pyai-2.js?v=2026102323"></script>
+<script src="js/data/pyai-3.js?v=2026102323"></script>
+<script src="js/data/pyai-4.js?v=2026102323"></script>
 
-<script src="js/icons.js?v=2026092102"></script>
-<script src="js/store.js?v=2026092702"></script>
-<script src="js/sync.js?v=2026092702"></script>
-<script src="js/ctrl.js?v=2026092004"></script>
-<script src="js/clock.js?v=2026092004"></script>
-<script src="js/i18n.js?v=2026092801"></script>
-<script src="js/utils.js?v=2026092004"></script>
+<script src="js/icons.js?v=2026102323"></script>
+<script src="js/store.js?v=2026102323"></script>
+<script src="js/sync.js?v=2026102323"></script>
+<script src="js/ctrl.js?v=2026102323"></script>
+<script src="js/clock.js?v=2026102323"></script>
+<script src="js/i18n.js?v=2026102323"></script>
+<script src="js/i18n-2026.js?v=2026102323"></script>
+<script src="js/utils.js?v=2026102323"></script>
 
-<script src="js/prayer.js?v=2026092004"></script>
-<script src="js/habit.js?v=2026092701"></script>
-<script src="js/focus.js?v=2026092803"></script>
-<script src="js/goal.js?v=2026092702"></script>
-<script src="js/engine.js?v=2026092004"></script>
-<script src="js/gen.js?v=2026092004"></script>
-<script src="js/goalmap.js?v=2026092004"></script>
+<script src="js/prayer.js?v=2026102323"></script>
+<script src="js/habit.js?v=2026102323"></script>
+<script src="js/focus.js?v=2026102323"></script>
+<script src="js/goal.js?v=2026102323"></script>
+<script src="js/engine.js?v=2026102323"></script>
+<script src="js/srs2.js?v=2026102323"></script>
+<script src="js/mission.js?v=2026102323"></script>
+<script src="js/pyrunner.js?v=2026102323"></script>
+<script src="js/pyai.js?v=2026102323"></script>
+<script src="js/jobready.js?v=2026102323"></script>
+<script src="js/gen.js?v=2026102323"></script>
+<script src="js/goalmap.js?v=2026102323"></script>
 
-<script src="js/quiz.js?v=2026092004"></script>
-<script src="js/playground.js?v=2026092004"></script>
-<script src="js/certificate.js?v=2026092602"></script>
-<script src="js/search.js?v=2026092004"></script>
+<script src="js/quiz.js?v=2026102323"></script>
+<script src="js/playground.js?v=2026102323"></script>
+<script src="js/certificate.js?v=2026102323"></script>
+<script src="js/search.js?v=2026102323"></script>
 
-<script src="js/pages/habit.js?v=2026092004"></script>
-<script src="js/pages/dashboard.js?v=2026092802"></script>
-<script src="js/pages/course.js?v=2026092004"></script>
-<script src="js/pages/lesson.js?v=2026092004"></script>
-<script src="js/pages/english.js?v=2026092004"></script>
-<script src="js/pages/books.js?v=2026092102"></script>
-<script src="js/pages/books2.js?v=2026092004"></script>
-<script src="js/pages/speaking.js?v=2026092004"></script>
-<script src="js/pages/bbc.js?v=2026092004"></script>
-<script src="js/pages/writing.js?v=2026092004"></script>
-<script src="js/pages/goal.js?v=2026092004"></script>
-<script src="js/pages/roadmap.js?v=2026092004"></script>
-<script src="js/pages/plan.js?v=2026092004"></script>
-<script src="js/pages/datacamp.js?v=2026092004"></script>
-<script src="js/pages/quick.js?v=2026092004"></script>
-<script src="js/pages/career.js?v=2026092004"></script>
-<script src="js/pages/misc.js?v=2026092004"></script>
-<script src="js/pages/profile.js?v=2026092004"></script>
-<script src="js/pages/copybook.js?v=2026092004"></script>
-<script src="js/pages/dua.js?v=2026092110"></script>
-<script src="js/pages/week.js?v=2026092703"></script>
-<script src="js/pages/today.js?v=2026092703"></script>
-<script src="js/pages/review.js?v=2026092004"></script>
-<script src="js/pages/practice.js?v=2026092004"></script>
-<script src="js/pages/projects.js?v=2026092004"></script>
-<script src="js/pages/analytics.js?v=2026092801"></script>
-<script src="js/pages/chat.js?v=2026092004"></script>
-<script src="js/pages/movies.js?v=2026092102"></script>
-<script src="js/pages/flash.js?v=2026092004"></script>
-<script src="js/pages/etch.js?v=2026092004"></script>
+<script src="js/pages/habit.js?v=2026102323"></script>
+<script src="js/pages/dashboard.js?v=2026102323"></script>
+<script src="js/pages/course.js?v=2026102323"></script>
+<script src="js/pages/lesson.js?v=2026102323"></script>
+<script src="js/pages/english.js?v=2026102323"></script>
+<script src="js/pages/books.js?v=2026102323"></script>
+<script src="js/pages/books2.js?v=2026102323"></script>
+<script src="js/pages/speaking.js?v=2026102323"></script>
+<script src="js/pages/bbc.js?v=2026102323"></script>
+<script src="js/pages/writing.js?v=2026102323"></script>
+<script src="js/pages/goal.js?v=2026102323"></script>
+<script src="js/pages/roadmap.js?v=2026102323"></script>
+<script src="js/pages/plan.js?v=2026102323"></script>
+<script src="js/pages/datacamp.js?v=2026102323"></script>
+<script src="js/pages/quick.js?v=2026102323"></script>
+<script src="js/pages/career.js?v=2026102323"></script>
+<script src="js/pages/misc.js?v=2026102323"></script>
+<script src="js/pages/profile.js?v=2026102323"></script>
+<script src="js/pages/copybook.js?v=2026102323"></script>
+<script src="js/pages/dua.js?v=2026102323"></script>
+<script src="js/pages/week.js?v=2026102323"></script>
+<script src="js/pages/today.js?v=2026102323"></script>
+<script src="js/pages/review.js?v=2026102323"></script>
+<script src="js/pages/practice.js?v=2026102323"></script>
+<script src="js/pages/projects.js?v=2026102323"></script>
+<script src="js/pages/analytics.js?v=2026102323"></script>
+<script src="js/pages/chat.js?v=2026102323"></script>
+<script src="js/pages/movies.js?v=2026102323"></script>
+<script src="js/pages/flash.js?v=2026102323"></script>
+<script src="js/pages/etch.js?v=2026102323"></script>
 
-<script src="js/app.js?v=2026092802"></script>
+<script src="js/pages/mission.js?v=2026102323"></script>
+<script src="js/pages/mission-run.js?v=2026102323"></script>
+<script src="js/pages/pyai.js?v=2026102323"></script>
+<script src="js/pages/jobready.js?v=2026102323"></script>
+<script src="js/app.js?v=2026102323"></script>
 </body>
 </html>

@@ -1,9 +1,8 @@
 /* ==========================================================================
-   GET /api/ctrl/state — o'quvchining bulutdagi holati (xodimlar, FAQAT o'qish)
+   GET /api/ctrl/state — o'quvchining bulutdagi holati (controller, FAQAT o'qish)
    --------------------------------------------------------------------------
-   controller, teacher — to'liq holat (maqsad doskasi panelda chizilmaydi).
-   english            — FILTRLANGAN holat: Python/DataCamp/coding qismlari
-                        serverda olib tashlanadi (L.filterStateForRole).
+   Faqat controller (monitoring). teacher / english rollari va ular uchun
+   filtrlangan ko'rinish 2026-10 da olib tashlangan.
    Yozish yo'q: xodim o'quvchi progressini o'zgartira olmaydi.
    ========================================================================== */
 'use strict';
@@ -17,7 +16,6 @@ module.exports = async function (req, res) {
   if (!L.can(role, 'state')) return L.json(res, role ? 403 : 401, { error: role ? 'role' : 'auth' });
   const raw = await L.store.get('uzla:state');
   const doc = raw ? JSON.parse(raw) : { rev: 0, savedAt: 0, state: null };
-  doc.state = L.filterStateForRole(doc.state, role);
   doc.role = role;
   res.setHeader('Cache-Control', 'no-store');
   return L.json(res, 200, doc);

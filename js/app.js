@@ -26,6 +26,7 @@
     books:      { render: function () { return PageBooks(); },      nav: 'books', mount: function () { PageBooks.mount(); } },
     datacamp:   { render: function () { return PageDataCamp(); },   nav: 'datacamp' },
     quick:      { render: function () { return PageQuick(); },      nav: 'course', mount: function () { PageQuick.mount(); } },
+    jobready:   { render: function () { return PageJobReady(); },  nav: 'course' },   // Job Ready dasturi (kurslar ichida)
     career:     { render: function () { return PageCareer(); },     nav: 'career', mount: function () { if (PageCareer.mount) PageCareer.mount(); } },
     settings:   { render: function () { return PageSettings(); },   nav: 'settings', mount: function () { PageSettings.mount(); } },
     profile:    { render: function () { return PageProfile(); },    nav: 'profile',  mount: function () { PageProfile.mount(); } },
@@ -116,6 +117,9 @@
     if (parts[0] === 'chat') return { name: 'comm', tab: 'messages', sub: parts[1] || 'controller' };
     if (parts[0] === 'assignments') return { name: 'comm', tab: 'assignments', sub: '' };
     if (parts[0] === 'notifications') return { name: 'comm', tab: 'notifications', sub: '' };
+    // #/mission/... — IELTS Mission (yo'l va so'rov qatori o'zi tahlil qiladi) · #/pyai/... — Python & AI yo'li
+    if (parts[0] === 'mission') return { name: 'mission', path: h.slice(8) };
+    if (parts[0] === 'pyai') return { name: 'pyai', path: h.slice(5) };
     if (ROUTES[parts[0]]) return { name: parts[0] };
     return { name: 'dashboard' };
   }
@@ -298,6 +302,8 @@
         : r.name === 'roadmap' ? (r.tab === 'map' ? 'roadmap' : 'roadmap/' + r.tab)
         : r.name === 'bookReading' ? 'books/' + (r.track === 'religious' ? 'd' : r.track === 'history' ? 't' : 'r') + r.num
         : r.name === 'bookListening' ? 'books/l' + r.num
+        : r.name === 'mission' ? 'mission' + (r.path ? '/' + r.path : '')
+        : r.name === 'pyai' ? 'pyai' + (r.path ? '/' + r.path : '')
         : r.name;
 
       var content = $('#content');
@@ -407,10 +413,26 @@
       } else if (r.name === 'bookListening') {
         content.innerHTML = PageBookListening(r.num);
         PageBookListening.mount();
+      } else if (r.name === 'mission' && window.PageMission) {
+        content.innerHTML = PageMission(r.path);
+        PageMission.mount(r.path);
+      } else if (r.name === 'pyai' && window.PagePyAI) {
+        content.innerHTML = PagePyAI(r.path);
+        PagePyAI.mount(r.path);
       } else {
         var route = ROUTES[r.name] || ROUTES.dashboard;
         content.innerHTML = route.render();
         if (route.mount) route.mount();
+      }
+      /* Coding — Python, DataCamp va Python & AI — Job Ready dasturi ichida: qaytish havolasi */
+      if (/^((python|datacamp|pyai)(\/|$)|lesson\/)/.test(currentRoute) && window.PageJobReady) {
+        var pg = content.querySelector('.page');
+        if (pg) pg.insertAdjacentHTML('afterbegin', '<button class="link-btn jr-crumb" data-go="jobready">← Job Ready: Python & AI Engineer</button>');
+      }
+      /* English, Speaking, BBC, Writing, Quick Repeat — IELTS Mission ichida: qaytish havolasi */
+      if (/^((english|speaking|writing|bbc|quick)(\/|$)|eng-skill\/)/.test(currentRoute) && window.PageMission) {
+        var pgE = content.querySelector('.page');
+        if (pgE) pgE.insertAdjacentHTML('afterbegin', '<button class="link-btn jr-crumb" data-go="mission">← IELTS Mission</button>');
       }
 
       App.refreshChrome();
@@ -577,10 +599,12 @@
       var items = '';
       g[2].forEach(function (item) {
         var on = currentRoute === item[0] ||
-          (item[0] === 'course' && /^(speaking|writing|bbc\/|writing\/|quick|python|lesson\/|datacamp|english|eng-skill\/)/.test(currentRoute)) ||
+          (item[0] === 'course' && /^(mission(\/|$)|pyai(\/|$)|jobready|speaking|writing|bbc\/|writing\/|quick|python|lesson\/|datacamp|english|eng-skill\/)/.test(currentRoute)) ||
           (item[0] === 'cheatsheet' && /^cheatsheet\//.test(currentRoute)) ||
           (item[0] === 'review' && /^review\//.test(currentRoute)) ||
           (item[0] === 'comm' && /^comm\//.test(currentRoute)) ||
+          (item[0] === 'mission' && /^mission(\/|$)/.test(currentRoute)) ||
+          (item[0] === 'pyai' && /^pyai(\/|$)/.test(currentRoute)) ||
           (item[0] === 'notes' && /^notes\//.test(currentRoute)) ||
           (item[0] === 'roadmap' && /^roadmap\//.test(currentRoute)) ||
           (item[0] === 'flash' && /^flash\//.test(currentRoute)) ||

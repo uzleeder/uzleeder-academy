@@ -1,6 +1,8 @@
 /* ==========================================================================
-   Ctrl (Comm) — xodimlar bilan aloqa: chat, nazorat sessiyasi, topshiriqlar,
-   feedback, writing/speaking tekshiruvi, bildirishnomalar (o'quvchi tomoni)
+   Ctrl (Comm) — nazoratchi (controller) bilan aloqa: chat, nazorat sessiyasi,
+   bildirishnomalar + eski topshiriq/feedback/tekshiruv ARXIVI (o'quvchi tomoni).
+   teacher / english rollari 2026-10 da olib tashlangan: ularga xabar yoki
+   ish yuborilmaydi; eski yozuvlar faqat o'qish uchun ko'rinadi.
    --------------------------------------------------------------------------
    Server: /api/ctrl/io (Vercel). Mahalliy static serverda API yo'q — modul
    "off" holatida turadi, sahifalar buni halol ko'rsatadi (soxta holat yo'q).
@@ -18,7 +20,8 @@
 
   var feed = null, status = 'off', lastHb = 0, hbTimer = null, pollTimer = null, watchers = [], sentEv = {};
   var FAST = 5000, SLOW = 60000;
-  var ROLES = ['controller', 'teacher', 'english'];
+  var ROLES = ['controller'];               // faol xodim roli (teacher / english — olib tashlangan)
+  var RETIRED = ['teacher', 'english'];     // faqat arxiv (eski suhbat va yozuvlar)
 
   function api(method, body) {
     return fetch('/api/ctrl/io', { method: method, credentials: 'same-origin', headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined })
@@ -68,6 +71,10 @@
 
   var Ctrl = {
     ROLES: ROLES,
+    RETIRED: RETIRED,
+    isRetired: function (r) { return RETIRED.indexOf(r) >= 0; },
+    /* Eski rollar bilan suhbatlar — faqat o'qish */
+    archive: function () { return feed && feed.archive ? feed.archive : {}; },
     /* API faqat https (Vercel) da bor; localhost/file — yo'q */
     available: function () { return location.protocol === 'https:'; },
     status: function () { return status; },
@@ -102,8 +109,6 @@
     /* --- writing / speaking tekshiruvi --- */
     reviews: function () { return feed && feed.reviews ? feed.reviews.slice().sort(function (a, b) { return b.updatedAt - a.updatedAt; }) : []; },
     reviewFor: function (kind, ref) { return Ctrl.reviews().filter(function (r) { return r.kind === kind && r.ref === ref; })[0] || null; },
-    submitReview: function (r) { return api('POST', { op: 'review', action: 'submit', r: r }).then(poll); },
-    reviseReview: function (id, text) { return api('POST', { op: 'review', action: 'revise', r: { id: id, text: text } }).then(poll); },
     /* --- bildirishnomalar --- */
     notif: function () { return feed && feed.notif ? feed.notif.slice().reverse() : []; },
     notifUnread: function () { return Ctrl.notif().filter(function (n) { return !n.read; }).length; },

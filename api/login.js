@@ -4,8 +4,9 @@
      → 200 { ok: false, choose: [roles…] }        bir nechta ish maydoni — tanlash kerak
      → 401 { error: 'auth' } | 429 | 500 env
    --------------------------------------------------------------------------
-   YAGONA KIRISH NUQTASI — barcha rollar shu yerdan: student · controller ·
-   teacher · english. Foydalanuvchi rol tanlamaydi: rol autentifikatsiya
+   YAGONA KIRISH NUQTASI — barcha rollar shu yerdan: student · controller.
+   (teacher / english 2026-10 da olib tashlangan — ularning logini ishlamaydi.)
+   Foydalanuvchi rol tanlamaydi: rol autentifikatsiya
    qilingan hisobdan aniqlanadi (login nomi qaysi rolning hisobiga to'g'ri
    kelsa va parol AYNAN o'sha rolning hash'iga mos kelsa). Hamma rollar
    hisoblanadi — javob vaqti "qaysi login mavjud"ni aytib qo'ymasin.
@@ -24,7 +25,7 @@ const L = require('./_lib');
 
 const MAX_FAILS = 10;
 const WINDOW_SEC = 15 * 60;
-const WORKSPACE = { learner: '/', controller: '/controller', teacher: '/controller', english: '/controller' };
+const WORKSPACE = { learner: '/', controller: '/controller' };
 
 module.exports = async function (req, res) {
   if (req.method !== 'POST') return L.json(res, 405, { error: 'method' });

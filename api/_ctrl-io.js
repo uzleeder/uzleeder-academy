@@ -1,32 +1,35 @@
 /* ==========================================================================
-   /api/ctrl/io — xodimlar va o'quvchi o'rtasidagi BUTUN aloqa (bitta funksiya)
+   /api/ctrl/io — controller va o'quvchi o'rtasidagi BUTUN aloqa (bitta funksiya)
    --------------------------------------------------------------------------
-   Kim: o'quvchi (uzla_session) yoki xodim (uzla_ctrl: controller | teacher |
-   english). Polling (5–60 s) — WebSocket yo'q, "deyarli real vaqt".
+   Kim: o'quvchi (uzla_session) yoki controller (uzla_ctrl, role=controller).
+   Polling (5–60 s) — WebSocket yo'q, "deyarli real vaqt".
 
    GET → rolga qarab kesilgan holat:
      { role, now, roles, status, controllerOnline, staffOnline, seen,
-       sessions, convs, assignments, feedback, reviews, notif, notes? }
+       sessions, convs, archive, assignments, feedback, reviews, notif, notes?, retired? }
 
    POST { op, ... } — ruxsatlar L.PERMS da (server tekshiradi):
      heartbeat  {route, title, name, lang, events[]}   o'quvchi: qayerdaman
      session    {action: start|pause|resume|finish}    o'quvchi / controller
-     message    {to, text}                              chat (to = rol yoki 'learner')
-     read       {conv}                                  suhbat o'qildi
-     notes      {text}                                  xodimning shaxsiy eslatmasi (o'z roli)
-     assignment {action: create|update|delete, a}       teacher / english
-     astatus    {id, status}                            o'quvchi: in_progress|completed; xodim: istalgan
-     feedback   {action: create|update|delete, f}       teacher / english; controller — faqat private
-     review     {action: submit|revise|feedback|complete|reopen, r}  writing/speaking tekshiruv oqimi
+     message    {text}                                  chat (faqat controller suhbati)
+     read       {}                                      suhbat o'qildi
+     notes      {text}                                  controllerning shaxsiy eslatmasi
+     astatus    {id, status}                            o'quvchi: tarixiy topshiriq holati
+     feedback   {action: create|update|delete, f}       controller — faqat private eslatma
      notif      {action: read, ids[] | all}             bildirishnoma o'qildi
 
-   Bildirishnomalar FAQAT real hodisadan tug'iladi (yangi topshiriq, feedback,
-   xabar, tekshiruv bosqichi, sessiya). Soxta "onlayn" yo'q: onlayn = oxirgi
-   45 soniyada so'rov kelgan.
+   2026-10: teacher / english rollari olib tashlandi. Topshiriq yaratish va
+   writing/speaking "tekshiruvga yuborish" oqimi yo'q — o'rniga o'quvchi
+   ilovasidagi Mission (kunlik reja) va Writing/Speaking Studio (o'z-o'zini
+   baholash). Eski yozuvlar (topshiriq, feedback, tekshiruv, eski rollar bilan
+   chat) O'CHIRILMAYDI: o'quvchiga faqat-o'qish arxivi sifatida qaytadi.
 
-   Kalitlar: uzla:ctrl:status · :sessions · :seen · :chat (controller suhbati,
-   tarixiy nom) · uzla:chat:<rol> · uzla:staff:read · :assignments · :feedback
-   · :reviews · :notif · uzla:ctrl:notes (controller) · uzla:staff:notes:<rol>
+   Bildirishnomalar FAQAT real hodisadan tug'iladi. Soxta "onlayn" yo'q:
+   onlayn = oxirgi 45 soniyada so'rov kelgan.
+
+   Kalitlar: uzla:ctrl:status · :sessions · :seen · :chat (controller suhbati)
+   · uzla:chat:<eski rol> (arxiv) · uzla:staff:read · :assignments · :feedback
+   · :reviews · :notif · uzla:ctrl:notes
    ========================================================================== */
 'use strict';
 const L = require('./_lib');
@@ -38,16 +41,12 @@ const K = {
 };
 const ONLINE_MS = 45 * 1000;
 const LIMITS = { chat: 400, assignments: 300, feedback: 500, reviews: 120, notif: 300, events: 60 };
-const A_TYPES = ['lesson', 'practice', 'quiz', 'review', 'reading', 'listening', 'speaking', 'writing', 'project', 'vocab', 'grammar'];
-const A_COURSES = ['python', 'english', 'datacamp', 'general'];
 const A_STATUS = ['assigned', 'in_progress', 'completed'];
-const ENGLISH_KINDS = /^(english|eng|grammar|vocab|reading|listening|speaking|writing|books|bbc|quiz-eng|assignment)$/;
 
 function id() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 function chatKey(role) { return role === 'controller' ? 'uzla:ctrl:chat' : 'uzla:chat:' + role; }
 function notesKey(role) { return role === 'controller' ? 'uzla:ctrl:notes' : 'uzla:staff:notes:' + role; }
 function str(v, n) { return String(v == null ? '' : v).trim().slice(0, n); }
-function isDate(s) { return /^\d{4}-\d{2}-\d{2}$/.test(s); }
 function isStaff(r) { return L.isStaffRole(r); }
 
 /* Sessiya davomida faol daqiqalar: start/resume → pause/finish oraliqlari */
@@ -66,14 +65,6 @@ async function notify(to, type, title, route, from) {
   const list = await L.getJSON(K.notif, []);
   list.push({ id: id(), at: Date.now(), to: to, type: type, title: str(title, 140), route: str(route, 120), from: from || null, read: false });
   await L.setJSON(K.notif, list.slice(-LIMITS.notif));
-}
-
-/* English roli: faqat ingliz tili ob'ektlari */
-function englishOk(role, obj) {
-  if (role !== 'english') return true;
-  if (obj.course && obj.course !== 'english') return false;
-  if (obj.kind && !ENGLISH_KINDS.test(obj.kind)) return false;
-  return true;
 }
 
 module.exports = async function (req, res) {
@@ -105,20 +96,30 @@ module.exports = async function (req, res) {
       };
     });
     const staffOnline = {}; L.STAFF_ROLES.forEach(r => { staffOnline[r] = !!seen[r] && now - seen[r] < ONLINE_MS; });
+    /* Olib tashlangan rollar bilan eski suhbatlar — o'quvchiga faqat-o'qish arxivi */
+    const archive = {};
+    if (role === 'learner') {
+      for (const r of Object.keys(L.RETIRED_ROLES)) {
+        const msgs = await L.getJSON(chatKey(r), []);
+        if (msgs.length) archive[r] = { msgs: msgs.slice(-200), retired: true };
+      }
+    }
 
     const out = {
       role: role, now: now, roles: await L.staffRolesAvailable(),
       status: Object.assign({ state: 'idle' }, status, { online: !!seen.learner && now - seen.learner < ONLINE_MS }),
       controllerOnline: staffOnline.controller, staffOnline: staffOnline, seen: seen,
-      sessions: (role === 'learner' || role === 'controller') ? sessions.slice(-30).map(s => Object.assign({}, s, { activeMin: activeMinutes(s, now) }))
-        : sessions.filter(s => !s.endedAt).map(s => ({ id: s.id, startedAt: s.startedAt, activeMin: activeMinutes(s, now) })),
-      convs: convs,
-      assignments: assignments.filter(a => role === 'learner' ? true : role === 'english' ? a.course === 'english' : true),
-      /* Feedback: o'quvchi faqat student-visible; xodim — hamma student-visible + O'Z rolining private eslatmalari */
-      feedback: feedback.filter(f => role === 'learner' ? f.visibility === 'student' : (f.visibility === 'student' || f.role === role) && (role !== 'english' || ENGLISH_KINDS.test((f.activity || {}).kind || 'assignment'))),
-      reviews: reviews.filter(r => role !== 'controller' && (role !== 'english' || r.kind !== 'project')),
+      sessions: sessions.slice(-30).map(s => Object.assign({}, s, { activeMin: activeMinutes(s, now) })),
+      convs: convs, archive: archive,
+      /* Tarixiy topshiriqlar (eski o'qituvchi rollari bergan) — o'quvchi ko'radi va yopadi */
+      assignments: role === 'learner' ? assignments : [],
+      /* Feedback: o'quvchi faqat student-visible (arxiv); controller — student-visible + o'zining private eslatmalari */
+      feedback: feedback.filter(f => role === 'learner' ? f.visibility === 'student' : (f.visibility === 'student' || f.role === role)),
+      /* Writing/speaking tekshiruv arxivi — faqat o'quvchiga, faqat o'qish */
+      reviews: role === 'learner' ? reviews : [],
       notif: notif.filter(n => n.to === role).slice(-100)
     };
+    if (role === 'controller') out.retired = await L.retiredAccounts();
     if (isStaff(role)) out.notes = (await L.store.get(notesKey(role))) || '';
     return L.json(res, 200, out);
   }
@@ -209,56 +210,18 @@ module.exports = async function (req, res) {
     return L.json(res, 200, { ok: true });
   }
 
-  /* ---------------- topshiriqlar ---------------- */
-  if (op === 'assignment') {
-    const action = String(body.action || ''), a = body.a || {};
-    const list = await L.getJSON(K.assignments, []);
-    if (action === 'create' || action === 'update') {
-      const rec = {
-        type: A_TYPES.indexOf(a.type) >= 0 ? a.type : 'lesson',
-        title: str(a.title, 120), desc: str(a.desc, 2000),
-        course: A_COURSES.indexOf(a.course) >= 0 ? a.course : 'general',
-        route: str(a.route, 120).replace(/^#\/?/, ''),
-        priority: /^(low|normal|high)$/.test(a.priority) ? a.priority : 'normal',
-        due: isDate(String(a.due || '')) ? a.due : ''
-      };
-      if (!rec.title) return L.json(res, 400, { error: 'title' });
-      if (!englishOk(role, rec)) return L.json(res, 403, { error: 'scope' });
-      if (action === 'create') {
-        const full = Object.assign({ id: id(), by: role, to: 'learner', status: 'assigned', createdAt: now, completedAt: null }, rec);
-        list.push(full);
-        await L.setJSON(K.assignments, list.slice(-LIMITS.assignments));
-        await notify('learner', 'assignment', full.title, 'comm/assignments', role);
-        return L.json(res, 200, { ok: true, assignment: full });
-      }
-      const cur = list.filter(x => x.id === a.id)[0];
-      if (!cur) return L.json(res, 404, { error: 'id' });
-      if (cur.by !== role) return L.json(res, 403, { error: 'owner' });
-      Object.assign(cur, rec, { updatedAt: now });
-      await L.setJSON(K.assignments, list);
-      return L.json(res, 200, { ok: true, assignment: cur });
-    }
-    if (action === 'delete') {
-      const cur = list.filter(x => x.id === a.id)[0];
-      if (!cur) return L.json(res, 404, { error: 'id' });
-      if (cur.by !== role) return L.json(res, 403, { error: 'owner' });
-      await L.setJSON(K.assignments, list.filter(x => x.id !== a.id));
-      return L.json(res, 200, { ok: true });
-    }
-    return L.json(res, 400, { error: 'action' });
-  }
-
+  /* ---------------- tarixiy topshiriq holati (o'quvchi) ---------------- */
   if (op === 'astatus') {
     const status = String(body.status || '');
     if (A_STATUS.indexOf(status) < 0) return L.json(res, 400, { error: 'status' });
     const list = await L.getJSON(K.assignments, []);
     const cur = list.filter(x => x.id === body.id)[0];
     if (!cur) return L.json(res, 404, { error: 'id' });
-    if (!englishOk(role, cur)) return L.json(res, 403, { error: 'scope' });
     cur.status = status; cur.updatedAt = now;
     cur.completedAt = status === 'completed' ? now : null;
     await L.setJSON(K.assignments, list);
-    if (role === 'learner' && status === 'completed') await notify(cur.by, 'assignment_done', cur.title, 'assignments', 'learner');
+    /* Faqat FAOL xodimga xabar — olib tashlangan rolga bildirishnoma yozilmaydi */
+    if (status === 'completed' && isStaff(cur.by)) await notify(cur.by, 'assignment_done', cur.title, 'assignments', 'learner');
     return L.json(res, 200, { ok: true, assignment: cur });
   }
 
@@ -278,8 +241,7 @@ module.exports = async function (req, res) {
         } : null
       };
       if (!rec.text && !rec.fb) return L.json(res, 400, { error: 'empty' });
-      if (role === 'controller' && rec.visibility !== 'private') return L.json(res, 403, { error: 'scope' });
-      if (!englishOk(role, { kind: rec.activity.kind })) return L.json(res, 403, { error: 'scope' });
+      if (rec.visibility !== 'private') return L.json(res, 403, { error: 'scope' });   // controller: faqat shaxsiy eslatma
       if (action === 'create') {
         const full = Object.assign({ id: id(), by: role, role: role, at: now }, rec);
         list.push(full);
@@ -300,66 +262,6 @@ module.exports = async function (req, res) {
       if (cur.by !== role) return L.json(res, 403, { error: 'owner' });
       await L.setJSON(K.feedback, list.filter(x => x.id !== f.id));
       return L.json(res, 200, { ok: true });
-    }
-    return L.json(res, 400, { error: 'action' });
-  }
-
-  /* ---------------- writing / speaking tekshiruv oqimi ----------------
-     submitted → reviewed → revised → reviewed2 → completed
-     O'quvchi: submit, revise. Xodim: feedback (reviewed/reviewed2), complete, reopen. */
-  if (op === 'review') {
-    const action = String(body.action || ''), r = body.r || {};
-    const list = await L.getJSON(K.reviews, []);
-    const kindOk = /^(writing|speaking)$/.test(r.kind || '');
-    if (action === 'submit') {
-      if (role !== 'learner') return L.json(res, 403, { error: 'role' });
-      if (!kindOk) return L.json(res, 400, { error: 'kind' });
-      const text = str(r.text, 12000);
-      if (!text) return L.json(res, 400, { error: 'empty' });
-      const rec = { id: id(), kind: r.kind, ref: str(r.ref, 40), title: str(r.title, 120), route: str(r.route, 120).replace(/^#\/?/, ''),
-        stage: 'submitted', createdAt: now, updatedAt: now, text: text, history: [{ stage: 'submitted', at: now, by: 'learner', text: text }] };
-      list.push(rec);
-      await L.setJSON(K.reviews, list.slice(-LIMITS.reviews));
-      await notify('teacher', 'review', rec.title, 'reviews', 'learner');
-      await notify('english', 'review', rec.title, 'reviews', 'learner');
-      return L.json(res, 200, { ok: true, review: rec });
-    }
-    const cur = list.filter(x => x.id === r.id)[0];
-    if (!cur) return L.json(res, 404, { error: 'id' });
-    if (action === 'revise') {
-      if (role !== 'learner') return L.json(res, 403, { error: 'role' });
-      if (cur.stage !== 'reviewed') return L.json(res, 409, { error: 'stage' });
-      const text = str(r.text, 12000); if (!text) return L.json(res, 400, { error: 'empty' });
-      cur.stage = 'revised'; cur.text = text; cur.updatedAt = now;
-      cur.history.push({ stage: 'revised', at: now, by: 'learner', text: text });
-      await L.setJSON(K.reviews, list);
-      await notify(cur.reviewer || 'teacher', 'review', cur.title, 'reviews', 'learner');
-      return L.json(res, 200, { ok: true, review: cur });
-    }
-    if (!isStaff(role) || role === 'controller') return L.json(res, 403, { error: 'role' });
-    if (action === 'feedback') {
-      if (cur.stage !== 'submitted' && cur.stage !== 'revised') return L.json(res, 409, { error: 'stage' });
-      const fb = r.fb || {};
-      const entry = { stage: cur.stage === 'submitted' ? 'reviewed' : 'reviewed2', at: now, by: role,
-        fb: { strengths: str(fb.strengths, 1500), weaknesses: str(fb.weaknesses, 1500), corrections: str(fb.corrections, 4000), recommendations: str(fb.recommendations, 1500), next: str(fb.next, 600) },
-        result: /^(completed|incomplete)$/.test(r.result || '') ? r.result : null, band: typeof r.band === 'number' ? r.band : null };
-      cur.stage = entry.stage; cur.reviewer = role; cur.updatedAt = now; cur.history.push(entry);
-      /* Ikkinchi tekshiruvdan keyin — tugallangan. Speaking: xodim natijani darhol yopishi mumkin. */
-      if (entry.stage === 'reviewed2' || (cur.kind === 'speaking' && entry.result)) { cur.stage = 'completed'; cur.completedAt = now; cur.history.push({ stage: 'completed', at: now, by: role }); }
-      await L.setJSON(K.reviews, list);
-      await notify('learner', 'review', cur.title, 'comm/feedback', role);
-      return L.json(res, 200, { ok: true, review: cur });
-    }
-    if (action === 'complete') {
-      cur.stage = 'completed'; cur.completedAt = now; cur.updatedAt = now; cur.reviewer = role; cur.history.push({ stage: 'completed', at: now, by: role });
-      await L.setJSON(K.reviews, list);
-      await notify('learner', 'review', cur.title, 'comm/feedback', role);
-      return L.json(res, 200, { ok: true, review: cur });
-    }
-    if (action === 'reopen') {
-      cur.stage = 'reviewed'; cur.completedAt = null; cur.updatedAt = now; cur.history.push({ stage: 'reopened', at: now, by: role });
-      await L.setJSON(K.reviews, list);
-      return L.json(res, 200, { ok: true, review: cur });
     }
     return L.json(res, 400, { error: 'action' });
   }

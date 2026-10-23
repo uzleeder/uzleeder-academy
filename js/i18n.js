@@ -2417,4 +2417,13 @@
     if (Array.isArray(obj)) return obj;
     return obj[lang] || obj.uz || obj.en || '';
   };
+
+  /* Qo'shimcha matnlar (alohida faylda, masalan js/i18n-2026.js) — mavjud
+     kalitni ham ustidan yozadi. Bitta 190 KB faylni har safar tahrirlamaslik uchun. */
+  window.I18N_ADD = function (dict) {
+    Object.keys(dict || {}).forEach(function (lang) {
+      STRINGS[lang] = STRINGS[lang] || {};
+      Object.keys(dict[lang]).forEach(function (k) { STRINGS[lang][k] = dict[lang][k]; });
+    });
+  };
 })();

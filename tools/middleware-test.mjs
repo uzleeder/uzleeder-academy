@@ -13,10 +13,10 @@ async function run(name, r, want) {
 }
 const exp = Date.now() + 3600000;
 const learner = 'uzla_session=' + token({ u: 'max', exp });
-const staff = 'uzla_ctrl=' + token({ u: 'teacher', role: 'teacher', exp });
+const staff = 'uzla_ctrl=' + token({ u: 'controller', role: 'controller', exp });
 const expired = 'uzla_session=' + token({ u: 'max', exp: Date.now() - 1 });
 const forged = 'uzla_session=' + token({ u: 'max', exp }, 'wrong');
-const swapped = 'uzla_session=' + token({ u: 'teacher', role: 'teacher', exp });
+const swapped = 'uzla_session=' + token({ u: 'controller', role: 'controller', exp });
 let ok = true;
 ok &= await run('no cookie, page → login', req('/', ''), '302→/login');
 ok &= await run('no cookie, api → 401', req('/api/state', '', 'application/json'), '401');
@@ -32,4 +32,10 @@ ok &= await run('/controller open', req('/controller', ''), 'pass');
 ok &= await run('/staff open (rewrite → controller.html)', req('/staff', ''), 'pass');
 ok &= await run('/api/ctrl/io open at edge (function checks role)', req('/api/ctrl/io', '', 'application/json'), 'pass');
 ok &= await run('login open', req('/login', ''), 'pass');
+/* 2026-10: teacher / english olib tashlangan */
+const retired = 'uzla_ctrl=' + token({ u: 'teacher', role: 'teacher', exp });
+ok &= await run('retired teacher cookie → js blocked (401)', req('/js/app.js', retired, '*/*'), '401');
+ok &= await run('retired teacher cookie → page → login', req('/', retired), '302→/login');
+ok &= await run('/teacher no longer open → login', req('/teacher', ''), '302→/login');
+ok &= await run('/english no longer open → login', req('/english', ''), '302→/login');
 console.log(ok ? '\nALL OK' : '\nFAILED'); process.exit(ok ? 0 : 1);

@@ -76,6 +76,22 @@
     var started = done > 0;
 
     var h = '<div class="page stagger dash">';
+    /* 2026-10: IELTS Mission va Python & AI yo'li — bugungi holat (faqat saqlangan ma'lumot) */
+    if (window.Mission && window.PyAI) {
+      try {
+        var mv = Mission.day(Store.dateKey()), mDone = mv.tasks.filter(function (x) { return x.state.st === 'done'; }).length;
+        var mIdx = Mission.dayIndex(), msDue = Mission.errors.due().length;
+        h += '<div class="ms-dashstrip">' +
+          '<button class="ms-dcard" data-go="mission"><span class="ms-ic">' + IC.target + '</span><span><b>IELTS Mission</b><small>' + esc(mIdx < 1 ? L({ uz: 'Boshlanishiga ' + (1 - mIdx) + ' kun · diagnostika ochiq', en: 'Starts in ' + (1 - mIdx) + ' day(s) · diagnostics open' }) : L({ uz: mIdx + '-kun · ' + mDone + '/' + mv.tasks.length + ' vazifa · ' + mv.planned + ' daq reja', en: 'Day ' + mIdx + ' · ' + mDone + '/' + mv.tasks.length + ' tasks · ' + mv.planned + ' min planned' })) + (msDue ? ' · ' + esc(L({ uz: msDue + ' xato takrori', en: msDue + ' error reviews' })) : '') + '</small></span>' + IC.arrowR + '</button>' +
+          (function () {
+            /* Job Ready — Coding — Python + DataCamp + Python & AI bitta dasturda */
+            var js = window.JobReady ? JobReady.nextSteps()[0] : null, jst = window.JobReady ? JobReady.status() : null;
+            return '<button class="ms-dcard" data-go="' + (js ? js.route : 'jobready') + '"><span class="ms-ic">' + IC.rocket + '</span><span><b>Job Ready</b><small>' +
+              esc(js ? L({ uz: 'Keyingi: ', en: 'Next: ' }) + L(js.title) : L({ uz: 'Hamma qadamlar bajarilgan', en: 'All steps done' })) +
+              (jst ? ' · ' + esc(L({ uz: 'mezonlar ' + jst.met + '/' + jst.of, en: 'criteria ' + jst.met + '/' + jst.of })) : '') + '</small></span>' + IC.arrowR + '</button>';
+          })() + '</div>';
+      } catch (e) {}
+    }
 
     /* --- Boshqaruv markazi: qayerdaman · bugun nima · davom etish -------- */
     var key = Store.dateKey();

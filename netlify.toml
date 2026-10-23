@@ -1,0 +1,22 @@
+[build]
+command = "node build/netlify.cjs"
+publish = "dist"
+functions = "netlify/functions"
+[build.environment]
+NODE_VERSION = "24"
+[functions]
+node_bundler = "esbuild"
+included_files = ["api/**"]
+[[edge_functions]]
+function = "auth"
+path = "/*"
+[[redirects]]
+from = "/staff"
+to = "/controller.html"
+status = 200
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Cache-Control = "private, no-store"

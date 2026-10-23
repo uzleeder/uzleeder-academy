@@ -24,3 +24,7 @@ npm-debug.log*
 # Brand video kadrlari (oraliq, ~115 MB) — MP4 yetarli
 brand/out/frames/
 brand/out/tour
+
+# Netlify
+.netlify/
+dist/

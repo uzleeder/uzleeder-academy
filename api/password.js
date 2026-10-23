@@ -2,7 +2,7 @@
    POST /api/password   { current, next }  →  200 {ok, role}  |  400  |  401  |  429
    --------------------------------------------------------------------------
    HAR BIR HISOB O'Z PAROLINI O'ZI ALMASHTIRADI — o'quvchi ham, xodim
-   (controller / teacher / english) ham shu bitta endpoint orqali. Kim ekani
+   (controller) ham shu bitta endpoint orqali. Kim ekani
    cookie'dagi imzolangan tokendan (rol) olinadi: o'quvchi → uzla:auth:hash,
    xodim → o'z rolining hash kaliti. Boshqa hisobning parolini o'zgartirib
    bo'lmaydi. Talablar:

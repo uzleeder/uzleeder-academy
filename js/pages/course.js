@@ -11,18 +11,156 @@
      #/course — ikkala kurs bitta joyda: Coding (Python) va English (IELTS).
      Bittasini tanlasang — o'sha kursga kirasan. Har kartada bugungi kun,
      progress va "kirish" tugmasi. Python kursining o'zi #/python da.     */
+  /* Karta yasovchi (Kurslar va Job Ready sahifalari uchun umumiy) */
+  function progCard(cls, go, ic, tag, title, desc, stats, p, next) {
+    return '<button class="cp-card ' + cls + '" data-go="' + go + '"><div class="cp-top"><span class="cp-ic">' + ic + '</span><span class="cp-tag">' + esc(tag) + '</span></div>' +
+      '<h2>' + esc(title) + '</h2><p>' + esc(desc) + '</p><div class="cp-stats">' + stats + '</div>' +
+      '<div class="bar"><i style="width:' + Math.max(0, Math.min(100, p)) + '%"></i></div>' +
+      (next ? '<div class="cp-next"><span>' + esc(tr('coursesNext')) + '</span><b>' + esc(next) + '</b></div>' : '') +
+      '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div></button>';
+  }
+
+  /* Job Ready ichidagi kurslar kartalari: Coding — Python · DataCamp · Python & AI */
+  window.CourseCards = {
+    python: function () {
+      var pyTotal = COURSE.length, pyDone = Store.doneCount(), pyNext = App.firstOpenDay(), pyLesson = null;
+      COURSE.forEach(function (c) { if (c.day === pyNext) pyLesson = c; });
+      var h = '';
+      h += '<button class="cp-card py" data-go="python">' +
+        '<div class="cp-top"><span class="cp-ic">' + IC.code + '</span>' +
+          '<span class="cp-tag">' + esc(tr('coursesCodingTag')) + '</span></div>' +
+        '<h2>' + esc(tr('coursesCoding')) + '</h2>' +
+        '<p>' + esc(tr('coursesCodingD')) + '</p>' +
+        '<div class="cp-stats">' +
+          '<span><b>' + pyDone + '</b>/' + pyTotal + ' ' + esc(tr('days')) + '</span>' +
+          '<span><b>' + Math.round(pyDone / pyTotal * 100) + '%</b></span>' +
+          '<span>' + esc(tr('coursesSched')) + ': ' + esc(tr('coursesDaily')) + ' · 20-sen → 19-okt</span></div>' +
+        '<div class="bar"><i style="width:' + (pyDone / pyTotal * 100) + '%"></i></div>' +
+        (pyLesson ? '<div class="cp-next"><span>' + esc(tr('coursesNext')) + '</span><b>' + esc(tr('day')) + ' ' + pyNext + ' · ' + esc(L(pyLesson.title)) + '</b></div>' : '') +
+        '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
+        '</button>';
+      return h;
+    },
+    datacamp: function () {
+      var h = '';
+      if (window.DataCamp) {
+        var dcCur = DataCamp.current(), dcDone = DataCamp.doneCount(), dcTot = DataCamp.total(), dcOver = DataCamp.overdue().length;
+        h += '<button class="cp-card dc" data-go="datacamp">' +
+          '<div class="cp-top"><span class="cp-ic">' + IC.layers + '</span><span class="cp-tag">' + esc(tr('coursesDCTag')) + '</span></div>' +
+          '<h2>' + esc(tr('coursesDC')) + '</h2><p>' + esc(tr('coursesDCD')) + '</p>' +
+          '<div class="cp-stats"><span><b>' + dcDone + '</b>/' + dcTot + ' ' + esc(tr('dcProgress')).toLowerCase() + '</span><span><b>' + DataCamp.pct() + '%</b></span>' + (dcOver ? '<span class="red">' + esc(tr('dcOverdue', { n: dcOver })) + '</span>' : '<span>' + esc(tr('dcOnePerDay')) + '</span>') + '</div>' +
+          '<div class="bar"><i style="width:' + DataCamp.pct() + '%"></i></div>' +
+          (dcCur ? '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(tr('dcChapN', { n: dcCur.n })) + ' · ' + esc(dcCur.title) + '</b></div>' : '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(tr('dcAllDone')) + '</b></div>') +
+          '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div></button>';
+      }
+      return h;
+    },
+    pyai: function () {
+      if (!window.PyAI) return '';
+      var lt = function (uz, en) { return L({ uz: uz, en: en }); };
+      var pc = PyAI.courseStatus(), pDone = 0, pTot = 0; pc.modules.forEach(function (x) { pDone += x.s.completed; pTot += x.s.lessons; });
+      var nx = PyAI.nextLesson();
+      return progCard('pa', 'pyai', IC.code, lt('Karyera yo\'li · 10 modul', 'Career path · 10 modules'), 'Python & AI Engineering',
+        lt("Modul 0–9, mashqlar, mahorat tekshiruvi, P1–P5 loyihalar, capstone, portfolio.", 'Modules 0–9, exercises, mastery checks, projects P1–P5, capstone, portfolio.'),
+        '<span><b>' + pDone + '</b>/' + pTot + ' ' + esc(lt('dars', 'lessons')) + '</span><span>' + esc(lt('takror', 'reviews')) + ': <b>' + PyAI.reviewDue().length + '</b></span>',
+        pTot ? pDone / pTot * 100 : 0, nx ? L(nx.lesson.title) : '');
+    },
+    english: function () {
+      var enTotal = ENGLISH.meta.days, enDone = Store.engDoneCount();
+      var enCur = window.EngCal ? EngCal.currentDay() : 0;
+      var enDay = (enCur > 0 && enCur <= enTotal && window.Eng) ? Eng.dayOf(enCur) : null;
+      var enLast = Store.engLastScore();
+      var enOverall = enLast ? Store.engOverall(enLast) : null;
+      var h = '';
+      h += '<button class="cp-card en" data-go="english">' +
+        '<div class="cp-top"><span class="cp-ic">' + IC.globe + '</span>' +
+          '<span class="cp-tag">' + esc(tr('coursesEnglishTag')) + '</span></div>' +
+        '<h2>' + esc(tr('coursesEnglish')) + '</h2>' +
+        '<p>' + esc(tr('coursesEnglishD')) + '</p>' +
+        '<div class="cp-stats">' +
+          '<span><b>' + enDone + '</b>/' + enTotal + ' ' + esc(tr('days')) + '</span>' +
+          '<span><b>' + Math.round(enDone / enTotal * 100) + '%</b></span>' +
+          '<span>' + esc(tr('engOverall')) + ': <b>' + (enOverall !== null ? enOverall.toFixed(1) : '—') + '</b></span></div>' +
+        '<div class="bar"><i style="width:' + (enDone / enTotal * 100) + '%"></i></div>' +
+        (enDay ? '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(tr('day')) + ' ' + enCur + ' · ' + esc(L(enDay.title)) + '</b></div>'
+               : '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(enCur === 0 ? tr('engDaysToStart', { n: EngCal.daysToStart() }) : tr('engExamMode')) + '</b></div>') +
+        '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
+        '</button>';
+      return h;
+    },
+    speaking: function () {
+      var h = '';
+      if (window.SPEAK30) {
+        var spDone = Store.speakDoneCount(), spTotal = SPEAK30.meta.days;
+        var todayKey = Store.dateKey();
+        var spCur = (window.HabitPlan && HabitPlan.inRange(todayKey)) ? (HabitPlan.speakDayOf(todayKey) || 0) : 0;
+        var spDay = spCur ? SPEAK30.days[spCur - 1] : null;
+        h += '<button class="cp-card sp" data-go="speaking">' +
+          '<div class="cp-top"><span class="cp-ic">' + IC.mic + '</span>' +
+            '<span class="cp-tag">' + esc(tr('coursesSpeakingTag')) + '</span></div>' +
+          '<h2>' + esc(tr('coursesSpeaking')) + '</h2>' +
+          '<p>' + esc(tr('coursesSpeakingD')) + '</p>' +
+          '<div class="cp-stats">' +
+            '<span><b>' + spDone + '</b>/' + spTotal + ' ' + esc(tr('days')) + '</span>' +
+            '<span><b>' + Math.round(spDone / spTotal * 100) + '%</b></span>' +
+            '<span>20–30 ' + esc(tr('engMin')) + ' · ' + esc(tr('coursesDaily')) + '</span></div>' +
+          '<div class="bar"><i style="width:' + (spDone / spTotal * 100) + '%"></i></div>' +
+          (spDay ? '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(tr('day')) + ' ' + spCur + ' · ' + esc(L(spDay.q)).slice(0, 70) + '</b></div>'
+                 : '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(spDone >= spTotal ? tr('spkOver') : tr('spkNotStarted')) + '</b></div>') +
+          '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
+          '</button>';
+      }
+      return h;
+    },
+    bbc: function () {
+      var h = '';
+      h += '<button class="cp-card bbc" data-go="bbc">' +
+        '<div class="cp-top"><span class="cp-ic">' + IC.headphones + '</span>' +
+          '<span class="cp-tag">BBC Learning English</span></div>' +
+        '<h2>' + esc(tr('coursesBBC')) + '</h2>' +
+        '<p>' + esc(tr('coursesBBCD')) + '</p>' +
+        '<div class="cp-stats"><span><b>' + Store.bbcDoneCount() + '</b> ' + esc(tr('bbcDoneS')) + '</span><span>6 ' + esc(tr('engMin')) + ' · ' + esc(tr('coursesDaily')) + '</span></div>' +
+        '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(tr('bbcTodayHint')) + '</b></div>' +
+        '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
+        '</button>';
+      return h;
+    },
+    writing: function () {
+      var h = '';
+      if (window.WRITING) {
+        var wCur = Writing.currentWeek();
+        var wDone = Writing.doneCount();
+        h += '<button class="cp-card wr" data-go="writing">' +
+          '<div class="cp-top"><span class="cp-ic">' + IC.pen + '</span>' +
+            '<span class="cp-tag">' + esc(tr('coursesWritingTag')) + '</span></div>' +
+          '<h2>' + esc(tr('coursesWriting')) + '</h2>' +
+          '<p>' + esc(tr('coursesWritingD')) + '</p>' +
+          '<div class="cp-stats"><span><b>' + wDone + '</b>/' + WRITING.weeks.length + ' ' + esc(tr('engWeek')).toLowerCase() + '</span></div>' +
+          '<div class="bar"><i style="width:' + (wDone / WRITING.weeks.length * 100) + '%"></i></div>' +
+          '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(wCur ? tr('engWeek') + ' ' + wCur.n + ' · ' + L(wCur.title) : tr('engDaysToStart', { n: Writing.daysToStart() })) + '</b></div>' +
+          '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
+          '</button>';
+      }
+      return h;
+    },
+    quick: function () {
+      var h = '';
+      if (window.Quick) {
+        var qCur = Quick.current(), qDone = Quick.doneCount(), qTot = Quick.total();
+        h += '<button class="cp-card qk" data-go="quick">' +
+          '<div class="cp-top"><span class="cp-ic">' + IC.refresh + '</span><span class="cp-tag">' + esc(tr('coursesQuickTag')) + '</span></div>' +
+          '<h2>' + esc(tr('coursesQuick')) + '</h2><p>' + esc(tr('coursesQuickD')) + '</p>' +
+          '<div class="cp-stats"><span><b>' + qDone + '</b>/' + qTot + ' ' + esc(tr('days')) + '</span><span><b>' + Math.round(qDone / qTot * 100) + '%</b></span><span>' + esc(Quick.certOk() ? tr('q10CertReady') : tr('coursesDaily')) + '</span></div>' +
+          '<div class="bar"><i style="width:' + Math.round(qDone / qTot * 100) + '%"></i></div>' +
+          '<div class="cp-next"><span>' + esc(qCur ? tr('q10Next') : tr('q10FinalT')) + '</span><b>' + esc(qCur ? tr('day') + ' ' + qCur.n + ' · ' + L(qCur.title) : (Quick.certOk() ? tr('q10CertReady') : tr('q10AllDone'))) + '</b></div>' +
+          '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div></button>';
+      }
+      return h;
+    },
+    englishAll: function () { var C = window.CourseCards; return C.english() + C.speaking() + C.bbc() + C.writing() + C.quick(); }
+  };
+
   window.PageCourses = function () {
-    var pyTotal = COURSE.length, pyDone = Store.doneCount();
-    var pyNext = App.firstOpenDay();
-    var pyLesson = null;
-    COURSE.forEach(function (c) { if (c.day === pyNext) pyLesson = c; });
-
-    var enTotal = ENGLISH.meta.days, enDone = Store.engDoneCount();
-    var enCur = window.EngCal ? EngCal.currentDay() : 0;
-    var enDay = (enCur > 0 && enCur <= enTotal && window.Eng) ? Eng.dayOf(enCur) : null;
-    var enLast = Store.engLastScore();
-    var enOverall = enLast ? Store.engOverall(enLast) : null;
-
     var h = '<div class="page stagger">';
     h += '<header class="page-head">' +
       '<div class="eyebrow">' + esc(tr('coursesKick')) + '</div>' +
@@ -31,108 +169,28 @@
 
     h += '<div class="course-pick">';
 
-    /* --- Coding --- */
-    h += '<button class="cp-card py" data-go="python">' +
-      '<div class="cp-top"><span class="cp-ic">' + IC.code + '</span>' +
-        '<span class="cp-tag">' + esc(tr('coursesCodingTag')) + '</span></div>' +
-      '<h2>' + esc(tr('coursesCoding')) + '</h2>' +
-      '<p>' + esc(tr('coursesCodingD')) + '</p>' +
-      '<div class="cp-stats">' +
-        '<span><b>' + pyDone + '</b>/' + pyTotal + ' ' + esc(tr('days')) + '</span>' +
-        '<span><b>' + Math.round(pyDone / pyTotal * 100) + '%</b></span>' +
-        '<span>' + esc(tr('coursesSched')) + ': ' + esc(tr('coursesDaily')) + ' · 20-sen → 19-okt</span></div>' +
-      '<div class="bar"><i style="width:' + (pyDone / pyTotal * 100) + '%"></i></div>' +
-      (pyLesson ? '<div class="cp-next"><span>' + esc(tr('coursesNext')) + '</span><b>' + esc(tr('day')) + ' ' + pyNext + ' · ' + esc(L(pyLesson.title)) + '</b></div>' : '') +
-      '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
-      '</button>';
-
-    /* --- DataCamp treki --- */
-    if (window.DataCamp) {
-      var dcCur = DataCamp.current(), dcDone = DataCamp.doneCount(), dcTot = DataCamp.total(), dcOver = DataCamp.overdue().length;
-      h += '<button class="cp-card dc" data-go="datacamp">' +
-        '<div class="cp-top"><span class="cp-ic">' + IC.layers + '</span><span class="cp-tag">' + esc(tr('coursesDCTag')) + '</span></div>' +
-        '<h2>' + esc(tr('coursesDC')) + '</h2><p>' + esc(tr('coursesDCD')) + '</p>' +
-        '<div class="cp-stats"><span><b>' + dcDone + '</b>/' + dcTot + ' ' + esc(tr('dcProgress')).toLowerCase() + '</span><span><b>' + DataCamp.pct() + '%</b></span>' + (dcOver ? '<span class="red">' + esc(tr('dcOverdue', { n: dcOver })) + '</span>' : '<span>' + esc(tr('dcOnePerDay')) + '</span>') + '</div>' +
-        '<div class="bar"><i style="width:' + DataCamp.pct() + '%"></i></div>' +
-        (dcCur ? '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(tr('dcChapN', { n: dcCur.n })) + ' · ' + esc(dcCur.title) + '</b></div>' : '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(tr('dcAllDone')) + '</b></div>') +
-        '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div></button>';
+    /* --- Job Ready (Coding — Python + DataCamp + Python & AI) va IELTS Mission (barcha ingliz tili kurslari) --- */
+    if (window.JobReady) {
+      try {
+        var lt = function (uz, en) { return L({ uz: uz, en: en }); };
+        var jr = JobReady.status(), jd = 0, jt = 0; jr.stages.forEach(function (s) { jd += s.done; jt += s.total; });
+        var jNext = JobReady.nextSteps()[0];
+        h += progCard('jr', 'jobready', IC.rocket, lt('Dastur · 3 kurs + loyihalar', 'Program · 3 courses + projects'), 'Job Ready: Python & AI Engineer',
+          lt("Ichida: Coding — Python (30 kun), DataCamp — Python Programming Fundamentals, Python & AI Engineering (modul 0–9), loyihalar, capstone, portfolio va ish qidirish.",
+            'Inside: Coding — Python (30 days), DataCamp — Python Programming Fundamentals, Python & AI Engineering (modules 0–9), projects, capstone, portfolio and job search.'),
+          '<span><b>' + (jt ? Math.round(jd / jt * 100) : 0) + '%</b></span><span>' + esc(lt('Mezonlar', 'Criteria')) + ': <b>' + jr.met + '</b>/' + jr.of + '</span><span>5 ' + esc(lt('bosqich', 'stages')) + '</span>',
+          jt ? jd / jt * 100 : 0, jNext ? L(jNext.title) : '');
+      } catch (e) { if (window.console) console.error(e); }
     }
-
-    /* --- English --- */
-    h += '<button class="cp-card en" data-go="english">' +
-      '<div class="cp-top"><span class="cp-ic">' + IC.globe + '</span>' +
-        '<span class="cp-tag">' + esc(tr('coursesEnglishTag')) + '</span></div>' +
-      '<h2>' + esc(tr('coursesEnglish')) + '</h2>' +
-      '<p>' + esc(tr('coursesEnglishD')) + '</p>' +
-      '<div class="cp-stats">' +
-        '<span><b>' + enDone + '</b>/' + enTotal + ' ' + esc(tr('days')) + '</span>' +
-        '<span><b>' + Math.round(enDone / enTotal * 100) + '%</b></span>' +
-        '<span>' + esc(tr('engOverall')) + ': <b>' + (enOverall !== null ? enOverall.toFixed(1) : '—') + '</b></span></div>' +
-      '<div class="bar"><i style="width:' + (enDone / enTotal * 100) + '%"></i></div>' +
-      (enDay ? '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(tr('day')) + ' ' + enCur + ' · ' + esc(L(enDay.title)) + '</b></div>'
-             : '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(enCur === 0 ? tr('engDaysToStart', { n: EngCal.daysToStart() }) : tr('engExamMode')) + '</b></div>') +
-      '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
-      '</button>';
-
-    /* --- Speaking 30 --- */
-    if (window.SPEAK30) {
-      var spDone = Store.speakDoneCount(), spTotal = SPEAK30.meta.days;
-      var todayKey = Store.dateKey();
-      var spCur = (window.HabitPlan && HabitPlan.inRange(todayKey)) ? (HabitPlan.speakDayOf(todayKey) || 0) : 0;
-      var spDay = spCur ? SPEAK30.days[spCur - 1] : null;
-      h += '<button class="cp-card sp" data-go="speaking">' +
-        '<div class="cp-top"><span class="cp-ic">' + IC.mic + '</span>' +
-          '<span class="cp-tag">' + esc(tr('coursesSpeakingTag')) + '</span></div>' +
-        '<h2>' + esc(tr('coursesSpeaking')) + '</h2>' +
-        '<p>' + esc(tr('coursesSpeakingD')) + '</p>' +
-        '<div class="cp-stats">' +
-          '<span><b>' + spDone + '</b>/' + spTotal + ' ' + esc(tr('days')) + '</span>' +
-          '<span><b>' + Math.round(spDone / spTotal * 100) + '%</b></span>' +
-          '<span>20–30 ' + esc(tr('engMin')) + ' · ' + esc(tr('coursesDaily')) + '</span></div>' +
-        '<div class="bar"><i style="width:' + (spDone / spTotal * 100) + '%"></i></div>' +
-        (spDay ? '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(tr('day')) + ' ' + spCur + ' · ' + esc(L(spDay.q)).slice(0, 70) + '</b></div>'
-               : '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(spDone >= spTotal ? tr('spkOver') : tr('spkNotStarted')) + '</b></div>') +
-        '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
-        '</button>';
-    }
-
-    /* --- Listening · BBC --- */
-    h += '<button class="cp-card bbc" data-go="bbc">' +
-      '<div class="cp-top"><span class="cp-ic">' + IC.headphones + '</span>' +
-        '<span class="cp-tag">BBC Learning English</span></div>' +
-      '<h2>' + esc(tr('coursesBBC')) + '</h2>' +
-      '<p>' + esc(tr('coursesBBCD')) + '</p>' +
-      '<div class="cp-stats"><span><b>' + Store.bbcDoneCount() + '</b> ' + esc(tr('bbcDoneS')) + '</span><span>6 ' + esc(tr('engMin')) + ' · ' + esc(tr('coursesDaily')) + '</span></div>' +
-      '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(tr('bbcTodayHint')) + '</b></div>' +
-      '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
-      '</button>';
-
-    /* --- Writing (1-oktabrdan) --- */
-    if (window.WRITING) {
-      var wCur = Writing.currentWeek();
-      var wDone = Writing.doneCount();
-      h += '<button class="cp-card wr" data-go="writing">' +
-        '<div class="cp-top"><span class="cp-ic">' + IC.pen + '</span>' +
-          '<span class="cp-tag">' + esc(tr('coursesWritingTag')) + '</span></div>' +
-        '<h2>' + esc(tr('coursesWriting')) + '</h2>' +
-        '<p>' + esc(tr('coursesWritingD')) + '</p>' +
-        '<div class="cp-stats"><span><b>' + wDone + '</b>/' + WRITING.weeks.length + ' ' + esc(tr('engWeek')).toLowerCase() + '</span></div>' +
-        '<div class="bar"><i style="width:' + (wDone / WRITING.weeks.length * 100) + '%"></i></div>' +
-        '<div class="cp-next"><span>' + esc(tr('coursesToday')) + '</span><b>' + esc(wCur ? tr('engWeek') + ' ' + wCur.n + ' · ' + L(wCur.title) : tr('engDaysToStart', { n: Writing.daysToStart() })) + '</b></div>' +
-        '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
-        '</button>';
-    }
-
-    /* --- Quick Repeat (10 kun, General English) --- */
-    if (window.Quick) {
-      var qCur = Quick.current(), qDone = Quick.doneCount(), qTot = Quick.total();
-      h += '<button class="cp-card qk" data-go="quick">' +
-        '<div class="cp-top"><span class="cp-ic">' + IC.refresh + '</span><span class="cp-tag">' + esc(tr('coursesQuickTag')) + '</span></div>' +
-        '<h2>' + esc(tr('coursesQuick')) + '</h2><p>' + esc(tr('coursesQuickD')) + '</p>' +
-        '<div class="cp-stats"><span><b>' + qDone + '</b>/' + qTot + ' ' + esc(tr('days')) + '</span><span><b>' + Math.round(qDone / qTot * 100) + '%</b></span><span>' + esc(Quick.certOk() ? tr('q10CertReady') : tr('coursesDaily')) + '</span></div>' +
-        '<div class="bar"><i style="width:' + Math.round(qDone / qTot * 100) + '%"></i></div>' +
-        '<div class="cp-next"><span>' + esc(qCur ? tr('q10Next') : tr('q10FinalT')) + '</span><b>' + esc(qCur ? tr('day') + ' ' + qCur.n + ' · ' + L(qCur.title) : (Quick.certOk() ? tr('q10CertReady') : tr('q10AllDone'))) + '</b></div>' +
-        '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div></button>';
+    if (window.Mission) {
+      try {
+        var lm = function (uz, en) { return L({ uz: uz, en: en }); };
+        var mIdx = Mission.dayIndex(), mDays = Mission.C().days, mDue = Mission.errors.due().length, mIn = Math.max(0, Math.min(mIdx, mDays));
+        h += progCard('ms', 'mission', IC.target, lm('IELTS · 5 kurs + 16 hafta', 'IELTS · 5 courses + 16 weeks'), 'IELTS Mission',
+          lm("25-okt 2026 → 14-fev 2027. Ichida: English (IELTS kursi), Speaking 30, BBC Listening, Writing, Quick Repeat, studiyalar, xato banki va mock testlar.", '25 Oct 2026 → 14 Feb 2027. Inside: English (IELTS course), Speaking 30, BBC Listening, Writing, Quick Repeat, studios, error bank and mock tests.'),
+          '<span><b>' + mIn + '</b>/' + mDays + ' ' + esc(tr('days')) + '</span>' + (mDue ? '<span>' + esc(lm(mDue + ' xato takrori', mDue + ' error reviews')) + '</span>' : ''),
+          mIn / mDays * 100, mIdx < 1 ? lm('Boshlanishiga ' + (1 - mIdx) + ' kun · diagnostika', 'Starts in ' + (1 - mIdx) + ' day(s) · diagnostics') : '');
+      } catch (e) { if (window.console) console.error(e); }
     }
 
     /* Maqsad (Goal) kurs emas — u chap menyuda alohida turadi (#/goal) */

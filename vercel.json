@@ -39,14 +39,6 @@
     {
       "source": "/staff",
       "destination": "/controller.html"
-    },
-    {
-      "source": "/teacher",
-      "destination": "/controller.html"
-    },
-    {
-      "source": "/english",
-      "destination": "/controller.html"
     }
   ]
 }

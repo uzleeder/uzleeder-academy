@@ -1,9 +1,10 @@
 /* ==========================================================================
-   Aloqa markazi (#/comm) — xodimlar bilan BITTA aloqa tizimi (o'quvchi tomoni)
+   Aloqa markazi (#/comm) — nazoratchi bilan aloqa (o'quvchi tomoni)
    --------------------------------------------------------------------------
-     #/comm/messages/<rol>  — chat: controller · teacher · english (alohida suhbatlar)
-     #/comm/assignments     — MENING TOPSHIRIQLARIM (kim berdi, kurs, muddat, holat)
-     #/comm/feedback        — o'quvchiga ko'rinadigan feedback + writing/speaking tekshiruvi
+     #/comm/messages        — chat: controller (yagona faol xodim)
+     #/comm/messages/<eski> — teacher / english bilan ESKI suhbat (faqat o'qish)
+     #/comm/assignments     — eski topshiriqlar arxivi (yangilari yaratilmaydi)
+     #/comm/feedback        — eski feedback + writing/speaking tekshiruv arxivi
      #/comm/sessions        — nazorat sessiyasi (Waiting → Active → Paused → Finished)
      #/comm/notifications   — bildirishnomalar markazi
    Eski #/chat → #/comm/messages/controller (App.parseRoute).
@@ -41,9 +42,33 @@
     return h + '</div>';
   };
 
+  /* ====================== 0. ESKI ROLLAR ARXIVI ======================
+     teacher / english 2026-10 da olib tashlangan. Ular bilan bo'lgan suhbat
+     o'chirilmaydi — faqat o'qish. Yangi xabar yuborib bo'lmaydi.          */
+  function archList(archRoles, cur) {
+    if (!archRoles.length) return '';
+    return '<div class="gc-l" style="margin-top:12px">' + esc(tr('commArchive')) + '</div>' + archRoles.map(function (r) {
+      var m = (Ctrl.archive()[r].msgs || []), last = m.slice(-1)[0];
+      return '<button class="ch-conv' + (r === cur ? ' on' : '') + '" data-go="comm/messages/' + r + '">' + IC.lock + '<span class="cc-b"><b>' + esc(roleName(r)) + '</b><i>' + esc(tr('commRetired')) + '</i>' +
+        '<span class="cc-last">' + (last ? esc(last.text.slice(0, 48)) : '') + '</span></span></button>';
+    }).join('');
+  }
+  function vArchive(sub, roles, archRoles) {
+    var h = '<div class="ch-grid msgs"><aside class="card ch-list"><h3 class="card-title"><span class="num">' + IC.user + '</span>' + esc(tr('commConvs')) + '</h3>';
+    roles.forEach(function (r) { h += '<button class="ch-conv" data-go="comm/messages/' + r + '">' + roleIcon(r) + '<span class="cc-b"><b>' + esc(roleName(r)) + '</b></span></button>'; });
+    h += archList(archRoles, sub) + '</aside>';
+    var msgs = (Ctrl.archive()[sub].msgs || []);
+    h += '<section class="card ch-chat"><h3 class="card-title"><span class="num">' + IC.lock + '</span>' + esc(roleName(sub)) + '</h3>' +
+      '<div class="callout tip"><span class="co-ic">' + IC.lock + '</span><div>' + esc(tr('commArchiveS')) + '</div></div>' +
+      '<div class="ch-msgs">' + msgs.map(function (m) { return '<div class="ch-m ' + (m.from === 'learner' ? 'me' : 'them') + '">' + esc(m.text) + '<time>' + dmy(m.at) + '</time></div>'; }).join('') + '</div></section>';
+    return h + '</div>';
+  }
+
   /* ====================== 1. XABARLAR ================================= */
   function vMessages(sub) {
-    var roles = Ctrl.roles(), cur = roles.indexOf(sub) >= 0 ? sub : (roles[0] || 'controller');
+    var roles = Ctrl.roles(), arch = Ctrl.archive(), archRoles = Object.keys(arch);
+    if (archRoles.indexOf(sub) >= 0) return vArchive(sub, roles, archRoles);
+    var cur = roles.indexOf(sub) >= 0 ? sub : (roles[0] || 'controller');
     var h = '<div class="ch-grid msgs">';
     /* Suhbatlar ro'yxati */
     h += '<aside class="card ch-list"><h3 class="card-title"><span class="num">' + IC.user + '</span>' + esc(tr('commConvs')) + '</h3>';
@@ -53,7 +78,7 @@
       h += '<button class="ch-conv' + (r === cur ? ' on' : '') + '" data-go="comm/messages/' + r + '">' + roleIcon(r) + '<span class="cc-b"><b>' + esc(roleName(r)) + '</b><i class="' + (Ctrl.staffOnline(r) ? 'on' : '') + '">' + esc(Ctrl.staffOnline(r) ? tr('chOnline') : tr('chOffline')) + '</i>' +
         '<span class="cc-last">' + (last ? esc(last.text.slice(0, 48)) : esc(tr('chNoMsg'))) + '</span></span>' + (c.unread ? '<em class="cc-n">' + c.unread + '</em>' : '') + '</button>';
     });
-    h += '</aside>';
+    h += archList(archRoles, '') + '</aside>';
     /* Chat oynasi */
     var c = Ctrl.conv(cur), items = [];
     if (c) c.msgs.forEach(function (m) { items.push({ at: m.at, html: '<div class="ch-m ' + (m.from === 'learner' ? 'me' : 'them') + '">' + esc(m.text) + '<time>' + dmy(m.at) + '</time></div>' }); });
@@ -82,7 +107,8 @@
     var all = Ctrl.assignments(), open = all.filter(function (a) { return a.st !== 'completed'; }), done = all.filter(function (a) { return a.st === 'completed'; });
     var ord = { overdue: 0, in_progress: 1, assigned: 2 }, pr = { high: 0, normal: 1, low: 2 };
     open.sort(function (a, b) { return ord[a.st] - ord[b.st] || pr[a.priority] - pr[b.priority] || (a.due || '9') .localeCompare(b.due || '9'); });
-    var h = '<div class="stat-grid" style="margin-bottom:18px">' +
+    var h = '<div class="callout tip" style="margin-bottom:14px"><span class="co-ic">' + IC.checklist + '</span><div>' + esc(tr('asArchiveNote')) + ' <button class="btn btn-quiet btn-sm" data-go="mission">' + IC.arrowR + esc(tr('msnOpen')) + '</button></div></div>' +
+      '<div class="stat-grid" style="margin-bottom:18px">' +
       '<div class="stat-tile"><div class="st-l">' + esc(tr('asOpenN')) + '</div><div class="st-v">' + open.length + '</div></div>' +
       '<div class="stat-tile ' + (open.filter(function (a) { return a.st === 'overdue'; }).length ? 'red' : '') + '"><div class="st-l">' + esc(tr('asSt_overdue')) + '</div><div class="st-v">' + open.filter(function (a) { return a.st === 'overdue'; }).length + '</div></div>' +
       '<div class="stat-tile gold"><div class="st-l">' + esc(tr('asSt_completed')) + '</div><div class="st-v">' + done.length + '</div></div></div>';
@@ -114,7 +140,6 @@
       (r.route ? '<button class="btn btn-quiet btn-sm" data-go="' + esc(r.route) + '">' + IC.arrowR + esc(tr('asOpen')) + '</button>' : '') + '</div>' +
       '<div class="rv-stages">' + ['submitted', 'reviewed', 'revised', 'reviewed2', 'completed'].map(function (s) { var hit = r.history.some(function (x) { return x.stage === s; }); return '<span class="' + (hit ? 'on' : '') + (r.stage === s ? ' cur' : '') + '">' + esc(stageLabel(s)) + '</span>'; }).join('') + '</div>' +
       (last ? '<div class="fb-by">' + esc(roleName(last.by)) + ' · ' + esc(dmy(last.at)) + (last.band != null ? ' · Band ' + last.band : '') + (last.result ? ' · ' + esc(tr('rvRes_' + last.result)) : '') + '</div>' + fbBlock(last.fb) : '') +
-      (r.stage === 'reviewed' ? '<div class="rv-revise"><label class="field"><span class="gc-l">' + esc(tr('rvReviseT')) + '</span><textarea class="textarea" rows="6" data-rvtext="' + esc(r.id) + '">' + esc(r.text) + '</textarea></label><button class="btn btn-primary btn-sm" data-rvsend="' + esc(r.id) + '">' + IC.upload + esc(tr('rvReviseSend')) + '</button></div>' : '') +
       '</article>';
   }
   function vFeedback() {
@@ -179,38 +204,36 @@
     $$('[data-areopen]').forEach(function (b) { b.addEventListener('click', function () { Ctrl.setAssignment(b.dataset.areopen, 'in_progress').then(function () { App.render(); }); }); });
     /* Ochilganda "jarayonda" bo'ladi */
     $$('[data-astart]').forEach(function (b) { b.addEventListener('click', function () { var a = Ctrl.assignments().filter(function (x) { return x.id === b.dataset.astart; })[0]; if (a && a.status === 'assigned') Ctrl.setAssignment(a.id, 'in_progress'); }); });
-    $$('[data-rvsend]').forEach(function (b) { b.addEventListener('click', function () { var ta2 = $('[data-rvtext="' + b.dataset.rvsend + '"]'); if (!ta2 || !ta2.value.trim()) return; b.disabled = true; Ctrl.reviseReview(b.dataset.rvsend, ta2.value.trim()).then(function () { toast(tr('rvSent'), 'ok'); App.render(); }).catch(function () { toast(tr('chErr'), 'warn'); b.disabled = false; }); }); });
     var ra = $('#nfReadAll'); if (ra) ra.addEventListener('click', function () { Ctrl.readNotif().then(function () { App.render(); }); });
     $$('[data-nf]').forEach(function (b) { b.addEventListener('click', function () { Ctrl.readNotif([b.dataset.nf]); }); });
     Ctrl.refresh();
   };
 
-  /* Dars sahifalari uchun: "ustozga yuborish" bloki + hozirgi tekshiruv holati.
-     kind: writing | speaking · ref: 'wr3' | 'spk12' · text: yuboriladigan matn.
-     Mahalliy nusxada (API yo'q) halol izoh; soxta holat yo'q.               */
+  /* Dars sahifalari uchun (writing / speaking): O'Z-O'ZINI TEKSHIRISH bloki.
+     2026-10 dan "o'qituvchiga yuborish" yo'q (rol olib tashlangan). Matn
+     Writing Studio'ga olib o'tiladi: mezonlar bo'yicha o'z bahosi, xato
+     belgilari, qayta yozish va versiyalarni solishtirish. Eski tekshiruv
+     yozuvi bo'lsa — arxiv sifatida ko'rinadi.                              */
   window.ReviewBlock = function (kind, ref, title, route, text) {
-    if (!window.Ctrl) return '';
-    var h = '<div class="card rv-submit"><h3 class="card-title"><span class="num gold">' + IC.upload + '</span>' + esc(tr('rvSubmitT')) + '</h3>';
-    if (!Ctrl.available()) return h + '<p class="hint">' + esc(tr('chOffS')) + '</p></div>';
-    if (!Ctrl.feed()) return h + '<p class="hint">' + esc(tr(Ctrl.status() === 'auth' ? 'commAuth' : Ctrl.status() === 'env' ? 'chEnv' : 'commLoading')) + '</p></div>';
-    var r = Ctrl.reviewFor(kind, ref);
-    var fbs = Ctrl.feedbackFor(kind, ref);
-    if (r) h += reviewRow(r);
-    else h += '<p class="hint">' + esc(tr('rvSubmitS')) + '</p>';
-    var canSend = !r || r.stage === 'completed';
-    if (canSend) h += '<div class="sync-actions"><button class="btn btn-primary btn-sm" id="rvSubmit" data-kind="' + esc(kind) + '" data-ref="' + esc(ref) + '" data-title="' + esc(title) + '" data-route="' + esc(route) + '"' + (text && text.trim() ? '' : ' disabled title="' + esc(tr('rvNoText')) + '"') + '>' + IC.upload + esc(r ? tr('rvSubmitAgain') : tr('rvSubmitBtn')) + '</button><span class="hint">' + esc(tr('rvSubmitHint')) + '</span></div>';
-    if (fbs.length) h += '<div class="gc-l" style="margin-top:12px">' + esc(tr('fbT')) + '</div>' + fbs.map(fbRow).join('');
+    var spk = kind === 'speaking';
+    var h = '<div class="card rv-submit"><h3 class="card-title"><span class="num gold">' + IC.pen + '</span>' + esc(tr(spk ? 'rvSelfSpkT' : 'rvSelfT')) + '</h3>' +
+      '<p class="hint">' + esc(tr(spk ? 'rvSelfSpkS' : 'rvSelfS')) + '</p>' +
+      '<div class="sync-actions"><button class="btn btn-primary btn-sm" id="rvSubmit" data-kind="' + esc(kind) + '" data-ref="' + esc(ref) + '" data-title="' + esc(title) + '" data-route="' + esc(route) + '">' + IC.arrowR + esc(tr(spk ? 'rvSelfSpkBtn' : 'rvSelfBtn')) + '</button></div>';
+    var r = window.Ctrl && Ctrl.feed() ? Ctrl.reviewFor(kind, ref) : null;
+    var fbs = window.Ctrl && Ctrl.feed() ? Ctrl.feedbackFor(kind, ref) : [];
+    if (r || fbs.length) h += '<div class="gc-l" style="margin-top:12px">' + esc(tr('rvArchive')) + '</div>' + (r ? reviewRow(r) : '') + fbs.map(fbRow).join('');
     return h + '</div>';
   };
   window.ReviewBlock.mount = function (getText) {
     var b = $('#rvSubmit'); if (!b) return;
     b.addEventListener('click', function () {
+      if (b.dataset.kind === 'speaking') { App.go('mission/speaking'); return; }
       var text = (getText ? getText() : '') || '';
       if (!text.trim()) { toast(tr('rvNoText'), 'warn'); return; }
-      b.disabled = true;
-      Ctrl.submitReview({ kind: b.dataset.kind, ref: b.dataset.ref, title: b.dataset.title, route: b.dataset.route, text: text }).then(function () { toast(tr('rvSent'), 'ok'); App.render(); }).catch(function () { toast(tr('chErr'), 'warn'); b.disabled = false; });
+      if (!window.Mission || !Mission.studio) { App.go('mission/writing'); return; }
+      var id = Mission.studio.importText({ src: b.dataset.ref, title: b.dataset.title, text: text });
+      App.go('mission/writing/' + id);
     });
-    $$('[data-rvsend]').forEach(function (b2) { b2.addEventListener('click', function () { var ta2 = $('[data-rvtext="' + b2.dataset.rvsend + '"]'); if (!ta2 || !ta2.value.trim()) return; b2.disabled = true; Ctrl.reviseReview(b2.dataset.rvsend, ta2.value.trim()).then(function () { toast(tr('rvSent'), 'ok'); App.render(); }).catch(function () { toast(tr('chErr'), 'warn'); b2.disabled = false; }); }); });
   };
 
   /* Eski #/chat — xabarlar tabi */

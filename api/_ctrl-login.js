@@ -3,8 +3,8 @@
    DELETE /api/ctrl/login                    → chiqish (xodim cookie'si)
    GET    /api/ctrl/login                    → { roles: [...] } sozlangan xodim rollari
    --------------------------------------------------------------------------
-   XODIM kirishi: controller · teacher · english. Har rolning o'z logini va
-   paroli (env yoki bazadagi hash). Rol login nomidan aniqlanadi; parol
+   XODIM kirishi: faqat controller (teacher / english 2026-10 da olib
+   tashlangan). O'z logini va paroli (env yoki bazadagi hash). Rol login nomidan aniqlanadi; parol
    FAQAT o'sha rolning hash'i bilan tekshiriladi. Hamma rol hash'lari
    hisoblanadi (vaqt bo'yicha "qaysi login mavjud" bilinmasin).
    O'quvchi paroli bu yerda ishlamaydi va aksincha. Urinishlar IP bo'yicha.

@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "academy-2000",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "2000", "--bind", "127.0.0.1"],
+      "port": 2000
+    },
+    {
       "name": "uzleeder-academy",
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "4000"],

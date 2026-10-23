@@ -34,7 +34,7 @@ self.addEventListener('fetch', function (e) {
   if (url.origin !== self.location.origin && !isFont) return;
 
   /* Xodimlar paneli va login — SW aralashmaydi (o'z cookie'si, oflayn qobiq kerak emas) */
-  if (/^\/(controller|staff|teacher|english|login|error|404)(\.html)?$/.test(url.pathname)) return;
+  if (/^\/(controller|staff|login|error|404)(\.html)?$/.test(url.pathname)) return;
 
   /* Sahifa: tarmoq → kesh (index.html). Faqat ILOVA sahifasi keshlanadi — boshqa
      navigatsiya javobi (masalan /controller) index.html o'rniga yozilmaydi. */

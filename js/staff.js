@@ -1,14 +1,11 @@
 /* ==========================================================================
-   js/staff.js — XODIMLAR PANELI (controller.html): controller · teacher · english
+   js/staff.js — NAZORATCHI PANELI (controller.html): faqat controller
    --------------------------------------------------------------------------
-   Bitta panel, rolga qarab tablar (server ham har amalni tekshiradi — bu yerdagi
-   yashirish faqat qulaylik):
      controller — MONITORING: umumiy, vaqt chizig'i, bugun/intizom, sessiya+chat,
                   faollik tahlili, shaxsiy eslatma, sozlamalar (o'z paroli)
-     teacher    — O'QITISH: progress, topshiriqlar, feedback, writing/speaking
-                  tekshiruvi, kurslar, xatolar, lug'at, loyihalar, chat, tahlil
-     english    — teacher bilan bir xil, FAQAT ingliz tili (holat serverda
-                  filtrlangan: Python/DataCamp yo'q)
+   teacher / english ("English support teacher") rollari 2026-10 da olib
+   tashlandi: topshiriq, feedback, writing/speaking tekshiruvi va ingliz tili
+   paneli yo'q. O'quvchi o'zi o'rganadi (Mission, Writing/Speaking Studio).
    O'quvchi holati /api/ctrl/state (faqat o'qish) → Store.replace; panel
    localStorage'dagi o'quvchi holatiga YOZMAYDI (setItem himoyasi controller.html da).
    ========================================================================== */
@@ -17,7 +14,7 @@
   /* App qobig'i yo'q — data-go tugmalari panelda ishlamasin, lekin xato ham bermasin */
   window.App = { render: function(){}, refreshChrome: function(){}, go: function(){} }; window.toast = function(){};
 
-  var T={uz:{gateMsg:'Sessiya tekshirilmoqda…',pwOwn:"Faqat o'z hisobingiz paroli. Yangi parol keyingi kirishdan amal qiladi.",lTitle:'Xodimlar paneli',lLede:"Controller · Teacher · English support — har rolning o'z logini. O'quvchi paroli bu yerda ishlamaydi.",lUser:'Login',lPass:'Parol',lGo:'Kirish',hTag:'Controller · Invigilator',learner:"O'quvchi",logout:'Chiqish',ro:"faqat o'qish",
+  var T={uz:{gateMsg:'Sessiya tekshirilmoqda…',pwOwn:"Faqat o'z hisobingiz paroli. Yangi parol keyingi kirishdan amal qiladi.",lTitle:'Xodimlar paneli',lLede:"Controller · Invigilator — o'z logini bor. O'quvchi paroli bu yerda ishlamaydi.",retT:"Olib tashlangan rollar: hisob topildi",retS:"Bu rol(lar) 2026-10 da olib tashlangan. Kirish BEKOR qilingan; hisob o'chirilmagan va boshqa rolga aylantirilmagan. Aylantirish yoki o'chirish — faqat egasining aniq qarori bilan (docs/UPGRADE-2026-10.md).",lUser:'Login',lPass:'Parol',lGo:'Kirish',hTag:'Controller · Invigilator',learner:"O'quvchi",logout:'Chiqish',ro:"faqat o'qish",
     nOverview:'Umumiy',nToday:'Bugun va intizom',nCourses:'Kurslar',nVocab:"Lug'at daftari",nMistakes:'Xatolar va takror',nNotes:'Eslatmalar',nMovies:'Movies & Videos',nProfile:'Profil',nChat:'Chat va sessiya',nAnalytics:'Tahlil',nSettings:'Sozlamalar',
     online:'onlayn',offline:'oflayn',ctrlYou:'siz onlaynsiz',bad:"Login yoki parol noto'g'ri.",lock:"Juda ko'p urinish. {m} daqiqadan keyin.",env:'Server sozlanmagan: ',net:'Server javob bermadi.',saved:'Saqlandi',ago:'{n} s oldin',agoM:'{n} daq oldin',agoH:'{n} soat oldin',min:'daq',by:'kim',sysStart:'Sessiya boshlandi',sysPause:'Pauza',sysResume:'Davom etdi',sysFinish:'Sessiya tugadi',never:"hali yo'q",
     kName:'Ism',kPage:'Hozirgi sahifa',kSeen:'Oxirgi faollik',kSince:'Holat vaqti',kActive:'Faol daqiqa',kSaved:'Progress saqlangan',aStart:'Sessiyani boshlash',aPause:'Pauza',aResume:'Davom',aFinish:'Tugatish',sLog:'Faollik jurnali',sHist:'Sessiyalar tarixi',sChat:'Shaxsiy chat',send:'Yuborish',cHint:'Enter — yuborish, Shift+Enter — yangi qator.',sNotes:'Sessiya eslatmalari (faqat siz)',none:"Hali ma'lumot yo'q",
@@ -31,7 +28,7 @@
     anTime:'O\'quv vaqti — oxirgi 14 kun',anTotal:'Jami',anQuiz:'Test natijalari (oxirgi)',anCode:'Katta coding testlari',anBest:'eng yaxshi',
     sLang:'Til',sTheme:'Mavzu',sTargets:'Kunlik me\'yor',sWork:'Ish davri',sPrayer:'Namoz sozlamasi',sNotify:'Bildirishnoma',sGate:'Ketma-ket rejim',on:'yoqilgan',off:"o'chiq",
     pwT:'Nazoratchi parolini almashtirish',pwCur:'Hozirgi parol',pwNew:'Yangi parol (≥ 6)',pwGo:'Almashtirish',pwOk:'Parol almashtirildi',pwBad:"Hozirgi parol noto'g'ri",noState:"O'quvchi hali bulutga progress yubormagan.",refresh:'Yangilash',
-    hTag_controller:'Controller · Invigilator',hTag_teacher:'Teacher panel',hTag_english:'English support panel',
+    hTag_controller:'Controller · Invigilator',
     nTimeline:"Vaqt chizig'i",nAssign:'Topshiriqlar',nFeedback:'Feedback',nReviews:'Writing / Speaking',nEnglish:'Ingliz tili',nProjects:'Loyihalar',nPnotes:'Shaxsiy eslatma',
     tlT:"Faollik vaqt chizig'i",tlS:"Faqat real saqlangan hodisalar: sahifa ochish (heartbeat), dars/test/xato/takror (o'quvchi jurnali), sessiya voqealari.",tlNone:"Hodisa yo'q",tlDay:'Kun',tlAll:'Hammasi',
     evOpen:'Sahifa ochildi',ev_py_done:'Python darsi yopildi','ev_py-done':'Python darsi yopildi','ev_py-quiz':'Python testi','ev_eng-done':'Ingliz kuni yopildi',ev_quiz:'Test',ev_mistake:'Xato yozildi',ev_read:"O'qish/tinglash natijasi",ev_review:'Takror',ev_flag:'Bajarildi',ev_plan:'Reja bandi',
@@ -45,7 +42,7 @@
     caT:'Faollik tahlili',caSess:'Sessiyalar',caActive:'Faol vaqt',caInact:'Faolsizlik',caLastSeen:"Oxirgi ko'rildi",caTask:'Joriy vazifa',caComm:'Aloqa',caMsgs:'xabar',caToday:'bugun',ca7:'7 kun',ca30:'30 kun',
     convWith:"O'quvchi bilan chat",pnT:'Shaxsiy eslatmalar (faqat siz)',pnS:"O'quvchi ko'rmaydi. Feedback bo'limidagi 'shaxsiy' yozuvlar ham shu yerda.",
     pwT2:'Parolni almashtirish (o\'z rolingiz)',roleYou:'Siz',filtered:"Faqat ingliz tili ma'lumotlari (Python serverda yashirilgan)"},
-  en:{gateMsg:'Checking your session…',pwOwn:'Only your own account password. It applies from the next sign-in.',lTitle:'Staff panel',lLede:'Controller · Teacher · English support — each role has its own login. The learner password does not work here.',lUser:'Username',lPass:'Password',lGo:'Sign in',hTag:'Controller · Invigilator',learner:'Learner',logout:'Sign out',ro:'read only',
+  en:{gateMsg:'Checking your session…',pwOwn:'Only your own account password. It applies from the next sign-in.',lTitle:'Staff panel',lLede:'Controller · Invigilator — has its own login. The learner password does not work here.',retT:'Retired roles: account found',retS:'These roles were removed in October 2026. Access is REVOKED; the account was not deleted and not converted to another role. Converting or deleting it needs an explicit decision by the owner (docs/UPGRADE-2026-10.md).',lUser:'Username',lPass:'Password',lGo:'Sign in',hTag:'Controller · Invigilator',learner:'Learner',logout:'Sign out',ro:'read only',
     nOverview:'Overview',nToday:'Today & discipline',nCourses:'Courses',nVocab:'Vocabulary copybook',nMistakes:'Mistakes & review',nNotes:'Notes',nMovies:'Movies & Videos',nProfile:'Profile',nChat:'Chat & session',nAnalytics:'Analytics',nSettings:'Settings',
     online:'online',offline:'offline',ctrlYou:'you are online',bad:'Incorrect username or password.',lock:'Too many attempts. Try again in {m} min.',env:'Server is not configured: ',net:'Server did not respond.',saved:'Saved',ago:'{n} s ago',agoM:'{n} min ago',agoH:'{n} h ago',min:'min',by:'by',sysStart:'Session started',sysPause:'Paused',sysResume:'Resumed',sysFinish:'Session finished',never:'not yet',
     kName:'Name',kPage:'Current page',kSeen:'Last activity',kSince:'State since',kActive:'Active minutes',kSaved:'Progress saved',aStart:'Start session',aPause:'Pause',aResume:'Resume',aFinish:'Finish',sLog:'Activity log',sHist:'Session history',sChat:'Private chat',send:'Send',cHint:'Enter sends, Shift+Enter adds a line.',sNotes:'Session notes (only you)',none:'Nothing yet',
@@ -59,7 +56,7 @@
     anTime:'Study time — last 14 days',anTotal:'Total',anQuiz:'Quiz results (latest)',anCode:'Big coding tests',anBest:'best',
     sLang:'Language',sTheme:'Theme',sTargets:'Daily targets',sWork:'Work period',sPrayer:'Prayer settings',sNotify:'Notifications',sGate:'Sequential mode',on:'on',off:'off',
     pwT:'Change controller password',pwCur:'Current password',pwNew:'New password (≥ 6)',pwGo:'Change',pwOk:'Password changed',pwBad:'Current password is wrong',noState:'The learner has not synced any progress yet.',refresh:'Refresh',
-    hTag_controller:'Controller · Invigilator',hTag_teacher:'Teacher panel',hTag_english:'English support panel',
+    hTag_controller:'Controller · Invigilator',
     nTimeline:'Timeline',nAssign:'Assignments',nFeedback:'Feedback',nReviews:'Writing / Speaking',nEnglish:'English',nProjects:'Projects',nPnotes:'Private notes',
     tlT:'Activity timeline',tlS:'Only real stored events: page opens (heartbeat), lesson/quiz/mistake/review (student log), session events.',tlNone:'No events',tlDay:'Day',tlAll:'All',
     evOpen:'Opened',ev_py_done:'Python lesson closed','ev_py-done':'Python lesson closed','ev_py-quiz':'Python quiz','ev_eng-done':'English day closed',ev_quiz:'Quiz',ev_mistake:'Mistake recorded',ev_read:'Reading/listening result',ev_review:'Review',ev_flag:'Done',ev_plan:'Plan item',
@@ -91,10 +88,9 @@
   /* ---------- holat ---------- */
   var feed=null,doc=null,tab='overview',timer=null,lastMsgId=null,hasState=false,role='controller';
   /* Rolga qarab tablar — server baribir har amalni tekshiradi */
+  /* Bitta xodim roli — controller (teacher / english 2026-10 da olib tashlangan) */
   var TABSET={
-    controller:[['overview','home'],['timeline','clock'],['today','today'],['chat','eye'],['analytics','trend'],['pnotes','pen'],['courses','book'],['mistakes','alert'],['settings','settings']],
-    teacher:[['overview','home'],['assign','checklist'],['feedback','star'],['reviews','pen'],['timeline','clock'],['courses','book'],['mistakes','alert'],['vocab','notebook'],['notes','doc'],['projects','rocket'],['chat','mic'],['analytics','trend'],['pnotes','lock'],['settings','settings']],
-    english:[['english','globe'],['assign','checklist'],['feedback','star'],['reviews','pen'],['timeline','clock'],['mistakes','alert'],['vocab','notebook'],['chat','mic'],['analytics','trend'],['pnotes','lock'],['settings','settings']]
+    controller:[['overview','home'],['timeline','clock'],['today','today'],['chat','eye'],['analytics','trend'],['pnotes','pen'],['courses','book'],['mistakes','alert'],['settings','settings']]
   };
   function TABS(){return TABSET[role]||TABSET.controller}
   function enter(r){role=r||'controller';tab=TABS()[0][0];$('#gate').hidden=true;$('#panel').hidden=false;var tag=$('[data-t="hTag"]');if(tag)tag.textContent=t('hTag_'+role);document.title=t('hTag_'+role)+' — UzLeeder Academy';Store.init();Store.all().lang=lang;loadState();poll();timer=setInterval(function(){poll();if(tab!=='chat')loadState()},tab==='chat'?5000:30000)}
@@ -103,8 +99,8 @@
   function post(body){return fetch('/api/ctrl/io',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json()})}
 
   function renderNav(){
-    var open=hasState?Store.openMistakes().length:0,unread=myConv().unread||0,rvq=feed?(feed.reviews||[]).filter(function(r){return r.stage==='submitted'||r.stage==='revised'}).length:0,asOver=feed?(feed.assignments||[]).filter(function(a){return a.status!=='completed'&&a.due&&a.due<todayKey()}).length:0;
-    $('#ctNav').innerHTML='<div class="lbl">'+esc(t('roleYou'))+': '+esc(t('hTag_'+role))+'</div>'+TABS().map(function(x){var badge=x[0]==='mistakes'&&open?'<span class="badge">'+open+'</span>':x[0]==='chat'&&unread?'<span class="badge hot">'+unread+'</span>':x[0]==='reviews'&&rvq?'<span class="badge hot">'+rvq+'</span>':x[0]==='assign'&&asOver?'<span class="badge hot">'+asOver+'</span>':'';return '<button data-tab="'+x[0]+'" class="'+(tab===x[0]?'on':'')+'">'+(IC[x[1]]||'')+'<span>'+esc(t('n'+x[0].charAt(0).toUpperCase()+x[0].slice(1)))+'</span>'+badge+'</button>'}).join('');
+    var open=hasState?Store.openMistakes().length:0,unread=myConv().unread||0;
+    $('#ctNav').innerHTML='<div class="lbl">'+esc(t('roleYou'))+': '+esc(t('hTag_'+role))+'</div>'+TABS().map(function(x){var badge=x[0]==='mistakes'&&open?'<span class="badge">'+open+'</span>':x[0]==='chat'&&unread?'<span class="badge hot">'+unread+'</span>':'';return '<button data-tab="'+x[0]+'" class="'+(tab===x[0]?'on':'')+'">'+(IC[x[1]]||'')+'<span>'+esc(t('n'+x[0].charAt(0).toUpperCase()+x[0].slice(1)))+'</span>'+badge+'</button>'}).join('');
     $$('[data-tab]').forEach(function(b){b.addEventListener('click',function(){tab=b.dataset.tab;renderNav();renderMain();window.scrollTo(0,0)})});
   }
   function render(){renderNav();renderMain()}
@@ -113,24 +109,19 @@
   function stOf(a){return a.status==='completed'?'completed':(a.due&&a.due<todayKey()?'overdue':a.status||'assigned')}
   function ymd(ts){var d=new Date(ts);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
   function fbStruct(fb){if(!fb)return '';var ks=[['strengths','fbStr'],['weaknesses','fbWeak'],['corrections','fbCorr'],['recommendations','fbRec'],['next','fbNext']];return '<div class="fb-struct">'+ks.filter(function(k){return fb[k[0]]}).map(function(k){return '<div class="fb-k"><span>'+esc(t(k[1]))+'</span><p>'+esc(fb[k[0]])+'</p></div>'}).join('')+'</div>'}
-  function isEnglishEv(e){return !/^(py|dc|code)/.test(e.type||'')&&!/^(py|dc|code|lesson)/.test(e.ref||'')}
   function card(title,body,extra){return '<section class="card"'+(extra||'')+'><h3 class="card-title">'+esc(title)+'</h3>'+body+'</section>'}
   function tile(l,v,note,cls){return '<div class="stat-tile '+(cls||'')+'"><div class="st-l">'+esc(l)+'</div><div class="st-v">'+v+'</div>'+(note?'<div class="st-note">'+esc(note)+'</div>':'')+'</div>'}
   function bar(v,cls){return '<div class="bar '+(cls||'')+'"><i style="width:'+Math.max(0,Math.min(100,v))+'%"></i></div>'}
 
   function renderMain(){
     var m=$('#ctMain');if(!m)return;
-    var noStateOk={chat:1,overview:1,assign:1,feedback:1,reviews:1,pnotes:1,timeline:1,settings:1};
+    var noStateOk={chat:1,overview:1,pnotes:1,timeline:1,settings:1};
     if(!hasState&&!noStateOk[tab]){m.innerHTML='<h1>'+esc(t('n'+tab.charAt(0).toUpperCase()+tab.slice(1)))+'</h1><div class="callout tip"><span class="co-ic">'+IC.cloud+'</span><div>'+esc(t('noState'))+'</div></div>';return}
-    var R={overview:vOverview,today:vToday,courses:vCourses,vocab:vVocab,mistakes:vMistakes,notes:vNotes,movies:vMovies,profile:vProfile,analytics:vAnalytics,settings:vSettings,chat:vChat,
-      timeline:vTimeline,assign:vAssign,feedback:vFeedback,reviews:vReviews,english:vEnglish,projects:vProjects,pnotes:vPnotes};
-    if(role==='english'&&tab==='analytics')R.analytics=vEnglishAn; if(role==='teacher'&&tab==='analytics')R.analytics=vTeacherAn; if(role==='controller'&&tab==='analytics')R.analytics=vCtrlAn;
+    var R={overview:vOverview,today:vToday,courses:vCourses,vocab:vVocab,mistakes:vMistakes,notes:vNotes,movies:vMovies,profile:vProfile,analytics:vCtrlAn,settings:vSettings,chat:vChat,
+      timeline:vTimeline,pnotes:vPnotes};
     try{m.innerHTML=R[tab]()}catch(e){m.innerHTML='<div class="callout pitfall"><span class="co-ic">'+IC.alert+'</span><div>'+esc(e.message)+'</div></div>'}
     if(tab==='chat')mountChat();
     if(tab==='settings')mountPw();
-    if(tab==='assign')mountAssign();
-    if(tab==='feedback')mountFeedback();
-    if(tab==='reviews')mountReviews();
     if(tab==='pnotes')mountPnotes();
   }
 
@@ -138,6 +129,9 @@
   function vOverview(){
     var st=(feed&&feed.status)||{},state=st.state||'idle',cur=feed?(feed.sessions||[]).filter(function(s){return !s.endedAt})[0]:null;
     var h='<h1>'+esc(t('nOverview'))+'</h1><p class="lede">'+esc(Store.get('name')||'—')+' · '+esc(t('kSaved'))+': '+(doc&&doc.savedAt?esc(dmy(doc.savedAt))+' ('+esc(ago(doc.savedAt))+')':'—')+' <button class="btn btn-quiet btn-sm" id="ctRefresh">'+IC.refresh+esc(t('refresh'))+'</button></p>';
+    /* Olib tashlangan rol hisobi sozlangan bo'lsa — faqat xabar (kirish allaqachon bekor) */
+    var ret=feed&&feed.retired||[];
+    if(ret.length)h+='<div class="callout pitfall" style="margin-bottom:16px"><span class="co-ic">'+IC.lock+'</span><div><b>'+esc(t('retT'))+': '+ret.map(function(r){return esc(r.role)+' ('+esc((r.source||[]).join(', '))+')'}).join(' · ')+'</b><br>'+esc(t('retS'))+'</div></div>';
     if(hasState){
       var debt=Goal.debt().days,req=Goal.required(),dm=Goal.doneMinutes(),pm=Mastery.python(),em=Mastery.english();
       h+='<div class="stat-grid" style="margin-bottom:18px">'+
@@ -299,7 +293,7 @@
   function vTimeline(){
     var st=(feed&&feed.status)||{},ev=[];
     (st.recent||[]).forEach(function(r){ev.push({at:r.at,k:'open',title:r.title||r.route,ref:'#/'+r.route})});
-    (hasState?Store.events(400):[]).filter(function(e){return role!=='english'||isEnglishEv(e)}).forEach(function(e){ev.push({at:e.at,k:e.type,title:e.title,ref:e.ref})});
+    (hasState?Store.events(400):[]).filter(function(){return true}).forEach(function(e){ev.push({at:e.at,k:e.type,title:e.title,ref:e.ref})});
     if(role==='controller')(feed?feed.sessions||[]:[]).forEach(function(sx){(sx.events||[]).forEach(function(e){ev.push({at:e.at,k:'session',title:t({start:'sysStart',pause:'sysPause',resume:'sysResume',finish:'sysFinish'}[e.type])+' ('+e.by+')',ref:''})})});
     ev.sort(function(a,b){return b.at-a.at});
     var days={};ev.forEach(function(e){var k=ymd(e.at);(days[k]=days[k]||[]).push(e)});
@@ -313,136 +307,8 @@
     return h;
   }
 
-  /* ---------- 13. Topshiriqlar (teacher / english) ---------- */
-  var A_TYPES=['lesson','practice','quiz','review','reading','listening','speaking','writing','project','vocab','grammar'];
-  var A_COURSES=role==='english'?['english']:['python','english','datacamp','general'];
-  var editA=null;
-  function quickRoutes(){
-    var out=[];
-    if(role!=='english'&&window.COURSE){COURSE.forEach(function(d){out.push({r:'lesson/'+d.day,t:'Python '+d.day+' · '+L(d.title),c:'python',ty:'lesson'})})}
-    if(window.ENG_DAYS){ENG_DAYS.slice(0,140).forEach(function(d){out.push({r:'english/'+d.d,t:'English '+d.d+' · '+L(d.title),c:'english',ty:'lesson'})})}
-    if(window.WRITING){WRITING.weeks.forEach(function(w){out.push({r:'writing/'+w.n,t:'Writing '+w.n+' · '+L(w.title),c:'english',ty:'writing'})})}
-    out.push({r:'speaking',t:'Speaking 30',c:'english',ty:'speaking'},{r:'books/listen',t:'Listening (Target)',c:'english',ty:'listening'},{r:'books/ebook',t:'Reading (e-book)',c:'english',ty:'reading'},{r:'books/vocab',t:'Vocabulary (Destination B2)',c:'english',ty:'vocab'},{r:'cheatsheet/grammar',t:'Grammar sheet',c:'english',ty:'grammar'},{r:'review',t:'Review (SRS)',c:'general',ty:'review'},{r:'practice',t:'Practice center',c:'general',ty:'practice'});
-    if(role!=='english')out.push({r:'projects',t:'Projects',c:'python',ty:'project'},{r:'practice/coding',t:'Coding test',c:'python',ty:'quiz'});
-    return out;
-  }
-  function aForm(a){
-    a=a||{type:'lesson',course:A_COURSES[0],priority:'normal',due:'',title:'',desc:'',route:''};
-    var sel=function(name,opts,cur,lbl){return '<label class="field"><span>'+esc(lbl)+'</span><select class="input" name="'+name+'">'+opts.map(function(o){return '<option value="'+o[0]+'"'+(o[0]===cur?' selected':'')+'>'+esc(o[1])+'</option>'}).join('')+'</select></label>'};
-    return '<form id="af" class="af"><input type="hidden" name="id" value="'+esc(a.id||'')+'">'+
-      '<label class="field"><span>'+esc(t('asTitle'))+'</span><input class="input" name="title" required maxlength="120" value="'+esc(a.title)+'"></label>'+
-      '<label class="field"><span>'+esc(t('asDesc'))+'</span><textarea class="input" name="desc" rows="3" maxlength="2000">'+esc(a.desc||'')+'</textarea></label>'+
-      '<div class="af-row">'+sel('type',A_TYPES.map(function(x){return [x,x]}),a.type,t('asType'))+sel('course',A_COURSES.map(function(x){return [x,x]}),a.course,t('asCourse'))+sel('priority',[['low',t('pr_low')],['normal',t('pr_normal')],['high',t('pr_high')]],a.priority,t('asPr'))+'<label class="field"><span>'+esc(t('asDue'))+'</span><input class="input" type="date" name="due" value="'+esc(a.due||'')+'"></label></div>'+
-      '<label class="field"><span>'+esc(t('asRoute'))+'</span><input class="input" name="route" list="qr" maxlength="120" value="'+esc(a.route||'')+'" placeholder="lesson/12"><datalist id="qr">'+quickRoutes().map(function(q){return '<option value="'+esc(q.r)+'">'+esc(q.t)+'</option>'}).join('')+'</datalist></label>'+
-      '<div class="acts"><button class="btn btn-primary btn-sm" type="submit">'+esc(t('asSave'))+'</button>'+(a.id?'<button class="btn btn-ghost btn-sm" type="button" id="afCancel">'+esc(t('asCancel'))+'</button>':'')+'</div><div class="err" id="afErr"></div></form>';
-  }
-  function vAssign(){
-    var list=(feed?feed.assignments||[]:[]).slice().sort(function(a,b){return b.createdAt-a.createdAt});
-    var open=list.filter(function(a){return a.status!=='completed'}),done=list.filter(function(a){return a.status==='completed'});
-    var over=open.filter(function(a){return stOf(a)==='overdue'}).length;
-    var h='<h1>'+esc(t('asT'))+'</h1><p class="lede">'+esc(t('asOpen'))+' '+open.length+' · '+esc(t('asOverdue'))+' '+over+' · '+esc(t('asDone'))+' '+done.length+(list.length?' · '+esc(t('asRate'))+' '+Math.round(done.length/list.length*100)+'%':'')+'</p>';
-    h+='<div class="two"><section class="card"><h3 class="card-title">'+esc(editA?t('asEdit'):t('asNew'))+'</h3>'+aForm(editA)+'</section>';
-    h+='<section class="card"><h3 class="card-title">'+esc(t('asT'))+'</h3>'+(list.length?'<div class="as-list">'+list.map(function(a){var st=stOf(a);return '<div class="as-row pr-'+esc(a.priority)+' st-'+st+'"><div class="as-main"><span class="as-type">'+esc(a.type)+' · '+esc(a.course)+(a.by!==role?' · '+esc(a.by):'')+'</span><b>'+esc(a.title)+'</b>'+(a.desc?'<p>'+esc(a.desc)+'</p>':'')+'<span class="as-meta">'+esc(ymd(a.createdAt))+(a.due?' · '+esc(t('asDue'))+' '+esc(a.due):'')+(a.route?' · #/'+esc(a.route):'')+(a.completedAt?' · ✓ '+esc(dmy(a.completedAt)):'')+'</span></div><div class="as-side"><span class="as-st st-'+st+'">'+esc(t('st_'+st))+'</span>'+(a.by===role?'<button class="btn btn-quiet btn-sm" data-aedit="'+esc(a.id)+'">'+esc(t('asEdit'))+'</button><button class="btn btn-quiet btn-sm" data-adel="'+esc(a.id)+'">'+esc(t('asDel'))+'</button>':'')+(st!=='completed'?'<button class="btn btn-ghost btn-sm" data-ast="'+esc(a.id)+'" data-v="completed">✓</button>':'<button class="btn btn-ghost btn-sm" data-ast="'+esc(a.id)+'" data-v="assigned">↺</button>')+'</div></div>'}).join('')+'</div>':'<div class="empty">'+esc(t('asNone'))+'</div>')+'</section></div>';
-    return h;
-  }
-  function mountAssign(){
-    var f=$('#af');if(f)f.addEventListener('submit',function(ev){ev.preventDefault();var fd=new FormData(f),a={};['id','title','desc','type','course','priority','due','route'].forEach(function(k){a[k]=fd.get(k)||''});
-      post({op:'assignment',action:a.id?'update':'create',a:a}).then(function(j){if(j.ok){editA=null;poll().then(render)}else{var e=$('#afErr');e.textContent=j.error||'error';e.classList.add('show')}})});
-    var c=$('#afCancel');if(c)c.addEventListener('click',function(){editA=null;render()});
-    $$('[data-aedit]').forEach(function(b){b.addEventListener('click',function(){editA=(feed.assignments||[]).filter(function(x){return x.id===b.dataset.aedit})[0];render();window.scrollTo(0,0)})});
-    $$('[data-adel]').forEach(function(b){b.addEventListener('click',function(){if(!confirm(t('asDelQ')))return;post({op:'assignment',action:'delete',a:{id:b.dataset.adel}}).then(function(){poll().then(render)})})});
-    $$('[data-ast]').forEach(function(b){b.addEventListener('click',function(){post({op:'astatus',id:b.dataset.ast,status:b.dataset.v}).then(function(){poll().then(render)})})});
-  }
-
-  /* ---------- 14. Feedback (teacher / english; controller — faqat shaxsiy) ---------- */
-  var FB_KINDS=role==='english'?['writing','speaking','reading','listening','grammar','vocab','english','quiz','practice','assignment','general']:['lesson','practice','quiz','writing','speaking','reading','listening','project','assignment','python','english','grammar','vocab','general'];
-  var editF=null;
-  function fForm(f){
-    f=f||{activity:{kind:FB_KINDS[0],ref:'',route:'',title:''},text:'',visibility:role==='controller'?'private':'student',fb:{}};
-    var fb=f.fb||{},act=f.activity||{};
-    var ta=function(name,lbl,val,rows){return '<label class="field"><span>'+esc(lbl)+'</span><textarea class="input" name="'+name+'" rows="'+(rows||2)+'">'+esc(val||'')+'</textarea></label>'};
-    return '<form id="ff" class="af"><input type="hidden" name="id" value="'+esc(f.id||'')+'">'+
-      '<div class="af-row"><label class="field"><span>'+esc(t('fbKind'))+'</span><select class="input" name="kind">'+FB_KINDS.map(function(k){return '<option'+(k===act.kind?' selected':'')+'>'+k+'</option>'}).join('')+'</select></label>'+
-      '<label class="field"><span>'+esc(t('fbRef'))+'</span><input class="input" name="ref" maxlength="60" value="'+esc(act.ref||'')+'" placeholder="wr3 · spk12 · p2"></label>'+
-      '<label class="field"><span>'+esc(t('asRoute'))+'</span><input class="input" name="route" maxlength="120" value="'+esc(act.route||'')+'" placeholder="writing/3"></label></div>'+
-      '<label class="field"><span>'+esc(t('fbTitle'))+'</span><input class="input" name="title" maxlength="120" value="'+esc(act.title||'')+'"></label>'+
-      ta('text',t('fbText'),f.text,3)+
-      (role!=='controller'?'<div class="af-row">'+ta('strengths',t('fbStr'),fb.strengths)+ta('weaknesses',t('fbWeak'),fb.weaknesses)+'</div>'+ta('corrections',t('fbCorr'),fb.corrections,3)+'<div class="af-row">'+ta('recommendations',t('fbRec'),fb.recommendations)+ta('next',t('fbNext'),fb.next)+'</div>':'')+
-      '<label class="field"><span>'+esc(t('fbVis'))+'</span><select class="input" name="visibility">'+(role!=='controller'?'<option value="student"'+(f.visibility==='student'?' selected':'')+'>'+esc(t('fbVisS'))+'</option>':'')+'<option value="private"'+(f.visibility==='private'?' selected':'')+'>'+esc(t('fbVisP'))+'</option></select></label>'+
-      '<div class="acts"><button class="btn btn-primary btn-sm" type="submit">'+esc(t('asSave'))+'</button>'+(f.id?'<button class="btn btn-ghost btn-sm" type="button" id="ffCancel">'+esc(t('asCancel'))+'</button>':'')+'</div><div class="err" id="ffErr"></div></form>';
-  }
+  /* ---------- Shaxsiy eslatma qatori (controller private notes) ---------- */
   function fbRowStaff(f){var a=f.activity||{};return '<article class="fb-row"><div class="fb-head"><span class="chip">'+esc(a.kind||'')+(a.ref?' · '+esc(a.ref):'')+'</span>'+(a.title?'<b>'+esc(a.title)+'</b>':'')+'<span class="as-st '+(f.visibility==='private'?'st-assigned':'st-completed')+'">'+esc(f.visibility==='private'?t('fbPrivate'):t('fbStudent'))+'</span><span class="fb-by">'+esc(f.role)+' · '+esc(dmy(f.at))+'</span>'+(f.by===role?'<button class="btn btn-quiet btn-sm" data-fedit="'+esc(f.id)+'">'+esc(t('asEdit'))+'</button><button class="btn btn-quiet btn-sm" data-fdel="'+esc(f.id)+'">'+esc(t('asDel'))+'</button>':'')+'</div>'+(f.text?'<p class="fb-text">'+esc(f.text)+'</p>':'')+fbStruct(f.fb)+'</article>'}
-  function vFeedback(){
-    var list=(feed?feed.feedback||[]:[]).slice().sort(function(a,b){return b.at-a.at});
-    var h='<h1>'+esc(t('fbT'))+'</h1><p class="lede">'+list.length+'</p>';
-    h+='<div class="two"><section class="card"><h3 class="card-title">'+esc(editF?t('asEdit'):t('fbNew'))+'</h3>'+fForm(editF)+'</section>';
-    h+='<section class="card"><h3 class="card-title">'+esc(t('fbT'))+'</h3>'+(list.length?list.map(fbRowStaff).join(''):'<div class="empty">'+esc(t('fbNone'))+'</div>')+'</section></div>';
-    return h;
-  }
-  function mountFeedback(){
-    var f=$('#ff');if(f)f.addEventListener('submit',function(ev){ev.preventDefault();var fd=new FormData(f);var o={id:fd.get('id')||'',activity:{kind:fd.get('kind'),ref:fd.get('ref'),route:fd.get('route'),title:fd.get('title')},text:fd.get('text'),visibility:fd.get('visibility'),fb:{strengths:fd.get('strengths')||'',weaknesses:fd.get('weaknesses')||'',corrections:fd.get('corrections')||'',recommendations:fd.get('recommendations')||'',next:fd.get('next')||''}};
-      if(!Object.keys(o.fb).some(function(k){return o.fb[k]}))o.fb=null;
-      post({op:'feedback',action:o.id?'update':'create',f:o}).then(function(j){if(j.ok){editF=null;poll().then(render)}else{var e=$('#ffErr');e.textContent=j.error||'error';e.classList.add('show')}})});
-    var c=$('#ffCancel');if(c)c.addEventListener('click',function(){editF=null;render()});
-    $$('[data-fedit]').forEach(function(b){b.addEventListener('click',function(){editF=(feed.feedback||[]).filter(function(x){return x.id===b.dataset.fedit})[0];render();window.scrollTo(0,0)})});
-    $$('[data-fdel]').forEach(function(b){b.addEventListener('click',function(){if(!confirm(t('asDelQ')))return;post({op:'feedback',action:'delete',f:{id:b.dataset.fdel}}).then(function(){poll().then(render)})})});
-  }
-
-  /* ---------- 15. Writing / Speaking tekshiruvi ---------- */
-  function vReviews(){
-    var list=(feed?feed.reviews||[]:[]).slice().sort(function(a,b){return b.updatedAt-a.updatedAt});
-    var q=list.filter(function(r){return r.stage!=='completed'}),d=list.filter(function(r){return r.stage==='completed'});
-    var h='<h1>'+esc(t('rvT'))+'</h1><p class="lede">'+esc(t('rvS'))+'</p>';
-    var row=function(r){
-      var open=r.stage==='submitted'||r.stage==='revised';
-      var h2='<details class="card rv-card" '+(open?'open':'')+'><summary><span class="chip">'+esc(r.kind)+'</span><b>'+esc(r.title)+'</b><span class="as-st st-'+esc(r.stage)+'">'+esc(t('stage_'+r.stage))+'</span><small>'+esc(dmy(r.updatedAt))+(r.route?' · #/'+esc(r.route):'')+'</small></summary>';
-      h2+='<div class="gc-l">'+esc(t('rvText'))+'</div><pre class="rv-text">'+esc(r.text)+'</pre>';
-      h2+='<div class="gc-l">'+esc(t('rvHist'))+'</div><div class="tl">'+r.history.map(function(x){return '<div class="tl-row"><time>'+dmy(x.at)+'</time><span class="tl-k">'+esc(t('stage_'+x.stage))+'</span><b>'+esc(x.by)+(x.band!=null?' · band '+x.band:'')+(x.result?' · '+esc(t('res_'+x.result)):'')+'</b></div>'+(x.fb?fbStruct(x.fb):'')}).join('')+'</div>';
-      if(open)h2+='<form class="af rvf" data-rid="'+esc(r.id)+'"><div class="af-row"><label class="field"><span>'+esc(t('fbStr'))+'</span><textarea class="input" name="strengths" rows="2"></textarea></label><label class="field"><span>'+esc(t('fbWeak'))+'</span><textarea class="input" name="weaknesses" rows="2"></textarea></label></div><label class="field"><span>'+esc(t('fbCorr'))+'</span><textarea class="input" name="corrections" rows="4"></textarea></label><div class="af-row"><label class="field"><span>'+esc(t('fbRec'))+'</span><textarea class="input" name="recommendations" rows="2"></textarea></label><label class="field"><span>'+esc(t('fbNext'))+'</span><textarea class="input" name="next" rows="2"></textarea></label></div><div class="af-row">'+(r.kind==='writing'?'<label class="field"><span>'+esc(t('rvBand'))+'</span><input class="input" name="band" type="number" step="0.5" min="4" max="9"></label>':'<label class="field"><span>'+esc(t('rvResult'))+'</span><select class="input" name="result"><option value="">—</option><option value="completed">'+esc(t('res_completed'))+'</option><option value="incomplete">'+esc(t('res_incomplete'))+'</option></select></label>')+'</div><div class="acts"><button class="btn btn-primary btn-sm" type="submit">'+esc(t('rvGive'))+'</button></div></form>';
-      else if(r.stage==='completed')h2+='<div class="acts"><button class="btn btn-ghost btn-sm" data-rvre="'+esc(r.id)+'">'+esc(t('rvReopen'))+'</button></div>';
-      else h2+='<div class="acts"><button class="btn btn-ghost btn-sm" data-rvdone="'+esc(r.id)+'">'+esc(t('rvComplete'))+'</button></div>';
-      return h2+'</details>';
-    };
-    h+='<h2 class="h2s">'+esc(t('rvQueue'))+' · '+q.length+'</h2>'+(q.length?q.map(row).join(''):'<div class="empty">'+esc(t('rvNone'))+'</div>');
-    if(d.length)h+='<h2 class="h2s">'+esc(t('rvDone'))+' · '+d.length+'</h2>'+d.slice(0,20).map(row).join('');
-    return h;
-  }
-  function mountReviews(){
-    $$('.rvf').forEach(function(f){f.addEventListener('submit',function(ev){ev.preventDefault();var fd=new FormData(f);var r={id:f.dataset.rid,fb:{strengths:fd.get('strengths'),weaknesses:fd.get('weaknesses'),corrections:fd.get('corrections'),recommendations:fd.get('recommendations'),next:fd.get('next')}};if(fd.get('band'))r.band=Number(fd.get('band'));if(fd.get('result'))r.result=fd.get('result');post({op:'review',action:'feedback',r:r}).then(function(){poll().then(render)})})});
-    $$('[data-rvdone]').forEach(function(b){b.addEventListener('click',function(){post({op:'review',action:'complete',r:{id:b.dataset.rvdone}}).then(function(){poll().then(render)})})});
-    $$('[data-rvre]').forEach(function(b){b.addEventListener('click',function(){post({op:'review',action:'reopen',r:{id:b.dataset.rvre}}).then(function(){poll().then(render)})})});
-  }
-
-  /* ---------- 16. Ingliz tili ish maydoni (english / teacher) ---------- */
-  function vEnglish(){
-    var em=Mastery.english(),cur=EngCal.currentDay(),row=function(l,v){return '<div class="ms-row"><span>'+esc(l)+'</span>'+bar(v)+'<b>'+v+'% · '+esc(Mastery.levelLabel(v))+'</b></div>'};
-    var h='<h1>'+esc(t('enT'))+'</h1><p class="lede">'+esc(t('enDay'))+': '+cur+' / '+ENGLISH.meta.days+' · '+Store.engDoneCount()+' '+esc(t('cDone'))+(doc&&doc.state&&doc.state._filtered?' · <span class="ro">'+esc(t('filtered'))+'</span>':'')+'</p>';
-    h+='<div class="stat-grid" style="margin-bottom:16px">'+tile(t('stEn'),Store.engDoneCount()+'<small> / '+ENGLISH.meta.days+'</small>','accent')+tile(t('stMastery'),em.overall+'<small>%</small>',Mastery.levelLabel(em.overall))+tile(t('stWords'),Store.copyList('vocab').length)+tile(t('stMis'),Store.openMistakes().filter(function(m){return m.cat!=='python'}).length,null,'red')+tile(t('stDue'),window.Review?Review.dueCount():0)+'</div>';
-    h+='<div class="two">'+card(t('stMastery'),row(t('enGram'),em.grammar)+row(t('enVoc'),em.vocab)+row(t('enRead'),em.reading)+row(t('enLis'),em.listening)+row(t('enSpk'),em.speaking)+row(t('enWr'),em.writing));
-    var weak=[['grammar',em.grammar],['vocab',em.vocab],['reading',em.reading],['listening',em.listening],['speaking',em.speaking],['writing',em.writing]].filter(function(x){return x[1]<60}).sort(function(a,b){return a[1]-b[1]});
-    h+=card(t('enWeak'),weak.length?'<div class="pr-tags">'+weak.map(function(x){return '<span class="chip hot">'+esc(x[0])+' '+x[1]+'%</span>'}).join('')+'</div>':'<div class="empty">—</div>')+'</div>';
-    var qz=Store.all().quiz,keys=Object.keys(qz).filter(function(k){return /^(eng|pr:|ls:|db2|q10)/.test(k)}).sort(function(a,b){return (qz[b].at||0)-(qz[a].at||0)}).slice(0,25);
-    h+='<div class="two">'+card(t('enQuiz'),keys.length?'<table class="tbl"><tr><th>key</th><th>last</th><th>'+esc(t('anBest'))+'</th><th>date</th></tr>'+keys.map(function(k){var q=qz[k];return '<tr><td class="mono">'+esc(k)+'</td><td>'+q.score+'/'+q.total+'</td><td>'+(q.best||0)+'/'+(q.bestTotal||q.total)+'</td><td>'+esc(dmy(q.at))+'</td></tr>'}).join('')+'</table>':'<div class="empty">'+esc(t('none'))+'</div>');
-    var wr=WRITING.weeks.filter(function(w){return Store.planDone('wr'+w.n)}).length,sp=Store.speakDoneCount();
-    var rvs=(feed?feed.reviews||[]:[]);
-    h+=card(t('enSpk')+' / '+t('enWr'),'<div class="kv"><span>'+esc(t('cSpk'))+'</span><b>'+sp+' / 30</b><span>'+esc(t('cWr'))+'</span><b>'+wr+' / '+WRITING.weeks.length+'</b><span>'+esc(t('rvQueue'))+'</span><b>'+rvs.filter(function(r){return r.stage!=='completed'}).length+'</b><span>'+esc(t('rvDone'))+'</span><b>'+rvs.filter(function(r){return r.stage==='completed'}).length+'</b></div>')+'</div>';
-    var ev=Store.events(200).filter(isEnglishEv).slice(-12).reverse();
-    h+=card(t('enRecent'),ev.length?'<div class="tl">'+ev.map(function(e){return '<div class="tl-row"><time>'+dmy(e.at)+'</time><span class="tl-k">'+esc(t('ev_'+e.type)==='ev_'+e.type?e.type:t('ev_'+e.type))+'</span><b>'+esc(e.title)+'</b></div>'}).join('')+'</div>':'<div class="empty">'+esc(t('none'))+'</div>');
-    var mine=(feed?feed.feedback||[]:[]).filter(function(f){return f.by===role}).slice(-5).reverse(),asg=(feed?feed.assignments||[]:[]).filter(function(a){return a.status!=='completed'});
-    h+='<div class="two">'+card(t('enFb')+' · '+mine.length,mine.length?mine.map(fbRowStaff).join(''):'<div class="empty">'+esc(t('fbNone'))+'</div>')+card(t('enAs')+' · '+asg.length,asg.length?'<div class="as-list">'+asg.map(function(a){var st=stOf(a);return '<div class="as-row st-'+st+' pr-'+esc(a.priority)+'"><div class="as-main"><b>'+esc(a.title)+'</b><span class="as-meta">'+(a.due||'')+'</span></div><span class="as-st st-'+st+'">'+esc(t('st_'+st))+'</span></div>'}).join('')+'</div>':'<div class="empty">'+esc(t('asNone'))+'</div>')+'</div>';
-    return h;
-  }
-
-  /* ---------- 17. Loyihalar (teacher) ---------- */
-  function vProjects(){
-    var h='<h1>'+esc(t('nProjects'))+'</h1>';
-    if(!window.PROJECTS)return h+'<div class="empty">—</div>';
-    var fbs=(feed?feed.feedback||[]:[]).filter(function(f){return (f.activity||{}).kind==='project'});
-    h+='<section class="card"><table class="tbl"><tr><th>#</th><th>project</th><th>after</th><th>steps</th><th>status</th><th>deadline</th><th>feedback</th></tr>'+PROJECTS.list.map(function(p){var n=p.steps.filter(function(_,i){return Store.flag('proj:'+p.id+':'+i)}).length,done=Store.flag('proj:'+p.id+':done'),open=Store.doneCount()>=p.after,r=Store.readGet('proj-'+p.id)||{};return '<tr class="'+(done?'done':'')+'"><td>'+esc(p.id)+'</td><td>'+esc(L(p.title))+'</td><td>'+p.after+'</td><td>'+n+'/'+p.steps.length+'</td><td>'+(done?'done':open?(n?'progress':'open'):'locked')+'</td><td>'+esc(r.deadline||'')+'</td><td>'+fbs.filter(function(f){return f.activity.ref===p.id}).length+'</td></tr>'}).join('')+'</table></section>';
-    h+=card(t('fbT'),fbs.length?fbs.map(fbRowStaff).join(''):'<div class="empty">'+esc(t('fbNone'))+'</div>');
-    return h;
-  }
-
   /* ---------- 18. Shaxsiy eslatmalar (o'z roli) ---------- */
   function vPnotes(){
     var priv=(feed?feed.feedback||[]:[]).filter(function(f){return f.visibility==='private'&&f.by===role});
@@ -450,19 +316,7 @@
   }
   function mountPnotes(){var na=$('#notes');if(!na)return;if(feed&&typeof feed.notes==='string')na.value=feed.notes;var nt=null;na.addEventListener('input',function(){clearTimeout(nt);var v=na.value;nt=setTimeout(function(){post({op:'notes',text:v}).then(function(){$('#notesSt').textContent=t('saved')+' · '+hm(Date.now())})},700)});$$('[data-fdel]').forEach(function(b){b.addEventListener('click',function(){if(!confirm(t('asDelQ')))return;post({op:'feedback',action:'delete',f:{id:b.dataset.fdel}}).then(function(){poll().then(render)})})})}
 
-  /* ---------- 19. Tahlil: o'qituvchi / english / controller ---------- */
-  function vTeacherAn(){
-    var list=feed?feed.assignments||[]:[],done=list.filter(function(a){return a.status==='completed'}).length,over=list.filter(function(a){return stOf(a)==='overdue'}).length;
-    var rvs=feed?feed.reviews||[]:[],rv=window.Review?Review.list():[],due=window.Review?Review.dueCount():0,mastered=rv.filter(function(it){return Review.status(it)==='mastered'}).length;
-    var pm=Mastery.python(),em=Mastery.english();
-    var h='<h1>'+esc(t('taT'))+'</h1>';
-    h+='<div class="stat-grid" style="margin-bottom:16px">'+tile(t('taRate'),(list.length?Math.round(done/list.length*100):0)+'<small>% · '+done+'/'+list.length+'</small>',null,'accent')+tile(t('taOver'),over,null,over?'red':'')+tile(t('taWr'),rvs.filter(function(r){return r.kind==='writing'}).length,rvs.filter(function(r){return r.kind==='writing'&&r.stage!=='completed'}).length+' open')+tile(t('taSpk'),Store.speakDoneCount()+'<small> / 30</small>',rvs.filter(function(r){return r.kind==='speaking'}).length+' reviews')+tile(t('taRv'),(rv.length?Math.round(mastered/rv.length*100):0)+'<small>%</small>',due+' due')+tile(t('stMis'),Store.openMistakes().length,null,'red')+'</div>';
-    var weak=[];[['Python',pm.overall],['grammar',em.grammar],['vocab',em.vocab],['reading',em.reading],['listening',em.listening],['speaking',em.speaking],['writing',em.writing]].forEach(function(x){if(x[1]<60)weak.push(x)});weak.sort(function(a,b){return a[1]-b[1]});
-    var bycat={};Store.openMistakes().forEach(function(m){bycat[m.cat||'python']=(bycat[m.cat||'python']||0)+1});
-    h+='<div class="two">'+card(t('taWeak'),'<div class="pr-tags">'+weak.map(function(x){return '<span class="chip hot">'+esc(x[0])+' '+x[1]+'% · '+esc(Mastery.levelLabel(x[1]))+'</span>'}).join('')+Object.keys(bycat).map(function(k){return '<span class="chip">'+esc(k)+' '+bycat[k]+' '+esc(t('mOpen').toLowerCase())+'</span>'}).join('')+'</div>')+card('Python · '+Mastery.levelLabel(pm.overall)+' / English · '+Mastery.levelLabel(em.overall),'<div class="ms-row"><span>Python</span>'+bar(pm.overall)+'<b>'+pm.overall+'%</b></div><div class="ms-row"><span>English</span>'+bar(em.overall)+'<b>'+em.overall+'%</b></div>')+'</div>';
-    return h+vAnalytics().replace(/^<h1>[\s\S]*?<\/p>/,'');
-  }
-  function vEnglishAn(){return vEnglish()}
+  /* ---------- 19. Tahlil: controller (faollik) ---------- */
   function vCtrlAn(){
     var ss=feed?feed.sessions||[]:[],now=Date.now(),d7=now-7*86400000,d30=now-30*86400000;
     var sum=function(from){return ss.filter(function(x){return x.startedAt>=from}).reduce(function(a,x){return a+(x.activeMin||0)},0)};
@@ -484,5 +338,5 @@
   if(/^(localhost|127\.0\.0\.1)$/.test(location.hostname))window.__staffDev={enter:enter,feed:function(f){feed=f;render()},state:function(st){doc={rev:1,savedAt:Date.now(),state:st};Store.replace(st,true);Store.all().lang=lang;hasState=true;render()},tab:function(x){tab=x;render()}};
 
   /* Kirish — umumiy /login sahifasida; sessiya bo'lmasa o'sha yerga */
-  fetch('/api/ctrl/io',{credentials:'same-origin'}).then(function(r){if(r.status===401){toLogin('');return null}return r.json()}).then(function(j){if(j&&(j.role==='controller'||j.role==='teacher'||j.role==='english'))enter(j.role);else if(j)toLogin('denied')}).catch(function(){var g=$('#gateMsg');if(g)g.textContent=t('net')});
+  fetch('/api/ctrl/io',{credentials:'same-origin'}).then(function(r){if(r.status===401){toLogin('');return null}return r.json()}).then(function(j){if(j&&j.role==='controller')enter(j.role);else if(j)toLogin('denied')}).catch(function(){var g=$('#gateMsg');if(g)g.textContent=t('net')});
 })();

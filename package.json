@@ -4,5 +4,15 @@
   "version": "1.0.0",
   "description": "UzLeeder Academy - static site + 3 serverless functions for cross-device sync",
   "type": "module",
-  "engines": { "node": "24.x" }
+  "engines": {
+    "node": "24.x"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.6",
+    "@netlify/database": "^2.0.1"
+  },
+  "scripts": {
+    "test": "node tools/api-test.cjs && node tools/middleware-test.mjs && node tools/netlify-test.mjs && node tools/mission-test.cjs && node tools/pyai-engine-test.cjs && node tools/jobready-test.cjs && node tools/pyai-test.cjs && node tools/audit-english.cjs && node tools/schedule-migration-test.cjs && node tools/validate-schedule.cjs && node tools/validator-negative-test.cjs",
+    "docs:legacy-map": "node tools/gen-legacy-map.cjs"
+  }
 }

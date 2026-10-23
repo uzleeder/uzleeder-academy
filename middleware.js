@@ -24,9 +24,9 @@ export const config = {
 const COOKIE = 'uzla_session';
 // cleanUrls: true — Vercel /login.html ni /login ga yo'naltiradi, ikkalasi ochiq
 const OPEN = new Set(['/login', '/login.html', '/api/login', '/api/health', '/manifest.json', '/sw.js',
-  // Xodimlar paneli (controller · teacher · english) — o'z logini bor (uzla_ctrl cookie, role bilan).
-  // /staff, /teacher, /english — vercel.json rewrite → controller.html (bitta panel, rolga qarab tablar)
-  '/controller', '/controller.html', '/staff', '/teacher', '/english', '/api/ctrl/login',
+  // Nazoratchi paneli (controller) — o'z logini bor (uzla_ctrl cookie, role bilan).
+  // /staff — rewrite → controller.html. /teacher, /english 2026-10 da olib tashlangan (rollar yo'q).
+  '/controller', '/controller.html', '/staff', '/api/ctrl/login',
   // Login sahifasidagi tanishtiruv videosi va uning muqovasi — kirmagan odam ham ko'ra olsin.
   // Faqat shu ikki fayl; brand/out ichidagi qolgan narsa (log, kadrlar) yopiq qoladi.
   '/brand/out/site-tour-1920x1080.mp4', '/brand/out/cover-1920x1080.png',
@@ -71,7 +71,7 @@ async function verify(token, secret) {
     return payload;
   } catch (e) { return false; }
 }
-const STAFF_ROLES = ['controller', 'teacher', 'english'];
+const STAFF_ROLES = ['controller'];   // teacher / english — olib tashlangan (2026-10)
 
 export default async function middleware(req) {
   const url = new URL(req.url);
@@ -89,7 +89,7 @@ export default async function middleware(req) {
      bo'lsa — qabul qilinmaydi (cookie almashtirib rol o'zgartirib bo'lmaydi). */
   if (learner && !learner.role) return pass;
 
-  /* Xodim (uzla_ctrl, role: controller|teacher|english): faqat panel uchun
+  /* Xodim (uzla_ctrl, role: controller): faqat panel uchun
      kerak bo'lgan statik fayllar (/js, /css, /img). Ilova sahifasining o'zi (/)
      va o'quvchi API'si (/api/state …) unga baribir yopiq — HTML so'rovi
      panelga qaytariladi.                                                     */
