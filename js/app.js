@@ -26,7 +26,7 @@
     books:      { render: function () { return PageBooks(); },      nav: 'books', mount: function () { PageBooks.mount(); } },
     datacamp:   { render: function () { return PageDataCamp(); },   nav: 'datacamp' },
     quick:      { render: function () { return PageQuick(); },      nav: 'course', mount: function () { PageQuick.mount(); } },
-    jobready:   { render: function () { return PageJobReady(); },  nav: 'course' },   // Job Ready dasturi (kurslar ichida)
+    jobready:   { render: function () { return PageJobReady(); },  nav: 'course', mount: function () { if (PageJobReady.mount) PageJobReady.mount(); } },   // Job Ready dasturi (kurslar ichida)
     career:     { render: function () { return PageCareer(); },     nav: 'career', mount: function () { if (PageCareer.mount) PageCareer.mount(); } },
     settings:   { render: function () { return PageSettings(); },   nav: 'settings', mount: function () { PageSettings.mount(); } },
     profile:    { render: function () { return PageProfile(); },    nav: 'profile',  mount: function () { PageProfile.mount(); } },
@@ -86,6 +86,9 @@
       if (parts[1] === 'dest') return { name: 'bookDestUnit', num: Number(parts[2]) || 2, sec: parts[3] || 'topic' };
       // #/books/dict/3/7 — diktant mashqi (3-test, 7-mashq)
       if (parts[1] === 'dict') return { name: 'bookDict', t: Number(parts[2]) || 1, e: Number(parts[3]) || 1 };
+      // #/books/ra · #/books/s1 — o'quvchining o'z PDF kitoblari (Reading Accelerator, Listening Section 1)
+      if ((parts[1] === 'ra' || parts[1] === 's1') && parts[2] === 'read') return { name: 'bookReader', id: parts[1], page: Number(parts[3]) || 0 };
+      if (parts[1] === 'ra' || parts[1] === 's1') return { name: 'bookExtra', id: parts[1] };
       var kind = parts[1].charAt(0), num = Number(parts[1].slice(1)) || 1;
       if (kind === 'v') return { name: 'bookVocab', num: num };
       if (kind === 'r') return { name: 'bookReading', num: num, track: 'ebook' };
@@ -278,6 +281,8 @@
         : r.name === 'bookVocab' ? 'books/v' + r.num
         : r.name === 'bookTrack' ? 'books/' + r.track
         : r.name === 'bookListen' ? 'books/listen'
+        : r.name === 'bookExtra' ? 'books/' + r.id
+        : r.name === 'bookReader' ? 'books/' + r.id + '/read' + (r.page ? '/' + r.page : '')
         : r.name === 'bookVocabList' ? 'books/ess4'
         : r.name === 'bookDest' ? 'books/vocab'
         : r.name === 'bookDestUnit' ? 'books/dest/' + r.num + '/' + r.sec
@@ -337,6 +342,12 @@
       } else if (r.name === 'freeNote') {
         content.innerHTML = PageFreeNote(r.id);
         PageFreeNote.mount();
+      } else if (r.name === 'bookReader' && window.PageBookReader) {
+        content.innerHTML = PageBookReader(r.id, r.page);
+        PageBookReader.mount(r.id);
+      } else if (r.name === 'bookExtra' && window.PageBookExtra) {
+        content.innerHTML = PageBookExtra(r.id);
+        PageBookExtra.mount(r.id);
       } else if (r.name === 'bookDest') {
         content.innerHTML = PageBookDest();
         PageBookDest.mount();

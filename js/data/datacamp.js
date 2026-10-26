@@ -5,7 +5,7 @@
    16 soat · Basic · 4 kurs (13 bob) · 1 loyiha. Kurslar va boblar DataCamp'dagi
    tartibda, har bobning darslari (video/mashq nomlari) ro'yxati bilan.
 
-   Jadval: RASMIY START 20-sen 2026 (kickoff, yakshanba) — kuniga BITTA bob,
+   Jadval: RASMIY START 25-okt 2026 (kickoff, yakshanba) — kuniga BITTA bob,
    yakshanbalar (27-sen, 4-okt) katta coding testi uchun bo'sh. 13 bob +
    loyiha = 14 kun → 5-oktabrda trek tugaydi. Keyin DataCamp bloki DCPLAN 2-bosqichga
    (NumPy · pandas · OOP) o'tadi.
@@ -19,7 +19,7 @@ window.DCTRACK = {
     title: 'Python Programming Fundamentals',
     short: 'DataCamp · Python track',
     url: 'https://app.datacamp.com/learn/skill-tracks/python-programming-fundamentals',
-    start: '2026-09-20',
+    start: '2026-10-25',
     hours: 16, level: 'Basic',
     lede: {
       uz: "DataCamp'ning 16 soatlik treki: 4 kurs, 13 bob, 1 loyiha. Kuniga bitta bob — nazariya va mashqlar DataCamp'da, keyin shu yerda bob testi. Yakshanba: shu haftagacha o'tilgan hamma narsa bo'yicha KATTA coding testi.",

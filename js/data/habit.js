@@ -16,8 +16,8 @@
      yakshanba 130 daq (bitta test bloki). Har shablon aynan 1440 daqiqa,
      bloklar ustma-ust tushmaydi (yt ham alohida slot).
 
-   CODING — HAR KUNI: Python 30 kun (20-sen → 19-okt, kuniga 1 dars) +
-     DataCamp treki (20-sen dan, kuniga 1 bob). Og'ir kun 100 daq
+   CODING — HAR KUNI: Python 30 kun (25-okt → 23-noy, kuniga 1 dars) +
+     DataCamp treki (25-okt dan, kuniga 1 bob). Og'ir kun 100 daq
      (Python 60 + DataCamp 40), LC kuni 90 daq, yakshanba: Python oyida
      45 daq dars, keyin shu slot SRS takrori. Coding takrori — ixtiyoriy.
 
@@ -30,7 +30,7 @@
      Ish davri Sozlamalarda (work: on/from/to). Ish kunida kechqurungi
      bloklar HABIT.work[type] bo'yicha qayta joylanadi: kino tushga ko'chadi,
      speaking/lug'at testi/kitob/yakun ishdan keyin. Har kun baribir 1440.
-     Writing bloki 1-oktabrgacha jadvalda YO'Q (Writing kursi shu kundan).
+     Writing bloki 25-oktabrgacha jadvalda YO'Q (Writing kursi shu kundan).
 
    KINO — har kuni, 35–45 daqiqa (yakshanba 45).
      Nega har kuni: (1) chegarasi bor dam chegarasizidan yaxshi — aks holda
@@ -54,9 +54,9 @@
 window.HABIT = {
 
   meta: {
-    from: '2026-09-20',          // jadval boshlanishi = RASMIY start (sinov kunlari 17–19-sen BEKOR qilingan)
-    official: '2026-09-20',      // RASMIY start (kickoff, yakshanba) — Python 1-kun, DataCamp 1-kun, yangi davr
-    to: '2027-02-20',
+    from: '2026-10-25',          // jadval boshlanishi = RASMIY start (2026-10 kalendar reseti)
+    official: '2026-10-25',      // RASMIY start (kickoff, yakshanba) — Python 1-kun, DataCamp 1-kun, yangi davr
+    to: '2027-02-10',
     dayStart: '05:20',
     dayEnd: '21:20',
     sleepFrom: '21:20',
@@ -64,8 +64,8 @@ window.HABIT = {
     debtCap: 3,                  // qarz ko'pi bilan 3 kun hisoblanadi — "roast" spiralga tushmasin
     title: { uz: 'Kunlik intizom', en: 'Daily discipline' },
     lede: {
-      uz: "20-sentabrdan 20-fevralgacha — har bir kun, soatma-soat. Uyg'onish 05:20, yotish 21:20 — aniq 8 soat uyqu.",
-      en: 'From 20 September to 20 February — every day, hour by hour. Wake at 05:20, sleep at 21:20 — exactly eight hours.'
+      uz: "25-oktabrdan 10-fevralgacha — har bir kun, soatma-soat. Uyg'onish 05:20, yotish 21:20 — aniq 8 soat uyqu.",
+      en: 'From 25 October to 10 February — every day, hour by hour. Wake at 05:20, sleep at 21:20 — exactly eight hours.'
     },
     note: {
       uz: "Bomdod va Peshin jadval ustuni — standart 05:20 va 13:00, Sozlamalardan o'zgartiriladi. Asr, Shom va Xufton hisoblanadi, chunki ular mavsum bilan 2 soatgacha suriladi. Hisob taxminiy — mahalliy taqvim bilan solishtir.",
@@ -76,8 +76,8 @@ window.HABIT = {
       en: 'Eight hours of sleep is a protected block, not what is left over. A short-slept brain does not retain new material: cutting sleep does not speed learning up, it slows it down. If a day overruns, shorten a lesson — never the sleep.'
     },
     restNote: {
-      uz: "Yakshanba — dam kuni. Yangi mavzu yo'q, LC yo'q, uy vazifasi yo'q. Majburiy ish bittasi: haftalik test (Listening + Reading, 100 daqiqa). Python oyida (19-oktabrgacha) 45 daqiqalik dars ham bor — 30/30 sig'ishi uchun. Qolgani — sayr, oila, kino. Dam olish \"hech narsa qilmaslik\" emas, \"yangi narsa boshlamaslik\" degani.",
-      en: 'Sunday is the rest day. No new material, no LC, no homework. One compulsory task: the weekly test (Listening + Reading, 100 minutes). During Python month (until 19 October) there is also a 45-minute lesson, so that 30 lessons fit in 30 days. The rest is walks, family, a film. Resting means not starting something new, not doing nothing.'
+      uz: "Yakshanba — dam kuni. Yangi mavzu yo'q, LC yo'q, uy vazifasi yo'q. Majburiy ish bittasi: haftalik test (Listening + Reading, 100 daqiqa). Python oyida (23-noyabrgacha) 45 daqiqalik dars ham bor — 30/30 sig'ishi uchun. Qolgani — sayr, oila, kino. Dam olish \"hech narsa qilmaslik\" emas, \"yangi narsa boshlamaslik\" degani.",
+      en: 'Sunday is the rest day. No new material, no LC, no homework. One compulsory task: the weekly test (Listening + Reading, 100 minutes). During Python month (until 23 November) there is also a 45-minute lesson, so that 30 lessons fit in 30 days. The rest is walks, family, a film. Resting means not starting something new, not doing nothing.'
     },
     loadNote: {
       uz: "Kun to'liq ochiq yozilgan: dars, uy vazifasi, namoz, ovqat, kino, erkin vaqt va uyqu — hammasi blok. Erkin vaqt ham rejaning bir qismi, uni to'ldirishga urinma.",
@@ -89,7 +89,7 @@ window.HABIT = {
     }
   },
 
-  /* Sinov kunlari (17–19-sen) shabloni OLIB TASHLANGAN — 20-sen dan rasmiy jadval. */
+  /* Sinov kunlari (17–19-sen) shabloni OLIB TASHLANGAN — 25-okt dan rasmiy jadval. */
 
   heavy: {
     key: 'heavy',
@@ -140,7 +140,7 @@ window.HABIT = {
          Kunning yagona tushdan keyingi OG'IR bloki (validator qoidasi).     */
       { id: 'h-eng-pm', kind: 'eng', at: '14:20', min: 65, core: true, w: 'hard', link: 'writing', writing: true,
         t: { uz: 'YADRO 4 · Ingliz tili — yozish va gapirish', en: 'CORE 4 · English — writing and speaking' },
-        note: { uz: "40 daq writing (kam yoz, ko'p tuzat: 1 abzats → tekshir → qayta yoz), 25 daq speaking treki (2 yozuv: sovuq → tuzatilgan, WPM va pauza hisobi). Writing kursi 1-oktabrdan.", en: '40 min writing (write less, correct more: one paragraph → check → rewrite), 25 min of the speaking track (2 recordings: cold → corrected, WPM and pause count). The Writing course starts 1 Oct.' } },
+        note: { uz: "40 daq writing (kam yoz, ko'p tuzat: 1 abzats → tekshir → qayta yoz), 25 daq speaking treki (2 yozuv: sovuq → tuzatilgan, WPM va pauza hisobi). Writing kursi 25-oktabrdan.", en: '40 min writing (write less, correct more: one paragraph → check → rewrite), 25 min of the speaking track (2 recordings: cold → corrected, WPM and pause count). The Writing course starts 25 Oct.' } },
 
       { id: 'h-free2', kind: 'rest', at: '15:25', min: 105, t: { uz: 'Erkin vaqt / oila', en: 'Free time / family' },
         note: { uz: "Asr namozi shu oraliqda.", en: 'Asr falls in here.' } },
@@ -198,7 +198,7 @@ window.HABIT = {
          Ilgari tinglashga ketgan 30 daqiqa shu yerga qo'shildi (LC takrori). */
       { id: 'c-write', kind: 'eng', at: '09:25', min: 50, core: true, w: 'hard', link: 'writing', writing: true,
         t: { uz: 'YADRO 3 · Writing', en: 'CORE 3 · Writing' },
-        note: { uz: "Kam yoz, ko'p tuzat: 1 abzats → tekshir → qayta yoz. Ilgari bu yerda tinglash ham bor edi — LC bilan takrorlanmasin deb olib tashlandi. Writing kursi 1-oktabrdan.", en: 'Write less, correct more: one paragraph → check → rewrite. There used to be a listening slot here — removed so it does not duplicate LC. The Writing course starts 1 Oct.' } },
+        note: { uz: "Kam yoz, ko'p tuzat: 1 abzats → tekshir → qayta yoz. Ilgari bu yerda tinglash ham bor edi — LC bilan takrorlanmasin deb olib tashlandi. Writing kursi 25-oktabrdan.", en: 'Write less, correct more: one paragraph → check → rewrite. There used to be a listening slot here — removed so it does not duplicate LC. The Writing course starts 25 Oct.' } },
 
       { id: 'c-walk', kind: 'rest', at: '10:15', min: 75, t: { uz: 'SAYR / DAM — ekransiz', en: 'WALK / REST — no screens' } },
       { id: 'c-yt', kind: 'yt', at: '11:30', min: 25,
@@ -237,10 +237,10 @@ window.HABIT = {
 
   /* ====================== DAM KUNI (Yakshanba) ==========================
      HAQIQIY dam: yangi mavzu yo'q, LC yo'q, BITTA test bloki (Listening +
-     Reading, 100 daq) — hafta shu bilan yakunlanadi. Python oyida (20-sen →
-     19-okt) 45 daqiqalik Python darsi — 30/30 muddatga sig'ishi uchun;
+     Reading, 100 daq) — hafta shu bilan yakunlanadi. Python oyida (25-okt →
+     23-noy) 45 daqiqalik Python darsi — 30/30 muddatga sig'ishi uchun;
      undan keyin o'sha slot SRS takroriga aylanadi. Kickoff yakshanbasida
-     (20-sen) DataCamp 1-bob; boshqa yakshanbalarda shu slot — sayr.
+     (25-okt) DataCamp 1-bob; boshqa yakshanbalarda shu slot — sayr.
      Coding takrori (30 savol) ixtiyoriy — yadroga kirmaydi.
      Yadro: test 100 · kitob 15 · hafta yakuni 15 (+ Python oyida 45).      */
   rest: {
@@ -271,7 +271,7 @@ window.HABIT = {
         note: { uz: "Bugun DataCamp bobi rejalashtirilgan: nazariya + mashqlar DataCamp'da, keyin platformada bob testi.", en: 'A DataCamp chapter is scheduled today: theory + exercises on DataCamp, then the chapter quiz here.' } },
       { id: 'r-focus', kind: 'py', at: '10:30', min: 60, core: true, w: 'med', link: 'lesson/{pyDay}', noDc: true,
         t: { uz: 'YADRO 2 · Python darsi', en: 'CORE 2 · Python lesson' },
-        note: { uz: "Faqat Python oyida (20-sen → 19-okt): 30 dars 30 kunga sig'ishi uchun. Keyin bu slot — haftalik takror.", en: 'Only in Python month (20 Sep → 19 Oct): so 30 lessons fit in 30 days. Afterwards this slot becomes the weekly review.' },
+        note: { uz: "Faqat Python oyida (25-okt → 23-noy): 30 dars 30 kunga sig'ishi uchun. Keyin bu slot — haftalik takror.", en: 'Only in Python month (25 Oct → 23 Nov): so 30 lessons fit in 30 days. Afterwards this slot becomes the weekly review.' },
         after: { kind: 'review', link: 'review',
           t: { uz: 'YADRO 2 · TAKROR — SRS navbati', en: 'CORE 2 · REVIEW — SRS queue' },
           note: { uz: "Python tugadi — bu slot haftalik takror: navbatdagi konspekt va so'zlar.", en: 'Python is done — this slot is the weekly review: due summaries and words.' } } },

@@ -324,3 +324,52 @@ input.input.sm { font-size: 13px; }
 .jr-honest { font-size: 12.5px; color: var(--muted); line-height: 1.55; border-left: 3px solid var(--line); padding-left: 12px; }
 @media (max-width: 600px) { .jr-part { grid-template-columns: 1fr; } .jr-pp { white-space: normal; } }
 .jr-crumb { display: inline-block; margin: 0 0 10px; font-size: 13px; }
+.ms-ctag { font: 700 10px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; padding: 1px 6px; border-radius: 999px; margin-right: 6px; background: color-mix(in srgb, var(--gold) 16%, transparent); color: var(--gold); }
+.ms-courses { margin: 6px 0 18px; } .ms-courses > summary { cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 8px; padding: 10px 0; }
+.ms-courses .ms-note { font-size: 13px; color: var(--muted); margin: 0 0 12px; }
+
+/* 2026-10 — o'z PDF kitoblari (#/books/ra · #/books/s1) */
+.bx-pdf .bx-pdfs { font-size: 13.5px; margin: 0 0 10px; } .bx-pdf label.btn { cursor: pointer; } .bx-note { font-size: 12px; color: var(--muted); margin: 10px 0 0; }
+.bx-list { display: grid; gap: 8px; margin-bottom: 18px; }
+.bx-row { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); }
+.bx-row.today { border-color: var(--brand); } .bx-row.done { border-color: color-mix(in srgb, var(--green) 45%, var(--line)); } .bx-row.late .bx-main small { color: var(--gold); }
+.bx-main b { display: block; font-size: 14px; } .bx-main small { color: var(--muted); font-size: 12px; }
+.bx-score { display: flex; align-items: center; gap: 6px; } .bx-score .input.sm { width: 64px; padding: 6px 8px; }
+@media (max-width: 640px) { .bx-row { grid-template-columns: 1fr; } }
+
+/* 2026-10 — ebook o'quvchi (#/books/<id>/read/<bet>) */
+.bx-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 16px; } .bx-cta span { font-size: 13px; color: var(--muted); }
+.bx-reader { max-width: 980px; padding-top: 0; }
+.bxr-bar { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 0; background: var(--bg); border-bottom: 1px solid var(--line); margin-bottom: 12px; }
+.bxr-t { flex: 1; min-width: 160px; } .bxr-t b { display: block; font-size: 14px; } .bxr-t small { color: var(--muted); font-size: 12px; }
+.bxr-nav, .bxr-tools { display: flex; align-items: center; gap: 6px; } .bxr-nav .input.sm { width: 64px; padding: 6px 8px; text-align: center; } .bxr-nav span { font: 600 12px var(--font-mono); color: var(--muted); }
+.bxr-stage { position: relative; display: flex; justify-content: center; overflow: auto; min-height: 60vh; background: var(--surface-2); border-radius: var(--r-md); padding: 1px; touch-action: pan-y pinch-zoom; }
+.bxr-stage canvas { display: block; background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+.bxr-msg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; text-align: center; padding: 24px; color: var(--muted); font-size: 14px; }
+.bxr-msg[hidden] { display: none; }
+.bx-reader.night .bxr-stage canvas { filter: invert(.92) hue-rotate(180deg); }
+.bxr-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 12px 0 24px; font-size: 13.5px; }
+@media (max-width: 640px) { .bxr-tools { margin-left: auto; } .bxr-t { order: -1; flex-basis: 100%; } }
+
+/* 2026-10 — Job Ready: Daily Discipline (3 soatlik kunlik reja) */
+.jr-daily { margin: 4px 0 26px; }
+.jrd-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; } .jrd-head h2 { font: 800 19px var(--font-display); margin: 0; }
+.jrd-prog { font: 700 12.5px var(--font-mono); color: var(--muted); }
+.jrd-week { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin: 8px 0 12px; } .jrd-week > span:first-child { margin-left: 6px; }
+.jrd-dot { width: 12px; height: 12px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line); }
+.jrd-dot.l1, .jrd-dot.l2 { background: color-mix(in srgb, var(--green) 30%, transparent); } .jrd-dot.l3, .jrd-dot.l4 { background: color-mix(in srgb, var(--green) 60%, transparent); } .jrd-dot.l5 { background: var(--green); }
+.jrd-card { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); padding: 6px 18px; }
+.jrd-row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: start; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.jrd-row.done .jrd-main > b { text-decoration: line-through; opacity: .7; }
+.jrd-ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; }
+.jrd-ic svg { width: 20px; height: 20px; }
+.jrd-ic.k-recall { background: #e8eeff; color: #3657d6; } .jrd-ic.k-learn { background: #e3f8ea; color: #1f8a4c; } .jrd-ic.k-code { background: #fff1d9; color: #b5651d; }
+.jrd-ic.k-build { background: #f1e8ff; color: #7a3fd1; } .jrd-ic.k-review { background: #e2f6fb; color: #13809a; }
+.jrd-main b { display: block; font-size: 15px; } .jrd-main > small { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
+.jrd-items { display: grid; gap: 4px; margin-top: 8px; } .jrd-items .link-btn { text-align: left; font-size: 13px; display: inline-flex; gap: 6px; align-items: center; } .jrd-items .link-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+.jrd-items em { font-size: 12px; color: var(--muted); font-style: normal; margin: -2px 0 2px 19px; }
+.jrd-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; } .jrd-min { font: 800 16px var(--font-display); white-space: nowrap; }
+.jrd-note { display: grid; gap: 6px; margin-top: 10px; } .jrd-note textarea { resize: vertical; }
+.jrd-total { display: flex; justify-content: space-between; align-items: center; padding: 16px 0 12px; } .jrd-total span { font-weight: 700; } .jrd-total b { font: 800 19px var(--font-display); }
+.jrd-yest { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); margin: 10px 0 0; } .jrd-yest svg { width: 15px; height: 15px; }
+@media (max-width: 600px) { .jrd-row { grid-template-columns: auto 1fr; } .jrd-side { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; } .jrd-card { padding: 4px 12px; } }

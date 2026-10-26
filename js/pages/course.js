@@ -34,7 +34,7 @@
         '<div class="cp-stats">' +
           '<span><b>' + pyDone + '</b>/' + pyTotal + ' ' + esc(tr('days')) + '</span>' +
           '<span><b>' + Math.round(pyDone / pyTotal * 100) + '%</b></span>' +
-          '<span>' + esc(tr('coursesSched')) + ': ' + esc(tr('coursesDaily')) + ' · 20-sen → 19-okt</span></div>' +
+          '<span>' + esc(tr('coursesSched')) + ': ' + esc(tr('coursesDaily')) + ' · 25-okt → 23-noy</span></div>' +
         '<div class="bar"><i style="width:' + (pyDone / pyTotal * 100) + '%"></i></div>' +
         (pyLesson ? '<div class="cp-next"><span>' + esc(tr('coursesNext')) + '</span><b>' + esc(tr('day')) + ' ' + pyNext + ' · ' + esc(L(pyLesson.title)) + '</b></div>' : '') +
         '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
@@ -175,7 +175,7 @@
         var lt = function (uz, en) { return L({ uz: uz, en: en }); };
         var jr = JobReady.status(), jd = 0, jt = 0; jr.stages.forEach(function (s) { jd += s.done; jt += s.total; });
         var jNext = JobReady.nextSteps()[0];
-        h += progCard('jr', 'jobready', IC.rocket, lt('Dastur · 3 kurs + loyihalar', 'Program · 3 courses + projects'), 'Job Ready: Python & AI Engineer',
+        h += progCard('jr', 'jobready', IC.rocket, lt('25-okt → 10-fev · 3 kurs + loyihalar', '25 Oct → 10 Feb · 3 courses + projects'), 'Job Ready: Python & AI Engineer',
           lt("Ichida: Coding — Python (30 kun), DataCamp — Python Programming Fundamentals, Python & AI Engineering (modul 0–9), loyihalar, capstone, portfolio va ish qidirish.",
             'Inside: Coding — Python (30 days), DataCamp — Python Programming Fundamentals, Python & AI Engineering (modules 0–9), projects, capstone, portfolio and job search.'),
           '<span><b>' + (jt ? Math.round(jd / jt * 100) : 0) + '%</b></span><span>' + esc(lt('Mezonlar', 'Criteria')) + ': <b>' + jr.met + '</b>/' + jr.of + '</span><span>5 ' + esc(lt('bosqich', 'stages')) + '</span>',
@@ -187,7 +187,7 @@
         var lm = function (uz, en) { return L({ uz: uz, en: en }); };
         var mIdx = Mission.dayIndex(), mDays = Mission.C().days, mDue = Mission.errors.due().length, mIn = Math.max(0, Math.min(mIdx, mDays));
         h += progCard('ms', 'mission', IC.target, lm('IELTS · 5 kurs + 16 hafta', 'IELTS · 5 courses + 16 weeks'), 'IELTS Mission',
-          lm("25-okt 2026 → 14-fev 2027. Ichida: English (IELTS kursi), Speaking 30, BBC Listening, Writing, Quick Repeat, studiyalar, xato banki va mock testlar.", '25 Oct 2026 → 14 Feb 2027. Inside: English (IELTS course), Speaking 30, BBC Listening, Writing, Quick Repeat, studios, error bank and mock tests.'),
+          lm("25-okt 2026 → 10-fev 2027. Ichida: English (IELTS kursi), Speaking 30, BBC Listening, Writing, Quick Repeat, studiyalar, xato banki va mock testlar.", '25 Oct 2026 → 10 Feb 2027. Inside: English (IELTS course), Speaking 30, BBC Listening, Writing, Quick Repeat, studios, error bank and mock tests.'),
           '<span><b>' + mIn + '</b>/' + mDays + ' ' + esc(tr('days')) + '</span>' + (mDue ? '<span>' + esc(lm(mDue + ' xato takrori', mDue + ' error reviews')) + '</span>' : ''),
           mIn / mDays * 100, mIdx < 1 ? lm('Boshlanishiga ' + (1 - mIdx) + ' kun · diagnostika', 'Starts in ' + (1 - mIdx) + ' day(s) · diagnostics') : '');
       } catch (e) { if (window.console) console.error(e); }

@@ -12,9 +12,12 @@ global.window = global;
 const mem = {}; global.localStorage = { getItem: k => (k in mem ? mem[k] : null), setItem: (k, v) => { mem[k] = String(v); }, removeItem: k => { delete mem[k]; } };
 const state = { best: {}, done: {}, mission: { v: 1, keep: true } };
 global.Store = { all: () => state, set: (k, v) => { state[k] = v; }, dateKey: () => '2026-11-01', bestScore: d => state.best[d], logEvent: () => {},
-  doneCount: () => Object.keys(state.done).length, isDone: d => !!state.done[d] };
+  doneCount: () => Object.keys(state.done).length, isDone: d => !!state.done[d],
+  flags: {}, flag(k) { return !!this.flags[k]; }, setFlag(k) { this.flags[k] = !this.flags[k]; }, read: {}, readGet(k) { return this.read[k] || null; }, readSet(k, v) { this.read[k] = v; },
+  shiftDays: (k, n) => { const d = new Date(k + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); } };
+global.HabitPlan = { pyDayOf: k => { const n = Math.round((new Date(k + 'T00:00:00Z') - new Date('2026-10-25T00:00:00Z')) / 864e5) + 1; return n >= 1 && n <= 30 ? n : 0; } };
 let dcDone = 0;
-global.DataCamp = { total: () => 6, doneCount: () => dcDone, current: () => ({ n: dcDone + 1, title: 'Ch' }) };
+global.DataCamp = { total: () => 6, doneCount: () => dcDone, current: () => ({ n: dcDone + 1, title: 'Ch' }), forDate: k => k === '2026-10-27' ? { n: 3, label: 'Control Flow · bob 3/14' } : null };
 global.App = { firstOpenDay: () => { for (let d = 1; d <= 30; d++) if (!state.done[d]) return d; return 30; } };
 ['js/data/course.js', 'js/data/pyai-1.js', 'js/data/pyai-m1.js', 'js/data/pyai-2.js', 'js/data/pyai-3.js', 'js/data/pyai-4.js', 'js/srs2.js', 'js/pyai.js', 'js/jobready.js'].forEach(f => new Function(fs.readFileSync(path.join(root, f), 'utf8'))());
 const J = global.JobReady, A = global.PyAI, P = global.PYAI;
@@ -63,6 +66,21 @@ new Function(fs.readFileSync(path.join(root, 'js/pages/jobready.js'), 'utf8'))()
 const html = global.PageJobReady();
 ok('page renders stages, criteria and honest note', /Job Ready/.test(html) && /Job-ready criteria/.test(html) && /does not guarantee a job/.test(html));
 ok('page links to legacy course and DataCamp', /data-go="python"/.test(html) && /data-go="datacamp"/.test(html));
+
+/* Daily Discipline — 3 soatlik kunlik reja */
+const dp = J.dayPlan('2026-10-27'), byK = k => dp.filter(b => b.k === k)[0];
+ok('daily: 5 blocks, 30+30+75+30+15 = 180 min', dp.length === 5 && dp.map(b => b.min).join() === '30,30,75,30,15' && dp.reduce((s, b) => s + b.min, 0) === 180);
+ok('daily: Recall points to yesterday (day 2)', byK('recall').items.some(x => x.route === 'lesson/2'));
+ok("daily: Learn = today's Coding day 3 + DataCamp lesson 3", byK('learn').items.map(x => x.route).join() === 'lesson/3,datacamp/3', byK('learn').items.map(x => x.route));
+ok('daily: Deep Coding includes day 3 practice and an independent problem', byK('code').items.some(x => x.route === 'lesson/3') && byK('code').items.some(x => /^pyai\/l\//.test(x.route)));
+ok('daily: Build & Apply has a concrete item', byK('build').items.length >= 1);
+ok("daily: Review & Plan links the error log and tomorrow's lesson (day 4)", byK('review').items.some(x => x.route === 'review/mistakes') && byK('review').items.some(x => x.route === 'lesson/4'));
+ok('daily: after the 30-day course, Learn falls back to the next Python & AI lesson', J.dayPlan('2026-12-10').filter(b => b.k === 'learn')[0].items.every(x => /^pyai\/l\//.test(x.route)));
+Store.setFlag('jr:2026-10-27:code');
+ok('daily: marking a block done is stored per day', J.dayPlan('2026-10-27').filter(b => b.k === 'code')[0].done && J.dayDone('2026-10-27').length === 1 && !J.dayPlan('2026-10-28').some(b => b.done));
+global.Store.dateKey = () => '2026-10-27';
+const html2 = global.PageJobReady();
+ok('page shows the Daily Discipline section with 5 blocks and 180 total', /Daily Discipline/.test(html2) && (html2.match(/data-jrblock=/g) || []).length === 5 && /180/.test(html2));
 
 console.log('\n' + (fails ? fails + ' FAILED' : 'ALL OK') + ' (' + n + ' checks)');
 process.exit(fails ? 1 : 0);

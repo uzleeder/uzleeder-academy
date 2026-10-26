@@ -21,7 +21,7 @@
 
    startState — foydalanuvchining 2026-09-19 dagi real holati: 1-test,
    diktant 6-mashqgacha, savollar 15-gacha qilingan (platforma ochilmasdan).
-   1-kun (20-sen): diktant 7–12, savollar 16–30.
+   1-kun (25-okt): diktant 7–12, savollar 16–30.
    ========================================================================== */
 window.ENG_DICT = {
   meta: {
@@ -30,7 +30,7 @@ window.ENG_DICT = {
     short: 'Target Listening 1',
     tests: 12, perTest: 15, qsPerTest: 30, tracksPerTest: 30,
     perDayDict: 6, perDayQ: 15,     // kunlik me'yor
-    startState: { on: '2026-09-19', test: 1, dictDone: 6, testDone: 15 },
+    startState: { on: '2026-10-25', test: 1, dictDone: 0, testDone: 0 },   // 2026-10 reset: noldan
     role: { uz: 'Tinglash — kuniga 6 diktant + 15 test savoli', en: 'Listening — 6 dictations + 15 test questions a day' }
   },
   /* Test savollari javob kaliti: harflar 1..30 */

@@ -21,7 +21,7 @@
   /* Hisob 17-sen 2026 dan boshlanadi: davrlar (7 / 30 kun) shu sanadan ketma-ket
      "oynalar" — 17–23-sen, 24–30-sen … Joriy oyna bugunni o'z ichiga oladi; kelgusi
      kunlar bo'sh ustun bo'lib turadi. Undan oldingi kunlar hech qayerda ko'rinmaydi. */
-  var TRACK_FROM = '2026-09-17';
+  var TRACK_FROM = '2026-10-25';
   function windowStart(days, back) {
     var t = Store.dateKey();
     if (t < TRACK_FROM) return TRACK_FROM;

@@ -14,8 +14,8 @@
 
    Kalendar (ENGLISH.meta dan hisoblanadi, hech qayerda qattiq yozilmagan):
      16–19-sen  introduction (ENG_INTRO, i1…i4) — kurs kuni EMAS
-     20-sen     rasmiy start (kickoff)
-     1–140-kun  20 hafta   21-sen 2026 → 7-fev 2027
+     25-okt     rasmiy start (kickoff)
+     1–108-kun  16 hafta   26-okt 2026 → 10-fev 2027
    ========================================================================== */
 (function () {
   'use strict';
@@ -37,7 +37,10 @@
   });
   window.ENG_DAYS = RAW_DAYS.filter(function (x) { return x.w > 0; }).map(function (x) {
     x.legacy = x.d; x.d = x.d - LEGACY_INTRO; return x;
-  });
+  }).filter(function (x) { return x.d <= ENGLISH.meta.days; });
+  /* 2026-10 kalendar reseti: kurs 26-okt → 10-fev (ENGLISH.meta.days = 108).
+     109–140-kunlar va 17–20-haftalar fayllarda qoladi, lekin jadvalga kirmaydi. */
+  ENGLISH.weeks = ENGLISH.weeks.filter(function (w) { return w.n <= ENGLISH.meta.weeks; });
   /* ENG_SKILLS.days ham eski kun raqami bilan — shuni ham o'giramiz */
   if (window.ENG_SKILLS && ENG_SKILLS.days) {
     var sd = {};
@@ -123,7 +126,8 @@
     isGapDay: function (key) { key = key || Store.dateKey(); return key >= ENGLISH.meta.start && key < ENGLISH.meta.week1 && !dayOfKey(key); },
     weekRange: function (w) {
       if (w === 0) return { from: ENGLISH.meta.orientation.from, to: ENGLISH.meta.orientation.to };
-      return { from: dayKey(ENGLISH.meta.intro + (w - 1) * 7 + 1), to: dayKey(ENGLISH.meta.intro + w * 7) };
+      /* oxirgi hafta to'liq bo'lmasligi mumkin (16-hafta: 8–10-fev) — kurs oxiridan oshmaydi */
+      return { from: dayKey(ENGLISH.meta.intro + (w - 1) * 7 + 1), to: dayKey(Math.min(ENGLISH.meta.intro + w * 7, ENGLISH.meta.days)) };
     },
     buffer: function () {
       return { from: Store.shiftDays(dayKey(ENGLISH.meta.days), 1), to: ENGLISH.meta.bufferTo };

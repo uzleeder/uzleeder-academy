@@ -18,7 +18,7 @@ window.DCPLAN = {
     {
       n: 1,
       title: { uz: "Python Programming Fundamentals — DataCamp treki (Poydevor)", en: "Python Programming Fundamentals — the DataCamp track (Foundation)" },
-      time: { uz: "16 soat · 20-sen → 5-okt · kuniga 1 bob", en: "16 hours · 20 Sep → 5 Oct · one chapter a day" },
+      time: { uz: "16 soat · 25-okt → 9-noy · kuniga 1 bob", en: "16 hours · 25 Oct → 9 Nov · one chapter a day" },
       goal: { uz: "Python'da mustaqil kod yozib, xatolarni o'zing tuzatasan. Platformadagi 30 kunlik kurs bilan parallel: bir mavzu ikki manbadan.", en: "Write Python independently and fix your own errors. In parallel with the 30-day course here: each topic from two sources." },
       courses: [
         { uz: "Introduction to Python for Developers (3 bob)", en: "Introduction to Python for Developers (3 chapters)" },

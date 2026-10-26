@@ -8,9 +8,9 @@
          ielts | tech | product | work | finance
    ========================================================================== */
 window.MASTERPLAN = {
-  from: '2026-09-20', to: '2083-12-31',
+  from: '2026-10-25', to: '2083-12-31',
   phases: [
-    { k: 'p1', y: '2026 – 2029', age: '16–19', from: '2026-09-20', to: '2029-01-01',
+    { k: 'p1', y: '2026 – 2029', age: '16–19', from: '2026-10-25', to: '2029-01-01',
       t: { uz: 'Tizimli poydevor va akademik tayyorgarlik', en: 'Systematic foundation and academic preparation' },
       goals: [
         { m: 'ielts', t: { uz: 'IELTS 7.5+', en: 'IELTS 7.5+' }, when: '2027', d: { uz: "B1+/Pre-IELTS'dan chiqib, IELTS Intro va Advanced darslarini yopish. Xalqaro VC muzokaralari uchun zarur.", en: 'Leave B1+/Pre-IELTS behind, close the IELTS Intro and Advanced lessons. Needed for international VC negotiations.' } },

@@ -37,7 +37,8 @@
   'use strict';
 
   var KEY = 'uzla.state';
-  var SCHEMA = 8;   // v8: ingliz tili kunlari qayta raqamlangan (1–4 kirish → 'i1'…'i4', 5–144 → 1–140)
+  var SCHEMA = 9;   // v8: ingliz tili kunlari qayta raqamlangan (1–4 kirish → 'i1'…'i4', 5–144 → 1–140)
+                    // v9: yangi kalendar 2026-10-25 → 2027-02-10 — barcha progress noldan (migrateCalendarReset)
 
   var DEFAULTS = {
     v: SCHEMA,
@@ -241,6 +242,28 @@
     return s;
   }
 
+  /* ====================== v8 → v9: KALENDAR RESET (2026-10-25) ==========
+     Hamma kurslar 25-oktabrda qaytadan boshlanadi va 10-fevralda tugaydi —
+     foydalanuvchi qarori bilan bajarilgan darslar, testlar, jadval belgilari,
+     takrorlar, IELTS Mission va Python & AI holati NOLDAN boshlanadi.
+     Saqlanadi (progress emas, foydalanuvchi yaratgan narsa yoki sozlama):
+     til/mavzu/ism, sozlamalar, profil, daftarlar, eslatmalar, saqlanganlar,
+     filmlar, rasmlar. Bulutdan kelgan eski (v8) nusxa ham shu yo'ldan o'tadi,
+     shuning uchun eski progress sinxron orqali qaytib kelmaydi.
+     Bir marta: faqat v < 9 bo'lsa. Mahalliy zaxira nusxa qoldiriladi.       */
+  var CAL_RESET = '2026-10-25';
+  var RESET_KEEP = ['lang', 'theme', 'name', 'settings', 'profile', 'city', 'movies', 'rdimg', 'copy', 'bookmarks', 'notes'];
+  function migrateCalendarReset(s, backup) {
+    if (backup) { try { localStorage.setItem('uzla.state.backup.reset-' + CAL_RESET, JSON.stringify(s)); } catch (e) {} }
+    var out = clone(DEFAULTS);
+    RESET_KEEP.forEach(function (k) { if (s[k] !== undefined) out[k] = clone(s[k]); });
+    out.eng.notes = clone((s.eng && s.eng.notes) || {});
+    if (out.settings && out.settings.books) { out.settings.books.readingAnchor = null; out.settings.books.listeningAnchor = null; }
+    out.scheduleVersion = SCHEDULE_VERSION;
+    out.calendarReset = { on: CAL_RESET, at: Date.now() };
+    return out;
+  }
+
   function read() {
     var raw = null;
     try { raw = JSON.parse(localStorage.getItem(KEY)); } catch (e) { raw = null; }
@@ -249,6 +272,7 @@
     if (raw && (raw.v || 1) < 8) s = migrateEngRenumber(s);
     /* Jadval migratsiyasi — sxema versiyasidan MUSTAQIL, o'z hisoblagichi bilan */
     if (raw && (raw.scheduleVersion || 1) < SCHEDULE_VERSION) s = migrateScheduleV2(s);
+    if (raw && (raw.v || 1) < 9) s = migrateCalendarReset(s, true);
     s.v = SCHEMA;
     if (!raw) s = migrateLegacy(s);
     return s;
@@ -675,6 +699,7 @@
     replace: function (obj, silent) {
       state = merge(DEFAULTS, obj || {});
       if (obj && (obj.v || 1) < 8) state = migrateEngRenumber(state);
+      if (obj && (obj.v || 1) < 9) state = migrateCalendarReset(state, false);
       state.v = SCHEMA;
       try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
       if (!silent) listeners.forEach(function (fn) { try { fn(state); } catch (e) {} });
@@ -684,6 +709,7 @@
     migrate: function (obj) {
       var s = merge(DEFAULTS, obj || {});
       if ((obj && obj.v || 1) < 8) s = migrateEngRenumber(s);
+      if ((obj && obj.v || 1) < 9) s = migrateCalendarReset(s, false);
       s.v = SCHEMA;
       return s;
     },

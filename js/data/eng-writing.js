@@ -1,20 +1,20 @@
 /* ==========================================================================
-   WRITING — IELTS Academic Writing chuqur kursi (1-oktabr 2026 → 7-fev 2027)
+   WRITING — IELTS Academic Writing chuqur kursi (25-oktabr 2026 → 10-fev 2027)
    --------------------------------------------------------------------------
    Nega alohida: 144 kunlik rejada Writing har kuni 45–60 daqiqa BOR, lekin
    u "insho yoz" darajasida. Bu kurs QANDAY yozishni o'rgatadi: haftada bitta
    mavzu, model gaplar, tekshiruv ro'yxati, 7 kunlik vazifalar.
 
-   Boshlanish: 1-oktabr (payshanba). Hafta — dushanbadan: 1-hafta 1–4-okt
-   (qisqa), 2-hafta 5-okt … 19-hafta 1–7-fev. Har hafta:
+   Boshlanish: 25-oktabr (yakshanba). 1-hafta 25-okt – 1-noy, keyin dushanbadan:
+   2-hafta 2-noy … 16-hafta 8–10-fev. Har hafta:
      { n, from, title, focus, intro, sections:[{h, p, model:[]}],
        checklist:[], tasks:[7 ta — Du…Ya], errors:[{bad, good}] }
    ========================================================================== */
 window.WRITING = {
   meta: {
-    start: '2026-10-01',
+    start: '2026-10-25',
     week1: '2026-10-05',          // 1-hafta 1–4-okt qisqa; 2-hafta shu dushanbadan
-    end: '2027-02-07',
+    end: '2027-02-10',
     title: { uz: 'IELTS Writing — chuqur kurs', en: 'IELTS Writing — the deep course' },
     lede: {
       uz: "Task 2 — 2/3 ball, Task 1 — 1/3. Haftada bitta mavzu, har kuni bitta yozish vazifasi, har inshoda 4 mezon bo'yicha o'z-o'zini baholash. 19 hafta: tuzilma → savol turlari → Task 1 → uslub → mezonlar → imtihon.",
@@ -29,7 +29,7 @@ window.WRITING = {
   },
 
   weeks: [
-    { n: 1, from: '2026-10-01',
+    { n: 1, from: '2026-10-25',
       title: { uz: 'Task 2 anatomiyasi', en: 'The anatomy of Task 2' },
       focus: { uz: "Savol nima so'rayapti, 4 abzats, tezis", en: 'What the question asks, four paragraphs, the thesis' },
       intro: { uz: "Band 6 insho savolga javob beradi. Band 8 insho savolning HAR QISMIGA javob beradi va o'z pozitsiyasini birinchi abzatsdan oxirgisigacha ushlab turadi. Bu hafta: savolni o'qish, reja, tezis.", en: 'A Band 6 essay answers the question. A Band 8 essay answers EVERY part of it and holds its position from the first paragraph to the last. This week: reading the question, the plan, the thesis.' },
@@ -49,7 +49,7 @@ window.WRITING = {
                en: ['Split 10 Task 2 questions into parts (written).', 'Write 5 theses for 5 questions — each position + reason.', 'One full plan (5 min): thesis, 2 ideas, 2 examples.', 'One full essay (40 min) — structure only is checked.', 'Reread yesterday\'s essay: is every part answered?', 'Plan × 3 (5 min each), no writing.', 'Sunday: essay 40 min + self-mark on four criteria.'] },
       errors: [{ bad: 'This essay will discuss both sides.', good: 'This essay argues that X, although Y has some merit.' }, { bad: 'In my opinion, I think that…', good: 'I believe that… / This essay argues that…' }] },
 
-    { n: 2, from: '2026-10-05',
+    { n: 2, from: '2026-11-02',
       title: { uz: 'Kirish: paraphrase + tezis', en: 'Introductions: paraphrase + thesis' },
       focus: { uz: "Savolni ko'chirmasdan qayta aytish", en: 'Restating the question without copying' },
       intro: { uz: "Kirish 2 gap: (1) savolni O'Z so'zlaring bilan, (2) tezis. Ko'chirilgan so'zlar so'z hisobiga kirmaydi va LR ni tushiradi. Uch usul: sinonim, turkum o'zgartirish, tuzilma o'zgartirish.", en: 'The introduction is two sentences: (1) the question in YOUR words, (2) the thesis. Copied words do not count and lower LR. Three methods: synonym, part-of-speech change, structure change.' },
@@ -69,7 +69,7 @@ window.WRITING = {
                en: ['10 questions → 10 paraphrases (first sentence only).', '10 questions → 10 theses (matching type).', '5 full introductions (5 min each).', 'Full essay (40 min) — intro with the 5 markers.', 'Reread the intros: any copied word?', '5 intros, marking the 3 methods.', 'Sunday: essay + four criteria.'] },
       errors: [{ bad: 'Nowadays, in the modern world…', good: 'Over the past decade, …' }, { bad: 'Some people think that children should learn…', good: 'It is often argued that young learners should begin…' }] },
 
-    { n: 3, from: '2026-10-12',
+    { n: 3, from: '2026-11-09',
       title: { uz: 'Tana abzatsi — PEEL', en: 'The body paragraph — PEEL' },
       focus: { uz: 'Fikr → tushuntirish → misol → bog\'lash', en: 'Point → explain → example → link' },
       intro: { uz: "Tana abzatsi 4 gap: Point (mavzu gapi — bitta fikr), Explain (nega shunday — 1–2 gap), Example (aniq — mamlakat, raqam, holat), Link (natija / tezisga qaytish). 90–100 so'z. CC 8 shu yerda beriladi.", en: 'A body paragraph is four sentences: Point (topic sentence — one idea), Explain (why — 1–2 sentences), Example (specific — a country, a figure, a case), Link (result / back to the thesis). 90–100 words. CC 8 is awarded here.' },
@@ -89,7 +89,7 @@ window.WRITING = {
                en: ['Write 5 topic sentences for 5 question types.', '3 PEEL paragraphs (10 min each).', 'Mark the 4 parts in yesterday\'s paragraphs.', 'Full essay (40) — PEEL bodies.', 'Sharpen the examples in your last essay.', '3 paragraphs — write the Link sentence 3 ways.', 'Sunday: essay + four criteria.'] },
       errors: [{ bad: 'For example, many people in many countries…', good: 'In Tashkent, for instance, …' }, { bad: 'Moreover, another point is…', good: 'This pattern explains why… (link) — yangi fikr keyingi abzatsda' }] },
 
-    { n: 4, from: '2026-10-19',
+    { n: 4, from: '2026-11-16',
       title: { uz: 'Savol turi I: agree / disagree', en: 'Question type I: agree / disagree' },
       focus: { uz: "'To what extent' — daraja", en: '"To what extent" — the degree' },
       intro: { uz: "Eng ko'p uchraydigan tur. Xato: ikkala tomonni teng yozib, oxirida 'it depends'. To'g'ri: pozitsiya kirishda, ikkala tana abzatsi O'SHA pozitsiyani qo'llaydi (yoki bittasi qarshi tomonni tan olib, rad etadi), xulosa qaytaradi.", en: 'The most common type. The error: writing both sides equally and ending with "it depends". Right: position in the intro, both bodies support THAT position (or one concedes the other side and refutes it), the conclusion returns to it.' },
@@ -109,7 +109,7 @@ window.WRITING = {
                en: ['Degree + thesis for 5 agree/disagree questions.', 'Concession paragraph × 3.', 'Full essay (40): largely agree.', 'Full essay (40): partly agree — precise condition.', 'Compare: which is clearer?', 'Conclusion × 5 (3 min each).', 'Sunday: essay + four criteria.'] },
       errors: [{ bad: 'In conclusion, there are advantages and disadvantages and it depends on the person.', good: 'In conclusion, I largely agree that…, chiefly because…' }, { bad: 'Some people agree, some people disagree.', good: 'Admittedly, …; however, …' }] },
 
-    { n: 5, from: '2026-10-26',
+    { n: 5, from: '2026-11-23',
       title: { uz: 'Savol turi II: discuss both views + opinion', en: 'Question type II: discuss both views + opinion' },
       focus: { uz: 'Uch qism, bitta pozitsiya', en: 'Three parts, one position' },
       intro: { uz: "Uch qism: 1-fikr, 2-fikr, O'Z fikring. Tuzilma: kirish (ikkala fikr + tezis) → tana 1 (1-fikr, halol) → tana 2 (2-fikr + nega kuchliroq) → xulosa (o'z fikr). Xato: o'z fikrni faqat xulosada aytish — TR 6.", en: 'Three parts: view 1, view 2, YOUR view. Structure: intro (both views + thesis) → body 1 (view 1, fairly) → body 2 (view 2 + why it is stronger) → conclusion (your view). The error: giving your view only in the conclusion — TR 6.' },
@@ -129,7 +129,7 @@ window.WRITING = {
                en: ['5 questions → 3 parts + thesis.', 'View-1 paragraph × 3 (fair).', 'View-2 paragraph × 3 ("more convincing").', 'Full essay (40).', 'Mark the 3 places your view appears.', 'Intro + conclusion × 5.', 'Sunday: essay + four criteria.'] },
       errors: [{ bad: 'Some people wrongly believe that…', good: 'Those who favour X argue that…, and this concern is understandable.' }, { bad: 'O\'z fikr faqat xulosada', good: 'Tezis → 2-abzats → xulosa' }] },
 
-    { n: 6, from: '2026-11-02',
+    { n: 6, from: '2026-11-30',
       title: { uz: 'Savol turi III: advantages / disadvantages', en: 'Question type III: advantages / disadvantages' },
       focus: { uz: "'Outweigh' — qaysi og'irroq", en: '"Outweigh" — which is heavier' },
       intro: { uz: "Ikki variant: (a) 'What are the advantages and disadvantages?' — ro'yxat, fikr shart emas; (b) 'Do the advantages outweigh the disadvantages?' — FIKR shart: qaysi og'irroq. (b) da 'both have advantages and disadvantages' — TR 5. Javob: 'the benefits clearly outweigh'.", en: 'Two variants: (a) "What are the advantages and disadvantages?" — a list, no opinion needed; (b) "Do the advantages outweigh the disadvantages?" — an OPINION is required: which is heavier. In (b), "both have advantages and disadvantages" is TR 5. Answer: "the benefits clearly outweigh".' },
@@ -149,7 +149,7 @@ window.WRITING = {
                en: ['Sort 10 questions into (a)/(b).', '5 "outweigh" intros.', 'Drawback paragraph × 3 ("real but limited").', 'Full essay (40) — type (b).', 'Count the synonyms.', 'Full essay (40) — type (a), no opinion.', 'Sunday: essay + four criteria.'] },
       errors: [{ bad: 'There are both advantages and disadvantages.', good: 'Although X has drawbacks, its benefits clearly outweigh them.' }, { bad: 'advantage ×6', good: 'benefit · merit · strength · upside' }] },
 
-    { n: 7, from: '2026-11-09',
+    { n: 7, from: '2026-12-07',
       title: { uz: 'Savol turi IV: problem / solution, cause / effect', en: 'Question type IV: problem / solution, cause / effect' },
       focus: { uz: 'Muammo → sabab → yechim zanjiri', en: 'The problem → cause → solution chain' },
       intro: { uz: "'What are the causes and what measures could be taken?' Tana 1: sabablar (2 ta, har biri misol bilan). Tana 2: yechimlar — HAR sabab uchun bittadan, va KIM qiladi (government / individuals / schools). Yechim sababga bog'lanmasa — mantiq uziladi (CC 6).", en: '"What are the causes and what measures could be taken?" Body 1: causes (two, each with an example). Body 2: solutions — ONE PER CAUSE, and WHO acts (government / individuals / schools). A solution not tied to a cause breaks the logic (CC 6).' },
@@ -169,7 +169,7 @@ window.WRITING = {
                en: ['Two-column table for 5 problems (cause | solution).', 'Cause paragraph × 2.', 'Solution paragraph × 2 — with agents.', 'Full essay (40) — problem/solution.', 'Draw a line from each solution to its cause.', 'Full essay (40) — cause/effect.', 'Sunday: essay + four criteria.'] },
       errors: [{ bad: 'The problem should be solved.', good: 'Governments should…; individuals can…' }, { bad: 'Yechim sababga bog\'lanmagan', good: 'Since the main cause is X, the measure is Y.' }] },
 
-    { n: 8, from: '2026-11-16',
+    { n: 8, from: '2026-12-14',
       title: { uz: 'Savol turi V: ikki qismli savol', en: 'Question type V: the two-part question' },
       focus: { uz: "'Why…? Is this positive or negative?'", en: '"Why…? Is this a positive or negative development?"' },
       intro: { uz: "Ikki mustaqil savol bitta topshiriqda: 'Why is this happening? Is it a positive or negative development?' Tana 1 = 1-savol, Tana 2 = 2-savol. Ikkalasiga TENG hajm. Faqat birinchisiga javob — TR 5. 'Positive or negative' — pozitsiya kerak: 'largely positive, with one caveat'.", en: 'Two independent questions in one task: "Why is this happening? Is it positive or negative?" Body 1 = question 1, body 2 = question 2. EQUAL length. Answering only the first — TR 5. "Positive or negative" needs a position: "largely positive, with one caveat".' },
@@ -189,7 +189,7 @@ window.WRITING = {
                en: ['Classify 10 questions into 5 types — 10 s each.', '5 two-part theses.', 'Full essay (40) — two-part.', 'Count: are the two bodies equal?', 'Mixed: 5 questions, 5 plans (5 min).', 'Full essay (40) — random type.', 'Sunday: essay + criteria + 8-week error list.'] },
       errors: [{ bad: 'It is both positive and negative.', good: 'On balance it is positive, although…' }, { bad: 'Faqat 1-savolga javob', good: 'Tana 1 = savol 1, tana 2 = savol 2' }] },
 
-    { n: 9, from: '2026-11-23',
+    { n: 9, from: '2026-12-21',
       title: { uz: 'Task 1: chiziqli va ustunli grafik', en: 'Task 1: line and bar charts' },
       focus: { uz: 'Overview, tendensiya tili, tanlash', en: 'Overview, trend language, selection' },
       intro: { uz: "Task 1 = 150+ so'z, 20 daqiqa, 4 abzats: kirish (1 gap paraphrase), overview (2 gap, raqamsiz), tana 1, tana 2 (raqamlar bilan). Overview yo'q = TA maksimum 5. Fikr yo'q, sabab yo'q — faqat tasvir.", en: 'Task 1 = 150+ words, 20 minutes, 4 paragraphs: intro (one paraphrased sentence), overview (two sentences, no numbers), body 1, body 2 (with figures). No overview = TA capped at 5. No opinion, no reasons — description only.' },
@@ -209,7 +209,7 @@ window.WRITING = {
                en: ['3 charts → 3 overviews (no numbers).', 'Trend vocabulary: 20 phrases in sentences.', 'Task 1 (20) — line.', 'Task 1 (20) — bar.', 'Count the figures: 6–8?', 'Task 1 (20) — two charts in one task.', 'Sunday: Task 1 + Task 2 (60 min).'] },
       errors: [{ bad: 'Overview raqamli', good: 'Overall, X rose while Y fell. (raqam tanada)' }, { bad: 'increased dramatic', good: 'increased dramatically / a dramatic increase' }] },
 
-    { n: 10, from: '2026-11-30',
+    { n: 10, from: '2026-12-28',
       title: { uz: 'Task 1: doira, jadval va taqqoslash', en: 'Task 1: pie charts, tables and comparison' },
       focus: { uz: "Statik ma'lumot — tendensiya emas, taqqoslash", en: 'Static data — comparison, not trend' },
       intro: { uz: "Bitta yil, bir necha toifa — bu tendensiya emas, TAQQOSLASH. 'rose' yozib bo'lmaydi. Til: 'accounts for', 'makes up', 'the largest share', 'twice as many', 'the second most popular'. Ikki doira (ikki yil) — taqqoslash + o'zgarish.", en: 'One year, several categories — not a trend, a COMPARISON. You cannot write "rose". Language: "accounts for", "makes up", "the largest share", "twice as many", "the second most popular". Two pies (two years) — comparison + change.' },
@@ -229,7 +229,7 @@ window.WRITING = {
                en: ['Share phrases: 15 in sentences.', 'Task 1 (20) — single pie.', 'Task 1 (20) — table (patterns).', 'Task 1 (20) — two pies.', 'Compare the three: which language?', 'Task 1 (20) — table + chart.', 'Sunday: Task 1 + Task 2.'] },
       errors: [{ bad: 'The pie chart rose to 40%.', good: 'X accounts for 40% of the total.' }, { bad: 'Qatorma-qator 20 raqam', good: '2 naqsh, 6–8 raqam' }] },
 
-    { n: 11, from: '2026-12-07',
+    { n: 11, from: '2027-01-04',
       title: { uz: 'Task 1: jarayon va xarita', en: 'Task 1: process and map' },
       focus: { uz: "Majhul nisbat, ketma-ketlik, joy tili", en: 'Passive voice, sequence, place language' },
       intro: { uz: "Imtihonning ~30% da jarayon yoki xarita chiqadi va ko'pchilik tayyor emas. Jarayon: majhul + ketma-ketlik so'zlari, overview = necha bosqich, boshi/oxiri. Xarita: joy so'zlari + o'zgarish fe'llari (majhul), overview = eng katta o'zgarish.", en: 'A process or map appears in ~30% of exams and most are unprepared. Process: passive + sequencers, overview = number of stages, start/end. Map: place words + change verbs (passive), overview = the biggest change.' },
@@ -249,7 +249,7 @@ window.WRITING = {
                en: ['Passive: 15 sentences.', 'Task 1 (20) — process.', 'Place and change phrases: 20 in sentences.', 'Task 1 (20) — map (past).', 'Task 1 (20) — map (future plan).', 'Task 1 (20) — cyclic process.', 'Sunday: Task 1 (process) + Task 2.'] },
       errors: [{ bad: 'First, they harvest the beans.', good: 'First, the beans are harvested.' }, { bad: 'The forest changed to houses.', good: 'The forest was cleared and replaced by housing.' }] },
 
-    { n: 12, from: '2026-12-14',
+    { n: 12, from: '2027-01-11',
       title: { uz: 'Coherence & Cohesion — bog\'lanish', en: 'Coherence & Cohesion' },
       focus: { uz: "Bog'lovchisiz bog'lanish, referencing, abzats", en: 'Cohesion without connectors, referencing, paragraphing' },
       intro: { uz: "CC 6: har gap bog'lovchi bilan boshlanadi (Firstly, Moreover, Furthermore). CC 8: bog'lovchi kam, lekin har gap oldingisiga BOG'LANGAN — 'this + ot', olmosh, takror ot, eski→yangi tartibi. Bu hafta shu mexanika.", en: 'CC 6: every sentence opens with a connector (Firstly, Moreover, Furthermore). CC 8: few connectors, but each sentence LINKED to the previous — "this + noun", pronouns, repeated nouns, old→new order. This week is that mechanism.' },
@@ -269,7 +269,7 @@ window.WRITING = {
                en: ['Delete the connectors in your last essay; rewrite with "this + noun".', 'Paragraph × 3 — no connectors.', 'Full essay (40) — ≤2 connectors per paragraph.', 'Underline the subject of every pronoun.', 'Paragraph × 3 — marking old→new.', 'Full essay (40).', 'Sunday: essay + four criteria.'] },
       errors: [{ bad: 'Firstly… Secondly… Moreover… Furthermore… Finally…', good: 'This expansion… The resulting… Such measures…' }, { bad: 'They think that… (kim?)', good: 'Employers think that…' }] },
 
-    { n: 13, from: '2026-12-21',
+    { n: 13, from: '2027-01-18',
       title: { uz: 'Lexical Resource — aniqlik va register', en: 'Lexical Resource — precision and register' },
       focus: { uz: 'Kollokatsiya, aniq so\'z, takrorsiz, rasmiy', en: 'Collocation, the precise word, no repetition, formal' },
       intro: { uz: "LR 8 = 'ko'p qiyin so'z' EMAS. LR 8 = aniq so'z, tabiiy kollokatsiya, takror yo'q, xato yo'q. 'Sophisticated' ni noto'g'ri ishlatish 'advanced' ni to'g'ri ishlatishdan yomon. Bu hafta: aniqlik, kollokatsiya, register.", en: 'LR 8 is NOT "many hard words". LR 8 = the precise word, natural collocation, no repetition, no errors. Misusing "sophisticated" is worse than using "advanced" correctly. This week: precision, collocation, register.' },
@@ -289,7 +289,7 @@ window.WRITING = {
                en: ['30 collocations in sentences.', 'Replace weak words in your last 3 essays.', 'Full essay (40) — LR markers.', 'Count every word; replace any at 3+.', 'Register: 20 spoken → formal pairs.', 'Full essay (40).', 'Sunday: essay + four criteria.'] },
       errors: [{ bad: 'do a decision · make research', good: 'make a decision · conduct research' }, { bad: 'very important problem', good: 'a pressing issue' }] },
 
-    { n: 14, from: '2026-12-28',
+    { n: 14, from: '2027-01-25',
       title: { uz: 'Grammatical Range & Accuracy', en: 'Grammatical Range & Accuracy' },
       focus: { uz: "Murakkab gap, majhul, shart, nominalizatsiya — xatosiz", en: 'Complex sentences, passive, conditionals, nominalisation — error-free' },
       intro: { uz: "GRA 8: 'majority of sentences error-free' + 'wide range'. Ikkalasi. Ko'p tuzilma, ko'p xato — 6. Kam tuzilma, xato yo'q — 6. Kerak: 5 xil tuzilma inshoda, xato ≤2. Bu hafta 5 tuzilma va 2 o'tishli tekshiruv.", en: 'GRA 8: "majority of sentences error-free" + "wide range". Both. Many structures with many errors — 6. Few structures with no errors — 6. Needed: five structure types per essay, ≤2 errors. This week: the five structures and the two-pass check.' },
@@ -309,7 +309,7 @@ window.WRITING = {
                en: ['5 structures × 3 sentences = 15.', 'Mark the 5 structures in your last essay; add the missing.', 'Full essay (40) — 5 structures + 2 passes.', 'Six-error list: count in your last 3 essays.', 'Conditionals × 10 (2nd and 3rd).', 'Full essay (40).', 'Sunday: essay + four criteria.'] },
       errors: [{ bad: 'The number of students are rising.', good: 'The number of students is rising.' }, { bad: 'Many researches show…', good: 'Much research shows… / Many studies show…' }] },
 
-    { n: 15, from: '2027-01-04',
+    { n: 15, from: '2027-02-01',
       title: { uz: 'Band mezonlari — o\'z-o\'zini baholash', en: 'Band descriptors — self-marking' },
       focus: { uz: "Band 6 va Band 8 — farqni ko'rish", en: 'Band 6 and Band 8 — seeing the difference' },
       intro: { uz: "Baholovchi 4 mezonga 4 ball beradi, o'rtachasi — Writing bali. 14 haftadan beri 'o'z-o'zini baholash' deyapmiz — bu hafta buni ANIQ qilamiz: har mezon uchun 6 va 8 ning farqi, va sening inshong qayerda.", en: 'The examiner gives four bands for four criteria; the average is the Writing band. "Self-marking" has been said for 14 weeks — this week we make it PRECISE: the difference between 6 and 8 for each criterion, and where your essay sits.' },
@@ -329,7 +329,7 @@ window.WRITING = {
                en: ['Re-mark your last 3 essays on four criteria — with reasons.', 'Rewrite one Band 6 paragraph as Band 8.', 'Full essay (40) + sheet.', 'Lowest criterion: 30 min on it alone.', 'Task 1 (20) + sheet.', 'Full essay (40) + sheet.', 'Sunday: Task 1 + Task 2 + two sheets.'] },
       errors: [{ bad: 'GRA 8 (ko\'p murakkab gap bor)', good: 'GRA 6.5 — 5 ta xato bor' }, { bad: 'Sababsiz ball', good: 'Ball + chunki + aniq misol' }] },
 
-    { n: 16, from: '2027-01-11',
+    { n: 16, from: '2027-02-08',
       title: { uz: 'Vaqt va imtihon strategiyasi', en: 'Timing and exam strategy' },
       focus: { uz: '20 / 40, reja 5, tekshirish 5, favqulodda reja', en: '20 / 40, plan 5, check 5, the emergency plan' },
       intro: { uz: "Bilim tayyor. Endi 60 daqiqada uni chiqarish. Task 2 birinchi (40), keyin Task 1 (20). 5 reja · 30 yozish · 5 tekshirish. Task 1: 3 reja · 15 yozish · 2 tekshirish. Bu hafta har kun soat bilan.", en: 'The knowledge is there. Now producing it in 60 minutes. Task 2 first (40), then Task 1 (20). 5 plan · 30 write · 5 check. Task 1: 3 plan · 15 write · 2 check. This week every day against the clock.' },
@@ -349,7 +349,7 @@ window.WRITING = {
                en: ['Full Writing (60) — clock visible.', 'Task 2 in 30 (emergency).', 'Task 2 in 20 (emergency).', 'Five-minute plan × 5.', 'Full Writing (60).', 'Task 1 × 2 (20 + 20) — different types.', 'Sunday: full Writing (60) + two sheets.'] },
       errors: [{ bad: 'Task 1 dan boshlab 30 daq sarflash', good: 'Task 2 (40) → Task 1 (20)' }, { bad: 'Vaqt qisilsa abzatsni tashlash', good: '4 abzats, har biri qisqa' }] },
 
-    { n: 17, from: '2027-01-18',
+    { n: 17, from: '2027-02-15',
       title: { uz: 'To\'liq mocklar va xatolar tahlili', en: 'Full mocks and error analysis' },
       focus: { uz: 'Ikki to\'liq test, xatolar egri chizig\'i', en: 'Two full tests, the error curve' },
       intro: { uz: "Bu hafta 2 ta to'liq Writing (seshanba va shanba), ikkalasi 4 mezon varag'i bilan, va 17 haftalik xatolar daftarining tahlili: qaysi xato yo'qoldi, qaysi qoldi. Qolganlari — 18-haftaning 'top 5' ro'yxati.", en: 'Two full Writing tests this week (Tuesday and Saturday), both with the four-criteria sheet, and an analysis of the 17-week error log: which errors are gone, which remain. The remaining ones — week 18\'s "top five".' },
@@ -369,7 +369,7 @@ window.WRITING = {
                en: ['Compare week-1 and week-17 essays — by category.', 'Full Writing (60) + sheet.', '10 trusted structures — one page.', '50 trusted words — one page.', 'Top 5 errors — list.', 'Full Writing (60) + sheet.', 'Sunday: compare the two mocks, write a forecast.'] },
       errors: [{ bad: 'Imtihonda yangi tuzilma sinash', good: 'Faqat 10 ishonchli tuzilma' }, { bad: 'Barcha xatolarni tekshirish', good: 'Top 5 — 2-o\'tish' }] },
 
-    { n: 18, from: '2027-01-25',
+    { n: 18, from: '2027-02-22',
       title: { uz: 'Yakuniy sayqal', en: 'Final polish' },
       focus: { uz: 'Top 5 xato, 3 sahifa, yengil', en: 'Top 5 errors, three pages, light' },
       intro: { uz: "Yangi narsa yo'q. Har kuni: 1 Task 2 yoki 1 Task 1 (ikkalasi emas), 3 sahifa (top 5 + 10 tuzilma + 50 so'z) 5 daqiqa. Kuniga 45 daqiqadan oshmasin — charchoq imtihonda 0.5 ball yeydi.", en: 'Nothing new. Daily: one Task 2 or one Task 1 (not both), the three pages (top 5 + 10 structures + 50 words) for 5 minutes. No more than 45 minutes a day — fatigue eats half a band in the exam.' },
@@ -389,7 +389,7 @@ window.WRITING = {
                en: ['Task 2 (40) + top 5.', '5 intro + 5 conclusion templates (by heart).', 'Task 1 (20).', 'Task 2 (40) — only the 10 trusted structures.', 'Six-line routine — write it.', 'Task 1 (20).', 'Sunday: Task 2 (40) — the last full essay.'] },
       errors: [{ bad: 'Kuniga 2 soat Writing', good: '≤45 daqiqa — charchoq = −0.5' }, { bad: 'Imtihon oldi yangi shablon', good: '10 tayyor shablon' }] },
 
-    { n: 19, from: '2027-02-01',
+    { n: 19, from: '2027-03-01',
       title: { uz: 'Imtihon rejimi', en: 'Exam mode' },
       focus: { uz: "Kuniga 20 daqiqa, 3 sahifa, uyqu", en: '20 minutes a day, three pages, sleep' },
       intro: { uz: "Oxirgi hafta (1–7 fev) va imtihon oldi (8–19 fev). Writing: kuniga 20 daqiqa — bitta reja (5 daq) + 3 sahifa (5 daq) + 1 abzats (10 daq). To'liq insho — 12-fevralda bitta (ixtiyoriy mock). 17–19 fev: faqat 6 qatorli tartib. 19-fev kechqurun: hech narsa.", en: 'The final week (1–7 Feb) and the pre-exam days (8–19 Feb). Writing: 20 minutes a day — one plan (5) + three pages (5) + one paragraph (10). A full essay — one on 12 February (optional mock). 17–19 Feb: the six-line routine only. Evening of 19 Feb: nothing.' },
@@ -410,3 +410,6 @@ window.WRITING = {
       errors: [{ bad: 'Imtihon oldi kuniga 2 insho', good: 'Kuniga 20 daq' }, { bad: 'Writing 7.0 = muvaffaqiyatsizlik', good: 'Writing odatda eng past; overall muhim' }] }
   ]
 };
+/* 2026-10 kalendar reseti: kurs 25-okt → 10-fev — 16 hafta sig'adi.
+   17–19-haftalar matni saqlanadi, lekin jadvalga kirmaydi. */
+window.WRITING.weeks = window.WRITING.weeks.filter(function (w) { return w.n <= 16; });

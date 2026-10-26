@@ -219,8 +219,8 @@ window.ROADMAP = {
       "en": "English — throughout the whole path"
     },
     "goal": {
-      "uz": "AI'ning hamma materiali inglizcha. Shu platformada 20 haftalik IELTS 8.0 kursi bor — Python bilan parallel yuradi.",
-      "en": "All AI material is in English. This platform has a 20-week IELTS 8.0 track that runs in parallel with Python."
+      "uz": "AI'ning hamma materiali inglizcha. Shu platformada 16 haftalik IELTS 8.0 kursi bor — Python bilan parallel yuradi.",
+      "en": "All AI material is in English. This platform has a 16-week IELTS 8.0 track that runs in parallel with Python."
     }
   }
 };

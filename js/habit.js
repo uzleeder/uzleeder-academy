@@ -85,7 +85,7 @@
     keyOf: function (index) { return Store.shiftDays(HABIT.meta.from, index - 1); },
 
     /* Kun turi taqvimdan: yakshanba — dam, Se/Pa/Sha — LC, qolgani og'ir.
-       (Sinov kunlari 17–19-sen bekor qilingan — jadval 20-sen dan.) */
+       (Sinov kunlari 17–19-sen bekor qilingan — jadval 25-okt dan.) */
     typeOf: function (key) {
       var dow = toDate(key).getDay();
       if (dow === 0) return 'rest';
@@ -94,8 +94,8 @@
     },
 
     /* Shu sanaga to'g'ri keladigan Python darsi raqami.
-       Python HAR KUNI: 20-sen → 19-okt, 30 kun = 30 dars. Muddat qat'iy.
-       Hammasi bir kunda — rasmiy start 20-sentabrda boshlanadi. */
+       Python HAR KUNI: 25-okt → 23-noy, 30 kun = 30 dars. Muddat qat'iy.
+       Hammasi bir kunda — rasmiy start 25-oktabrda boshlanadi. */
     pyDayOf: function (key) {
       var start = HABIT.meta.official;
       var n = daysBetween(start, key) + 1;
@@ -108,7 +108,7 @@
 
     /* Ingliz tili kuni — kurs boshlanishidan sanaladi */
     engDayOf: function (key) {
-      /* Kalendar EngCal'da (kirish bloki + dushanbadan boshlanuvchi 20 hafta,
+      /* Kalendar EngCal'da (kirish bloki + dushanbadan boshlanuvchi 16 hafta,
          orada bo'sh kunlar bo'lishi mumkin) — shu yerda takrorlamaymiz */
       if (window.EngCal) return EngCal.dayOfKey(key);
       var n = daysBetween(ENGLISH.meta.start, key) + 1;
@@ -120,7 +120,7 @@
       return n >= 1 ? n : 0;
     },
 
-    /* Speaking 30 kunlik trek — ingliz tili kursining birinchi 30 kuni (1-kun = 21-sen) */
+    /* Speaking 30 kunlik trek — ingliz tili kursining birinchi 30 kuni (1-kun = 26-okt) */
     speakDayOf: function (key) {
       var n = HabitPlan.engDayOf(key);
       return (n >= 1 && n <= SPEAK30.meta.days) ? n : 0;
@@ -168,9 +168,9 @@
         if (b.dcOnly && !(window.DataCamp && DataCamp.forDate(key))) return;
         /* noDc — dcOnly blokning juftligi: bob bor kuni tashlanadi, shunda slot bo'sh qolmaydi */
         if (b.noDc && window.DataCamp && DataCamp.forDate(key)) return;
-        /* Writing kursi 1-oktabrdan — ungacha jadvalda Writing bloki YO'Q (o'rni erkin vaqt) */
+        /* Writing kursi 25-oktabrdan — ungacha jadvalda Writing bloki YO'Q (o'rni erkin vaqt) */
         if (b.writing && !writingOpen) {
-          b = { id: b.id, kind: 'rest', at: b.at, min: b.min, t: { uz: 'Erkin vaqt (Writing 1-okt dan)', en: 'Free time (Writing from 1 Oct)' } };
+          b = { id: b.id, kind: 'rest', at: b.at, min: b.min, t: { uz: 'Erkin vaqt (Writing 25-okt dan)', en: 'Free time (Writing from 25 Oct)' } };
         }
         /* YouTube — har ikki kunda bir (juft kalendar kunlari) */
         if (b.everyOther && calDay % 2 !== 0) return;

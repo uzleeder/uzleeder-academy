@@ -3,7 +3,7 @@
    --------------------------------------------------------------------------
    Ikki kurs bir vaqtda yuradi:
      Python  — 30 kun, haftasiga 3 kun (Du / Ch / Ju) → ~10 hafta
-     Ingliz  — 144 kun, har kuni → 20 hafta + zaxira
+     Ingliz  — 108 kun, har kuni → 16 hafta
 
    Nega Python dushanba/chorshanba/jumaga qo'yildi: seshanba, payshanba va
    shanbada Everest LC darsi bor (16:30–18:30). Python ham o'sha kunlarga
@@ -20,8 +20,8 @@
 window.DUAL = {
 
   intro: {
-    uz: "Ikki kurs HAR KUNI birga: ingliz tili kuniga 4 soat (yakshanba ham), coding og'ir kunlarda 4 soat, LC kunlarida 2 soat. Python 30 dars — 16-sentabrdan 19-oktabrgacha, har kuni bitta, muddat qat'iy. Keyin o'sha soatlar DataCamp'ga o'tadi. 8 soat uyqu himoyalangan.",
-    en: 'Both courses every day: English four hours a day (Sunday too), coding four hours on heavy days and two on LC days. Python — 30 lessons from 16 September to 19 October, one a day, hard deadline. Then those hours go to DataCamp. Eight hours of sleep protected.'
+    uz: "Ikki kurs HAR KUNI birga: ingliz tili kuniga 4 soat (yakshanba ham), coding og'ir kunlarda 4 soat, LC kunlarida 2 soat. Python 30 dars — 25-oktabrdan 23-noyabrgacha, har kuni bitta, muddat qat'iy. Keyin o'sha soatlar DataCamp'ga o'tadi. 8 soat uyqu himoyalangan.",
+    en: 'Both courses every day: English four hours a day (Sunday too), coding four hours on heavy days and two on LC days. Python — 30 lessons from 25 October to 23 November, one a day, hard deadline. Then those hours go to DataCamp. Eight hours of sleep protected.'
   },
 
   warning: {
@@ -65,10 +65,10 @@ window.DUAL = {
   timeline: [
     { from: 1, to: 5,
       title: { uz: '1–5-hafta · Python oyi', en: 'Weeks 1–5 · Python month' },
-      py: { uz: 'Python 30 kunlik kurs — HAR KUNI, 20-sen → 19-okt', en: 'The 30-day Python course — EVERY day, 20 Sep → 19 Oct' },
+      py: { uz: 'Python 30 kunlik kurs — HAR KUNI, 25-okt → 23-noy', en: 'The 30-day Python course — EVERY day, 25 Oct → 23 Nov' },
       eng: { uz: 'Ingliz tili: poydevor → B2+', en: 'English: foundation → B2+' },
-      note: { uz: "30 dars 30 kunga: yakshanba ham. 19-oktabr — qat'iy muddat. Parallel: DataCamp 1-bosqich (kuniga 1 soat, og'ir kunlarda).",
-              en: '30 lessons in 30 days, Sundays included. 19 October is a hard deadline. In parallel: DataCamp phase 1 (1h a day on heavy days).' } },
+      note: { uz: "30 dars 30 kunga: yakshanba ham. 23-noyabr — qat'iy muddat. Parallel: DataCamp 1-bosqich (kuniga 1 soat, og'ir kunlarda).",
+              en: '30 lessons in 30 days, Sundays included. 23 November is a hard deadline. In parallel: DataCamp phase 1 (1h a day on heavy days).' } },
     { from: 6, to: 12,
       title: { uz: '6–12-hafta · DataCamp', en: 'Weeks 6–12 · DataCamp' },
       py: { uz: 'DataCamp 1–3-bosqich: Python qo\'lda → pandas/OOP → AI nazariyasi', en: 'DataCamp phases 1–3: Python by hand → pandas/OOP → AI theory' },
@@ -99,8 +99,8 @@ window.DUAL = {
   rules: [
     { uz: "Ingliz tili 4 soat — har kuni, muzokarasiz. Yomon kunda ham.",
       en: 'English four hours — every day, non-negotiable. Even on a bad day.' },
-    { uz: "Coding: og'ir kun 4 soat, LC kuni 2 soat. Python 30/30 — 19-oktabr, muddat surilmaydi.",
-      en: 'Coding: heavy day 4h, LC day 2h. Python 30/30 by 19 October — the deadline does not move.' },
+    { uz: "Coding: og'ir kun 4 soat, LC kuni 2 soat. Python 30/30 — 23-noyabr, muddat surilmaydi.",
+      en: 'Coding: heavy day 4h, LC day 2h. Python 30/30 by 23 November — the deadline does not move.' },
     { uz: "8 soat uyquni hech qachon qisqartirma. Kun ulgurmasa — erkin vaqt qisqarsin, uyqu emas.",
       en: 'Never cut the eight hours of sleep. If a day overruns, shorten free time, not the sleep.' },
     { uz: "Bajarilmagan kun = qarz kuni = maqsad sanasi +1. Bu jazo emas, hisob.",

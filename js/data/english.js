@@ -1,11 +1,11 @@
 /* ==========================================================================
-   ENGLISH — 20 haftalik IELTS 8.0 tayyorgarlik rejasi
+   ENGLISH — 16 haftalik IELTS 8.0 tayyorgarlik rejasi
    --------------------------------------------------------------------------
-   Kurs kalendari (RASMIY: 20-sentabr 2026 → 10-fevral 2027):
+   Kurs kalendari (RASMIY: 25-oktabr 2026 → 10-fevral 2027):
      introduction 16–19-sen 2026 — kirish darslari, KURS KUNI EMAS (0-hafta)
-     rasmiy start 20-sen 2026 (yakshanba) — kickoff: Python 1-kun, DataCamp 1-kun
-     1-kun        21-sen 2026 (dushanba) — 20 hafta = 140 kun
-     140-kun      7-fev 2027 (yakshanba)
+     rasmiy start 25-okt 2026 (yakshanba) — kickoff: Python 1-kun, DataCamp 1-kun
+     1-kun        26-okt 2026 (dushanba) — 15 hafta + 3 kun = 108 kun
+     108-kun      10-fev 2027 (chorshanba)
      zaxira       8–10-fev 2027  (kurs rasmiy tugashi 10-fev)
      imtihon      20-fevral 2027
 
@@ -13,12 +13,12 @@
      meta       — sanalar, daraja, LC jadvali, halol ogohlantirish
      skills     — 6 ta ko'nikma ustuni
      phases     — 5 bosqich (har biri 4 hafta)
-     weeks      — 20 hafta: goal, blocks[], example, tasks[]
+     weeks      — 16 hafta: goal, blocks[], example, tasks[]
      daily      — kunlik tartib (3 xil kun)
      systems    — har ko'nikma uchun metod (grammar 7 qadam, vocab 5 qadam…)
      scoreboard — har yakshanba yoziladigan ko'rsatkichlar
      rules      — 10 ta buzilmas qoida
-     target     — 20 hafta oxiridagi ideal profil
+     target     — 16 hafta oxiridagi ideal profil
 
    Hafta obyekti:
      { n, phase, title, goal, mock:bool,
@@ -29,24 +29,24 @@
 window.ENGLISH = {
 
   /* ====================== META =========================================
-     Kalendar (20-sen 2026 → 10-fev 2027):
+     Kalendar (25-okt 2026 → 10-fev 2027):
        16–19-sen   introduction — 4 kirish darsi (ENG_INTRO), kurs kuni EMAS,
                    progressga kirmaydi; #/english/i1 … i4
-       20-sen      RASMIY START (yakshanba): kickoff kuni — Python 1-kun,
+       25-okt      RASMIY START (yakshanba): kickoff kuni — Python 1-kun,
                    DataCamp 1-kun, diagnostik mock; intizom jadvali shu kundan
-       1–140-kun   21-sen 2026 → 7-fev 2027 — 20 hafta, dushanba → yakshanba
+       1–108-kun   26-okt 2026 → 10-fev 2027 — 16 hafta, dushanba → yakshanba
        8–10-fev    zaxira, 20-fev imtihon
 
-     Nega 1-kun dushanba: 20 haftani dushanbadan boshlasak, HAR haftaning
+     Nega 1-kun dushanba: 16 haftani dushanbadan boshlasak, HAR haftaning
      7-kuni yakshanbaga (test kuni), 2/4/6-kunlari Se/Pa/Sha — Everest LC
      kunlariga tushadi. dayKey() shu qoidani biladi — sanani qo'lda hisoblama. */
   meta: {
-    start: '2026-09-20',        // RASMIY boshlanish (kickoff, yakshanba)
-    week1: '2026-09-21',        // 1-kun — 1-haftaning dushanbasi
+    start: '2026-10-25',        // RASMIY boshlanish (kickoff, yakshanba) — 2026-10 kalendar reseti
+    week1: '2026-10-26',        // 1-kun — 1-haftaning dushanbasi
     intro: 0,                   // kurs kunlari ichida kirish kuni yo'q (introduction alohida)
-    orientation: { from: '2026-09-16', to: '2026-09-19', done: true },   // introduction darslari — 19-sen da RASMIY TUGALLANGAN (ertalabki darsda chiqmaydi)
-    days: 140,                  // jami kun (20 × 7)
-    weeks: 20,
+    orientation: { from: '2026-10-21', to: '2026-10-24', done: true },   // introduction darslari — 19-sen da RASMIY TUGALLANGAN (ertalabki darsda chiqmaydi)
+    days: 108,                  // jami kun: 26-okt → 10-fev (15 hafta + 3 kun); 109–140-kunlar jadvaldan olib tashlangan
+    weeks: 16,
     bufferTo: '2027-02-10',     // kursning rasmiy tugash sanasi
     exam: '2027-02-20',         // IELTS imtihoni
     from: 'B1+',
@@ -57,10 +57,10 @@ window.ENGLISH = {
     classDays: [2, 4, 6],       // Se, Pa, Sha (0 = yakshanba)
     selfStudy: { uz: '3–4 soat/kun', en: '3–4 hours/day' },
 
-    title: { uz: 'IELTS 8.0 — 20 haftalik reja', en: 'IELTS 8.0 — 20-week plan' },
+    title: { uz: 'IELTS 8.0 — 16 haftalik reja', en: 'IELTS 8.0 — 16-week plan' },
     lede: {
-      uz: "B1+ dan boshlab 20 hafta ichida IELTS 8.0 hududiga chiqish tizimi. Olti ko'nikma alohida emas — bir-birini quvvatlab o'rganiladi.",
-      en: 'A system to move from B1+ into IELTS 8.0 territory in 20 weeks. Six skills, not studied separately but feeding each other.'
+      uz: "B1+ dan boshlab 16 hafta ichida IELTS 8.0 hududiga chiqish tizimi. Olti ko'nikma alohida emas — bir-birini quvvatlab o'rganiladi.",
+      en: 'A system to move from B1+ into IELTS 8.0 territory in 16 weeks. Six skills, not studied separately but feeding each other.'
     },
 
     /* Halol ogohlantirish — reja bilan birga turishi shart */
@@ -812,8 +812,8 @@ window.ENGLISH = {
       ],
       quota: [
         { t: { uz: 'Boshlang\'ich (1–8 hafta)', en: 'Early stage (weeks 1–8)' }, d: { uz: '2 × Task 2 + 1 × Task 1 / hafta', en: '2 Task 2 + 1 Task 1 per week' } },
-        { t: { uz: 'Keyinroq (9–16 hafta)', en: 'Later (weeks 9–16)' },          d: { uz: '3 × Task 2 + 2 × Task 1 / hafta', en: '3 Task 2 + 2 Task 1 per week' } },
-        { t: { uz: 'Yakuniy (17–20 hafta)', en: 'Final phase (weeks 17–20)' },   d: { uz: "Vaqt bilan to'liq Writing testlari", en: 'Timed full Writing tests' } }
+        { t: { uz: 'Keyinroq (9–13 hafta)', en: 'Later (weeks 9–13)' },          d: { uz: '3 × Task 2 + 2 × Task 1 / hafta', en: '3 Task 2 + 2 Task 1 per week' } },
+        { t: { uz: 'Yakuniy (14–16 hafta)', en: 'Final phase (weeks 14–16)' },   d: { uz: "Vaqt bilan to'liq Writing testlari", en: 'Timed full Writing tests' } }
       ]
     },
     {

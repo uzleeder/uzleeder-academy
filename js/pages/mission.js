@@ -53,7 +53,7 @@
   function taskCard(d, tk, canAct) {
     var s = tk.state || { st: 'todo' }, st = s.st;
     var h = '<article class="ms-task st-' + esc(st) + (tk.carried ? ' carried' : '') + '" id="mt-' + esc(tk.id.replace(/[^\w-]/g, '_')) + '">';
-    h += '<div class="ms-task-h"><span class="ms-ic">' + icon(tk.skill) + '</span><div class="ms-task-t"><span class="ms-sk">' + esc(skillName(tk.skill)) + ' · ' + tk.min + ' ' + t('daq', 'min') +
+    h += '<div class="ms-task-h"><span class="ms-ic">' + icon(tk.skill) + '</span><div class="ms-task-t"><span class="ms-sk">' + esc(tk.block ? tk.block.n + '. ' + L(tk.block.title) : skillName(tk.skill)) + ' · ' + tk.min + ' ' + t('daq', 'min') +
       (tk.kind === 'diag' ? ' · <b>' + t('diagnostika', 'diagnostic') + '</b>' : tk.kind === 'mock' ? ' · <b>' + t('amaliy mock', 'practice mock') + '</b>' : '') +
       (tk.movedFrom ? ' · ' + t('ko\'chirilgan: ', 'moved from ') + esc(fmtD(tk.movedFrom)) : '') + '</span><h4>' + esc(L(tk.title)) + '</h4></div>' +
       '<span class="ms-st st-' + esc(st) + '">' + esc(stateLabel(st)) + (s.min || st === 'active' ? ' · <span data-elapsed="' + esc(tk.id) + '">' + elapsed(s) + '</span> ' + t('daq', 'min') : '') + '</span></div>';
@@ -62,7 +62,7 @@
     if (tk.why && tk.why.length) h += '<details class="ms-why"><summary>' + IC.bulb + t('Nega bu vazifa?', 'Why this task?') + '</summary><ul>' + tk.why.map(function (w) { return '<li>' + esc(L(w)) + '</li>'; }).join('') + '</ul></details>';
     var parts = tk.parts && tk.parts.length ? tk.parts : [{ min: tk.min, label: tk.material.label, route: tk.material.route }];
     h += '<div class="ms-parts">' + parts.map(function (p) {
-      return '<button class="btn btn-ghost btn-sm ms-open" data-mopen="' + esc(p.route) + '" data-mid="' + esc(tk.id) + '" data-md="' + esc(d) + '">' + IC.arrowR + esc(L(p.label)) + (parts.length > 1 ? ' · ' + p.min + ' ' + t('daq', 'min') : '') + '</button>';
+      return '<button class="btn btn-ghost btn-sm ms-open" data-mopen="' + esc(p.route) + '" data-mid="' + esc(tk.id) + '" data-md="' + esc(d) + '">' + (p.course && M().courseDone(p.chk) ? IC.check : IC.arrowR) + (p.course ? '<span class="ms-ctag">' + t('kurs', 'course') + '</span>' : '') + esc(L(p.label)) + (parts.length > 1 ? ' · ' + p.min + ' ' + t('daq', 'min') : '') + '</button>';
     }).join('') + '</div>';
     if (canAct) {
       h += '<div class="ms-acts">';
@@ -145,9 +145,12 @@
     h += '<aside class="ms-side">' + card(t('Tavsiya etilgan keyingi qadamlar', 'Recommended next actions'), recsPanel(), IC.bulb) +
       card(t('Takrorlar', 'Upcoming reviews'), reviewsPanel(), IC.refresh) +
       card(t('Hafta: o\'quv vaqti', 'This week: study time'), weekBars(), IC.clock) + '</aside></div>';
-    /* Missiya ichidagi ingliz tili kurslari (Kurslar sahifasidan shu yerga ko'chirilgan) */
+    /* Ingliz tili kurslari kunlik rejaga bo'lingan (har vazifada "kurs" qismi).
+       To'liq kurs sahifalari — faqat yig'iladigan ma'lumotnoma sifatida.    */
     if (window.CourseCards && CourseCards.englishAll) {
-      try { h += '<h2 class="jr-h2">' + esc(t('Missiya ichidagi kurslar', 'Courses in this mission')) + '</h2><div class="course-pick programs">' + CourseCards.englishAll() + '</div>'; }
+      try { h += '<details class="ms-courses"><summary>' + IC.layers + esc(t("Kurslarning to'liq ko'rinishi (English, Speaking 30, BBC, Writing, Quick Repeat)", 'Full course views (English, Speaking 30, BBC, Writing, Quick Repeat)')) + '</summary>' +
+        '<p class="ms-note">' + esc(t("Bu kurslarning kunlik darslari yuqoridagi rejada — tegishli vazifa ichida \"kurs\" belgisi bilan. Bu yerda faqat umumiy progress.", 'The daily lessons of these courses are in the plan above — inside the matching task, marked "course". This is only the overall progress.')) + '</p>' +
+        '<div class="course-pick programs">' + CourseCards.englishAll() + '</div></details>'; }
       catch (e) { if (window.console) console.error(e); }
     }
     h += card(t("Ko'nikmalar (dalil asosida)", 'Skills (evidence-based)'), skillsPanel(), IC.trend);

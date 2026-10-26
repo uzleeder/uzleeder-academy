@@ -30,8 +30,8 @@ const sum = ts => ts.reduce((s, t) => s + t.min, 0);
 
 /* ---------- kalendar ---------- */
 ok('day 1 = 25 Oct 2026', M.dayIndex('2026-10-25') === 1);
-ok('day 113 = 14 Feb 2027 (final review, counted in week 16)', M.dayIndex('2027-02-14') === 113 && M.C().finalReview === '2027-02-14');
-ok('16 weeks', M.weekOf('2027-02-14') === 16 && M.weekOf('2026-10-31') === 1 && M.weekOf('2026-11-01') === 2);
+ok('day 109 = 10 Feb 2027 (final review, counted in week 16)', M.dayIndex('2027-02-10') === 109 && M.C().finalReview === '2027-02-10' && M.C().days === 109);
+ok('16 weeks', M.weekOf('2027-02-10') === 16 && M.weekOf('2026-10-31') === 1 && M.weekOf('2026-11-01') === 2);
 ok('phases cover weeks 1–16', [1, 2, 5, 6, 10, 11, 14, 15, 16].every(w => M.C().phases.some(p => w >= p.from && w <= p.to)));
 ok('mock days are inside the mission and Saturdays', M.C().mockDays.every(d => M.inMission(d) && new Date(d + 'T00:00:00').getDay() === 6));
 
@@ -81,12 +81,12 @@ ok('frozen plan unchanged on re-view', JSON.stringify(M.day('2026-11-03').tasks.
 TODAY = '2026-11-04';
 const d2 = M.day('2026-11-04');
 ok('next day: one unfinished noted, rest not carried', d2.notes.some(x => /Unfinished yesterday/.test(x.en)) && d2.notes.some(x => /Not carried over/.test(x.en)), d2.notes);
-ok('no backlog: planned minutes still = budget', d2.planned === 195, d2.planned);
+ok('no backlog: planned minutes still = budget', d2.planned === 240, d2.planned);
 TODAY = '2026-11-08';
 const d3 = M.day('2026-11-08');
-ok('missed days → note, normal day', d3.notes.some(x => /day\(s\) missed/.test(x.en)) && d3.planned === 195, d3.notes);
+ok('missed days → note, normal day', d3.notes.some(x => /day\(s\) missed/.test(x.en)) && d3.planned === 240, d3.notes);
 ok('move task to another day', M.tasks.move('2026-11-08', d3.tasks[1].id, '2026-11-09') && M.day('2026-11-09').tasks.some(t => t.movedFrom === '2026-11-08'));
-ok('moved task not counted in source day', M.day('2026-11-08').planned === 195 - d3.tasks[1].min);
+ok('moved task not counted in source day', M.day('2026-11-08').planned === 240 - d3.tasks[1].min);
 const dm = M.tasks.setMode('2026-11-10', '90');
 ok('mode change → 90 min plan', dm.planned === 90 && state.mission.settings.mode === '90');
 state.mission.settings.mode = '195';
@@ -94,7 +94,7 @@ state.mission.settings.mode = '195';
 /* ---------- mock va yakuniy kun ---------- */
 const mk = M.build('2026-11-21');
 ok('mock day plan: practice mock tasks', mk.mock && mk.tasks.filter(t => t.kind === 'mock').length === 4 && mk.tasks.every(t => /NOT a band|—/.test(t.assess.en) || t.kind !== 'mock'));
-const fin = M.build('2027-02-14');
+const fin = M.build('2027-02-10');
 ok('final review day', fin.final && fin.tasks.some(t => t.kind === 'profile'));
 
 /* ---------- SRS2 ---------- */
@@ -192,6 +192,78 @@ ok('merge: remote writing kept', !!mg.writing.wremote);
 
 /* ---------- zaxira ---------- */
 ok('one-time local backup written before first mission write', !!mem['uzla.state.backup.mission-v1']);
+
+/* ---------- English Daily Discipline — 240 daqiqa, 7 qat'iy blok ---------- */
+{
+  ok('240: default mode is 240 (English Daily Discipline)', M.C().defaultMode === '240' && M.C().modes.some(m => m.key === '240' && m.min === 240));
+  const p = M.build('2026-11-05', '240'), sk = p.tasks.map(t => t.skill).join(), mins = p.tasks.map(t => t.min).join();
+  ok('240: seven blocks in the fixed order', sk === 'vocab,grammar,listening,speaking,reading,writing,review', sk);
+  ok('240: minutes 30/35/45/45/35/35/15 = 240', mins === '30,35,45,45,35,35,15' && p.tasks.reduce((s, t) => s + t.min, 0) === 240, mins);
+  ok('240: blocks carry the given names', p.tasks[0].block.title.en === 'Vocabulary & Spaced Repetition' && p.tasks[2].block.title.en === 'Listening & Shadowing' && p.tasks[6].block.title.en === 'Active Recall & Daily Review');
+  ok('240: Grammar block is grammar only (no writing part)', p.tasks[1].kind !== 'diag' ? !(p.tasks[1].parts || []).some(x => /writing/.test(x.route)) : true);
+  ok('240: Writing is its own block with a Writing Studio task', p.tasks[5].skill === 'writing' && /mission\/writing\/new/.test(p.tasks[5].material.route));
+  ok('240: Active Recall = explain + mini-test + tomorrow plan, sums to 15', p.tasks[6].kind === 'recall' && p.tasks[6].parts.length === 3 && p.tasks[6].parts.reduce((s, x) => s + x.min, 0) === 15);
+  ok('240: every block has objective/activity/material/criteria', p.tasks.every(t => t.objective && t.activity && t.material && t.material.route && t.criteria));
+  ok('240: week 1 → diagnostics inside the blocks', M.build('2026-10-26', '240').tasks.filter(t => t.kind === 'diag').length >= 1);
+  ok('240: mock day still a mock day', M.build('2026-11-21', '240').mock);
+}
+
+/* ---------- ingliz tili kurslari Mission ichida (qism sifatida) ---------- */
+{
+  const SAVE = { HabitPlan: global.HabitPlan, Eng: global.Eng, SPEAK30: global.SPEAK30, WRITING: global.WRITING, Writing: global.Writing, Quick: global.Quick };
+  global.HabitPlan = { inRange: k => k >= '2026-10-25' && k <= '2027-02-10', engDayOf: () => 9, speakDayOf: () => 9 };
+  global.Eng = { dayOf: n => ({ d: n, title: { uz: 'Past Simple', en: 'Past Simple' }, practice: [{ uz: 'Reading: 45 daqiqa', en: 'Reading: one passage, 45 minutes' }] }) };
+  global.SPEAK30 = { days: Array.from({ length: 30 }, (_, i) => ({ n: i + 1, q: { uz: 'Savol', en: 'Question' } })) };
+  global.WRITING = { meta: { start: '2026-10-25', end: '2027-02-10' }, weeks: [{ n: 1, from: '2026-10-25', tasks: { uz: ['a', 'b', 'c', 'd', 'e', 'f', 'g'], en: ['A', 'B', 'C', 'D', 'E', 'F', 'G'] } }, { n: 2, from: '2026-11-02', tasks: { uz: ['a', 'b', 'c', 'd', 'e', 'f', 'g'], en: ['A', 'B', 'C', 'D', 'E', 'F', 'G'] } }] };
+  global.Writing = { currentWeek: () => ({ n: 2, tasks: { uz: ['a', 'b', 'c', 'd', 'e', 'f', 'g'], en: ['A', 'B', 'C', 'D', 'E', 'F', 'G'] } }) };
+  global.Quick = { current: () => ({ n: 1, title: { uz: 'Q1', en: 'Q1' } }) };
+  const kinds = t => (t.parts || []).filter(p => p.course).map(p => (p.chk || {}).c || 'bbc');
+  const sums = b => b.tasks.every(t => !t.parts || !t.parts.length || t.parts.reduce((s, p) => s + p.min, 0) === t.min);
+  const b195 = M.build('2026-11-04', '195'), by = sk => b195.tasks.filter(t => t.skill === sk)[0];
+  ok('course: grammar task holds English grammar + Writing week part', by('grammar') && kinds(by('grammar')).join() === 'eng,wr', by('grammar') && kinds(by('grammar')));
+  ok('course: vocab task holds English vocab + Quick Repeat', by('vocab') && kinds(by('vocab')).join() === 'eng,q10', by('vocab') && kinds(by('vocab')));
+  ok('course: reading task holds English reading practice', by('reading') && kinds(by('reading')).indexOf('eng') >= 0);
+  ok('course: listening task holds BBC episode', by('listening') && kinds(by('listening')).indexOf('bbc') >= 0);
+  ok('course: speaking task holds Speaking 30 day', by('speaking') && kinds(by('speaking')).indexOf('speak') >= 0);
+  ok('course: parts minutes add up to each task (195)', sums(b195), b195.tasks.map(t => [t.skill, t.min, (t.parts || []).map(p => p.min)]));
+  ok('course: every task keeps ≥ half for its own Mission material', b195.tasks.every(t => !t.parts || !t.parts.length || t.parts.filter(p => !p.course).reduce((s, p) => s + p.min, 0) >= Math.max(15, Math.round(t.min * 0.5 / 5) * 5)));
+  ok('course: Writing week chosen by the plan date (week 2 on 4 Nov)', by('grammar').parts.some(p => p.chk && p.chk.c === 'wr' && p.chk.n === 2));
+  const b60 = M.build('2026-11-04', '60');
+  ok('course: parts minutes add up in 60-min plan too', sums(b60), b60.tasks.map(t => [t.skill, t.min, (t.parts || []).map(p => p.min)]));
+  ok('course: outside the calendar → no course parts', M.build('2027-02-12', '195').tasks.every(t => !kinds(t).length));
+  ok('course: mock day unchanged (no course parts)', M.build('2026-11-21', '195').tasks.every(t => !kinds(t).length));
+  Object.assign(global, SAVE);
+}
+
+/* ---------- o'z PDF kitoblari: Reading Accelerator · Listening Section 1 ---------- */
+{
+  const fs = require('fs'), path = require('path'), root = path.join(__dirname, '..');
+  const READ = {};
+  const SAVE = { Store: global.Store, HabitPlan: global.HabitPlan };
+  global.Store = Object.assign({}, global.Store, { readGet: k => READ[k] || null, readSet: (k, v) => { READ[k] = Object.assign({ at: Date.now() }, v); },
+    shiftDays: (k, n) => { const d = new Date(k + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }, dateKey: () => '2026-11-01' });
+  global.L = o => (o && o.en) || o;
+  new Function(fs.readFileSync(path.join(root, 'js/data/eng-book-extra.js'), 'utf8'))();
+  new Function(fs.readFileSync(path.join(root, 'js/pages/books3.js'), 'utf8'))();
+  const X = global.ENG_BOOKS_EXTRA, BX = global.BookExtra;
+  ok('books: Reading Accelerator has 35 texts, Section 1 has 18 sets', X.ra.units.length === 35 && X.s1.units.length === 18);
+  ok('books: RA text 1 on 25 Oct, text 2 on 28 Oct, nothing on 26 Oct', BX.unitFor('ra', '2026-10-25') === 1 && BX.unitFor('ra', '2026-10-28') === 2 && BX.unitFor('ra', '2026-10-26') === 0);
+  ok('books: last RA text and last S1 set fall before 10 Feb', BX.dateOf('ra', 35) <= '2027-02-10' && BX.dateOf('s1', 18) <= '2027-02-10', [BX.dateOf('ra', 35), BX.dateOf('s1', 18)]);
+  ok('books: nothing scheduled outside the calendar', BX.unitFor('ra', '2026-10-22') === 0 && BX.unitFor('ra', '2027-02-13') === 0);
+  ok('books: RA PDF page = book page + 2 (text 1 → PDF p3)', X.ra.units[0].page + X.ra.pdfOffset === 3);
+  global.HabitPlan = { inRange: k => k >= '2026-10-25' && k <= '2027-02-10', engDayOf: () => 0, speakDayOf: () => 0 };
+  const day = M.build('2026-10-28', '195'), rd = day.tasks.filter(t => t.skill === 'reading')[0];
+  ok('books: RA text is a course part inside the Mission reading task', rd && (rd.parts || []).some(p => p.chk && p.chk.c === 'bx' && p.chk.id === 'ra' && p.chk.n === 2));
+  const ls = M.build('2026-11-01', '195').tasks.filter(t => t.skill === 'listening')[0];
+  ok('books: S1 set is a course part inside the Mission listening task', ls && (ls.parts || []).some(p => p.chk && p.chk.c === 'bx' && p.chk.id === 's1' && p.chk.n === 2));
+  ok('books: not done before saving', !M.courseDone({ c: 'bx', id: 'ra', n: 2 }));
+  const before = state.mission.attempts.length;
+  BX.save('s1', 2, 8, 10);
+  ok('books: saved result marks the part done', M.courseDone({ c: 'bx', id: 's1', n: 2 }) && BX.doneCount('s1') === 1);
+  const at = state.mission.attempts.slice(before).filter(a => a.kind === 'book')[0];
+  ok('books: result logged to Mission as listening practice 8/10', at && at.skill === 'listening' && at.score === 8 && at.total === 10 && at.mode === 'practice');
+  Object.assign(global, SAVE);
+}
 
 console.log('\n' + (fails ? fails + ' FAILED of ' + n : 'ALL OK — ' + n + ' checks'));
 process.exit(fails ? 1 : 0);

@@ -9,6 +9,7 @@
      • Loyihalar P1–P5, capstone, portfolio                   PyAI.projectStatus/capstoneStatus
      • Karyera (#/career), IELTS Mission (intervyu ingliz tili)
    "Ishga tayyor" mezonlari — har biri dalil bilan (bajarildi / yo'q).
+   Kalendar: 2026-10-25 → 2027-02-10 (hamma kurslar bilan bir xil).
    Hech qanday ish kafolati yoki rasmiy sertifikat va'da qilinmaydi.
    ========================================================================== */
 (function () {
@@ -38,15 +39,15 @@
   function stages() {
     return [
       { id: 's1', title: T('1. Python poydevori', '1. Python foundations'), goal: T("Sintaksis, tuzilmalar, funksiyalar, OOP — kod yozib isbotlangan", 'Syntax, data structures, functions, OOP — proven by writing code'),
-        weeks: '1–6', parts: [C.legacy(), C.datacamp(), C.pyai(['m0', 'm1'], T("Python & AI: Diagnostika + Python Core (yaxshilangan)", 'Python & AI: Diagnostic + Python Core (improved)'))] },
+        dates: T('25-okt – 23-noy', '25 Oct – 23 Nov'), parts: [C.legacy(), C.datacamp(), C.pyai(['m0', 'm1'], T("Python & AI: Diagnostika + Python Core (yaxshilangan)", 'Python & AI: Diagnostic + Python Core (improved)'))] },
       { id: 's2', title: T("2. Dasturchi va ma'lumot", '2. Developer & data'), goal: T("Git, testlar, SQL, HTTP/API, pandas — real ilova asoslari", 'Git, tests, SQL, HTTP/APIs, pandas — real application foundations'),
-        weeks: '7–12', parts: [C.pyai(['m2', 'm3', 'm4'], T('Python & AI: Modul 2–4', 'Python & AI: Modules 2–4')), C.projects(['p1', 'p2', 'p3'])] },
+        dates: T('24-noy – 21-dek', '24 Nov – 21 Dec'), parts: [C.pyai(['m2', 'm3', 'm4'], T('Python & AI: Modul 2–4', 'Python & AI: Modules 2–4')), C.projects(['p1', 'p2', 'p3'])] },
       { id: 's3', title: T('3. AI muhandislik', '3. AI engineering'), goal: T("Model API, strukturali chiqish, RAG, tool calling — ishonchli va o'lchanadigan", 'Model APIs, structured output, RAG, tool calling — reliable and measured'),
-        weeks: '13–18', parts: [C.pyai(['m5', 'm6', 'm7'], T('Python & AI: Modul 5–7', 'Python & AI: Modules 5–7')), C.projects(['p4', 'p5'])] },
+        dates: T('22-dek – 18-yan', '22 Dec – 18 Jan'), parts: [C.pyai(['m5', 'm6', 'm7'], T('Python & AI: Modul 5–7', 'Python & AI: Modules 5–7')), C.projects(['p4', 'p5'])] },
       { id: 's4', title: T('4. Production va portfolio', '4. Production & portfolio'), goal: T("Xavfsizlik, monitoring, capstone, toza repolar", 'Security, monitoring, a capstone, clean repositories'),
-        weeks: '19–22', parts: [C.pyai(['m8', 'm9'], T('Python & AI: Modul 8–9', 'Python & AI: Modules 8–9')), C.capstone(), C.portfolio()] },
+        dates: T('19-yan – 3-fev', '19 Jan – 3 Feb'), parts: [C.pyai(['m8', 'm9'], T('Python & AI: Modul 8–9', 'Python & AI: Modules 8–9')), C.capstone(), C.portfolio()] },
       { id: 's5', title: T('5. Ish qidirish', '5. Job search'), goal: T("Rezyume, bo'shliq rejasi, intervyu mashqi, ingliz tili", 'Resume, gap plan, interview practice, English'),
-        weeks: '23+', parts: [C.career(), C.english()] }
+        dates: T('4-fev – 10-fev', '4 Feb – 10 Feb'), parts: [C.career(), C.english()] }
     ].map(function (s) {
       var tot = 0, dn = 0; s.parts.forEach(function (p) { if (p.total) { tot += p.total; dn += Math.min(p.done, p.total); } });
       s.done = dn; s.total = tot; s.pct = pct(dn, tot); return s;
@@ -100,5 +101,65 @@
     return { stages: st, criteria: cr, met: met, of: cr.length, ready: met === cr.length, current: cur.id };
   }
 
-  window.JobReady = { stages: stages, criteria: criteria, nextSteps: nextSteps, status: status };
+  /* ====================== DAILY DISCIPLINE — 3 soatlik kunlik reja ======
+     5 blok × qat'iy daqiqa (30 + 30 + 75 + 30 + 15 = 180). Har blok HAQIQIY
+     darsga bog'lanadi: 25-okt → 23-noy Coding — Python (har kuni 1 dars) +
+     DataCamp; undan keyin Python & AI yo'li. Blok belgisi:
+     done["jr:<sana>:<blok>"]; Review & Plan yozuvi: read["jr-note-<sana>"].  */
+  var BLOCKS = [
+    { k: 'recall', min: 30, icon: 'brain', title: T('Knowledge & Recall', 'Knowledge & Recall'), d: T("Kechagi mavzuni eslash — notes'ga qaramasdan tushuntirish", "Recall yesterday's topic — explain it without looking at notes") },
+    { k: 'learn', min: 30, icon: 'book', title: T('Learn', 'Learn'), d: T('Yangi Python yoki Job Ready mavzusi', 'A new Python or Job Ready topic') },
+    { k: 'code', min: 75, icon: 'code', title: T('Deep Coding', 'Deep Coding'), d: T("Kodni o'zing yozish, debugging va mustaqil masalalar", 'Write the code yourself, debugging and independent problems') },
+    { k: 'build', min: 30, icon: 'layers', title: T('Build & Apply', 'Build & Apply'), d: T("Loyiha, mini-feature yoki real vazifaga qo'llash", 'A project, a mini-feature or applying it to a real task') },
+    { k: 'review', min: 15, icon: 'checklist', title: T('Review & Plan', 'Review & Plan'), d: T('Xatolar jurnali, bugungi natija va ertangi vazifa', "Error log, today's result and tomorrow's task") }
+  ];
+  function shift(k, n) { var d = new Date(k + 'T00:00:00'); d.setDate(d.getDate() + n); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function pyDay(d) { return window.HabitPlan && HabitPlan.pyDayOf ? HabitPlan.pyDayOf(d) : 0; }
+  function courseDay(n) { return window.COURSE ? COURSE.filter(function (c) { return c.day === n; })[0] : null; }
+  function cl(o) { return o && typeof o === 'object' ? o : T(String(o || ''), String(o || '')); }
+  function lt(o) { return window.L ? L(o) : (o.en || o.uz); }
+  function it(title, route, note) { return { title: title, route: route, note: note || null }; }
+
+  function dayPlan(d) {
+    var a = A(), n = pyDay(d), yn = pyDay(shift(d, -1)), out = {};
+    var nx = a ? a.nextLesson() : null, nxL = nx ? nx.lesson : null;
+    /* 1. Recall */
+    var rc = [];
+    if (yn) { var yc = courseDay(yn); if (yc) rc.push(it(T('Kechagi dars: ' + yn + '-kun — ' + lt(yc.title), "Yesterday's lesson: day " + yn + ' — ' + lt(yc.title)), 'lesson/' + yn, T("Daftarni yopib 5 daqiqa tushuntiring, keyin konspekt bilan solishtiring", 'Explain it for 5 minutes with notes closed, then compare with the summary'))); }
+    else if (a) { var last = a.lessonOrder().filter(function (id) { return a.lessonStatus(id).completed; }).pop(); if (last) rc.push(it(T('Oxirgi tugallangan dars: ' + a.lesson(last).title.uz, 'Last completed lesson: ' + a.lesson(last).title.en), 'pyai/l/' + last, T('Exit savollarini notes\'siz qayta yeching', 'Redo the exit questions without notes'))); }
+    var due = a ? a.reviewDue(d).length : 0;
+    if (due) rc.push(it(T(due + ' ta takror (oraliqli takrorlash)', due + ' reviews due (spaced repetition)'), 'pyai/review'));
+    if (!rc.length) rc.push(it(T('Aralash mashq: avvalgi mavzulardan 5 savol', 'Mixed practice: 5 questions from earlier topics'), 'pyai/mixed'));
+    out.recall = rc;
+    /* 2. Learn */
+    var ln = [], c = n ? courseDay(n) : null;
+    if (c) ln.push(it(T('Coding — Python ' + n + '-kun: ' + lt(c.title), 'Coding — Python day ' + n + ': ' + lt(c.title)), 'lesson/' + n));
+    var dc = window.DataCamp && DataCamp.forDate ? DataCamp.forDate(d) : null;
+    if (dc) ln.push(it(T('DataCamp: ' + dc.label, 'DataCamp: ' + dc.label), 'datacamp/' + dc.n));
+    if (!ln.length && nxL) ln.push(it(T('Python & AI: ' + nxL.title.uz, 'Python & AI: ' + nxL.title.en), 'pyai/l/' + nx.id, nx.why));
+    out.learn = ln;
+    /* 3. Deep Coding */
+    var cd = [];
+    if (c) cd.push(it(T(n + '-kun amaliy mashqlari (' + (c.practice || []).length + ' ta) — o\'zingiz yozing', 'Day ' + n + ' practice tasks (' + (c.practice || []).length + ') — write them yourself'), 'lesson/' + n, T('Playground\'da yozing, xatoni o\'qib tuzating', 'Write in the playground; read the error and fix it')));
+    if (nxL && nxL.independent) cd.push(it(T('Mustaqil masala: ' + nxL.title.uz, 'Independent problem: ' + nxL.title.en), 'pyai/l/' + nx.id, T('Hint\'siz urinib ko\'ring — mahorat shu bilan o\'lchanadi', 'Try without hints — that is how mastery is measured')));
+    if (nxL && nxL.debug) cd.push(it(T('Debugging: buzilgan kodni tuzatish', 'Debugging: fix the broken code'), 'pyai/l/' + nx.id));
+    if (a && nxL) { var wm = a.module(nxL.module); if (wm && wm.workshop && wm.workshop.length && a.moduleStatus(wm.id).completed >= Math.ceil(wm.lessons.length / 2)) { var ws = wm.workshop.filter(function (w) { return !a.passed(w.id); })[0]; if (ws) cd.push(it(T('Workshop: ' + cl(ws.title).uz, 'Workshop: ' + cl(ws.title).en), 'pyai/w/' + ws.id)); } }
+    out.code = cd;
+    /* 4. Build & Apply */
+    var bd = [], done = window.Store ? Store.doneCount() : 0;
+    var lp = window.PROJECTS ? PROJECTS.list.filter(function (p) { return done >= p.after && !Store.flag('proj:' + p.id + ':done'); })[0] : null;
+    if (lp) bd.push(it(T('Mini-loyiha: ' + lp.title.uz, 'Mini-project: ' + lp.title.en), 'projects', T('~' + lp.hours + ' soat — bugun bitta qismini yozing', '~' + lp.hours + ' h — build one part today')));
+    if (a) { var pj = PYAI.projects.filter(function (p) { var m = a.module(p.after); return m && a.moduleStatus(p.after).completed > 0 && !a.projectStatus(p.id).autoChecked; })[0]; if (pj) bd.push(it(T('Loyiha ' + pj.id.toUpperCase() + ': ' + pj.title.uz, 'Project ' + pj.id.toUpperCase() + ': ' + pj.title.en), 'pyai/p/' + pj.id)); }
+    if (!bd.length) bd.push(it(T("Bugungi mavzuni kichik skriptga qo'llang (masalan, o'z kunlik xarajatlaringiz, ro'yxatlar) va GitHub'ga commit qiling", "Apply today's topic in a small script (e.g. your daily expenses, lists) and commit it to GitHub"), c ? 'lesson/' + n : (nx ? 'pyai/l/' + nx.id : 'pyai')));
+    out.build = bd;
+    /* 5. Review & Plan */
+    var mis = window.Store ? (Store.all().mistakes || []).filter(function (m) { return !m.fixed; }).length : 0;
+    var tn = pyDay(shift(d, 1)), tc = tn ? courseDay(tn) : null;
+    out.review = [it(T('Xatolar jurnali' + (mis ? ': ' + mis + ' ta ochiq' : ''), 'Error log' + (mis ? ': ' + mis + ' open' : '')), 'review/mistakes'),
+      it(tc ? T('Ertaga: ' + tn + '-kun — ' + lt(tc.title), 'Tomorrow: day ' + tn + ' — ' + lt(tc.title)) : T("Ertangi vazifani pastda yozing", "Write tomorrow's task below"), tc ? 'lesson/' + tn : 'jobready')];
+    return BLOCKS.map(function (b) { return Object.assign({}, b, { items: out[b.k] || [], done: !!(window.Store && Store.flag('jr:' + d + ':' + b.k)) }); });
+  }
+  function dayDone(d) { return BLOCKS.filter(function (b) { return window.Store && Store.flag('jr:' + d + ':' + b.k); }); }
+
+  window.JobReady = { stages: stages, criteria: criteria, nextSteps: nextSteps, status: status, BLOCKS: BLOCKS, dayPlan: dayPlan, dayDone: dayDone };
 })();

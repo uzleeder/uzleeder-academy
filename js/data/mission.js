@@ -1,7 +1,7 @@
 /* ==========================================================================
    MISSION_CFG — IELTS Mission (16 hafta) sozlamalari va o'z materiallari
    --------------------------------------------------------------------------
-   Kalendar: 2026-10-25 (yakshanba) → 2027-02-14 (yakshanba): 16 hafta + yakuniy kun = 113 kun.
+   Kalendar: 2026-10-25 (yakshanba) → 2027-02-10 (chorshanba): 15 hafta + 4 kun = 109 kun.
    Bu fayl FAQAT sozlama va platforma uchun yozilgan original materiallar:
      • workload rejimlari, standart taqsimot (195 daqiqa)
      • xato toifalari (grammatika 10 ta, tinglash sabablari, o'qish turlari)
@@ -14,8 +14,8 @@
    ========================================================================== */
 window.MISSION_CFG = {
   start: '2026-10-25',
-  finalReview: '2027-02-14',
-  days: 113,                     // 16 hafta (112 kun) + 14-fevral yakuniy takror kuni
+  finalReview: '2027-02-10',
+  days: 109,                     // 2026-10-25 → 2027-02-10 (15 hafta + 4 kun); 16-hafta = 7–10-fevral yakuniy takror
   weeks: 16,
   exam: '2027-02-20',            // ENGLISH.meta.exam bilan bir xil (ma'lumot uchun)
   target: 8.0,
@@ -41,9 +41,22 @@ window.MISSION_CFG = {
     { key: '90',  min: 90,  label: { uz: '90 daqiqa', en: '90 minutes' } },
     { key: '120', min: 120, label: { uz: '120 daqiqa', en: '120 minutes' } },
     { key: '195', min: 195, label: { uz: '195 daqiqa (intensiv)', en: '195 minutes (intensive)' } },
+    { key: '240', min: 240, label: { uz: '240 daqiqa — English Daily Discipline', en: '240 minutes — English Daily Discipline' } },
     { key: 'custom', min: 0, label: { uz: 'Boshqa', en: 'Custom' } }
   ],
-  defaultMode: '195',
+  defaultMode: '240',
+  /* English Daily Discipline — 240 daqiqa, 7 qat'iy blok (o'quvchi bergan tartib).
+     '240' rejimida kunlik reja shu bloklardan yasaladi; mazmun (studiya, kitob,
+     kurs qismlari, xatolar banki) har blok ichida dalil asosida tanlanadi.    */
+  discipline: [
+    { sk: 'vocab', min: 30, title: { uz: 'Vocabulary & Spaced Repetition', en: 'Vocabulary & Spaced Repetition' }, d: { uz: "Eski so'zlarni eslash, 10–15 ta yangi so'z, har birini gapda ishlatish", en: 'Recall old words, 10–15 new words, use each one in a sentence' } },
+    { sk: 'grammar', min: 35, title: { uz: 'Grammar', en: 'Grammar' }, d: { uz: "Bitta mavzuni o'rganish, misollar va mashqlar, xatolarni tuzatish", en: 'Study one topic, examples and exercises, fix the errors' } },
+    { sk: 'listening', min: 45, title: { uz: 'Listening & Shadowing', en: 'Listening & Shadowing' }, d: { uz: 'Audio tinglash, transcript bilan tekshirish va jumlalarni talaffuz bilan takrorlash', en: 'Listen to audio, check with the transcript and repeat sentences with pronunciation' } },
+    { sk: 'speaking', min: 45, title: { uz: 'Speaking', en: 'Speaking' }, d: { uz: 'Savollarga javob berish, 2–5 daqiqalik nutq, ovozingni tinglash va qayta gapirish', en: 'Answer questions, a 2–5 minute talk, listen to your recording and speak again' } },
+    { sk: 'reading', min: 35, title: { uz: 'Reading', en: 'Reading' }, d: { uz: "Darajangga mos matn o'qish, asosiy fikrni topish va yangi iboralarni ajratish", en: 'Read a level-appropriate text, find the main idea and pick out new phrases' } },
+    { sk: 'writing', min: 35, title: { uz: 'Writing', en: 'Writing' }, d: { uz: "Paragraf, kundalik yoki qisqa essay yozish; grammar va vocabulary'ni qo'llash", en: 'Write a paragraph, a journal entry or a short essay; apply the grammar and vocabulary' } },
+    { sk: 'review', min: 15, title: { uz: 'Active Recall & Daily Review', en: 'Active Recall & Daily Review' }, d: { uz: 'Bugungi mavzuni kitobsiz tushuntirish, mini-test va ertangi reja', en: "Explain today's topic without the book, a mini-test and tomorrow's plan" } }
+  ],
   /* Standart intensiv taqsimot (jami 195) */
   split: { reading: 45, listening: 45, vocab: 30, grammar: 30, speaking: 30, review: 15 },
 

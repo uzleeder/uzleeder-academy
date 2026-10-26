@@ -1,8 +1,8 @@
 /* ==========================================================================
    SPEAK30 — Speaking Fluency, 30 kunlik trek
    --------------------------------------------------------------------------
-   Kursning BIRINCHI OYIDA (1–30-kun: 21-sen → 20-okt 2026) kunlik Speaking
-   bloki shu trekning savoli bilan almashtiriladi. Qolgan hamma narsa 20 haftalik
+   Kursning BIRINCHI OYIDA (1–30-kun: 26-okt → 24-noy 2026) kunlik Speaking
+   bloki shu trekning savoli bilan almashtiriladi. Qolgan hamma narsa 16 haftalik
    rejaga tegmaydi.
 
    Maqsad — ravonlik ODATI, band ball emas: qotib qolmaslik, kam pauza,
@@ -34,8 +34,8 @@ window.SPEAK30 = {
       en: 'Expected after 30 days: smoother 2–3 minute answers, fewer freezes, automatic transition phrases — roughly "hesitant 6.0" to "steady 6.5" in fluency specifically. Not expected: clean grammar or overall Band 8 speaking; those take longer.'
     },
     connect: {
-      uz: "Birinchi oy davomida platformadagi odatiy kuningni bajar, lekin SPEAKING blokini shu trekning savoli bilan almashtir. Shunda birinchi 30 kun gapirishga qo'shimcha turtki beradi, qolgan hammasi 20 haftalik reja bo'yicha ketaveradi.",
-      en: 'During the first month do your normal day on the platform, but replace the SPEAKING block with this track\'s question. That way the first 30 days give speaking extra push while everything else runs on the 20-week plan.'
+      uz: "Birinchi oy davomida platformadagi odatiy kuningni bajar, lekin SPEAKING blokini shu trekning savoli bilan almashtir. Shunda birinchi 30 kun gapirishga qo'shimcha turtki beradi, qolgan hammasi 16 haftalik reja bo'yicha ketaveradi.",
+      en: 'During the first month do your normal day on the platform, but replace the SPEAKING block with this track\'s question. That way the first 30 days give speaking extra push while everything else runs on the 16-week plan.'
     }
   },
 

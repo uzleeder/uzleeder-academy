@@ -62,13 +62,23 @@
     }
     var m = st.mission, d = blank();
     Object.keys(d).forEach(function (k) { if (m[k] === undefined) m[k] = d[k]; });
+    /* 2026-10: English Daily Discipline (240) standart bo'ldi — eski standart 195 da qolganlar bir marta o'tadi */
+    if (m.settings && !m.settings.d240) {
+      if (m.settings.mode === '195') {
+        m.settings.mode = '240';
+        /* bugungi muzlatilgan 195 reja hali boshlanmagan bo'lsa — 240 bo'yicha qayta tuziladi */
+        var tr0 = m.days && m.days[today()];
+        if (tr0 && tr0.mode === '195' && !Object.keys(tr0.tasks || {}).some(function (k) { return tr0.tasks[k] && tr0.tasks[k].st && tr0.tasks[k].st !== 'todo'; })) { tr0.plan = null; tr0.mode = '240'; }
+      }
+      m.settings.d240 = 1;
+    }
     return m;
   }
   function save() { Store.set('mission', M()); }
   function ivls() { var s = M().settings.ivls; return s && s.length ? s : C().intervals; }
 
   /* ====================== KALENDAR ===================================== */
-  function dayIndex(k) { return diffDays(C().start, k || today()) + 1; }          // 1..113 (113 = yakuniy takror)
+  function dayIndex(k) { return diffDays(C().start, k || today()) + 1; }          // 1..109 (106–109 = 16-hafta, yakuniy takror)
   function weekOf(k) { var i = dayIndex(k); return i < 1 ? 0 : Math.min(C().weeks, Math.ceil(i / 7)); }
   function phaseOf(k) { var w = weekOf(k); return C().phases.filter(function (p) { return w >= p.from && w <= p.to; })[0] || null; }
   function inMission(k) { var i = dayIndex(k); return i >= 1 && i <= C().days; }
@@ -400,7 +410,8 @@
       var rec = { id: uid(), at: today(), book: b.book || 'other', title: String(b.title || '').slice(0, 120), unit: String(b.unit || '').slice(0, 60), pages: String(b.pages || '').slice(0, 40),
         score: isNaN(score) ? null : score, total: isNaN(total) || total <= 0 ? null : total, types: (b.types || []).slice(0, 8), misses: String(b.misses || '').slice(0, 800), min: Number(b.min) || 0 };
       M().books.push(rec);
-      if (rec.total) record({ kind: 'book', skill: 'reading', ref: 'book:' + rec.id, mode: 'practice', items: [], score: rec.score, total: rec.total, book: rec.book });
+      rec.skill = b.skill === 'listening' ? 'listening' : 'reading';
+      if (rec.total) record({ kind: 'book', skill: rec.skill, ref: 'book:' + rec.id, mode: 'practice', items: [], score: rec.score, total: rec.total, book: rec.book });
       else save();
       return rec;
     },
@@ -572,9 +583,15 @@
     if (k === 'found' || k === 'diag') return { task: 2, prompt: p, what: rot === 0 ? T('Task 2: reja + kirish + 1 ta asosiy abzats', 'Task 2: plan + introduction + one body paragraph') : T('Task 2: reja + ikkinchi asosiy abzats + xulosa', 'Task 2: plan + second body paragraph + conclusion') };
     return { task: 2, prompt: p, what: T('Task 2: reja va 2 ta to\'liq asosiy abzats (vaqt bilan)', 'Task 2: plan and two full body paragraphs (timed)') };
   }
-  function mkGrammar(d, min, why, diag) {
+  function mkGrammar(d, min, why, diag, only) {
     var t = taskBase(d, 'grammar', min, why);
-    if (diag) {
+    if (diag && only) {
+      t.kind = 'diag'; t.ref = 'g:diag';
+      t.title = T('Grammatika diagnostikasi', 'Grammar diagnostic');
+      t.objective = T("10 toifa bo'yicha qaysi xatolar eng ko'p ekanini aniqlash", 'Find which of the 10 categories cause most errors');
+      t.activity = T("20 ta mashq (har toifadan 2 ta), keyin har xatoni sababi bilan ko'rib chiqish", '20 exercises (2 per category), then review every miss with its reason');
+      t.material = { route: 'mission/run/grammar/diag?mode=diagnostic', label: T('Grammatika diagnostikasi', 'Grammar diagnostic') };
+    } else if (diag) {
       t.kind = 'diag'; t.ref = 'g:diag';
       t.title = T('Grammatika diagnostikasi + Writing', 'Grammar diagnostic + Writing');
       t.objective = T("10 toifa bo'yicha qaysi xatolar eng ko'p ekanini aniqlash", 'Find which of the 10 categories cause most errors');
@@ -589,14 +606,16 @@
         cat = rows[0] ? rows[0].c : 'tenses';
         t.why.push(rows[0] ? cc(T('Diagnostikada eng past toifa: ', 'Lowest category in the evidence: '), C().grammarCats[cat].title) : T('Dastlabki feedback: grammatik aniqlik — zamon tanlashdan boshlaymiz', 'Earlier feedback: grammar accuracy — starting with tense choice'));
       } else t.why.push(cc(T('Eng ko\'p ochiq xato: ', 'Most open errors: '), C().grammarCats[cat].title, ' (' + gf.n + ')'));
-      var w = writingFor(d), gmin = Math.max(10, round5(min / 3));
+      var w = writingFor(d), gmin = only ? min : Math.max(10, round5(min / 3));
       t.kind = 'grammar'; t.ref = 'g:' + cat; t.cat = cat;
-      t.title = cc(C().grammarCats[cat].title, ' + ', w.what);
-      t.objective = T("Bitta ustuvor grammatika toifasini mashq qilib, darhol o'z yozuvingizda 3 marta ishlatish", 'Practise one priority grammar category, then use it 3 times in your own writing');
-      t.activity = cc(T('8 ta mashq → ', '8 exercises → '), w.what);
+      t.title = only ? cc(T('Grammatika: ', 'Grammar: '), C().grammarCats[cat].title) : cc(C().grammarCats[cat].title, ' + ', w.what);
+      t.objective = only ? T("Bitta ustuvor grammatika toifasi: qoida → misollar → mashqlar → xatolarni tuzatish", 'One priority grammar category: rule → examples → exercises → fix the errors') : T("Bitta ustuvor grammatika toifasini mashq qilib, darhol o'z yozuvingizda 3 marta ishlatish", 'Practise one priority grammar category, then use it 3 times in your own writing');
+      t.activity = only ? T("Qisqa tushuntirish, 8 ta mashq, har xatoni qayta yozib tuzatish; toifa Writing blokida 3 marta ishlatiladi", 'Short explanation, 8 exercises, rewrite every miss correctly; the category is used 3 times in the Writing block') : cc(T('8 ta mashq → ', '8 exercises → '), w.what);
       t.material = { route: 'mission/run/grammar/' + cat, label: cc(T('Grammatika: ', 'Grammar: '), C().grammarCats[cat].title) };
-      t.parts.push({ min: gmin, label: t.material.label, route: t.material.route });
-      t.parts.push({ min: min - gmin, label: w.what, route: 'mission/writing/new?task=' + w.task + '&prompt=' + w.prompt.id + '&focus=' + cat });
+      if (!only) {
+        t.parts.push({ min: gmin, label: t.material.label, route: t.material.route });
+        t.parts.push({ min: min - gmin, label: w.what, route: 'mission/writing/new?task=' + w.task + '&prompt=' + w.prompt.id + '&focus=' + cat });
+      }
     }
     t.criteria = T("Mashqlar tekshirilgan; yozuv saqlangan va kamida bitta xato belgilangan yoki o'z bahosi berilgan", 'Exercises checked; writing saved with at least one error marked or a self-assessment done');
     t.assess = T("Avtomatik (aniq kalit) yoki o'z-o'zini tekshirish — har biri belgilanadi", 'Auto-check (clean key) or self-check — each is labelled');
@@ -638,7 +657,43 @@
     t.next = T('2 marta ketma-ket mustaqil to\'g\'ri → "tuzatildi"', 'Two independent correct answers in a row → "fixed"');
     return t;
   }
-  var MAKERS = { reading: mkReading, listening: mkListening, vocab: mkVocab, grammar: mkGrammar, speaking: mkSpeaking };
+  /* 240 rejimi: Writing — alohida 35 daqiqalik blok (grammatika fokusini qo'llaydi) */
+  function mkWriting(d, min, why, diag) {
+    var t = taskBase(d, 'writing', min, why), w = writingFor(d), gf = Errors.grammarFocus(), cat = gf ? gf.cat : null;
+    if (diag) {
+      t.kind = 'diag'; t.ref = 'w:diag';
+      t.title = T("Writing diagnostikasi: Task 2 (40 daqiqa, vaqt bilan)", 'Writing diagnostic: Task 2 (40 minutes, timed)');
+      t.objective = T("Task 2 bo'yicha boshlang'ich yozuv — mezonlar bo'yicha o'z bahosi", 'A baseline Task 2 — self-assessed against the criteria');
+      t.activity = T("Reja (5 daq) → yozish (30 daq) → tekshirish (5 daq). Bugun ulgurmasangiz — ertaga davom", 'Plan (5 min) → write (30 min) → check (5 min). If time runs out — continue tomorrow');
+      t.material = { route: 'mission/writing/new?task=2&prompt=t2-01&mode=diagnostic&timed=40', label: T('Writing Studio — diagnostika', 'Writing Studio — diagnostic') };
+    } else {
+      t.kind = 'writing'; t.ref = 'w:' + w.prompt.id;
+      t.title = cc(T('Writing: ', 'Writing: '), w.what);
+      t.objective = cat ? cc(T('Yozuvda grammatika fokusini 3 marta ishlatish: ', 'Use the grammar focus 3 times in your writing: '), C().grammarCats[cat].title) : T("Fikrni aniq tuzish va bugungi so'zlarni ishlatish", "Organise the idea clearly and use today's words");
+      t.activity = T("Reja → yozish → bugungi 3 ta yangi so'z va grammatika fokusini belgilash → bitta xatoni topib qayta yozish", "Plan → write → mark 3 of today's new words and the grammar focus → find one error and rewrite it");
+      t.material = { route: 'mission/writing/new?task=' + w.task + '&prompt=' + w.prompt.id + (cat ? '&focus=' + cat : ''), label: T('Writing Studio', 'Writing Studio') };
+    }
+    t.criteria = T("Yozuv saqlangan va kamida bitta xato belgilangan yoki mezonlar bo'yicha o'z bahosi berilgan", 'Writing saved with at least one error marked or a criteria self-assessment done');
+    t.assess = T("O'z bahosi (mezonlar bo'yicha) — band emas", 'Self-assessment (by criteria) — not a band');
+    t.next = T('Belgilangan xatolar xatolar bankiga tushadi va takrorlanadi', 'Marked errors go to the error bank and come back for review');
+    return t;
+  }
+  /* 240 rejimi: Active Recall & Daily Review — kun yakuni (15 daqiqa) */
+  function mkRecall(d, min) {
+    var t = mkReview(d, min), due = Errors.due(d).length, mt = due ? Math.max(5, min - 7) : 5, ex = Math.max(3, min - mt - 3);
+    t.kind = 'recall';
+    t.title = T('Active Recall & Daily Review', 'Active Recall & Daily Review');
+    t.objective = T("Bugun o'rganilganni kitobsiz eslash va ertangi kunni rejalash", "Recall today's learning without the book and plan tomorrow");
+    t.activity = T("1) Bugungi grammatika va 5 ta yangi so'zni kitobsiz ovoz chiqarib tushuntiring; 2) mini-test: xatolar takrori; 3) ertangi rejani ko'rib, eng zaif blokni belgilang", "1) Explain today's grammar and 5 new words aloud without the book; 2) mini-test: error review; 3) look at tomorrow's plan and mark the weakest block");
+    t.parts = [
+      { min: ex, label: T("Kitobsiz tushuntirish: bugungi grammatika + 5 ta yangi so'z (ovoz chiqarib)", "Explain without the book: today's grammar + 5 new words (aloud)"), route: 'mission/vocab' },
+      { min: mt, label: T('Mini-test: xatolar takrori' + (due ? ' (' + due + ' ta)' : ''), 'Mini-test: error review' + (due ? ' (' + due + ')' : '')), route: 'mission/errors/review' },
+      { min: min - ex - mt, label: T('Ertangi reja', "Tomorrow's plan"), route: 'mission/plan' }
+    ];
+    t.criteria = T("Tushuntirildi, mini-test bajarildi va ertangi zaif blok belgilandi", "Explained aloud, mini-test done and tomorrow's weakest block noted");
+    return t;
+  }
+  var MAKERS = { reading: mkReading, listening: mkListening, vocab: mkVocab, grammar: mkGrammar, speaking: mkSpeaking, writing: mkWriting };
 
   function mockPlan(d) {
     var rs = Cat.readings().slice().sort(function (a, b) { return (attempted('r:' + a.n) ? 1 : 0) - (attempted('r:' + b.n) ? 1 : 0) || b.n - a.n; }).slice(0, 3).map(function (r) { return r.n; });
@@ -654,10 +709,105 @@
   }
 
   /* Rejani yasash (saqlamaydi) */
+  /* --- Ingliz tili kurslari Mission ichida (2026-10) ---------------------
+     English (108 kun), Speaking 30, BBC, Writing (16 hafta) va Quick Repeat
+     alohida kurs sifatida emas — shu kunning tegishli ko'nikma vazifasiga
+     QISM bo'lib qo'shiladi. Vazifaning umumiy daqiqasi o'zgarmaydi: vaqt
+     Mission materiali va kurs qismi orasida bo'linadi. `chk` — qism
+     bajarilganini kursning o'z holatidan o'qish uchun (courseDone).        */
+  function courseParts(d) {
+    var out = { reading: [], listening: [], vocab: [], grammar: [], speaking: [] }, HP = window.HabitPlan;
+    if (!HP || !HP.inRange(d)) return out;
+    var en = HP.engDayOf(d), ed = en && window.Eng ? Eng.dayOf(en) : null, P = function (min, label, route, chk) { return { min: min, label: label, route: route, chk: chk || null, course: true }; };
+    if (ed) {
+      var r = 'english/' + en, ck = { c: 'eng', n: en };
+      out.grammar.push(P(15, ed.title ? cc(T('English ' + en + '-kun grammatika: ', 'English day ' + en + ' grammar: '), ed.title) : T('English ' + en + '-kun', 'English day ' + en), r, ck));
+      out.vocab.push(P(10, T('English ' + en + "-kun lug'ati", 'English day ' + en + ' vocabulary'), r, ck));
+      var rp = (ed.practice || []).filter(function (p) { return /reading/i.test(p.en || ''); })[0];
+      if (rp) out.reading.push(P(15, cc(T('English ' + en + '-kun: ', 'English day ' + en + ': '), rp), r, ck));
+    }
+    var sp = HP.speakDayOf(d);
+    if (sp && window.SPEAK30) { var sd = SPEAK30.days[sp - 1]; out.speaking.push(P(10, cc(T('Speaking 30 · ' + sp + '-kun: ', 'Speaking 30 · day ' + sp + ': '), sd ? sd.q : T('', '')), 'speaking', { c: 'speak', n: sp })); }
+    out.listening.push(P(10, T("BBC Learning English: navbatdagi epizod (6 daq + shadowing)", 'BBC Learning English: next episode (6 min + shadowing)'), 'bbc/6min', null));
+    if (window.WRITING && d >= WRITING.meta.start && d <= WRITING.meta.end) {
+      /* reja sanasidagi hafta (bugungi emas) — hafta `from` sanasidan boshlanadi */
+      var wk = WRITING.weeks.filter(function (w) { return w.from <= d; }).pop();
+      if (wk) {
+        var wd = (new Date(d + 'T00:00:00').getDay() + 6) % 7, tasks = wk.tasks || {}, tx = (tasks.uz || [])[wd];
+        out.grammar.push(P(15, tx ? T('Writing ' + wk.n + '-hafta: ' + tx, 'Writing week ' + wk.n + ': ' + ((tasks.en || [])[wd] || '')) : T('Writing ' + wk.n + '-hafta', 'Writing week ' + wk.n), 'writing/' + wk.n, { c: 'wr', n: wk.n }));
+      }
+    }
+    /* O'z PDF kitoblari: Reading Accelerator (har 3 kunda) · Listening Section 1 (har 6 kunda) */
+    if (window.ENG_BOOKS_EXTRA && window.BookExtra) {
+      [['ra', 'reading'], ['s1', 'listening']].forEach(function (x) {
+        var bx = ENG_BOOKS_EXTRA[x[0]], n = BookExtra.unitFor(x[0], d);
+        if (n) out[x[1]].push(P(bx.min, T(bx.title + ' · ' + n + ': ' + bx.units[n - 1].title, bx.title + ' · ' + n + ': ' + bx.units[n - 1].title), BookExtra.readerRoute ? BookExtra.readerRoute(x[0], n) : 'books/' + x[0], { c: 'bx', id: x[0], n: n }));
+      });
+    }
+    if (window.Quick) { var q = Quick.current(); if (q) out.vocab.push(P(10, cc(T('Quick Repeat ' + q.n + '-kun: ', 'Quick Repeat day ' + q.n + ': '), q.title), 'quick/' + q.n, { c: 'q10', n: q.n })); }
+    return out;
+  }
+  function attachCourses(d, tasks) {
+    var cp = courseParts(d);
+    if (tasks.some(function (t) { return t.skill === 'writing'; })) {
+      cp.writing = cp.grammar.filter(function (p) { return p.chk && p.chk.c === 'wr'; });
+      cp.grammar = cp.grammar.filter(function (p) { return !(p.chk && p.chk.c === 'wr'); });
+    }
+    tasks.forEach(function (t) {
+      var add = cp[t.skill]; if (!add || !add.length || t.kind === 'mock') return;
+      var own = t.parts && t.parts.length ? t.parts : [{ min: t.min, label: t.material.label, route: t.material.route }];
+      var ownMin = own.reduce(function (s, p) { return s + p.min; }, 0), keep = Math.max(15, Math.round(t.min * 0.5 / 5) * 5);
+      var room = Math.max(0, t.min - keep), list = [], used = 0;
+      /* joy yetmasa kurs qismlari mutanosib qisqaradi (har biri ≥ 5 daq), keyin ham sig'masa oxiridagisi tushadi */
+      var want = add.reduce(function (s, p) { return s + p.min; }, 0), k = want > room ? room / want : 1;
+      add.forEach(function (p) { var m = Math.max(5, Math.floor(p.min * k / 5) * 5); if (used + m <= room) { list.push(Object.assign({}, p, { min: m })); used += m; } });
+      if (!list.length) return;
+      /* o'z qismlari qolgan vaqtga mutanosib qisqaradi */
+      var left = t.min - used, scaled = own.map(function (p) { return Object.assign({}, p, { min: Math.max(5, Math.round(p.min * left / ownMin / 5) * 5) }); });
+      var diff = left - scaled.reduce(function (s, p) { return s + p.min; }, 0); scaled[0].min = Math.max(5, scaled[0].min + diff);
+      t.parts = scaled.concat(list);
+      t.why = (t.why || []).concat([T("Kurs darslari shu vazifa ichida: " + list.map(function (p) { return { eng: 'English', speak: 'Speaking 30', wr: 'Writing', q10: 'Quick Repeat', bx: 'Kitob' }[(p.chk || {}).c] || 'BBC'; }).join(', '), 'Course lessons inside this task: ' + list.map(function (p) { return { eng: 'English', speak: 'Speaking 30', wr: 'Writing', q10: 'Quick Repeat', bx: 'Kitob' }[(p.chk || {}).c] || 'BBC'; }).join(', '))]);
+    });
+    return tasks;
+  }
+  function courseDone(chk) {
+    if (!chk || !window.Store) return false;
+    var s = Store.all();
+    if (chk.c === 'eng') return !!(s.eng && s.eng.done && s.eng.done[String(chk.n)]);
+    if (chk.c === 'speak') return !!(s.speak && s.speak[String(chk.n)]);
+    if (chk.c === 'wr') return !!(Store.planDone && Store.planDone('wr' + chk.n));
+    if (chk.c === 'bx') return !!(window.BookExtra && BookExtra.isDone(chk.id, chk.n));
+    if (chk.c === 'q10') return !!(Store.flag && Store.flag('q10:' + chk.n + ':done'));
+    return false;
+  }
+
+  /* English Daily Discipline (240): 7 qat'iy blok, tartib o'zgarmaydi; mazmun dalil asosida */
+  function buildDiscipline(d, out) {
+    var pri = priorities(d), w = out.week, idx = out.idx;
+    C().discipline.forEach(function (b, i) {
+      var task, diag = b.sk !== 'review' && !M().diag[b.sk] && (w <= 1 || idx < 1);
+      var why = pri[b.sk] ? pri[b.sk].why.slice() : [];
+      if (b.sk === 'review') task = mkRecall(d, b.min);
+      else if (b.sk === 'grammar') task = mkGrammar(d, b.min, why, diag, true);
+      else task = MAKERS[b.sk](d, b.min, why, diag);
+      task.block = { n: i + 1, title: b.title, d: b.d };
+      task.pri = 100 - i;
+      if (diag) {
+        task.criteria = T('Diagnostika oxirigacha bajarilgan va natija saqlangan', 'The diagnostic is completed and the result saved');
+        task.assess = T("Boshlang'ich dalil — band emas; profil va keyingi rejalar shundan tuziladi", 'Baseline evidence — not a band; the profile and later plans are built from it');
+        task.why.unshift(T("Bu ko'nikma uchun diagnostika hali bajarilmagan", 'No diagnostic done for this skill yet'));
+      }
+      out.tasks.push(task);
+    });
+    attachCourses(d, out.tasks);
+    if (out.before) out.notes.push(T('Mission ' + C().start + ' kuni boshlanadi. Hozir diagnostikalarni oldindan bajarishingiz mumkin — natijalar saqlanadi.', 'The mission starts on ' + C().start + '. You can take the diagnostics early — results are saved.'));
+    return out;
+  }
+
   function build(d, modeOverride) {
     var budget = budgetFor(modeOverride), idx = dayIndex(d), w = weekOf(d), notes = [];
     var out = { date: d, idx: idx, week: w, phase: phaseOf(d), budget: budget, tasks: [], notes: notes, mock: false, final: false, before: idx < 1, after: idx > C().days };
-    if (out.after) { notes.push(T("Mission tugagan (14-fevral). Imtihon: " + C().exam + '. Xatolar banki va lug\'at takrori davom etadi.', 'The mission has ended (14 February). Exam: ' + C().exam + '. Error-bank and vocabulary reviews continue.')); }
+    if (out.after) { notes.push(T("Mission tugagan (10-fevral). Imtihon: " + C().exam + '. Xatolar banki va lug\'at takrori davom etadi.', 'The mission has ended (10 February). Exam: ' + C().exam + '. Error-bank and vocabulary reviews continue.')); }
     if (C().mockDays.indexOf(d) >= 0) {
       out.mock = true; out.tasks = mockPlan(d);
       notes.push(T("Mock kuni ~3 soat. Vaqtingiz kam bo'lsa — Reading va Listening bugun, Writing va Speaking'ni ertaga ko'chiring.", 'A mock day is ~3 hours. If you have less time, do Reading and Listening today and move Writing and Speaking to tomorrow.'));
@@ -671,6 +821,8 @@
         mkVocab(d, 30, [T('Yakuniy lug\'at takrori', 'Final vocabulary review')])];
       return out;
     }
+    var md = modeOverride || M().settings.mode;
+    if (md === '240' && C().discipline) return buildDiscipline(d, out);
     var pri = priorities(d), dueN = Errors.due(d).length, alloc = allocate(budget, pri, dueN);
     SKILLS.forEach(function (sk) {
       if (!alloc[sk]) return;
@@ -685,6 +837,7 @@
       }
       out.tasks.push(task);
     });
+    attachCourses(d, out.tasks);
     out.tasks.sort(function (a, b) { return (b.pri || 0) - (a.pri || 0); });
     if (alloc.review) out.tasks.push(mkReview(d, alloc.review));
     var skipped = SKILLS.filter(function (sk) { return !alloc[sk]; });
@@ -821,6 +974,7 @@
     record: record, attempted: attempted, attemptsOf: attemptsOf, profile: profile, strengths: strengths,
     errors: Errors, vocab: Vocab, studio: Studio, speaking: Speaking, results: Results, books: Books,
     build: build, day: day, tasks: Tasks, priorities: priorities, allocate: allocate, budgetFor: budgetFor,
-    weekMinutes: weekMinutes, recommend: recommend, merge: merge, ivls: ivls, lastSelfAvg: lastSelfAvg
+    weekMinutes: weekMinutes, recommend: recommend, merge: merge, ivls: ivls, lastSelfAvg: lastSelfAvg,
+    courseParts: courseParts, attachCourses: attachCourses, courseDone: courseDone
   };
 })();

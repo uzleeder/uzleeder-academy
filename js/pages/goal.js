@@ -29,7 +29,7 @@
   window.GOAL_CITY_PHASES = [
     { y: '2026 – 2027', k: 'foundation', build: [],
       t: { uz: 'Poydevor: IELTS 8.0 + Python + birinchi ish', en: 'Foundation: IELTS 8.0 + Python + first job' },
-      d: { uz: "Shu platformadagi 140 kun (20-sen → 10-fev). Har kun 4 soat ingliz, 2–4 soat coding. 20-fevral — IELTS, 1-iyun — birinchi ish. Shaharning bironta g'ishti ham hali yo'q — lekin uni quradigan odam shu yerda yasaladi.", en: 'The 144 days on this platform. 4 h English and 2–4 h coding every day. 20 Feb — IELTS, 1 June — first job. Not one brick of the city yet — but the person who builds it is being made here.' } },
+      d: { uz: "Shu platformadagi 108 kun (25-okt → 10-fev). Har kun 4 soat ingliz, 2–4 soat coding. 20-fevral — IELTS, 1-iyun — birinchi ish. Shaharning bironta g'ishti ham hali yo'q — lekin uni quradigan odam shu yerda yasaladi.", en: 'The 108 days on this platform (25 Oct → 10 Feb). 4 h English and 2–4 h coding every day. 20 Feb — IELTS, 1 June — first job. Not one brick of the city yet — but the person who builds it is being made here.' } },
     { y: '2027 – 2030', k: 'expert', build: [],
       t: { uz: 'Ekspert: senior AI muhandisi + magistratura', en: 'Expert: senior AI engineer + master\'s' },
       d: { uz: "Ish bilan parallel: Data Science → mid → senior/MLOps. Magistratura (IELTS 8.0 bilan grant). Ochiq manba loyihalar. Kapital: daromadning 30% jamg'arma — foizsiz, halol.", en: 'Alongside work: Data Science → mid → senior/MLOps. Master\'s (scholarship with IELTS 8.0). Open-source projects. Capital: 30% of income saved — interest-free, halal.' } },

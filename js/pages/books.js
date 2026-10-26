@@ -371,6 +371,14 @@
     h += bookCard('ess4', IC.book, ENG_BOOK.sources[0].title, tr('booksOptional'),
       tr('booksSynOnly') + ' · ' + tr('booksEss4Opt'), (ENG_BOOK_VOCAB.length * 20) + ' ' + tr('engWords'),
       tr('booksOptional'), 'books/ess4');
+    /* O'quvchining o'z PDF kitoblari (2026-10): Reading Accelerator · Listening Section 1 */
+    if (window.ENG_BOOKS_EXTRA && window.BookExtra) {
+      ['ra', 's1'].forEach(function (id) {
+        var bx = ENG_BOOKS_EXTRA[id], tn = BookExtra.unitFor(id, Store.dateKey()), nx = BookExtra.next(id);
+        h += bookCard('bx-' + id, IC[bx.icon], bx.title, L(bx.tag), L(bx.desc), BookExtra.doneCount(id) + ' / ' + bx.units.length + ' ' + L(bx.unitName),
+          tn ? L(bx.unitName) + ' ' + tn + ' · ' + bx.units[tn - 1].title : (nx ? L({ uz: 'Navbatdagi: ', en: 'Next: ' }) + nx.title : L({ uz: 'Hammasi bajarilgan', en: 'All done' })), 'books/' + id);
+      });
+    }
     h += '</div>';
 
     /* Daftarlar (copybook) — o'z qo'lim bilan yoziladigan uchta daftar */
@@ -546,7 +554,7 @@
     });
     h += '</div>';
 
-    /* 140 kunlik jadval — kun, sana, test · diktant · savollar */
+    /* 108 kunlik jadval — kun, sana, test · diktant · savollar */
     h += sectionHead(3, tr('booksListenSched'), tr('booksDictSchedS'));
     h += '<div class="sk-table"><div class="sk-row head"><span>#</span><span>' + esc(tr('date')) + '</span><span>' + esc(tr('engMin')) + '</span><span>' + esc(tr('booksInBook')) + '</span><span></span></div>';
     var S = window.ENG_SKILLS;

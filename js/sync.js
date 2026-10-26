@@ -210,6 +210,7 @@
       setStatus('in');
       if (window.App) { App.applyTheme(); App.render(); }
       if (merged) return push(true);   // birlashgan nusxani bulutga qaytaramiz
+      if ((doc.state.v || 1) < 9) return push(true);   // v9 kalendar reseti — bulutdagi eski progress ham almashtirilsin
       return true;
     }).catch(function () { setStatus('error'); return false; });
   }
