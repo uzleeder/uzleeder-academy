@@ -131,7 +131,14 @@
   overflow-y: auto; overscroll-behavior: contain;
   padding-right: var(--sp-2);
   display: flex; flex-direction: column; gap: var(--sp-5);
+  /* Yon paneldagi matn BELGILANMAYDI. Aks holda bosganda barmoq yoki
+     sichqoncha bir-ikki piksel surilsa brauzer matnni ajratadi, bosish
+     esa umuman o'tmaydi — "bo'lim ochilmayapti" shundan kelib chiqadi.
+     Telefonda uzoq bosish ham matn tanlashga o'tib ketadi.             */
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
+.sidebar button, .sidebar a { -webkit-user-select: none; user-select: none; }
 
 /* Bo'limlar navigatsiyasi */
 .nav-group { display: flex; flex-direction: column; gap: 2px; }
