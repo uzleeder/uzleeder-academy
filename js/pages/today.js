@@ -48,8 +48,8 @@
     /* DataCamp: bugungi bob (yoki kechikkan birinchisi); yakshanba — katta coding testi */
     if (window.DataCamp && window.HabitPlan && HabitPlan.inRange(key)) {
       var dcIt = DataCamp.forDate(key) || (DataCamp.overdue()[0] || null);
-      if (dcIt) out.push({ id: 'dc', route: 'datacamp/' + dcIt.n, ic: IC.layers, t: tr('tdDC', { n: dcIt.n, t: dcIt.title }), why: tr('tdDCWhy'), min: HabitPlan.typeOf(key) === 'class' ? 45 : 60, prio: 4, auto: DataCamp.isDone(dcIt) });
-      if (HabitPlan.typeOf(key) === 'rest' && key > HABIT.meta.official) out.push({ id: 'codetest', route: 'practice/coding', ic: IC.target, t: tr('tdCodeTest'), why: tr('tdCodeTestWhy'), min: 45, prio: 4, auto: !!Store.readGet('codetest-' + key) });
+      if (dcIt) out.push({ id: 'dc', route: 'datacamp/' + dcIt.n, ic: IC.layers, t: tr('tdDC', { n: dcIt.n, t: dcIt.title }), why: tr('tdDCWhy'), min: HabitPlan.typeOf(key) === 'lc' ? 45 : 60, prio: 4, auto: DataCamp.isDone(dcIt) });
+      if (HabitPlan.typeOf(key) === 'tiklanish' && key > HABIT.meta.official) out.push({ id: 'codetest', route: 'practice/coding', ic: IC.target, t: tr('tdCodeTest'), why: tr('tdCodeTestWhy'), min: 45, prio: 4, auto: !!Store.readGet('codetest-' + key) });
       if (HabitPlan.workOn(key)) out.push({ id: 'work', route: 'habit', ic: IC.rocket, t: tr('tdWork', { m: HabitPlan.workCfg().min }), why: tr('tdWorkWhy'), min: HabitPlan.workCfg().min, prio: 6 });
     }
     var engDay = window.EngCal ? EngCal.dayOfKey(key) : 0;

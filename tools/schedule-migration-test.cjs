@@ -62,7 +62,7 @@ ok(d['h-close'] === true,   "to'liq kun: h-hw2+h-book+h-log → h-close");
 ok(d['h-fajr'] === true,    'namoz bloki tegilmadi');
 ok(!d['h-l1'],              "eski id habit dan olib tashlandi");
 ok(s.habitLegacy['2026-09-21']['h-l1'] === true, 'eski id habitLegacy ga ko\'chdi');
-ok(s.scheduleVersion === 2, 'scheduleVersion = 2');
+ok(s.scheduleVersion === 3, 'scheduleVersion = 3');
 ok(s.scheduleMigration && s.scheduleMigration.moved === 5, 'migratsiya hisoboti: 5 blok ko\'chdi');
 
 /* 2. QISMAN bajarilgan → yangi blok belgilanMAYDI (yolg'on "bajarildi" yo'q) */
@@ -94,7 +94,7 @@ ok(twice.scheduleMigration.at === once.scheduleMigration.at, 'idempotent: qayta 
 
 /* 6. Yangi foydalanuvchi */
 s = run(undefined);
-ok(s.scheduleVersion === 2, 'yangi foydalanuvchi: scheduleVersion = 2');
+ok(s.scheduleVersion === 3, 'yangi foydalanuvchi: scheduleVersion = 3');
 ok(Object.keys(s.habit).length === 0, 'yangi foydalanuvchi: habit bo\'sh');
 
 /* 7. Boshqa progress tegilmaydi */
@@ -138,6 +138,36 @@ const again = run(Object.assign({}, s, { best: { '2': 7 } }));
 ok(again.best['2'] === 7 && again.calendarReset.at === s.calendarReset.at, 'reset bir marta: v9 holatdagi yangi progress tegilmaydi');
 const remote = run(undefined, OLD).__remote;
 ok(remote.v === 9 && !Object.keys(remote.best).length && !Object.keys(remote.eng.done).length && !remote.mission, 'bulutdan kelgan eski (v8) nusxa ham reset — eski progress sinxron orqali qaytmaydi');
+
+/* ====================== v3: eski QAT'IY namoz qiymatlari ==============
+   Eski modelda Bomdod 05:20 va Peshin 13:00 sozlamalarga `manual`
+   sifatida yozilgan edi. Yangi model haqiqiy vaqtlarga tayanadi, shuning
+   uchun aynan shu ikki qiymat tozalanadi. Foydalanuvchi o'zi kiritgan
+   boshqa qiymat TEGILMAYDI, progress ham tegilmaydi.                   */
+{
+  const withLegacy = {
+    v: 9, scheduleVersion: 2, name: 'Leejon',
+    settings: { prayer: { city: 'tashkent', fajr: 18, isha: 18, asr: 2, manual: { fajr: '05:20', dhuhr: '13:00' } } },
+    habit: { '2026-10-26': { 'h-juz1': true } }
+  };
+  const r = run(withLegacy);
+  const man = ((r.settings || {}).prayer || {}).manual;
+  ok(!man, "v3: eski standart namoz qiymatlari (05:20 / 13:00) tozalandi");
+  ok(r.scheduleVersion === 3, 'v3: scheduleVersion = 3');
+  ok(r.prayerMigration && r.prayerMigration.count === 2, 'v3: migratsiya hisoboti 2 qiymat');
+  ok(r.prayerMigration && r.prayerMigration.removed.dhuhr === '13:00', "v3: o'chirilgani tarixda qoldi");
+  ok(r.habit && r.habit['2026-10-26'] && r.habit['2026-10-26']['h-juz1'] === true, 'v3: progress tegilmadi');
+
+  const withCustom = {
+    v: 9, scheduleVersion: 2,
+    settings: { prayer: { city: 'tashkent', manual: { fajr: '05:05', dhuhr: '13:00' } } }
+  };
+  const r2 = run(withCustom);
+  const man2 = ((r2.settings || {}).prayer || {}).manual || {};
+  ok(man2.fajr === '05:05', "v3: foydalanuvchi kiritgan Bomdod (05:05) saqlandi");
+  ok(!man2.dhuhr, 'v3: standart Peshin (13:00) esa tozalandi');
+  ok(r2.prayerMigration && r2.prayerMigration.kept.fajr === '05:05', 'v3: saqlangani hisobotda');
+}
 
 console.log('');
 console.log(fail ? ('FAIL — ' + fail + ' ta xato, ' + pass + ' ta ok') : ('ALL OK — ' + pass + ' ta tekshiruv'));

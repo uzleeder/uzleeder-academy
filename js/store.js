@@ -39,6 +39,7 @@
   var KEY = 'uzla.state';
   var SCHEMA = 9;   // v8: ingliz tili kunlari qayta raqamlangan (1–4 kirish → 'i1'…'i4', 5–144 → 1–140)
                     // v9: yangi kalendar 2026-10-25 → 2027-02-10 — barcha progress noldan (migrateCalendarReset)
+                    // scheduleVersion 3: eski qat'iy namoz qiymatlari tozalanadi — PROGRESS TEGILMAYDI
 
   var DEFAULTS = {
     v: SCHEMA,
@@ -54,7 +55,7 @@
     eng: { done: {}, tasks: {}, scores: {}, notes: {} },
     habit: {},            // "2026-09-10": { "h-fajr": true, … }
     habitLegacy: {},      // eski jadval (v1) bloklari — migratsiyada saqlangan tarix, hisobga kirmaydi
-    scheduleVersion: 2,   // kunlik jadval versiyasi (migrateScheduleV2)
+    scheduleVersion: 3,   // kunlik jadval versiyasi (migrateScheduleV2 / V3)
     /* Blok yakuni (§15): "2026-10-05|h-code" → { st, note, at }
        st: done | partial | skipped.  `done`/`partial` habit belgisini qo'yadi,
        `partial` qo'shimcha takrorga tushadi. Jazolash yo'q — bu o'lchov.   */
@@ -181,7 +182,7 @@
      Yolg'on "bajarildi" qo'yilmaydi.
 
      Idempotent: `scheduleVersion` maydoni bilan bir marta ishlaydi.        */
-  var SCHEDULE_VERSION = 2;
+  var SCHEDULE_VERSION = 3;   // v3: eski qat'iy namoz qiymatlari tozalanadi (migrateScheduleV3)
 
   /* yangi id → uni tashkil qilgan eski id lar */
   var SCHEDULE_MAP_V2 = {
@@ -201,6 +202,35 @@
   /* Yangi jadvalda o'rni yo'q (LC bilan takrorlanmasin deb olib tashlangan):
      faqat tarixiy yozuv sifatida saqlanadi. */
   var SCHEDULE_DROPPED_V2 = ['c-l3'];
+
+  /* --- v3: eski jadvalning QAT'IY namoz qiymatlari ------------------
+     Eski modelda Bomdod 05:20 va Peshin 13:00 jadvalning "ustunlari" edi
+     va sozlamalarga `manual` sifatida yozilgan. Yangi modelda bloklar
+     haqiqiy namoz vaqtlariga bog'langan, shuning uchun bu qiymatlar
+     hisobni buzadi: 26-oktabrda Peshin haqiqatda 12:08 da kiradi, 13:00
+     esa 52 daqiqa keyin — ya'ni jadval ham, namoz ham surilib ketadi.
+
+     Faqat AYNAN eski standart qiymatlar o'chiriladi (05:20 / 13:00).
+     Foydalanuvchi mahalliy taqvimga qarab o'zi kiritgan boshqa qiymat
+     TEGILMAYDI, va o'chirilgani tarixda qoladi (prayerMigration).      */
+  var LEGACY_PRAYER_V3 = { fajr: '05:20', dhuhr: '13:00' };
+
+  function migrateScheduleV3(s) {
+    var pr = (s.settings && s.settings.prayer) || null;
+    var man = pr && pr.manual;
+    var removed = {}, kept = {}, n = 0;
+    if (man) {
+      Object.keys(man).forEach(function (k) {
+        if (LEGACY_PRAYER_V3[k] && man[k] === LEGACY_PRAYER_V3[k]) {
+          removed[k] = man[k]; delete man[k]; n++;
+        } else kept[k] = man[k];
+      });
+      if (!Object.keys(man).length) delete pr.manual;
+    }
+    s.prayerMigration = { at: Date.now(), to: 3, removed: removed, kept: kept, count: n };
+    s.scheduleVersion = SCHEDULE_VERSION;
+    return s;
+  }
 
   function migrateScheduleV2(s) {
     var days = s.habit || {};
@@ -271,7 +301,8 @@
     if (raw && (raw.v || 1) < 4) s = migrateEngToDays(s);
     if (raw && (raw.v || 1) < 8) s = migrateEngRenumber(s);
     /* Jadval migratsiyasi — sxema versiyasidan MUSTAQIL, o'z hisoblagichi bilan */
-    if (raw && (raw.scheduleVersion || 1) < SCHEDULE_VERSION) s = migrateScheduleV2(s);
+    if (raw && (raw.scheduleVersion || 1) < 2) s = migrateScheduleV2(s);
+    if (raw && (raw.scheduleVersion || 1) < 3) s = migrateScheduleV3(s);
     if (raw && (raw.v || 1) < 9) s = migrateCalendarReset(s, true);
     s.v = SCHEMA;
     if (!raw) s = migrateLegacy(s);
@@ -700,6 +731,7 @@
       state = merge(DEFAULTS, obj || {});
       if (obj && (obj.v || 1) < 8) state = migrateEngRenumber(state);
       if (obj && (obj.v || 1) < 9) state = migrateCalendarReset(state, false);
+      if (obj && (obj.scheduleVersion || 1) < 3) state = migrateScheduleV3(state);
       state.v = SCHEMA;
       try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
       if (!silent) listeners.forEach(function (fn) { try { fn(state); } catch (e) {} });

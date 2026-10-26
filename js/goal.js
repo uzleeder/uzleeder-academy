@@ -153,14 +153,16 @@
       var i = (dayN + debtDays().days) % arr.length;
       return arr[i];
     },
-    /* Bugungi talab: ingliz 240 daq har kuni; coding 240 (og'ir) / 120 (LC), yakshanba 0 */
+    /* Bugungi talab: ingliz 240 daq har kuni; coding 240 (gibrid/oddiy) / 120 (LC), yakshanba 0 */
     required: function (key) {
       key = key || Store.dateKey();
-      var type = window.HabitPlan ? HabitPlan.typeOf(key) : 'heavy';
+      var type = window.HabitPlan ? HabitPlan.typeOf(key) : 'oddiy';
       var pyMonth = window.HabitPlan && HabitPlan.pyDayOf(key) > 0;
       var s = Store.all().settings || {};
       var eng = s.targetEng || 240, heavy = s.targetCodeHeavy || 240, cls = s.targetCodeClass || 120;
-      return { eng: eng, code: type === 'rest' ? (pyMonth ? 60 : 0) : type === 'class' ? cls : heavy };
+      /* tiklanish — kod yo'q (Python oyida 60 daq takror); LC kuni dars
+         vaqtini oladi, shuning uchun kam; gibrid/oddiy — to'liq.        */
+      return { eng: eng, code: type === 'tiklanish' ? (pyMonth ? 60 : 0) : type === 'lc' ? cls : heavy };
     },
     /* Bugungi bajarilgan daqiqalar: jadvaldagi belgilangan bloklardan */
     doneMinutes: function (key) {

@@ -1,17 +1,18 @@
 /* ==========================================================================
-   HabitPlan — bir kunning aniq jadvalini yig'adi
+   HabitPlan - bir kunning aniq jadvalini yig'adi
    --------------------------------------------------------------------------
    Kirish:  sana ("YYYY-MM-DD")
-   Chiqish: { type, prayer, blocks[], engDay, pyDay, speakDay, warnings[] }
+   Chiqish: { type, prayer, blocks[], bed, sleep, engDay, pyDay, warnings[] }
 
-   Bloklarning vaqti shablondagi anchordan (namoz vaqtidan) hisoblanadi va
-   ketma-ket suriladi. Ikki segment ustma-ust tushib qolsa, keyingisi
-   oldingisining oxiridan boshlanadi — jadvalda "18:00 dan 17:40 gacha"
-   degan bema'nilik chiqmasligi uchun.
+   Jadval QAT'IY SOATGA emas, NAMOZ VAQTLARIGA qurilgan (HABIT.meta izohi).
+   Zanjir: har blok oldingisidan davom etadi; `anchor` namoz vaqtiga
+   ko'chiradi, `flex` oradagi bo'shliqni yutadi, `flexTo: 'bed'` yotish
+   vaqtigacha cho'ziladi. Uyqu 390 daqiqa - qayta uyqu va asosiy uyqu
+   nisbati Bomdodga qarab o'zgaradi, jami o'zgarmaydi.
 
-   Alohida holat: Everest LC 16:30–18:30 qat'iy. Sentabr-oktabrda Asr,
-   oktabrdan fevralgacha Shom aynan shu oraliqqa tushadi. Bu vaziyat
-   yashirilmaydi — ogohlantirish sifatida chiqariladi.
+   Blok sig'masa YASHIRILMAYDI: ogohlantirish sifatida chiqariladi
+   (warnings[].chain). Everest LC 16:30-18:30 qat'iy - Shom namozi dars
+   vaqtiga tushadi va bu ham ogohlantirishda ko'rsatiladi.
    ========================================================================== */
 (function () {
   'use strict';
@@ -84,14 +85,22 @@
     index: function (key) { return daysBetween(HABIT.meta.from, key) + 1; },
     keyOf: function (index) { return Store.shiftDays(HABIT.meta.from, index - 1); },
 
-    /* Kun turi taqvimdan: yakshanba — dam, Se/Pa/Sha — LC, qolgani og'ir.
-       (Sinov kunlari 17–19-sen bekor qilingan — jadval 25-okt dan.) */
+    /* Kun turi taqvimdan (Uzlat & Ribat, 4 shablon):
+         Yak            tiklanish  — yangi mavzu yo'q, haftalik hisobot
+         Du, Ch         gibrid     — oshxona va ro'zg'or + podkast
+         Se, Pa, Sha    lc         — Everest LC 16:30-18:30 + yo'l
+         Ju             oddiy      — Uzlat master plan + juma namozi      */
     typeOf: function (key) {
       var dow = toDate(key).getDay();
-      if (dow === 0) return 'rest';
-      if (dow === 2 || dow === 4 || dow === 6) return 'class';
-      return 'heavy';
+      if (dow === 0) return 'tiklanish';
+      if (dow === 1 || dow === 3) return 'gibrid';
+      if (dow === 5) return 'oddiy';
+      return 'lc';
     },
+    /* Eski nomlar (heavy/class/rest) hali ham tushuniladi — tashqi
+       sahifalar o'z kun turlarini shunday ataydi (books, english).      */
+    LEGACY_TYPE: { heavy: 'oddiy', class: 'lc', rest: 'tiklanish', study: 'oddiy', test: 'tiklanish' },
+    tplOf: function (type) { return HABIT[type] || HABIT[HabitPlan.LEGACY_TYPE[type]] || HABIT.oddiy; },
 
     /* Shu sanaga to'g'ri keladigan Python darsi raqami.
        Python HAR KUNI: 25-okt → 23-noy, 30 kun = 30 dars. Muddat qat'iy.
@@ -133,303 +142,374 @@
     },
     workOn: function (key) { var w = HabitPlan.workCfg(); return w.on && key >= w.from && key <= w.to; },
 
-    /* ================= ASOSIY: bir kunning jadvali ==================== */
+    /* ================= ASOSIY: bir kunning jadvali ====================
+       Zanjirli shablon (tpl.chain): blok vaqti hisoblanadi, qotirilmaydi.
+         anchor  — blok shu namoz vaqtida boshlanadi (soft: vaqt o'tgan
+                   bo'lsa joyida qoladi, orqaga sakramaydi)
+         at      — qat'iy soat (faqat tashqi dars: Everest LC)
+         flex    — davomiyligi keyingi anchorgacha bo'lgan bo'shliq,
+                   oradagi qat'iy bloklar ayirilib
+         flexTo  — 'bed' (yotish) yoki 'tahajjud' (kun yopilishi)
+       Uyqu 390 daqiqa kafolatlangan: qayta uyqu Bomdodga qarab o'zgaradi,
+       asosiy uyqu shunga qarab moslashadi, yotish vaqti suriladi.      */
     forDate: function (key) {
       var type = HabitPlan.typeOf(key);
-      var tpl = HABIT[type];
+      var tpl = HabitPlan.tplOf(type);
       var pr = resolveTimes(key);
       var engDay = HabitPlan.engDayOf(key);
       var pyDay = HabitPlan.pyDayOf(key);
       var speakDay = HabitPlan.speakDayOf(key);
+      var calDay = HabitPlan.calDayOf(key);
+      var dow = toDate(key).getDay();
       var warnings = [];
 
-      /* --- 1) Jadval skeleti: qat'iy vaqtli bloklar --------------------
-         Har blokning boshlanish soati shablonda yozilgan. Hech narsa
-         surilmaydi — kun har doim 05:20 da boshlanib 21:45 da tugaydi.  */
-      var blocks = [];
-      var placed = {};        // shablon bloklarining oralig'i (namozni belgilash uchun)
+      var M = HABIT.meta;
+      var TAH = parseHM(M.tahajjud || '02:00') * 60;        // daqiqa, kun boshi
+      var JUZ = M.juz || 90;
+      var SLEEP = M.sleepMin || 390;
+      var DAY = 1440;
+      var mins = function (name) { return pr[name] ? pr[name].dec * 60 : null; };
 
-      var calDay = HabitPlan.calDayOf(key);
-      var writingOpen = !window.WRITING || key >= WRITING.meta.start;
-      /* Ish kuni: kechqurungi bloklar HABIT.work[type] bo'yicha almashtiriladi —
-         ISH bitta uzluksiz blok (og'ir/yakshanba 16:00–19:00, LC kuni LC dan keyin). */
-      var work = HabitPlan.workOn(key) && HABIT.work && HABIT.work[type];
-      var srcBlocks = work
-        ? tpl.blocks.filter(function (b) { return work.drop.indexOf(b.id) < 0; }).concat(work.add)
-        : tpl.blocks;
-      srcBlocks.forEach(function (b) {
-        /* Python kursi tugagan bo'lsa blokni tashlab ketmaymiz — kunda
-           teshik qoladi. Shablondagi "after" varianti bilan almashtiramiz. */
-        if ((b.kind === 'py' || b.kind === 'hw') && b.after === undefined && b.pyOnly && !pyDay) return;
-        if (b.kind === 'py' && !pyDay && !b.after) return;
-        /* Yakshanba: katta test birinchi (kickoff) yakshanbada yo'q; DataCamp bloki faqat bob rejalashtirilgan kunda */
-        if (b.notFirst && key === HABIT.meta.official) return;
-        if (b.firstOnly && key !== HABIT.meta.official) return;
-        if (b.dcOnly && !(window.DataCamp && DataCamp.forDate(key))) return;
-        /* noDc — dcOnly blokning juftligi: bob bor kuni tashlanadi, shunda slot bo'sh qolmaydi */
-        if (b.noDc && window.DataCamp && DataCamp.forDate(key)) return;
-        /* Writing kursi 25-oktabrdan — ungacha jadvalda Writing bloki YO'Q (o'rni erkin vaqt) */
-        if (b.writing && !writingOpen) {
-          b = { id: b.id, kind: 'rest', at: b.at, min: b.min, t: { uz: 'Erkin vaqt (Writing 25-okt dan)', en: 'Free time (Writing from 25 Oct)' } };
-        }
-        /* YouTube — har ikki kunda bir (juft kalendar kunlari) */
-        if (b.everyOther && calDay % 2 !== 0) return;
-        var alt = ((b.kind === 'py' || b.kind === 'hw') && !pyDay && b.after) ? b.after : null;
+      /* --- Uyqu hisobi: qayta uyqu + asosiy uyqu = SLEEP (qat'iy) ----- */
+      var tahEnd = TAH + 60 + JUZ;                          // Tahajjud bloki + 1-pora
+      var reSleep = Math.max(0, (mins('fajr') || tahEnd) - tahEnd);
+      var mainSleep = Math.max(0, SLEEP - reSleep);
+      var bed = TAH + DAY - mainSleep;                       // yotish vaqti (daqiqa)
 
-        var start = b.prayer ? (pr[b.prayer] ? pr[b.prayer].dec : null) : parseHM(b.at);
-        if (start === null) return;
-        var end = start + b.min / 60;
-        var srcLink = alt ? alt.link : b.link;
-        var introN = HabitPlan.introDayOf(key) || 4;
-        var link = srcLink
-          ? srcLink.replace('{engDay}', engDay || 1).replace('{pyDay}', pyDay || 1).replace('{introDay}', 'i' + introN)
-          : null;
-        if (srcLink && srcLink.indexOf('{engDay}') >= 0 && !engDay) link = null;
+      /* --- Gibrid: 3-pora joyi mavsumga qarab ------------------------
+         Shomdan keyin faqat kechqurun yetarli bo'lsa: 3-pora 90 +
+         Xufton 20 + ovqat 35 + yadro 45 = 190 daqiqa.                  */
+      var eveRoom = bed - ((mins('maghrib') || bed) + 15);
+      var juzEvening = eveRoom >= JUZ + 20 + 35 + 45;
 
-        var row = {
-          id: b.id, kind: (alt ? alt.kind : b.kind), core: !!b.core, fixed: !!b.fixed,
-          w: b.w || null,                      // yuk darajasi: hard | med | light (§8, §19)
-          prayer: b.prayer || null,
-          from: start, to: end, fromStr: hm(start), toStr: hm(end),
-          min: b.min, t: (alt ? alt.t : b.t), note: (alt ? alt.note : b.note) || null, link: link,
-          manual: b.prayer && pr[b.prayer] && pr[b.prayer].manual
-        };
-        /* Kitobdagi aniq joy — Listening va Reading bloklariga
-           (foydalanuvchining anchor'idan davom etadi)                    */
-        if (calDay && window.Books) {
-          var title = (row.t && row.t.en) || '';
-          if (/Listening/.test(title)) row.book = Books.listenLabel(calDay);
-          else if (/Reading/.test(title)) row.book = Books.readingLabel(calDay);
-          else if (/Vocabulary|lug'at/i.test(title) && Books.vocabTodayLabel) row.book = Books.vocabTodayLabel(calDay);
-        }
-        /* DataCamp: bugungi bob (trek jadvalidan) */
-        if (b.kind === 'dc' && b.link === 'datacamp' && window.DataCamp) {
-          var dcs = DataCamp.forDate(key);
-          if (dcs) { row.book = dcs.label; row.link = 'datacamp/' + dcs.n; }
-          else if (DataCamp.finished(key)) { row.book = L(DCPLAN.phases[1].title); row.link = 'plan'; }
-        }
-        /* Kunning filmi va YouTube kanali — ro'yxatdan navbat bilan */
-        if (b.movie && HABIT.movies && HABIT.movies.length) row.book = HABIT.movies[(Math.max(1, calDay) - 1) % HABIT.movies.length];
-        if (b.kind === 'yt' && HABIT.youtube && HABIT.youtube.length) row.book = HABIT.youtube[Math.floor(calDay / 2) % HABIT.youtube.length];
-        blocks.push(row);
-        placed[b.id] = row;
+      /* --- Shablon bloklarini filtrlash ------------------------------ */
+      var src = (tpl.blocks || []).filter(function (b) {
+        if (b.when === 'juzEvening' && !juzEvening) return false;
+        if (b.when === 'juzMorning' && juzEvening) return false;
+        if (b.satOnly && dow !== 6) return false;
+        if (b.sunOnly && dow !== 0) return false;
+        return true;
       });
 
-      /* --- 1b) Ish kuni ogohlantirishi: LC kunida 3 soat sig'maydi ------ */
-      if (work) {
-        var wb = blocks.filter(function (b) { return b.kind === 'work'; })[0];
-        if (wb && wb.min < HABIT.work.min) warnings.push({ work: true, text: {
-          uz: 'Ish bloki ' + wb.fromStr + '–' + wb.toStr + ' (' + wb.min + ' daq): LC kunida 3 soat sig\'maydi — 21:20 uyqu himoyalangan. Kamomad ' + (HABIT.work.min - wb.min) + ' daq.',
-          en: 'Work block ' + wb.fromStr + '–' + wb.toStr + ' (' + wb.min + ' min): three hours do not fit on an LC day — sleep at 21:20 is protected. Shortfall ' + (HABIT.work.min - wb.min) + ' min.'
-        } });
+      /* --- Anchor vaqti: namoz, qat'iy soat yoki yotish --------------- */
+      function anchorAt(b) {
+        if (b.at) return parseHM(b.at) * 60;
+        if (!b.anchor) return null;
+        if (b.anchor === 'tahajjud') return TAH;
+        return mins(b.anchor);
+      }
+      /* flex blokdan keyin, maqsad anchorgacha turgan qat'iy daqiqalar */
+      function fixedAfter(i, stop) {
+        var sum = 0;
+        for (var j = i + 1; j < src.length; j++) {
+          if (j === stop) break;
+          var b = src[j];
+          if (b.flex || b.flexTo) continue;
+          sum += b.min || 0;
+        }
+        return sum;
+      }
+      function targetOf(i) {
+        var b = src[i], j;
+        if (b.untilBlock) {
+          for (j = i + 1; j < src.length; j++) if (src[j].id === b.untilBlock) return { at: anchorAt(src[j]), stop: j };
+          return null;
+        }
+        if (b.until) {
+          for (j = i + 1; j < src.length; j++) if (src[j].anchor === b.until) return { at: anchorAt(src[j]), stop: j };
+          var t = b.until === 'tahajjud' ? TAH + DAY : mins(b.until);
+          return t === null ? null : { at: t, stop: src.length };
+        }
+        if (b.flexTo === 'bed') return { at: bed, stop: src.length };
+        if (b.flexTo === 'tahajjud') return { at: TAH + DAY, stop: src.length };
+        return null;
       }
 
-      /* --- 2) Qolgan namozlar: Asr, Shom, Xufton ------------------------
-         Bular shablonda yo'q, chunki 164 kun ichida 2 soatgacha suriladi.
-         O'z vaqtida qo'shiladi va qaysi blok ichiga tushgani belgilanadi. */
-      ['asr', 'maghrib', 'isha'].forEach(function (name) {
-        var p = pr[name];
-        if (!p) return;
+      /* --- Zanjirni yurib chiqish ------------------------------------- */
+      var chain = [], cur = TAH, introN = HabitPlan.introDayOf(key) || 4;
+      /* Anchor oldinga sakrasa oradagi bo'shliq yashirilmaydi — ochiq
+         "Dam" bloki qo'yiladi, shunda kun baribir aniq 1440 daqiqa. */
+      function fill(upto, afterId) {
+        var gap = Math.round(upto - cur);
+        if (gap <= 0) return;
+        chain.push({
+          id: afterId + '-gap', kind: 'rest', core: false, fixed: false, w: null,
+          prayer: null, from: cur / 60, to: upto / 60,
+          fromStr: hm(cur / 60), toStr: hm(upto / 60), min: gap,
+          t: { uz: 'Dam - ekransiz', en: 'Rest - no screens' }, note: null, link: null, gap: true
+        });
+        cur = upto;
+      }
+      src.forEach(function (b, i) {
+        var min = b.min || 0, start = cur;
+        var a = anchorAt(b);
+        if (a !== null) {
+          if (a >= cur) { fill(a, b.id); start = a; }
+          else if (b.soft || b.at) start = cur;              // vaqt o'tgan — joyida qoladi
+          else { start = cur; warnings.push({ chain: true, text: {
+            uz: L(b.t) + ' bloki ' + hm(a / 60) + ' ga ulgurmadi — jadval ' + hm(cur / 60) + ' dan davom etadi.',
+            en: L(b.t) + ' could not start at ' + hm(a / 60) + ' — the schedule continues from ' + hm(cur / 60) + '.'
+          } }); }
+        }
+        if (b.flex || b.flexTo) {
+          var t = targetOf(i);
+          if (t && t.at !== null) {
+            min = Math.round(t.at - start - fixedAfter(i, t.stop));
+            if (min < 0) {
+              warnings.push({ chain: true, tight: true, text: {
+                uz: L(b.t) + ' bloki ' + (-min) + ' daqiqa sig\'madi — keyingi bloklar surildi.',
+                en: L(b.t) + ' overflowed by ' + (-min) + ' minutes — the later blocks were pushed.'
+              } });
+              min = 0;
+            }
+          } else min = b.min || 0;
+        }
+
+        var link = b.link
+          ? String(b.link).replace('{engDay}', engDay || 1).replace('{pyDay}', pyDay || 1).replace('{introDay}', 'i' + introN)
+          : null;
+        if (b.link && String(b.link).indexOf('{engDay}') >= 0 && !engDay) link = null;
+
+        var row = {
+          id: b.id, kind: b.kind, core: !!b.core, fixed: !!b.fixed,
+          w: b.w || null, prayer: b.anchor && b.anchor !== 'tahajjud' ? b.anchor : null,
+          tahajjud: b.anchor === 'tahajjud' || null,
+          from: start / 60, to: (start + min) / 60,
+          fromStr: hm(start / 60), toStr: hm((start + min) / 60),
+          min: Math.round(min), shortOk: !!b.shortOk, longOk: !!b.longOk, t: b.t, note: b.note || null, link: link,
+          manual: !!(b.anchor && pr[b.anchor] && pr[b.anchor].manual)
+        };
+        /* Kitobdagi aniq joy — Listening/Reading/lug'at bloklariga */
+        if (calDay && window.Books) {
+          var title = (b.t && b.t.en) || '';
+          if (/Listening|Input/.test(title)) row.book = Books.listenLabel(calDay);
+          else if (/Reading/.test(title)) row.book = Books.readingLabel(calDay);
+          else if (/vocab/i.test(title) && Books.vocabTodayLabel) row.book = Books.vocabTodayLabel(calDay);
+        }
+        /* Qur'on: bugungi pora raqami (3 pora/kun, 1-kun = rasmiy start) */
+        if (b.kind === 'quran') {
+          var dayN = Math.max(1, daysBetween(M.official, key) + 1);
+          var nth = b.id.indexOf('juz1') >= 0 ? 1 : b.id.indexOf('juz2') >= 0 ? 2 : 3;
+          var juzNo = ((dayN - 1) * (M.juzPerDay || 3) + nth - 1) % 30 + 1;
+          row.juz = juzNo;
+          row.book = L({ uz: juzNo + '-pora', en: 'Juz ' + juzNo });
+        }
+        /* Tech bloki: bugungi dars yoki DataCamp bobi */
+        if (b.kind === 'py' && window.DataCamp) {
+          var dcs = DataCamp.forDate(key);
+          if (dcs) row.book = dcs.label;
+        }
+        chain.push(row);
+        cur = start + min;
+      });
+
+      /* --- Shablonda yo'q majburiy namozlar: o'z vaqtida qo'shiladi ---
+         Asr/Shom/Xufton ba'zi shablonlarda alohida blok emas (LC kunida
+         dars vaqtiga tushadi). Ularni surib yozish yolg'on bo'lardi.   */
+      var anchored = {};
+      chain.forEach(function (r) { if (r.prayer) anchored[r.prayer] = true; });
+      var blocks = chain.slice();
+      ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'].forEach(function (name) {
+        if (anchored[name] || !pr[name]) return;
         blocks.push({
           id: 'p-' + name, kind: 'pray', core: false, prayer: name, injected: true,
-          from: p.dec, to: p.dec + 20 / 60,
-          fromStr: p.str, toStr: hm(p.dec + 20 / 60),
+          from: pr[name].dec, to: pr[name].dec + 20 / 60,
+          fromStr: pr[name].str, toStr: hm(pr[name].dec + 20 / 60),
           min: 20, t: { uz: L(Prayer.NAMES[name]) + ' namozi', en: L(Prayer.NAMES[name]) + ' prayer' },
-          note: null, link: null, manual: !!p.manual
+          note: null, link: null, manual: !!pr[name].manual
         });
       });
 
-      /* --- 3) Namoz qaysi blok ichiga tushdi ---------------------------
-         Shom qishda dars vaqtida, sentabrda kechki ovqat vaqtida kiradi.
-         Uni surib yozish yolg'on bo'lardi — o'z vaqtida qoldiramiz va
-         ustidagi blokni ko'rsatamiz.                                     */
-      var skeleton = blocks.filter(function (b) { return !b.injected; });
+      /* --- Namoz qaysi blok ichiga tushdi ---------------------------- */
       blocks.forEach(function (b) {
         if (!b.injected) return;
-        skeleton.forEach(function (s) {
+        chain.forEach(function (s) {
           if (b.from >= s.from && b.from < s.to) {
-            b.inside = true;
-            b.insideOf = s.t;
+            b.inside = true; b.insideOf = s.t;
             if (s.fixed) b.insideFixed = true;
           }
         });
       });
-
       blocks.sort(function (a, b) { return a.from - b.from || (a.injected ? 1 : -1); });
 
-      /* LC darsi vaqtiga tushadigan namozlar — alohida ogohlantirish */
-      if (type === 'class') {
+      /* --- Tashqi dars vaqtiga tushadigan namozlar ------------------- */
+      if (type === 'lc') {
         Prayer.inRange(pr, 16.5, 18.5).forEach(function (name) {
-          warnings.push({
-            prayer: name,
-            time: pr[name].str,
-            text: {
-              uz: L(Prayer.NAMES[name]) + ' namozi (' + pr[name].str + ') Everest LC darsi vaqtiga tushadi. Darsdan oldin yoki tanaffusda o\'qib ol.',
-              en: L(Prayer.NAMES[name]) + ' (' + pr[name].str + ') falls during the Everest LC class. Pray before class or in the break.'
-            }
-          });
+          warnings.push({ prayer: name, time: pr[name].str, text: {
+            uz: L(Prayer.NAMES[name]) + ' namozi (' + pr[name].str + ') Everest LC darsi vaqtiga tushadi. Darsdan oldin yoki tanaffusda o\'qib ol.',
+            en: L(Prayer.NAMES[name]) + ' (' + pr[name].str + ') falls during the Everest LC class. Pray before the class or in the break.'
+          } });
         });
       }
 
       return {
         key: key, index: HabitPlan.index(key), type: type, tpl: tpl,
-        dow: toDate(key).getDay(), prayer: pr,
+        dow: dow, prayer: pr,
         engDay: engDay, pyDay: pyDay, speakDay: speakDay,
+        bed: bed / 60, bedStr: hm(bed / 60),
+        sleep: { total: SLEEP, main: mainSleep, re: reSleep },
+        juzEvening: juzEvening,
         blocks: blocks, warnings: warnings,
         coreCount: blocks.filter(function (b) { return b.core; }).length
       };
     },
 
-    /* ================= JADVAL VALIDATORI (dev) ==========================
-       Har shablon (oddiy + ish kuni varianti) uchun: jami 1440 daqiqa,
-       ustma-ust tushmaydi, dublikat yadro bloki yo'q, vaqt mumkin (0–24),
-       yashirin to'qnashuv (blok ichida boshqa blok), haftalik ziddiyat
-       (LC kuni LC bloksiz, yakshanbada LC). Console: HabitPlan.validate()  */
     /* ====================== JADVAL VALIDATORI ==========================
-       15 qoida. Har variant (oddiy/ish kuni × birinchi/oddiy kun ×
-       DataCamp bor/yo'q) alohida tekshiriladi.
+       Jadval endi QAT'IY emas — har kuni namoz vaqtlaridan hisoblanadi.
+       Shuning uchun validator variantlarni emas, MARAFONNING HAR KUNINI
+       tekshiradi (26-okt → 10-fev, 108 kun × 4 shablon). Bir kun uchun
+       to'g'ri bo'lgan jadval boshqa mavsumda buzilishi mumkin — eski
+       "bitta namunali kun" tekshiruvi aynan shuni ko'rmagan.
 
-       SHARTLI BLOKLAR: `firstOnly/notFirst` va `dcOnly/noDc` juftliklari
-       bir-birini ISTISNO qiladi — ular bitta slotda tursa ham to'qnashuv
-       EMAS. Validator variantni avval filtrlaydi, keyin vaqtni solishtiradi
-       (spec §6, §10). Faqat bir variantda BIRGA chiqadigan bloklar
-       to'qnashuv hisoblanadi.
-
-       Chegaralar (LIMITS): og'ir kunda yakka ish OG'IR yuki ≤ 240 daq;
-       bloklar ≤ 6; yadro bloki ≥ 45 daq; tushdan keyin ≤ 1 OG'IR blok.
-       `fixed: true` — tashqi dars (LC): yakka ish yukiga kirmaydi.
-       `shortOk: true` — ataylab qisqa blokka ruxsat (§9, 6-qoida istisnosi).
+       16 qoida:
+         1  kun aniq 1440 daqiqa
+         2  manfiy davomiylikli blok yo'q
+         3  bloklar ustma-ust tushmaydi va bo'shliq qoldirmaydi
+         3b avtomatik yopilgan bo'shliq 30 daqiqadan oshmaydi
+         4  uyqu = meta.sleepMin (qaylula hisobga kirmaydi)
+         5  kuniga meta.juzPerDay pora × meta.juz daqiqa
+         6  yadro bloklari ≤ maxBlocks
+         7  yadro bloki ≥ minCore  (shortOk — ataylab istisno)
+         8  yadro bloki ≤ maxCore  (bir o'tirishda 4 soatdan ko'p emas;
+            `longOk` — uy ishi + passiv tinglash bloki uchun istisno)
+         9  OG'IR yuk ≤ hardMax (tashqi dars kirmaydi)
+         10 tushdan keyin OG'IR bloklar ≤ pmHardMax (shablon o'zgartirishi mumkin)
+         11 har yadro blokida `w` bor (hard | med | light)
+         12 dublikat blok id yo'q
+         13 noma'lum `kind` yo'q
+         14 `anchor` haqiqiy namoz nomi
+         15 hech bir flex blok sig'may qolmadi (warnings.tight)
+         16 Tahajjud kecha ichida va oxirgi uchdan birida
 
        Qaytaradi: { ok, errors[], findings[], report{} } — findings har biri
        { rule, day, actual, limit, msg }.                                 */
-    LIMITS: { hardMax: 240, maxBlocks: 6, minCore: 45, pmHardMax: 1, dayMin: 1440 },
+    LIMITS: { hardMax: 240, maxBlocks: 6, minCore: 45, maxCore: 240, pmHardMax: 1, dayMin: 1440 },
 
-    validate: function () {
-      var L = HabitPlan.LIMITS;
-      var errors = [], findings = [], report = { variants: [], week: 0 };
-      var hmToMin = function (str) { var p = String(str).split(':'); return Number(p[0]) * 60 + Number(p[1] || 0); };
-      var FIXED = { fajr: hmToMin(HABIT.meta.dayStart || '05:20'), dhuhr: 13 * 60 };
+    validate: function (opts) {
+      var LIM = HabitPlan.LIMITS, M = HABIT.meta;
+      var o = opts || {};
+      var from = o.from || M.from, to = o.to || M.to;
+      var errors = [], findings = [], report = { days: 0, byType: {}, week: 0, weekParts: {}, tight: [] };
       var KINDS = HABIT.kinds || {};
+      var PRAYERS = { fajr: 1, dhuhr: 1, asr: 1, maghrib: 1, isha: 1, tahajjud: 1 };
       var add = function (rule, day, msg, actual, limit) {
         findings.push({ rule: rule, day: day, msg: msg, actual: actual, limit: limit });
         errors.push(day + ' · ' + rule + ': ' + msg);
       };
 
-      ['heavy', 'class', 'rest'].forEach(function (type) {
-        [false, true].forEach(function (work) {
-          var tpl = HABIT[type]; if (!tpl) { add('shablon', type, "shablon yo'q"); return; }
-          var blocks = tpl.blocks;
-          if (work) { var w = HABIT.work && HABIT.work[type]; if (!w) return; blocks = blocks.filter(function (b) { return w.drop.indexOf(b.id) < 0; }).concat(w.add); }
-          var name = type + (work ? '+work' : '');
-
-          /* 12-qoida: shartli bayroqlar mantiqan to'g'rimi */
-          blocks.forEach(function (b) {
-            if (b.firstOnly && b.notFirst) add('shartli', name, b.id + ': firstOnly va notFirst birga');
-            if (b.dcOnly && b.noDc) add('shartli', name, b.id + ': dcOnly va noDc birga');
-            /* 13/15-qoida: id va kind */
-            if (!b.id) add('id', name, "blok id siz");
-            if (b.kind && KINDS && Object.keys(KINDS).length && !KINDS[b.kind]) add('kind', name, b.id + ": noma'lum kind '" + b.kind + "'");
-          });
-
-          /* variantlar: birinchi kun / oddiy kun, DataCamp bor / yo'q */
-          [{ first: true, dc: true }, { first: false, dc: false }, { first: false, dc: true }].forEach(function (v) {
-            var vName = name + ' [' + (v.first ? 'first' : 'notFirst') + '/' + (v.dc ? 'dc' : 'noDc') + ']';
-            var rows = blocks.filter(function (b) {
-              if (b.firstOnly && !v.first) return false; if (b.notFirst && v.first) return false;
-              if (b.dcOnly && !v.dc) return false; if (b.noDc && v.dc) return false; return true;
-            }).map(function (b) {
-              return { id: b.id, core: !!b.core, w: b.w, fixed: !!b.fixed, shortOk: !!b.shortOk,
-                       at: b.prayer ? FIXED[b.prayer] : hmToMin(b.at), min: b.min };
-            });
-
-            /* 1-qoida: imkonsiz vaqt oralig'i */
-            rows.forEach(function (r) {
-              if (!(r.at >= 0 && r.at < 1440) || !(r.min > 0)) add('vaqt', vName, r.id + ": vaqt/davomiylik noto'g'ri", r.at + '/' + r.min);
-            });
-
-            /* 9-qoida: kun 1440 daqiqa */
-            var sum = rows.reduce(function (a, r) { return a + r.min; }, 0);
-            if (sum !== L.dayMin) add('kun uzunligi', vName, 'jami ' + sum + ' daq', sum, L.dayMin);
-
-            rows.sort(function (a, b) { return a.at - b.at; });
-
-            /* 10/14-qoida: dublikat id · 2/11-qoida: to'qnashuv va ichma-ich */
-            var ids = {};
-            rows.forEach(function (r, i) {
-              if (ids[r.id]) add('dublikat id', vName, 'ikki marta: ' + r.id);
-              ids[r.id] = 1;
-              var n = rows[i + 1]; if (!n) return;
-              var end = r.at + r.min;
-              if (end > n.at) {
-                var nested = end >= n.at + n.min;
-                add(nested ? 'ichma-ich blok' : "to'qnashuv", vName,
-                  r.id + ' (tugash ' + end + ') ' + n.id + ' (boshlanish ' + n.at + ')' + (r.core && n.core ? ' — IKKI YADRO' : ''),
-                  end - n.at);
-              }
-              if (end < n.at) add('teshik', vName, r.id + ' va ' + n.id + ' orasida ' + (n.at - end) + ' daq', n.at - end);
-            });
-
-            var core = rows.filter(function (r) { return r.core; });
-            var solo = core.filter(function (r) { return !r.fixed; });   // yakka ish (tashqi darssiz)
-
-            /* 8-qoida: har yadro blokida `w` majburiy */
-            core.forEach(function (r) {
-              if (!r.w) add('w yo\'q', vName, r.id + ": yadro blokida yuk darajasi (w) ko'rsatilmagan");
-              else if (['hard', 'med', 'light'].indexOf(r.w) < 0) add('w noto\'g\'ri', vName, r.id + ": w = '" + r.w + "'");
-            });
-
-            /* 6-qoida: yadro bloki ≥ 45 daq (shortOk istisno) */
-            core.forEach(function (r) {
-              if (r.min < L.minCore && !r.shortOk) add('qisqa blok', vName, r.id + ': ' + r.min + ' daq', r.min, L.minCore);
-            });
-
-            /* 5-qoida: yadro bloklari soni ≤ 6 */
-            if (core.length > L.maxBlocks) add('blok soni', vName, core.length + ' ta yadro bloki', core.length, L.maxBlocks);
-
-            /* 4-qoida: OG'IR yuk ≤ 240 daq (yakka ish; tashqi dars hisobga kirmaydi) */
-            var hard = solo.filter(function (r) { return r.w === 'hard'; }).reduce(function (a, r) { return a + r.min; }, 0);
-            if (hard > L.hardMax) add('OG\'IR yuk chegarasi', vName, hard + ' daq', hard, L.hardMax);
-
-            /* 7-qoida: tushdan keyin ≤ 1 OG'IR blok (tashqi darssiz) */
-            var pmHard = solo.filter(function (r) { return r.w === 'hard' && r.at >= 13 * 60; }).length;
-            if (pmHard > L.pmHardMax) add('tushdan keyingi OG\'IR', vName, pmHard + ' ta blok', pmHard, L.pmHardMax);
-
-            /* LC bloki faqat LC kunida */
-            var hasLc = rows.some(function (r) { return r.id.indexOf('-lc') > 0; });
-            if (type === 'class' && !hasLc) add('LC', vName, 'LC kuni LC bloksiz');
-            if (type !== 'class' && hasLc) add('LC', vName, "LC bloki LC bo'lmagan kunda");
-
-            var byW = function (k) { return core.filter(function (r) { return r.w === k; }).reduce(function (a, r) { return a + r.min; }, 0); };
-            report.variants.push({
-              name: vName, type: type, work: work, blocks: core.length, day: sum,
-              core: core.reduce(function (a, r) { return a + r.min; }, 0),
-              hard: byW('hard'), med: byW('med'), light: byW('light'),
-              soloHard: hard, pmHard: pmHard,
-              /* eng qisqa yadro bloki — ataylab qisqa (shortOk) bloklar hisobga kirmaydi */
-              minBlock: (function () {
-                var m = core.filter(function (r) { return !r.shortOk; }).map(function (r) { return r.min; });
-                return m.length ? Math.min.apply(null, m) : 0;
-              })()
-            });
-          });
+      /* --- 12/13/14: shablonning o'zi (sanadan qat'i nazar) ----------- */
+      Object.keys(HABIT).forEach(function (k) {
+        var tpl = HABIT[k];
+        if (!tpl || !tpl.chain) return;
+        var seen = {};
+        tpl.blocks.forEach(function (b) {
+          if (!b.id) add('id siz blok', k, 'blokda id yo\'q: ' + L(b.t || {}));
+          else if (seen[b.id]) add('dublikat id', k, 'id ikki marta: ' + b.id);
+          seen[b.id] = true;
+          if (!KINDS[b.kind]) add('noma\'lum kind', k, b.id + ' → kind "' + b.kind + '" HABIT.kinds da yo\'q');
+          if (b.anchor && !PRAYERS[b.anchor]) add('noto\'g\'ri anchor', k, b.id + ' → anchor "' + b.anchor + '"');
+          if (b.until && !PRAYERS[b.until]) add('noto\'g\'ri until', k, b.id + ' → until "' + b.until + '"');
+          if (b.core && !b.w) add('w yo\'q', k, b.id + ' yadro bloki, lekin yuk darajasi (w) berilmagan');
         });
       });
 
-      /* Haftalik yadro: 3 og'ir + 3 LC + 1 yakshanba (oddiy variant) */
-      var plain = function (t) {
-        var v = null;
-        report.variants.forEach(function (x) { if (x.type === t && !x.work && /notFirst\/noDc/.test(x.name)) v = x; });
-        return v ? v.core : 0;
-      };
-      report.week = plain('heavy') * 3 + plain('class') * 3 + plain('rest');
-      report.weekParts = { heavy: plain('heavy'), class: plain('class'), rest: plain('rest') };
+      /* --- 1..11, 15, 16: marafonning har kuni ----------------------- */
+      var key = from, guard = 0;
+      while (key <= to && guard++ < 400) {
+        var p = HabitPlan.forDate(key);
+        var tpl = p.tpl, tLim = (tpl && tpl.limits) || {};
+        var own = p.blocks.filter(function (b) { return !b.injected; });
+        var core = own.filter(function (b) { return b.core; });
+        var day = own.reduce(function (s, b) { return s + b.min; }, 0);
+        var st = report.byType[p.type] || (report.byType[p.type] = { n: 0, core: 0, hard: 0, min: 1e9, max: 0 });
 
-      /* Namoz bloklari (asr/shom/xufton) alohida qo'shiladi va blok ichiga tushadi — bu ustma-ust emas, belgilangan holat */
+        if (Math.round(day) !== LIM.dayMin) add('kun 1440 daqiqa', key, p.type + ': kun ' + Math.round(day) + ' daqiqa', Math.round(day), LIM.dayMin);
+        own.forEach(function (b) {
+          if (b.min < 0) add('manfiy blok', key, b.id + ' → ' + b.min + ' daqiqa', b.min, 0);
+        });
+        /* 3: zanjir uzluksizmi */
+        for (var i = 1; i < own.length; i++) {
+          var gap = Math.round((own[i].from - own[i - 1].to) * 60);
+          if (gap !== 0) add('zanjir uzilgan', key, own[i - 1].id + ' → ' + own[i].id + ': ' + gap + ' daqiqa', gap, 0);
+        }
+        /* 3b: dvigatel bo'shliqni avtomatik yopadi (fill). Kichik bo'shliq
+           normal (namoz vaqti suriladi), lekin KATTA bo'shliq shablonda
+           blok yo'qolganini bildiradi — shuni ochiq aytamiz. */
+        own.forEach(function (b) {
+          if (b.gap && b.min > 30) add('avtomatik bo\'shliq', key,
+            b.id + ' → ' + b.min + ' daqiqa avtomatik "Dam" bilan yopildi', b.min, 30);
+        });
+        var sleep = own.filter(function (b) { return b.kind === 'sleep' && !/qaylula/.test(b.id); })
+          .reduce(function (s, b) { return s + b.min; }, 0);
+        if (sleep !== (M.sleepMin || 390)) add('uyqu', key, p.type + ': uyqu ' + sleep + ' daqiqa', sleep, M.sleepMin || 390);
+
+        var juz = own.filter(function (b) { return b.kind === 'quran'; });
+        if (juz.length !== (M.juzPerDay || 3)) add('pora soni', key, p.type + ': ' + juz.length + ' pora', juz.length, M.juzPerDay || 3);
+        juz.forEach(function (b) {
+          if (b.min !== (M.juz || 90)) add('pora davomiyligi', key, b.id + ' → ' + b.min + ' daqiqa', b.min, M.juz || 90);
+        });
+
+        if (core.length > LIM.maxBlocks) add('yadro bloklari soni', key, p.type + ': ' + core.length + ' yadro bloki', core.length, LIM.maxBlocks);
+        core.forEach(function (b) {
+          if (b.min < LIM.minCore && !b.shortOk) add('qisqa yadro bloki', key, b.id + ' → ' + b.min + ' daqiqa', b.min, LIM.minCore);
+          if (b.min > (tLim.maxCore || LIM.maxCore) && !b.longOk) add('uzun yadro bloki', key, b.id + ' → ' + b.min + ' daqiqa', b.min, tLim.maxCore || LIM.maxCore);
+        });
+
+        var hard = core.filter(function (b) { return b.w === 'hard' && !b.fixed; });
+        var hardMin = hard.reduce(function (s, b) { return s + b.min; }, 0);
+        if (hardMin > (tLim.hardMax || LIM.hardMax)) add('OG\'IR yuk', key, p.type + ': ' + hardMin + ' daqiqa', hardMin, tLim.hardMax || LIM.hardMax);
+        var noon = p.prayer.dhuhr ? p.prayer.dhuhr.dec : 12;
+        var pm = hard.filter(function (b) { return b.from >= noon; }).length;
+        if (pm > (tLim.pmHardMax || LIM.pmHardMax)) add('tushdan keyingi OG\'IR bloklar', key, p.type + ': ' + pm + ' blok', pm, tLim.pmHardMax || LIM.pmHardMax);
+
+        p.warnings.forEach(function (w) { if (w.tight) { report.tight.push(key); add('blok sig\'madi', key, L(w.text)); } });
+
+        /* 16: Tahajjud kechaning oxirgi uchdan birida */
+        var prev = Store.shiftDays(key, -1);
+        var pm2 = Prayer.times(prev, null), tm = p.prayer;
+        var th = own.filter(function (b) { return b.tahajjud; })[0];
+        if (pm2 && pm2.maghrib && tm.fajr && th) {
+          /* Kecha = kechagi Shom → bugungi Bomdod. Ikki vaqtni ham
+             Shomdan boshlab SILJISH sifatida solishtiramiz, aks holda
+             yarim kechadan o'tganda taqqoslash buziladi. */
+          var mg = pm2.maghrib.dec;
+          var nightLen = (tm.fajr.dec + 24) - mg;
+          var off = function (t) { return ((t - mg) % 24 + 24) % 24; };
+          var tahOff = off(th.from), thirdOff = nightLen * 2 / 3;
+          if (tahOff > nightLen) {
+            add('Tahajjud kecha tashqarisida', key,
+              'Tahajjud ' + th.fromStr + ' — Shom (' + pm2.maghrib.str + ') va Bomdod (' +
+              tm.fajr.str + ') oraligidan tashqarida', th.fromStr, tm.fajr.str);
+          } else if (tahOff < thirdOff - 1e-9) {
+            add('Tahajjud oxirgi uchdan bir', key,
+              'Tahajjud ' + th.fromStr + ', oxirgi uchdan bir ' + hm(((mg + thirdOff) % 24)) + ' da boshlanadi',
+              th.fromStr, hm((mg + thirdOff) % 24));
+          }
+        }
+
+        var cm = core.reduce(function (s, b) { return s + b.min; }, 0);
+        st.n++; st.core += cm; st.hard += hardMin;
+        if (cm < st.min) st.min = cm;
+        if (cm > st.max) st.max = cm;
+        report.days++;
+        key = Store.shiftDays(key, 1);
+      }
+
+      Object.keys(report.byType).forEach(function (k) {
+        var a = report.byType[k];
+        a.avg = Math.round(a.core / a.n);
+        a.avgHard = Math.round(a.hard / a.n);
+        report.weekParts[k] = a.avg;
+      });
+      /* Haftalik yadro: 2 gibrid + 3 lc + 1 oddiy + 1 tiklanish */
+      var W = { gibrid: 2, lc: 3, oddiy: 1, tiklanish: 1 };
+      report.week = Object.keys(W).reduce(function (s, k) {
+        return s + (report.weekParts[k] || 0) * W[k];
+      }, 0);
+
       return { ok: !errors.length, errors: errors, findings: findings, report: report };
     },
 
-    /* Kunning yuk taqsimoti (§19): { hard, med, light, core, done } daqiqalarda.
-       Talabaga ko'rsatiladi — "bugun qancha og'ir ish bor" degan savolga javob. */
     loadOf: function (plan) {
       var out = { hard: 0, med: 0, light: 0, core: 0, done: 0, fixed: 0 };
       (plan.blocks || []).forEach(function (b) {

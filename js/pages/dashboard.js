@@ -352,7 +352,9 @@
     if (!window.HabitPlan || !HabitPlan.inRange(key)) return '';
     var plan = HabitPlan.forDate(key);
     var done = HabitPlan.doneCount(plan);
-    var typeName = tr(plan.type === 'rest' ? 'engRestDay' : plan.type === 'class' ? 'engClassDay' : 'engHeavyDay');
+    /* Kun turi nomi shablonning o'zidan — 4 shablon, ikki til (i18n
+       kalitlari takrorlanmasin).                                        */
+    var typeName = plan.tpl && plan.tpl.name ? L(plan.tpl.name) : plan.type;
     var next = HabitPlan.nextBlock ? HabitPlan.nextBlock(plan) : null;
 
     var h = '<div class="today-strip">';
