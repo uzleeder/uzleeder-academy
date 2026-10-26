@@ -252,9 +252,10 @@
       }).catch(function () { hint.textContent = tr('profImgErr'); btn.disabled = false; });
     });
     $$('[data-ppdel]').forEach(function (b) { b.addEventListener('click', function () {
-      if (!confirm(tr('profDelQ'))) return;
-      var x = Store.pprojGet(b.dataset.ppdel); if (x && x.imgUrl && window.MediaCloud) MediaCloud.del(x.imgUrl);
-      Store.pprojDel(b.dataset.ppdel); App.render();
+      App.confirm({ text: tr('profDelQ'), danger: true }, function () {
+        var x = Store.pprojGet(b.dataset.ppdel); if (x && x.imgUrl && window.MediaCloud) MediaCloud.del(x.imgUrl);
+        Store.pprojDel(b.dataset.ppdel); App.render();
+      });
     }); });
 
     /* Sertifikat kartalari */
@@ -271,9 +272,10 @@
     });
     $$('[data-certdel]').forEach(function (b) {
       b.addEventListener('click', function () {
-        if (!confirm(tr('profDelQ'))) return;
-        Store.certDel(b.dataset.certdel);
-        App.render();
+        App.confirm({ text: tr('profDelQ'), danger: true }, function () {
+          Store.certDel(b.dataset.certdel);
+          App.render();
+        });
       });
     });
 

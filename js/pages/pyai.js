@@ -418,7 +418,14 @@
     h += card(t('Tozalash', 'Reset'), '<p class="hint">' + t("Faqat Python & AI yo'li progressi o'chadi (mahalliy zaxira saqlanadi). Eski Python kursi, ingliz tili va Mission ma'lumotlariga tegilmaydi.", 'Only the Python & AI path progress is cleared (a local backup is kept). The original Python course, English and Mission data are untouched.') + '</p><button class="btn btn-quiet btn-sm" id="pyReset">' + IC.trash + t('Progressni tozalash…', 'Reset progress…') + '</button>', IC.lock);
     MOUNT = function () {
       $('#pySet').addEventListener('submit', function (e) { e.preventDefault(); try { A().setSettings({ dailyMin: e.target.goal.value, ivls: e.target.iv.value.split(',').map(function (x) { return x.trim(); }).filter(Boolean) }); toast(t('Saqlandi', 'Saved'), 'ok'); App.render(); } catch (er) { toast(er.message === 'ivls' ? t("Oraliqlar: kamida 2 ta o'sib boruvchi son (1–90)", 'Intervals: at least 2 increasing numbers (1–90)') : t('Maqsad 10–480 daqiqa', 'Goal must be 10–480 minutes'), 'warn'); } });
-      $('#pyReset').addEventListener('click', function () { if (!confirm(t("Python & AI yo'li progressi o'chadi. Davom etasizmi?", 'The Python & AI path progress will be cleared. Continue?'))) return; if ((prompt(t('Tasdiqlash uchun PYAI deb yozing', 'Type PYAI to confirm')) || '').trim().toUpperCase() !== 'PYAI') return; A().reset(); toast(t('Tozalandi (zaxira saqlandi)', 'Reset (backup kept)'), 'ok'); App.go('pyai'); }); };
+      $('#pyReset').addEventListener('click', function () {
+        App.confirm({ text: t("Python & AI yo'li progressi o'chadi. Davom etasizmi?", 'The Python & AI path progress will be cleared. Continue?'), danger: true }, function () {
+          App.prompt({ text: t('Tasdiqlash uchun PYAI deb yozing', 'Type PYAI to confirm'), match: 'PYAI', placeholder: 'PYAI', danger: true }, function () {
+            A().reset(); toast(t('Tozalandi (zaxira saqlandi)', 'Reset (backup kept)'), 'ok'); App.go('pyai');
+          });
+        });
+      });
+    };
     return h + '</div>';
   };
 

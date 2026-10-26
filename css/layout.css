@@ -146,6 +146,17 @@
 .nav-label svg { width: 13px; height: 13px; transition: transform var(--t-base) var(--ease); }
 .nav-group .nav-items { display: flex; flex-direction: column; gap: 2px; }
 .nav-group.collapsed .nav-label svg { transform: rotate(-90deg); }
+/* Yopiq guruh: ichida nechta bo'lim borligi ko'rinib tursin. Aks holda
+   sarlavha oddiy matn kabi ko'rinadi va bo'limlar "yo'qolgan" deb
+   o'ylanadi — ayniqsa "Home" guruhida (Dashboard, Today, Muhosaba ...). */
+.nav-count {
+  margin-left: auto; margin-right: 6px; min-width: 16px; padding: 0 5px;
+  font-size: 9px; font-weight: 800; line-height: 15px; text-align: center;
+  color: var(--muted); background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: 999px;
+}
+.nav-group.collapsed .nav-label { color: var(--muted); }
+.nav-group.collapsed .nav-label:hover .nav-count { color: var(--text); border-color: var(--muted); }
 .nav-group.collapsed .nav-items { display: none; }
 .nav-group.collapsed.has-on .nav-items { display: flex; }
 .nav-group.collapsed.has-on .nav-item:not(.on) { display: none; }

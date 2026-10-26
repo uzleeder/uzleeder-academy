@@ -215,11 +215,16 @@
     /* Progressni o'chirish — kuchli tasdiq: avval zaxira taklifi, keyin "OCHIR" so'zini yozish.
        Bulutdagi nusxa ham keyingi sinxronda bo'shaydi — shuning uchun tasodifan bosib bo'lmasin. */
     resetProgress: function () {
-      if (!confirm(tr('resetConfirm'))) return;
-      var typed = prompt(tr('resetType', { w: 'OCHIR' }));
-      if (typed === null) return;
-      if (typed.trim().toUpperCase() !== 'OCHIR') { toast(tr('resetCancel'), 'warn'); return; }
-      Store.resetAll(); toast(tr('resetDone'), 'ok'); App.render();
+      /* Ikki qadam: avval tasdiq, keyin OCHIR deb yozish. Ikkalasi ham
+         saytning o'z oynasida — brauzerning tepadagi oynasida emas.    */
+      App.confirm({ text: tr('resetConfirm'), danger: true }, function () {
+        App.prompt({
+          text: tr('resetType', { w: 'OCHIR' }), match: 'OCHIR',
+          ok: tr('askOk'), danger: true, placeholder: 'OCHIR'
+        }, function () {
+          Store.resetAll(); toast(tr('resetDone'), 'ok'); App.render();
+        });
+      });
     },
     /* "?" — klaviatura qisqartmalari oynasi (bir marta yaratiladi) */
     kbdHelp: function (open) {
@@ -245,6 +250,85 @@
       }
       ov.classList.toggle('show', o);
       if (o) { var x = ov.querySelector('[data-kbdx]'); if (x) x.focus(); }
+    },
+    /* ====================== SAYT ICHIDAGI SO'ROV OYNASI =================
+       Brauzerning o'z confirm() / prompt() oynasi sahifaning TEPASIDA
+       chiqadi, sayt uslubiga aloqasi yo'q va mobil qurilmada "sayt javob
+       bermayapti" degan taassurot qoldiradi. Shuning uchun o'chirish va
+       boshqa qaytarib bo'lmaydigan amallar saytning O'Z oynasida
+       so'raladi — mavjud .overlay / .modal uslubida.
+
+       Chaqirish (kod uslubi: callback, va'da emas):
+         App.confirm("Shu o'chirilsinmi?", function () { … });
+         App.confirm({ text: …, title: …, ok: …, danger: true }, fn);
+         App.prompt({ text: …, value: …, match: 'OCHIR' }, function (v) { … });
+
+       `danger: true` — tasdiq tugmasi qizil (o'chirish uchun).
+       `match` — faqat shu so'z yozilgandagina tasdiq tugmasi ishlaydi.
+       Esc va fon bosilsa — bekor qilinadi, callback CHAQIRILMAYDI.       */
+    ask: function (o, onOk) {
+      if (typeof o === 'string') o = { text: o };
+      o = o || {};
+      var ov = $('#askOverlay');
+      if (!ov) { if (onOk) onOk(o.value || true); return; }   /* oyna yo'q bo'lsa to'xtatmaymiz */
+      var isPrompt = o.prompt === true;
+      var okTxt = o.ok || tr(isPrompt ? 'askSave' : 'askOk');
+      var prev = document.activeElement;
+
+      ov.innerHTML = '<div class="modal ask" role="alertdialog" aria-modal="true">' +
+        (o.title ? '<div class="modal-head"><h3>' + esc(o.title) + '</h3></div>' : '') +
+        '<p class="ask-text">' + esc(o.text || '') + '</p>' +
+        (isPrompt
+          ? '<div class="field"><input class="input" id="askInput" value="' + esc(o.value == null ? '' : String(o.value)) + '"' +
+            (o.placeholder ? ' placeholder="' + esc(o.placeholder) + '"' : '') +
+            (o.match ? ' autocomplete="off" spellcheck="false"' : '') + '></div>'
+          : '') +
+        '<div class="modal-foot ask-foot">' +
+          '<button class="btn" data-askno>' + esc(o.cancel || tr('askCancel')) + '</button>' +
+          '<button class="btn primary' + (o.danger ? ' danger' : '') + '" data-askyes>' + esc(okTxt) + '</button>' +
+        '</div></div>';
+      ov.classList.add('show');
+
+      var inp = ov.querySelector('#askInput');
+      var yes = ov.querySelector('[data-askyes]');
+      /* `match` berilgan bo'lsa: aynan o'sha so'z yozilmaguncha tasdiq o'chiq */
+      function sync() {
+        if (!o.match) return;
+        var v = (inp.value || '').trim().toUpperCase();
+        yes.disabled = v !== String(o.match).toUpperCase();
+      }
+      function close() {
+        ov.classList.remove('show');
+        ov.innerHTML = '';
+        document.removeEventListener('keydown', onKey, true);
+        if (prev && prev.focus) { try { prev.focus(); } catch (e) {} }
+      }
+      function onKey(e) {
+        if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(); }
+        else if (e.key === 'Enter' && !yes.disabled && (!isPrompt || e.target === inp)) {
+          e.preventDefault(); e.stopPropagation(); done();
+        }
+      }
+      function done() {
+        var v = isPrompt ? (inp ? inp.value : '') : true;
+        close();
+        if (onOk) onOk(v);
+      }
+      document.addEventListener('keydown', onKey, true);
+      yes.addEventListener('click', function () { if (!yes.disabled) done(); });
+      ov.querySelector('[data-askno]').addEventListener('click', close);
+      ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+      if (inp) inp.addEventListener('input', sync);
+      sync();
+      if (inp) { inp.focus(); inp.select(); } else { yes.focus(); }
+    },
+    /* Tasdiq: faqat "ha" bosilganda callback ishlaydi */
+    confirm: function (o, onYes) { App.ask(o, function () { if (onYes) onYes(); }); },
+    /* Matn so'rash: bekor qilinsa callback CHAQIRILMAYDI (prompt() null qaytargani kabi) */
+    prompt: function (o, onValue) {
+      if (typeof o === 'string') o = { text: o };
+      o = o || {}; o.prompt = true;
+      App.ask(o, function (v) { if (onValue) onValue(v); });
     },
     /* Tepadagi tugma: qorong'i ↔ yorug' (oxirgi tanlangan variantni eslaydi) */
     toggleTheme: function () {
@@ -636,10 +720,17 @@
           (item[3] ? '<span class="badge' + (item[4] ? ' hot' : '') + '">' + esc(item[3]) + '</span>' : '') +
           '</button>';
       });
-      /* Yig'ilgan guruh: sarlavha + (agar faol sahifa shu guruhda bo'lsa) faqat o'sha element */
+      /* Yig'ilgan guruh: sarlavha + (agar faol sahifa shu guruhda bo'lsa) faqat o'sha element.
+         Guruh butunlay yopiq bo'lsa (faol sahifa ichida yo'q) ichidagi bo'limlar
+         soni ko'rsatiladi — aks holda foydalanuvchi ularni YO'Q deb o'ylaydi va
+         sarlavhani bosish kerakligini bilmaydi. */
+      var hidden = isCol && !anyOn ? g[2].length : 0;
       html += '<div class="nav-group' + (isCol ? ' collapsed' : '') + (anyOn ? ' has-on' : '') + '">' +
-        '<button class="nav-label" data-navgroup="' + g[0] + '" aria-expanded="' + !isCol + '">' +
-          '<span>' + esc(g[1]) + '</span>' + IC.chevron + '</button>' +
+        '<button class="nav-label" data-navgroup="' + g[0] + '" aria-expanded="' + !isCol + '"' +
+          ' title="' + esc(tr(isCol ? 'navExpand' : 'navCollapse')) + '">' +
+          '<span>' + esc(g[1]) + '</span>' +
+          (hidden ? '<span class="nav-count" aria-hidden="true">' + hidden + '</span>' : '') +
+          IC.chevron + '</button>' +
         '<div class="nav-items">' + items + '</div></div>';
     });
     $('#navGroups').innerHTML = html;

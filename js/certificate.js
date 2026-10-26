@@ -31,6 +31,25 @@
      Joylashuv (900×620 viewBox): imzo x≈140, muhr markazi (770,515) r=48.
      Ikkalasi ham o'rtadagi ball/sana bloklariga (x 250–650) tegmaydi.     */
   var SIG_FONT = "Caveat, 'Segoe Script', 'Brush Script MT', cursive";
+  /* Asoschining imzosi — shaffof PNG (img/sign-akbar.png).
+     Ekranda shu manzil ishlaydi; PNG'ga yuklashda esa <img> orqali
+     chizilayotgan SVG tashqi fayllarni KO'RMAYDI, shuning uchun
+     rasterizatsiyadan oldin base64 data URI bilan almashtiriladi
+     (shrift bilan bir xil yo'l).                                     */
+  var SIG_SRC = 'img/sign-akbar.png';
+  var sigDataCache = null;
+  function signatureData() {
+    if (sigDataCache !== null) return Promise.resolve(sigDataCache);
+    return fetch(SIG_SRC)
+      .then(function (r) { return r.ok ? r.arrayBuffer() : Promise.reject(); })
+      .then(function (buf) {
+        var b = new Uint8Array(buf), bin = '';
+        for (var i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+        sigDataCache = 'data:image/png;base64,' + btoa(bin);
+        return sigDataCache;
+      })
+      .catch(function () { sigDataCache = ''; return ''; });   /* topilmasa imzosiz chiqadi */
+  }
 
   /* UzLeeder RASMIY MUHRI — "UzLeeder Official Design v2026.09", 07-bo'lim
      (emblem-stamp): disksiz emblema, bir siyoh rangida (Qizil · yorug'),
@@ -80,12 +99,14 @@
   function sealSig(color, soft, uz, ink) {
     var founder = uz ? 'ASOSCHI · UZLEEDER ACADEMY' : 'FOUNDER · UZLEEDER ACADEMY';
     return (
-      /* --- imzo (chap) --- */
+      /* --- imzo (chap): asoschining haqiqiy qo'lyozma imzosi --------
+         Shrift bilan yozilgan "Max" o'rniga skanerlangan kalligrafiya
+         (shaffof PNG). Rang sertifikat brendiga bo'yalmaydi — imzo
+         qora siyohda qoladi, hujjatda shunday bo'lishi kerak.         */
       '<g font-family="Arial">' +
-        '<text x="140" y="536" text-anchor="middle" font-family="' + SIG_FONT + '" font-size="44" font-weight="700" fill="' + color + '" ' +
-          'transform="rotate(-4 140 536)">Max</text>' +
-        '<path d="M70 548 Q140 542 210 548" fill="none" stroke="' + color + '" stroke-width="1.3" opacity=".8"/>' +
-        '<text x="140" y="566" text-anchor="middle" font-size="7.5" font-weight="bold" letter-spacing="1.6" fill="' + soft + '">' + founder + '</text>' +
+        '<image href="' + SIG_SRC + '" xlink:href="' + SIG_SRC + '" ' +
+          'x="55" y="452" width="170" height="110" preserveAspectRatio="xMidYMid meet"/>' +
+        '<text x="140" y="572" text-anchor="middle" font-size="7.5" font-weight="bold" letter-spacing="1.6" fill="' + soft + '">' + founder + '</text>' +
       '</g>' +
       /* --- rasmiy muhr (o'ng, imzo yonida) --- */
       uzStamp(770, 512, 108, color, ink || '#1c2233')
@@ -152,7 +173,7 @@
        matn, Paper fon.                                                       */
     var C = { brand: '#e01e37', brand2: '#e5243b', gold: '#c9a227', ink: '#1c2233', soft: '#5e6b7d', line: '#e4e6eb' };
 
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="Georgia, serif">' +
+    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 620" font-family="Georgia, serif">' +
       '<defs>' +
         '<linearGradient id="certBg" x1="0" y1="0" x2="1" y2="1">' +
           '<stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f6f7f9"/></linearGradient>' +
@@ -242,7 +263,7 @@
       });
     }
 
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="Georgia, serif">' +
+    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 620" font-family="Georgia, serif">' +
       '<defs>' +
         '<linearGradient id="ieBg" x1="0" y1="0" x2="1" y2="1">' +
           '<stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f6f7f9"/></linearGradient>' +
@@ -341,7 +362,7 @@
       note: uz ? 'Namoz, ingliz tili, coding, kitob, uyqu — hammasi rejadagidek.' : 'Prayer, English, coding, reading, sleep — all as planned.'
     };
     var C = { deep: '#e01e37', mid: '#e5243b', gold: '#c9a227', ink: '#1c2233', soft: '#5e6b7d', line: '#e4e6eb' };   /* hujjat = Bold Red */
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="Georgia, serif">' +
+    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 620" font-family="Georgia, serif">' +
       '<defs><linearGradient id="wkBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f6f7f9"/></linearGradient>' +
       '<linearGradient id="wkBrand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="' + C.deep + '"/><stop offset="1" stop-color="' + C.mid + '"/></linearGradient></defs>' +
       '<rect width="900" height="620" fill="url(#wkBg)"/>' +
@@ -388,7 +409,7 @@
     var dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     var C = Object.assign({ deep: '#e01e37', mid: '#e5243b', gold: '#c9a227', ink: '#1c2233', soft: '#5e6b7d', line: '#e4e6eb', bg1: '#ffffff', bg2: '#f6f7f9' }, o.color || {});
     var t = { cert: uz ? 'SERTIFIKAT' : 'CERTIFICATE', certifies: uz ? 'Ushbu sertifikat quyidagini tasdiqlaydi:' : 'This certifies that', completing: uz ? 'quyidagi dasturni muvaffaqiyatli tugatgani uchun' : 'for successfully completing', date: uz ? 'SANA' : 'DATE', score: uz ? 'YAKUNIY TEST' : 'FINAL TEST', note: uz ? 'Platforma sertifikati — rasmiy natija emas.' : 'A platform certificate — not an official result.' };
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="Georgia, serif">' +
+    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 620" font-family="Georgia, serif">' +
       '<defs><linearGradient id="gnBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + C.bg1 + '"/><stop offset="1" stop-color="' + C.bg2 + '"/></linearGradient>' +
       '<linearGradient id="gnBrand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="' + C.deep + '"/><stop offset="1" stop-color="' + C.mid + '"/></linearGradient></defs>' +
       '<rect width="900" height="620" fill="url(#gnBg)"/>' +
@@ -471,10 +492,13 @@
         return;
       }
       var file = active.file;
-      caveatFontFace().then(function (fontCss) {
-      // Imzo shrifti SVG ichida bo'lsin — <img> sahifadagi shriftni ko'rmaydi
+      Promise.all([caveatFontFace(), signatureData()]).then(function (res) {
+      var fontCss = res[0], sigData = res[1];
+      // Shrift ham, imzo tasviri ham SVG ICHIDA bo'lsin — <img> orqali
+      // chizilayotgan SVG sahifadagi shrift va fayllarni ko'rmaydi.
       var svg = active.build();
       if (fontCss) svg = svg.replace(/<svg([^>]*)>/, '<svg$1><style>' + fontCss + '</style>');
+      if (sigData) svg = svg.split(SIG_SRC).join(sigData);
       var blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
       var url = URL.createObjectURL(blob);
       var img = new Image();

@@ -180,12 +180,13 @@
     /* O'chirish */
     $$('[data-rddel]', wrap).forEach(function (b) {
       b.addEventListener('click', function () {
-        if (!confirm(tr('rdImgDelQ'))) return;
-        var slot = Number(b.dataset.rddel), rec = Store.rdimgGet(track, n, slot), key = rdimgKey(track, n, slot);
-        if (rec && rec.url && window.MediaCloud) MediaCloud.del(rec.url);
-        if (window.MediaDB) MediaDB.del('thumbs', key).catch(function () {});
-        if (rdimgUrlCache[key]) { URL.revokeObjectURL(rdimgUrlCache[key]); delete rdimgUrlCache[key]; }
-        Store.rdimgDel(track, n, slot); App.render();
+        App.confirm({ text: tr('rdImgDelQ'), danger: true }, function () {
+          var slot = Number(b.dataset.rddel), rec = Store.rdimgGet(track, n, slot), key = rdimgKey(track, n, slot);
+          if (rec && rec.url && window.MediaCloud) MediaCloud.del(rec.url);
+          if (window.MediaDB) MediaDB.del('thumbs', key).catch(function () {});
+          if (rdimgUrlCache[key]) { URL.revokeObjectURL(rdimgUrlCache[key]); delete rdimgUrlCache[key]; }
+          Store.rdimgDel(track, n, slot); App.render();
+        });
       });
     });
 

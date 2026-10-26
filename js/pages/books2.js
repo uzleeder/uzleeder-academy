@@ -554,8 +554,9 @@
     });
     $('#fePrint').addEventListener('click', function () { save(); window.print(); });
     $('#feDel').addEventListener('click', function () {
-      if (!confirm(tr('copyFreeDelQ'))) return;
-      Store.copyDel('free', id); location.hash = '#/copy/free';
+      App.confirm({ text: tr('copyFreeDelQ'), danger: true }, function () {
+        Store.copyDel('free', id); location.hash = '#/copy/free';
+      });
     });
     window.addEventListener('hashchange', function once() { clearTimeout(tm); save(); window.removeEventListener('hashchange', once); });
   };

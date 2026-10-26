@@ -350,11 +350,12 @@
     bindTypeSeg('me');
     $$('[data-mvdone]').forEach(function (b) { b.addEventListener('click', function () { var mm = Store.movieGet(id); mm.done = !mm.done; Store.movieSet(mm); App.render(); }); });
     $$('[data-mvdel]').forEach(function (b) { b.addEventListener('click', function () {
-      if (!confirm(tr('mvDelQ'))) return;
-      var mm = Store.movieGet(id);
-      if (mm && mm.cloud && mm.url) Cloud.del(mm.url);
-      if (mm && mm.thumbUrl) Cloud.del(mm.thumbUrl);
-      Store.movieDel(id); MediaDB.del('videos', id).catch(function () {}); MediaDB.del('thumbs', id).catch(function () {}); App.go('movies');
+      App.confirm({ text: tr('mvDelQ'), danger: true }, function () {
+        var mm = Store.movieGet(id);
+        if (mm && mm.cloud && mm.url) Cloud.del(mm.url);
+        if (mm && mm.thumbUrl) Cloud.del(mm.thumbUrl);
+        Store.movieDel(id); MediaDB.del('videos', id).catch(function () {}); MediaDB.del('thumbs', id).catch(function () {}); App.go('movies');
+      });
     }); });
     $$('[data-mvedit]').forEach(function (b) { b.addEventListener('click', function () { var e = $('#mvEdit'); e.hidden = !e.hidden; if (!e.hidden) $('#meTitle').focus(); }); });
     var th = null, tIn = $('#meThumb'); if (tIn) tIn.addEventListener('change', function () { th = tIn.files[0] || null; $('#meThumbName').textContent = th ? th.name : tr('mvThumbPick'); });

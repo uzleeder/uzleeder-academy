@@ -590,7 +590,7 @@
       });
       var cm = $('#wCmp'); if (cm) cm.addEventListener('change', function () { R.cmpA = Number(cm.value); App.render(); });
       $('#wExt').addEventListener('submit', function (e) { e.preventDefault(); if (!e.target.band.value) return; M().studio.external(id, e.target.band.value, e.target.note.value); toast(t('Saqlandi', 'Saved'), 'ok'); App.render(); });
-      $('#wDel').addEventListener('click', function () { if (confirm(t("Bu ishni o'chirasizmi? Xatolar bankidagi belgilar qoladi.", 'Delete this piece? Its marks in the error bank are kept.'))) { M().studio.del(id); App.go('mission/writing'); } });
+      $('#wDel').addEventListener('click', function () { App.confirm({ text: t("Bu ishni o'chirasizmi? Xatolar bankidagi belgilar qoladi.", 'Delete this piece? Its marks in the error bank are kept.'), danger: true }, function () { M().studio.del(id); App.go('mission/writing'); }); });
       if ((p.self || []).length) U.markTask('grammar');
     });
     return h + '</div>';
@@ -682,7 +682,7 @@
         if (!Object.keys(self).length) { toast(t('Kamida bitta mezonni baholang', 'Rate at least one criterion'), 'warn'); return; }
         M().speaking.assess(id, self, refl); toast(t('Saqlandi (o\'z bahosi)', 'Saved (self-assessment)'), 'ok'); App.render(); U.markTask('speaking');
       });
-      $('#spDel').addEventListener('click', function () { if (confirm(t("Sessiyani o'chirasizmi?", 'Delete this session?'))) { MissionMedia.del('spk:' + id); M().speaking.del(id); App.go('mission/speaking'); } });
+      $('#spDel').addEventListener('click', function () { App.confirm({ text: t("Sessiyani o'chirasizmi?", 'Delete this session?'), danger: true }, function () { MissionMedia.del('spk:' + id); M().speaking.del(id); App.go('mission/speaking'); }); });
       if (s.self) U.markTask('speaking');
     });
     return h + '</div>';
