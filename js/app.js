@@ -20,6 +20,7 @@
     habit:      { render: function () { return PageHabit(); },      nav: 'habit', mount: function () { PageHabit.mount(); } },
     course:     { render: function () { return PageCourses(); },    nav: 'course' },   // kurslar markazi: Coding | English
     python:     { render: function () { return PageCourse(); },     nav: 'course' },   // Python kursining o'zi
+    placement:  { render: function () { return PagePlacement(); },  nav: 'course', mount: function () { PagePlacement.mount(); } },   // "men buni bilaman" - daraja testi
     english:    { render: function () { return PageEnglish(); },    nav: 'course' },
     speaking:   { render: function () { return PageSpeaking(); },   nav: 'course', mount: function () { PageSpeaking.mount(); } },   // 30 kunlik fluency treki
     writing:    { render: function () { return PageWriting(); },    nav: 'course', mount: function () { PageWriting.mount(); } },
@@ -137,8 +138,13 @@
       return Store.isDone(day - 1);
     },
     firstOpenDay: function () {
+      /* Daraja testi bilan o'tkazib yuborilgan kunlar ham tashlab ketiladi:
+         ular "bajarilgan" emas, lekin keyingi dars ulardan keyin boshlanadi
+         (js/pages/placement.js).                                          */
+      var skip = window.Placement ? Placement.skipDays() : [];
       for (var i = 0; i < COURSE.length; i++) {
-        if (!Store.isDone(COURSE[i].day)) return COURSE[i].day;
+        var d = COURSE[i].day;
+        if (!Store.isDone(d) && skip.indexOf(d) < 0) return d;
       }
       return COURSE[COURSE.length - 1].day;
     },
