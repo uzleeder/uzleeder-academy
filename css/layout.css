@@ -415,7 +415,17 @@ body.is-offline .brand-text small::after { content: ' / OFFLINE'; color: var(--r
 /* --- Qurilmalar: telefon / planshet / desktop (iOS Safari, Android Chrome, Windows, macOS) --- */
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
-button, [role="button"], .nav-item, .opt, .hb-check, .td-check { touch-action: manipulation; }
+/* Bosiladigan elementlarda matn BELGILANMAYDI. Sabab: bosganda barmoq yoki
+   sichqoncha bir-ikki piksel surilsa, brauzer bosish o'rniga yozuvni ajratadi
+   va `click` umuman yuzaga kelmaydi — tugma "ishlamayapti" bo'lib tuyuladi.
+   Telefonda uzoq bosish ham matn tanlashga o'tib ketadi. Avval bu faqat yon
+   panelga qo'yilgan edi, lekin tuzoq tepadagi UZ/EN, mavzu va profil
+   tugmalarida ham bor edi.                                                  */
+button, [role="button"], .nav-item, .opt, .hb-check, .td-check {
+  touch-action: manipulation;
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
 @media (max-width: 768px) {
   input, select, textarea { font-size: max(16px, 1em); }   /* iOS: 16px dan kichik input fokusda sahifani kattalashtiradi */
 }
