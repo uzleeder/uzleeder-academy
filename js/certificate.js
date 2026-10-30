@@ -22,15 +22,14 @@
   var active = null;
 
   /* ====================== MUHR + ASOSCHI IMZOSI ==========================
-     Har sertifikatning pastki qismida: chapda asoschi imzosi ("Max",
-     Caveat qo'lyozma shrifti), o'ngda UzLeeder rasmiy muhri (aylana, halqa
-     bo'ylab matn, markazda logotip). Rang — sertifikatning o'z brend rangi,
-     shunda Python (terrakota), IELTS (ko'k-yashil), intizom (yashil)
-     sertifikatlarida muhr o'z ohangida chiqadi.
+     Har sertifikatning pastki qismida: chapda asoschining HAQIQIY imzosi
+     (img/sign-akbar.png, shaffof PNG), o'ngda UzLeeder rasmiy muhri.
+     Muhr har doim brend qizilida (#f0384e) — qo'llanma 07-bo'limi uni bir
+     siyoh rangida belgilaydi, shuning uchun sertifikat turiga qarab
+     bo'yalmaydi.
 
-     Joylashuv (900×620 viewBox): imzo x≈140, muhr markazi (770,515) r=48.
-     Ikkalasi ham o'rtadagi ball/sana bloklariga (x 250–650) tegmaydi.     */
-  var SIG_FONT = "Caveat, 'Segoe Script', 'Brush Script MT', cursive";
+     Joylashuv (900×620): imzo x 58–240 y 470–596, muhr markazi (786,516).
+     Ikkalasi ham ma'lumot qatoriga (y 392–448) tegmaydi.                 */
   /* Asoschining imzosi — shaffof PNG (img/sign-akbar.png).
      Ekranda shu manzil ishlaydi; PNG'ga yuklashda esa <img> orqali
      chizilayotgan SVG tashqi fayllarni KO'RMAYDI, shuning uchun
@@ -96,51 +95,107 @@
     );
   }
 
-  function sealSig(color, soft, uz, ink) {
-    var founder = uz ? 'ASOSCHI · UZLEEDER ACADEMY' : 'FOUNDER · UZLEEDER ACADEMY';
-    return (
-      /* --- imzo (chap): asoschining haqiqiy qo'lyozma imzosi --------
-         Shrift bilan yozilgan "Max" o'rniga skanerlangan kalligrafiya
-         (shaffof PNG). Rang sertifikat brendiga bo'yalmaydi — imzo
-         qora siyohda qoladi, hujjatda shunday bo'lishi kerak.         */
-      '<g font-family="Arial">' +
-        '<image href="' + SIG_SRC + '" xlink:href="' + SIG_SRC + '" ' +
-          'x="55" y="452" width="170" height="110" preserveAspectRatio="xMidYMid meet"/>' +
-        '<text x="140" y="572" text-anchor="middle" font-size="7.5" font-weight="bold" letter-spacing="1.6" fill="' + soft + '">' + founder + '</text>' +
-      '</g>' +
-      /* --- rasmiy muhr (o'ng, imzo yonida) --- */
-      uzStamp(770, 512, 108, color, ink || '#1c2233')
-    );
-  }
 
-  /* PNG'ga yuklashda imzo shrifti SVG ichida bo'lishi shart: <img> orqali
-     chizilayotgan SVG sahifadagi shriftlarni ko'rmaydi. Shuning uchun Caveat
-     woff2 faylini bir marta olib, base64 @font-face sifatida joylaymiz.
-     Internet bo'lmasa — jimgina zaxira shriftga tushadi (Georgia italic).   */
-  var fontFaceCache = null;
-  function caveatFontFace() {
-    if (fontFaceCache !== null) return Promise.resolve(fontFaceCache);
-    return fetch('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap')
-      .then(function (r) { return r.text(); })
-      .then(function (css) {
-        // Google bir necha @font-face beradi (cyrillic, latin-ext, latin) — latin kerak
-        var blocks = css.split('@font-face').filter(function (b) { return /\/\* latin \*\//.test(b); });
-        var m = /url\((https:[^)]+)\)/.exec(blocks[0] || css);
-        if (!m) throw new Error('no url');
-        return fetch(m[1]).then(function (r) { return r.arrayBuffer(); });
-      })
-      .then(function (buf) {
-        var bytes = new Uint8Array(buf), bin = '';
-        for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
-        fontFaceCache = "@font-face{font-family:'Caveat';font-weight:700;src:url(data:font/woff2;base64," +
-          btoa(bin) + ") format('woff2')}";
-        return fontFaceCache;
-      })
-      .catch(function () { fontFaceCache = ''; return ''; });
-  }
 
   function weekComplete(unit) {
     return unit.days.every(function (d) { return Store.isDone(d.day); });
+  }
+
+  /* ====================== HUJJAT MAKETI (umumiy) ======================
+     To'rtala sertifikat (hafta bloki, IELTS, intizom haftasi, umumiy) bir
+     maketdan chiziladi — avval har biri o'z nusxasini chizar edi va ular
+     asta-sekin bir-biridan uzoqlashib ketgandi.
+
+     Maket: chapga tekislangan tahririy kompozitsiya. Qalin ikki ramka
+     o'rniga chap qirrada brend ustuni va ichkarida soch tolasidek chiziqlar;
+     ism — sahifaning tayanchi; pastda uchta-to'rtta ma'lumot katagi.
+
+     BREND AKTIVLARI ASL HOLIDA:
+       belgi  — brand/logo-mark.svg (navy plita + qizil o'sish chizig'i)
+       muhr   — uzStamp(), "Official Design v2026.09" 07-bo'lim
+       ranglar — aksent #f0384e, Ink Navy #1c2233 (brand/brand.css)      */
+  var BRAND = { red: '#f0384e', red2: '#ff5468', ink: '#1c2233', soft: '#8A8F98',
+                faint: '#B6BAC1', line: '#E2E3E0', body: '#6B7079' };
+  var DOC_FONT = "Outfit, Manrope, 'Segoe UI', system-ui, sans-serif";
+  var MONO_FONT = "'Cascadia Mono', Consolas, ui-monospace, monospace";
+
+  /* Rasmiy belgi — brand/logo-mark.svg dagi yo'l aynan, 256 tarmoqdan
+     kerakli o'lchamga keltiriladi. Belgi qayta chizilmaydi.            */
+  function markLogo(x, y, size) {
+    var k = (size / 256).toFixed(5);
+    return '<g transform="translate(' + x + ',' + y + ') scale(' + k + ')">' +
+        '<rect width="256" height="256" rx="64" fill="url(#clMark)"/>' +
+        '<rect x="1" y="1" width="254" height="254" rx="63" fill="none" stroke="#ffffff" stroke-opacity=".25" stroke-width="2"/>' +
+        '<g transform="translate(48 48) scale(6.6667)" fill="none" stroke="' + BRAND.red + '" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M4 18 L9 8 L13 14 L20 5"/>' +
+          '<circle cx="20" cy="5" r="2.3" fill="' + BRAND.red + '" stroke="none"/>' +
+        '</g></g>';
+  }
+
+  /* o = { kicker, id, name, lead, course, sub, rows[], note }
+     rows — 2..4 ta katak: { l: yorliq, v: qiymat, s: kichik qo'shimcha } */
+  function sheet(o) {
+    var rows = o.rows || [], n = rows.length;
+    var step = n ? Math.floor(772 / n) : 0;
+    var vSize = n >= 5 ? 19 : n >= 4 ? 21 : 25;
+    var lSize = n >= 5 ? 8.2 : n >= 4 ? 9 : 9.5;
+    var cells = '';
+    rows.forEach(function (r, i) {
+      var x = 64 + i * step;
+      if (i) cells += '<rect x="' + (x - 32) + '" y="402" width="1" height="46" fill="' + BRAND.line + '"/>';
+      cells += '<text x="' + x + '" y="416" font-size="' + lSize + '" font-weight="700" letter-spacing="2.2" fill="#A2A7AE">' + esc(r.l) + '</text>' +
+        '<text x="' + x + '" y="444" font-size="' + vSize + '" font-weight="800" letter-spacing="-0.4" fill="' + BRAND.ink + '">' + esc(r.v) +
+          (r.s ? '<tspan font-size="14" font-weight="600" fill="#A2A7AE"> ' + esc(r.s) + '</tspan>' : '') + '</text>';
+    });
+
+    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 620" font-family="' + DOC_FONT + '">' +
+      '<defs>' +
+        '<linearGradient id="clSpine" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="' + BRAND.red2 + '"/><stop offset="0.5" stop-color="' + BRAND.red + '"/><stop offset="1" stop-color="' + BRAND.ink + '"/></linearGradient>' +
+        '<linearGradient id="clPaper" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0" stop-color="#FCFCFA"/><stop offset="1" stop-color="#F2F3F1"/></linearGradient>' +
+        '<linearGradient id="clMark" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0" stop-color="#1c2233"/><stop offset="1" stop-color="#141a29"/></linearGradient>' +
+        '<clipPath id="clSheet"><rect x="0" y="0" width="900" height="620"/></clipPath>' +
+      '</defs>' +
+      '<g clip-path="url(#clSheet)">' +
+        '<rect width="900" height="620" fill="url(#clPaper)"/>' +
+        /* qog'oz hissi — deyarli ko'rinmas diagonal to'r */
+        '<g stroke="' + BRAND.ink + '" stroke-width="0.4" opacity="0.03">' +
+          '<path d="M-120 720 L680 -80"/><path d="M-50 720 L750 -80"/><path d="M20 720 L820 -80"/>' +
+          '<path d="M90 720 L890 -80"/><path d="M160 720 L960 -80"/><path d="M230 720 L1030 -80"/>' +
+          '<path d="M300 720 L1100 -80"/></g>' +
+        '<rect x="0" y="0" width="10" height="620" fill="url(#clSpine)"/>' +
+
+        markLogo(64, 50, 38) +
+        '<text x="114" y="68" font-size="13" font-weight="800" letter-spacing="2.4" fill="' + BRAND.ink + '">UzLeeder</text>' +
+        '<text x="114" y="82" font-size="8.6" font-weight="700" letter-spacing="3.4" fill="' + BRAND.soft + '">ACADEMY</text>' +
+
+        '<text x="836" y="64" text-anchor="end" font-size="10" font-weight="700" letter-spacing="3.6" fill="' + BRAND.soft + '">' + esc(o.cert || 'SERTIFIKAT') + '</text>' +
+        (o.id ? '<text x="836" y="82" text-anchor="end" font-size="9.5" font-weight="600" letter-spacing="1.3" fill="' + BRAND.faint + '" font-family="' + MONO_FONT + '">' + esc(o.id) + '</text>' : '') +
+
+        '<rect x="64" y="110" width="772" height="1" fill="' + BRAND.line + '"/>' +
+
+        '<text x="64" y="164" font-size="10.5" font-weight="700" letter-spacing="2.8" fill="' + BRAND.soft + '">' + esc(o.kicker) + '</text>' +
+        '<text x="64" y="232" font-size="' + (String(o.name).length > 18 ? 46 : 62) + '" font-weight="800" letter-spacing="-1.8" fill="' + BRAND.ink + '">' + esc(o.name) + '</text>' +
+        '<rect x="64" y="258" width="58" height="3" rx="1.5" fill="' + BRAND.red + '"/>' +
+        '<text x="64" y="302" font-size="12" font-weight="600" fill="' + BRAND.body + '">' + esc(o.lead) + '</text>' +
+        '<text x="64" y="342" font-size="' + (String(o.course).length > 34 ? 24 : 30) + '" font-weight="700" letter-spacing="-0.4" fill="' + BRAND.ink + '">' + esc(o.course) + '</text>' +
+        (o.sub ? '<text x="64" y="368" font-size="12.5" font-weight="500" fill="' + BRAND.soft + '">' + esc(o.sub) + '</text>' : '') +
+
+        (n ? '<rect x="64" y="392" width="772" height="1" fill="' + BRAND.line + '"/>' + cells : '') +
+
+        /* imzo — quti nisbati imzo nisbatiga yaqin (600×416), aks holda
+           preserveAspectRatio="meet" imzoni kichraytirib yuboradi */
+        '<image href="' + SIG_SRC + '" xlink:href="' + SIG_SRC + '" x="58" y="470" width="182" height="126" preserveAspectRatio="xMinYMid meet"/>' +
+        '<text x="64" y="606" font-size="8.5" font-weight="700" letter-spacing="1.8" fill="' + BRAND.soft + '">' +
+          esc(o.founder || 'ASOSCHI · UZLEEDER ACADEMY') + '</text>' +
+
+        /* rasmiy muhr — qo'llanmadagi geometriya, doim brend qizilida */
+        uzStamp(786, 516, 104, BRAND.red, BRAND.ink) +
+
+        '<text x="836" y="606" text-anchor="end" font-size="8.6" font-weight="500" fill="' + BRAND.faint + '">' + esc(o.note) + '</text>' +
+      '</g></svg>';
   }
 
   function buildSVG(unit) {
@@ -173,48 +228,17 @@
        matn, Paper fon.                                                       */
     var C = { brand: '#e01e37', brand2: '#e5243b', gold: '#c9a227', ink: '#1c2233', soft: '#5e6b7d', line: '#e4e6eb' };
 
-    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 620" font-family="Georgia, serif">' +
-      '<defs>' +
-        '<linearGradient id="certBg" x1="0" y1="0" x2="1" y2="1">' +
-          '<stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f6f7f9"/></linearGradient>' +
-        '<linearGradient id="certBrand" x1="0" y1="0" x2="1" y2="0">' +
-          '<stop offset="0" stop-color="' + C.brand + '"/><stop offset="1" stop-color="' + C.brand2 + '"/></linearGradient>' +
-      '</defs>' +
-      '<rect width="900" height="620" fill="url(#certBg)"/>' +
-      '<rect x="24" y="24" width="852" height="572" rx="14" fill="none" stroke="' + C.brand + '" stroke-width="2.5"/>' +
-      '<rect x="34" y="34" width="832" height="552" rx="10" fill="none" stroke="' + C.line + '" stroke-width="1.5"/>' +
-      // burchak bezaklari
-      '<path d="M24 60 L24 38 L46 38" fill="none" stroke="' + C.brand2 + '" stroke-width="4"/>' +
-      '<path d="M876 60 L876 38 L854 38" fill="none" stroke="' + C.brand2 + '" stroke-width="4"/>' +
-      '<path d="M24 560 L24 582 L46 582" fill="none" stroke="' + C.brand2 + '" stroke-width="4"/>' +
-      '<path d="M876 560 L876 582 L854 582" fill="none" stroke="' + C.brand2 + '" stroke-width="4"/>' +
-      // logotip
-      '<g transform="translate(450,92)">' +
-        /* Brend "app icon": yumaloq Ink Navy plita + akademiya belgisi qizilda */
-        '<rect x="-26" y="-26" width="52" height="52" rx="12" fill="' + C.ink + '"/>' +
-        '<path d="M-13 12 L-4 -6 L3 5 L14 -12" fill="none" stroke="' + C.brand2 + '" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>' +
-        '<circle cx="14" cy="-12" r="3.6" fill="' + C.brand2 + '"/></g>' +
-      '<text x="450" y="150" text-anchor="middle" font-size="15" letter-spacing="4" fill="' + C.soft + '" font-family="Arial">' +
-        'UZLEEDER · ' + esc(t.path.toUpperCase()) + '</text>' +
-      '<text x="450" y="205" text-anchor="middle" font-size="46" font-weight="bold" letter-spacing="8" fill="' + C.ink + '">' + t.cert + '</text>' +
-      '<rect x="380" y="222" width="140" height="3" rx="1.5" fill="url(#certBrand)"/>' +
-      '<text x="450" y="270" text-anchor="middle" font-size="16" fill="' + C.soft + '" font-family="Arial">' + esc(t.certifies) + '</text>' +
-      '<text x="450" y="312" text-anchor="middle" font-size="34" font-weight="bold" fill="' + C.brand + '">' + esc(name) + '</text>' +
-      '<text x="450" y="348" text-anchor="middle" font-size="16" fill="' + C.soft + '" font-family="Arial">' + esc(t.completing) + '</text>' +
-      '<text x="450" y="392" text-anchor="middle" font-size="26" font-weight="bold" fill="' + C.ink + '">' +
-        esc(parts.wk) + ' — ' + esc(parts.name) + '</text>' +
-      '<text x="450" y="428" text-anchor="middle" font-size="13" fill="' + C.soft + '" font-family="Arial">' +
-        esc(t.topics) + ' ' + esc(topics) + '</text>' +
-      '<g font-family="Arial">' +
-        '<text x="300" y="498" text-anchor="middle" font-size="12" letter-spacing="1" fill="' + C.soft + '">' + esc(t.avg) + '</text>' +
-        '<text x="300" y="524" text-anchor="middle" font-size="24" font-weight="bold" fill="' + C.gold + '">' + avg + ' / 10</text>' +
-        '<text x="600" y="498" text-anchor="middle" font-size="12" letter-spacing="1" fill="' + C.soft + '">' + esc(t.date) + '</text>' +
-        '<text x="600" y="524" text-anchor="middle" font-size="20" font-weight="bold" fill="' + C.ink + '">' + esc(dateStr) + '</text></g>' +
-      '<rect x="250" y="552" width="400" height="1.5" fill="' + C.line + '"/>' +
-      '<text x="450" y="576" text-anchor="middle" font-size="13" font-style="italic" fill="' + C.soft + '" font-family="Georgia">' +
-        'UzLeeder Academy — ' + esc(t.path) + '</text>' +
-      sealSig(C.brand, C.soft, uz, C.ink) +
-      '</svg>';
+    return sheet({
+      cert: t.cert, kicker: t.certifies, name: name,
+      lead: t.completing, course: parts.wk + ' — ' + L(unit.name).replace(parts.wk, '').replace(/^[\s—·-]+/, ''),
+      sub: topics ? t.topics + ' ' + topics : t.path,
+      rows: [
+        { l: t.avg, v: avg, s: '/ 10' },
+        { l: t.date, v: dateStr }
+      ],
+      note: uz ? 'Platforma sertifikati — rasmiy imtihon natijasi emas.'
+               : 'A platform certificate — not an official result.'
+    });
   }
 
   /* ====================== IELTS SERTIFIKATI ============================
@@ -263,54 +287,24 @@
       });
     }
 
-    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 620" font-family="Georgia, serif">' +
-      '<defs>' +
-        '<linearGradient id="ieBg" x1="0" y1="0" x2="1" y2="1">' +
-          '<stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f6f7f9"/></linearGradient>' +
-        '<linearGradient id="ieBrand" x1="0" y1="0" x2="1" y2="0">' +
-          '<stop offset="0" stop-color="' + C.deep + '"/><stop offset="1" stop-color="' + C.mid + '"/></linearGradient>' +
-      '</defs>' +
-      '<rect width="900" height="620" fill="url(#ieBg)"/>' +
-      '<rect x="24" y="24" width="852" height="572" rx="14" fill="none" stroke="' + C.deep + '" stroke-width="2.5"/>' +
-      '<rect x="34" y="34" width="832" height="552" rx="10" fill="none" stroke="' + C.line + '" stroke-width="1.5"/>' +
-      '<path d="M24 60 L24 38 L46 38" fill="none" stroke="' + C.mid + '" stroke-width="4"/>' +
-      '<path d="M876 60 L876 38 L854 38" fill="none" stroke="' + C.mid + '" stroke-width="4"/>' +
-      '<path d="M24 560 L24 582 L46 582" fill="none" stroke="' + C.mid + '" stroke-width="4"/>' +
-      '<path d="M876 560 L876 582 L854 582" fill="none" stroke="' + C.mid + '" stroke-width="4"/>' +
-      // logotip — globus
-      '<g transform="translate(450,88)">' +
-        '<rect x="-26" y="-26" width="52" height="52" rx="14" fill="url(#ieBrand)"/>' +
-        '<circle cx="0" cy="0" r="13" fill="none" stroke="#fbfefe" stroke-width="2.4"/>' +
-        '<path d="M-13 0h26M0 -13a19 19 0 0 1 0 26M0 -13a19 19 0 0 0 0 26" fill="none" stroke="#fbfefe" stroke-width="2.4"/></g>' +
-      '<text x="450" y="144" text-anchor="middle" font-size="15" letter-spacing="4" fill="' + C.soft + '" font-family="Arial">' +
-        'UZLEEDER · ENGLISH TRACK</text>' +
-      '<text x="450" y="199" text-anchor="middle" font-size="46" font-weight="bold" letter-spacing="8" fill="' + C.ink + '">' + t.cert + '</text>' +
-      '<rect x="380" y="216" width="140" height="3" rx="1.5" fill="url(#ieBrand)"/>' +
-      '<text x="450" y="262" text-anchor="middle" font-size="16" fill="' + C.soft + '" font-family="Arial">' + esc(t.certifies) + '</text>' +
-      '<text x="450" y="304" text-anchor="middle" font-size="34" font-weight="bold" fill="' + C.deep + '">' + esc(name) + '</text>' +
-      '<text x="450" y="340" text-anchor="middle" font-size="16" fill="' + C.soft + '" font-family="Arial">' + esc(t.completing) + '</text>' +
-      '<text x="450" y="382" text-anchor="middle" font-size="26" font-weight="bold" fill="' + C.ink + '">' + esc(t.course) + '</text>' +
-      '<g font-family="Arial">' +
-        '<text x="450" y="416" text-anchor="middle" font-size="13" fill="' + C.soft + '">' +
-          esc(t.period) + ': ' + esc(EngCal.fmt(m.start)) + ' – ' + esc(EngCal.fmt(m.bufferTo)) +
-          '   ·   ' + esc(t.exam) + ': ' + esc(EngCal.fmt(m.exam)) + '</text>' +
-        bands +
-      '</g>' +
-      // Pastki blok ramka ichida qolishi kerak: tashqi ramka y=596 da tugaydi
-      (overall !== null
-        ? '<g font-family="Arial">' +
-            '<text x="450" y="530" text-anchor="middle" font-size="12" letter-spacing="1.4" fill="' + C.soft + '">' + esc(t.overall) + '</text>' +
-            '<text x="450" y="556" text-anchor="middle" font-size="26" font-weight="bold" fill="' + C.gold + '">' + overall.toFixed(1) + ' / 9.0</text>' +
-          '</g>'
-        : '<g font-family="Arial">' +
-            '<text x="450" y="530" text-anchor="middle" font-size="12" letter-spacing="1.4" fill="' + C.soft + '">' + esc(t.date) + '</text>' +
-            '<text x="450" y="556" text-anchor="middle" font-size="22" font-weight="bold" fill="' + C.deep + '">' + esc(dateStr) + '</text>' +
-          '</g>') +
-      '<rect x="250" y="566" width="400" height="1.5" fill="' + C.line + '"/>' +
-      '<text x="450" y="584" text-anchor="middle" font-size="11.5" font-style="italic" fill="' + C.soft + '" font-family="Georgia">' +
-        esc(t.note) + '</text>' +
-      sealSig(C.deep, C.soft, uz, C.ink) +
-      '</svg>';
+    var bandRows = [];
+    if (last) {
+      bandRows = [
+        { l: t.overall, v: overall == null ? '—' : overall.toFixed(1) },
+        { l: 'LISTENING', v: typeof last.l === 'number' ? last.l.toFixed(1) : '—' },
+        { l: 'READING', v: typeof last.r === 'number' ? last.r.toFixed(1) : '—' },
+        { l: 'WRITING', v: typeof last.w === 'number' ? last.w.toFixed(1) : '—' },
+        { l: 'SPEAKING', v: typeof last.s === 'number' ? last.s.toFixed(1) : '—' }
+      ];
+    } else {
+      bandRows = [{ l: t.date, v: dateStr }];
+    }
+    return sheet({
+      cert: t.cert, kicker: t.certifies, name: name,
+      lead: t.completing, course: t.course,
+      sub: t.period + ': ' + EngCal.fmt(m.start) + ' – ' + EngCal.fmt(m.bufferTo) + ' · ' + t.date + ': ' + dateStr,
+      rows: bandRows, note: t.note
+    });
   }
 
   /* ====================== HAFTALIK INTIZOM SERTIFIKATI ===================
@@ -362,33 +356,16 @@
       note: uz ? 'Namoz, ingliz tili, coding, kitob, uyqu — hammasi rejadagidek.' : 'Prayer, English, coding, reading, sleep — all as planned.'
     };
     var C = { deep: '#e01e37', mid: '#e5243b', gold: '#c9a227', ink: '#1c2233', soft: '#5e6b7d', line: '#e4e6eb' };   /* hujjat = Bold Red */
-    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 620" font-family="Georgia, serif">' +
-      '<defs><linearGradient id="wkBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f6f7f9"/></linearGradient>' +
-      '<linearGradient id="wkBrand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="' + C.deep + '"/><stop offset="1" stop-color="' + C.mid + '"/></linearGradient></defs>' +
-      '<rect width="900" height="620" fill="url(#wkBg)"/>' +
-      '<rect x="24" y="24" width="852" height="572" rx="14" fill="none" stroke="' + C.deep + '" stroke-width="2.5"/>' +
-      '<rect x="34" y="34" width="832" height="552" rx="10" fill="none" stroke="' + C.line + '" stroke-width="1.5"/>' +
-      '<path d="M24 60 L24 38 L46 38" fill="none" stroke="' + C.mid + '" stroke-width="4"/><path d="M876 60 L876 38 L854 38" fill="none" stroke="' + C.mid + '" stroke-width="4"/>' +
-      '<path d="M24 560 L24 582 L46 582" fill="none" stroke="' + C.mid + '" stroke-width="4"/><path d="M876 560 L876 582 L854 582" fill="none" stroke="' + C.mid + '" stroke-width="4"/>' +
-      // logotip — olov (streak)
-      '<g transform="translate(450,88)"><rect x="-26" y="-26" width="52" height="52" rx="14" fill="url(#wkBrand)"/>' +
-      '<path d="M0 -14c6 7 10 12 10 18a10 10 0 0 1-20 0c0-3 1-5 3-8 0 4 2 6 4 6 0-6-1-10 3-16z" fill="#fbfefb"/></g>' +
-      '<text x="450" y="144" text-anchor="middle" font-size="15" letter-spacing="4" fill="' + C.soft + '" font-family="Arial">' + esc(t.kicker) + '</text>' +
-      '<text x="450" y="199" text-anchor="middle" font-size="46" font-weight="bold" letter-spacing="8" fill="' + C.ink + '">' + t.cert + '</text>' +
-      '<rect x="380" y="216" width="140" height="3" rx="1.5" fill="url(#wkBrand)"/>' +
-      '<text x="450" y="262" text-anchor="middle" font-size="16" fill="' + C.soft + '" font-family="Arial">' + esc(t.certifies) + '</text>' +
-      '<text x="450" y="304" text-anchor="middle" font-size="34" font-weight="bold" fill="' + C.deep + '">' + esc(name) + '</text>' +
-      '<text x="450" y="340" text-anchor="middle" font-size="16" fill="' + C.soft + '" font-family="Arial">' + esc(t.completing) + '</text>' +
-      '<text x="450" y="382" text-anchor="middle" font-size="26" font-weight="bold" fill="' + C.ink + '">' + esc(t.what) + '</text>' +
-      '<g font-family="Arial">' +
-        '<text x="300" y="470" text-anchor="middle" font-size="12" letter-spacing="1" fill="' + C.soft + '">' + esc(t.period) + '</text>' +
-        '<text x="300" y="498" text-anchor="middle" font-size="20" font-weight="bold" fill="' + C.ink + '">' + esc(EngCal.fmt(w.mon) + ' – ' + EngCal.fmt(w.sun)) + '</text>' +
-        '<text x="600" y="470" text-anchor="middle" font-size="12" letter-spacing="1" fill="' + C.soft + '">' + esc(t.no) + '</text>' +
-        '<text x="600" y="498" text-anchor="middle" font-size="26" font-weight="bold" fill="' + C.gold + '">' + n + '</text></g>' +
-      '<rect x="250" y="552" width="400" height="1.5" fill="' + C.line + '"/>' +
-      '<text x="450" y="576" text-anchor="middle" font-size="13" font-style="italic" fill="' + C.soft + '" font-family="Georgia">' + esc(t.note) + '</text>' +
-      sealSig(C.deep, C.soft, uz, C.ink) +
-      '</svg>';
+    return sheet({
+      cert: t.cert, kicker: t.kicker, name: name,
+      lead: t.completing, course: t.what, sub: t.note,
+      rows: [
+        { l: t.period, v: EngCal.fmt(w.mon) + ' – ' + EngCal.fmt(w.sun) },
+        { l: t.no, v: String(n) }
+      ],
+      note: uz ? 'Platforma sertifikati — rasmiy imtihon natijasi emas.'
+               : 'A platform certificate — not an official result.'
+    });
   }
 
   /* Oynani ochish (ikkala tur uchun umumiy) */
@@ -409,32 +386,14 @@
     var dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     var C = Object.assign({ deep: '#e01e37', mid: '#e5243b', gold: '#c9a227', ink: '#1c2233', soft: '#5e6b7d', line: '#e4e6eb', bg1: '#ffffff', bg2: '#f6f7f9' }, o.color || {});
     var t = { cert: uz ? 'SERTIFIKAT' : 'CERTIFICATE', certifies: uz ? 'Ushbu sertifikat quyidagini tasdiqlaydi:' : 'This certifies that', completing: uz ? 'quyidagi dasturni muvaffaqiyatli tugatgani uchun' : 'for successfully completing', date: uz ? 'SANA' : 'DATE', score: uz ? 'YAKUNIY TEST' : 'FINAL TEST', note: uz ? 'Platforma sertifikati — rasmiy natija emas.' : 'A platform certificate — not an official result.' };
-    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 620" font-family="Georgia, serif">' +
-      '<defs><linearGradient id="gnBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + C.bg1 + '"/><stop offset="1" stop-color="' + C.bg2 + '"/></linearGradient>' +
-      '<linearGradient id="gnBrand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="' + C.deep + '"/><stop offset="1" stop-color="' + C.mid + '"/></linearGradient></defs>' +
-      '<rect width="900" height="620" fill="url(#gnBg)"/>' +
-      '<rect x="24" y="24" width="852" height="572" rx="14" fill="none" stroke="' + C.deep + '" stroke-width="2.5"/>' +
-      '<rect x="34" y="34" width="832" height="552" rx="10" fill="none" stroke="' + C.line + '" stroke-width="1.5"/>' +
-      '<path d="M24 60 L24 38 L46 38" fill="none" stroke="' + C.mid + '" stroke-width="4"/><path d="M876 60 L876 38 L854 38" fill="none" stroke="' + C.mid + '" stroke-width="4"/>' +
-      '<path d="M24 560 L24 582 L46 582" fill="none" stroke="' + C.mid + '" stroke-width="4"/><path d="M876 560 L876 582 L854 582" fill="none" stroke="' + C.mid + '" stroke-width="4"/>' +
-      '<g transform="translate(450,88)"><rect x="-26" y="-26" width="52" height="52" rx="14" fill="url(#gnBrand)"/>' +
-        '<path d="M-14 12 L-5 -6 L3 6 L15 -12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="15" cy="-12" r="3" fill="#fff"/></g>' +
-      '<text x="450" y="144" text-anchor="middle" font-size="15" letter-spacing="4" fill="' + C.soft + '" font-family="Arial">' + esc(String(o.track || 'UZLEEDER ACADEMY').toUpperCase()) + '</text>' +
-      '<text x="450" y="199" text-anchor="middle" font-size="46" font-weight="bold" letter-spacing="8" fill="' + C.ink + '">' + t.cert + '</text>' +
-      '<rect x="380" y="216" width="140" height="3" rx="1.5" fill="url(#gnBrand)"/>' +
-      '<text x="450" y="262" text-anchor="middle" font-size="16" fill="' + C.soft + '" font-family="Arial">' + esc(t.certifies) + '</text>' +
-      '<text x="450" y="304" text-anchor="middle" font-size="34" font-weight="bold" fill="' + C.deep + '">' + esc(name) + '</text>' +
-      '<text x="450" y="340" text-anchor="middle" font-size="16" fill="' + C.soft + '" font-family="Arial">' + esc(t.completing) + '</text>' +
-      '<text x="450" y="382" text-anchor="middle" font-size="26" font-weight="bold" fill="' + C.ink + '">' + esc(o.course) + '</text>' +
-      (o.sub ? '<text x="450" y="416" text-anchor="middle" font-size="13" fill="' + C.soft + '" font-family="Arial">' + esc(o.sub) + '</text>' : '') +
-      '<g font-family="Arial">' +
-        (o.score ? '<text x="330" y="500" text-anchor="middle" font-size="12" letter-spacing="1.4" fill="' + C.soft + '">' + esc(t.score) + '</text><text x="330" y="530" text-anchor="middle" font-size="26" font-weight="bold" fill="' + C.gold + '">' + esc(o.score) + '</text>' : '') +
-        '<text x="' + (o.score ? 570 : 450) + '" y="500" text-anchor="middle" font-size="12" letter-spacing="1.4" fill="' + C.soft + '">' + esc(t.date) + '</text>' +
-        '<text x="' + (o.score ? 570 : 450) + '" y="530" text-anchor="middle" font-size="22" font-weight="bold" fill="' + C.deep + '">' + esc(dateStr) + '</text></g>' +
-      '<rect x="250" y="566" width="400" height="1.5" fill="' + C.line + '"/>' +
-      '<text x="450" y="584" text-anchor="middle" font-size="11.5" font-style="italic" fill="' + C.soft + '" font-family="Georgia">' + esc(t.note) + '</text>' +
-      sealSig(C.deep, C.soft, uz, C.ink) +
-      '</svg>';
+    var gRows = [];
+    if (o.score) gRows.push({ l: t.score, v: String(o.score) });
+    gRows.push({ l: t.date, v: dateStr });
+    return sheet({
+      cert: t.cert, kicker: t.certifies, name: name,
+      lead: t.completing, course: o.course || '', sub: o.sub || '',
+      rows: gRows, note: t.note
+    });
   }
 
   window.Certificate = {
@@ -492,12 +451,11 @@
         return;
       }
       var file = active.file;
-      Promise.all([caveatFontFace(), signatureData()]).then(function (res) {
-      var fontCss = res[0], sigData = res[1];
-      // Shrift ham, imzo tasviri ham SVG ICHIDA bo'lsin — <img> orqali
-      // chizilayotgan SVG sahifadagi shrift va fayllarni ko'rmaydi.
+      signatureData().then(function (sigData) {
+      // Imzo tasviri SVG ICHIDA bo'lsin — <img> orqali chizilayotgan SVG
+      // sahifadagi fayllarni ko'rmaydi. Matn endi tizim shriftlarida, ya'ni
+      // yuklab olish uchun tashqi shrift so'ralmaydi.
       var svg = active.build();
-      if (fontCss) svg = svg.replace(/<svg([^>]*)>/, '<svg$1><style>' + fontCss + '</style>');
       if (sigData) svg = svg.split(SIG_SRC).join(sigData);
       var blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
       var url = URL.createObjectURL(blob);
