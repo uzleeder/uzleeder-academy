@@ -1,1 +1,4 @@
+/* build/site.cjs — saytni dist/ ga yig'adi (Netlify ham, Vercel ham shuni
+   ishlatadi: npm run build). Ro'yxat ATAYLAB oq ro'yxat — backend
+   (api/, netlify/, middleware.js), vositalar va sirlar chiqmaydi. */
 const fs=require('fs'),p=require('path');const root=p.resolve(__dirname,'..'),out=p.join(root,'dist');fs.mkdirSync(out,{recursive:true});for(const name of ['index.html','login.html','controller.html','404.html','error.html','manifest.json','sw.js','css','js','img','brand']){fs.cpSync(p.join(root,name),p.join(out,name),{recursive:true,filter:s=>!s.split(p.sep).some(n=>n.startsWith('.')||['frames','tour'].includes(n))});}console.log('Static allowlist packaged; backend and secrets excluded.');
