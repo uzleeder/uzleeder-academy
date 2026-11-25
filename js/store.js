@@ -37,14 +37,15 @@
   'use strict';
 
   var KEY = 'uzla.state';
-  var SCHEMA = 9;   // v8: ingliz tili kunlari qayta raqamlangan (1–4 kirish → 'i1'…'i4', 5–144 → 1–140)
+  var SCHEMA = 10;  // v8: ingliz tili kunlari qayta raqamlangan (1–4 kirish → 'i1'…'i4', 5–144 → 1–140)
                     // v9: yangi kalendar 2026-10-25 → 2027-02-10 — barcha progress noldan (migrateCalendarReset)
+                    // v10: Personal OS — faqat KO'RINISH (mavzu) ko'chadi, PROGRESS TEGILMAYDI
                     // scheduleVersion 3: eski qat'iy namoz qiymatlari tozalanadi — PROGRESS TEGILMAYDI
 
   var DEFAULTS = {
     v: SCHEMA,
     lang: 'uz',
-    theme: 'dark',
+    theme: 'os',     /* Personal OS — yangi standart (v10) */
     name: '',
     scores: {},
     best: {},
@@ -75,12 +76,23 @@
     bookmarks: {},        // id → { route, title, kind, at }
     done: {},             // umumiy "bajarildi" bayroqlari: "spk-ck:12:2", "gr:present-perfect", "proj:p1:3" → true
     sessions: {},         // "2026-09-16": { min } — Today sahifasida o'lchangan o'quv vaqti
+    /* Personal OS (v10): Missiya rejasidagi vazifalar — id -> {date,time,min,cat,
+       title,note,status,ref,src,at,up}. 8-bosqichda IndexedDB `tasks` omboriga
+       ko'chadi; shakl o'zgarmaydi, shuning uchun id va vaqt belgilari saqlanadi. */
+    osTasks: {},
+    /* Xatolar daftari uchun QO'SHIMCHA maydonlar (asl 4 ustunga tegilmaydi):
+       id -> { why, cat, difficulty, resolvedBy, at } */
+    osMistakeMeta: {},
     events: [],           // faollik jurnali: { id, at, type, ref, title } — Controller/Teacher vaqt chizig'i (REAL hodisalar)
     settings: {
       gate: false,        // ketma-ket rejim: standart o'chiq (hamma dars ochiq)
       shuffle: true,      // test variantlarini aralashtirish: standart yoqilgan
       playground: true,   // kod maydoni: standart yoqilgan
       notify: false,      // brauzer bildirishnomalari (ruxsat so'raladi)
+      /* Bulut sinxroni: STANDART O'CHIQ (Personal OS, local-first).
+         Yoqilsa BUTUN shaxsiy holat /api/state ga yuboriladi — shuning
+         uchun bu faqat foydalanuvchi o'zi yoqadigan sozlama.          */
+      cloudSync: false,
       /* Namoz vaqti sozlamalari — O'zbekiston uchun standart:
          Hanafiy mazhab (Asr soyasi 2×), Bomdod va Xufton 18°.
          manual — qo'lda kiritilgan vaqtlar hisobning ustiga qo'yiladi.
@@ -294,6 +306,17 @@
     return out;
   }
 
+  /* v9 → v10 · Personal OS.
+     FAQAT ko'rinish ko'chadi: Bold Red standart mavzusida o'tirgan odam
+     yangi Personal OS mavzusiga chiqadi. O'zi ATAYLAB boshqa mavzu
+     (navy, emerald, …) tanlagan bo'lsa — tegilmaydi.
+     PROGRESS, XATOLAR, ESLATMALAR — hech biri o'zgarmaydi.             */
+  function migratePersonalOS(s) {
+    if (s.theme === 'dark') s.theme = 'os';
+    else if (s.theme === 'light') s.theme = 'os-light';
+    return s;
+  }
+
   function read() {
     var raw = null;
     try { raw = JSON.parse(localStorage.getItem(KEY)); } catch (e) { raw = null; }
@@ -304,6 +327,7 @@
     if (raw && (raw.scheduleVersion || 1) < 2) s = migrateScheduleV2(s);
     if (raw && (raw.scheduleVersion || 1) < 3) s = migrateScheduleV3(s);
     if (raw && (raw.v || 1) < 9) s = migrateCalendarReset(s, true);
+    if (raw && (raw.v || 1) < 10) s = migratePersonalOS(s);
     s.v = SCHEMA;
     if (!raw) s = migrateLegacy(s);
     return s;

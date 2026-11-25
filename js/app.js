@@ -42,8 +42,9 @@
     movies:     { render: function () { return PageMovies(); },     nav: 'movies',   mount: function () { PageMovies.mount(); } },
   };
 
-  function parseRoute() {
-    var h = (location.hash || '').replace(/^#\/?/, '');
+  /* src berilsa (classic/… ichidan) o'sha yo'l tahlil qilinadi */
+  function parseRoute(src) {
+    var h = src != null ? src : (location.hash || '').replace(/^#\/?/, '');
     if (!h) return { name: 'dashboard' };
     var parts = h.split('/');
     if (parts[0] === 'lesson') return { name: 'lesson', day: Number(parts[1]) || 1 };
@@ -124,8 +125,12 @@
     // #/mission/... — IELTS Mission (yo'l va so'rov qatori o'zi tahlil qiladi) · #/pyai/... — Python & AI yo'li
     if (parts[0] === 'mission') return { name: 'mission', path: h.slice(8) };
     if (parts[0] === 'pyai') return { name: 'pyai', path: h.slice(5) };
+    /* Personal OS manzillari: #/center, #/planner/today, #/studio/ielts … */
+    if (window.OS && OS.NAV && OS.NAV.ROUTE_KEYS.indexOf(parts[0]) >= 0) {
+      return { name: 'os', head: parts[0], tab: parts[1] || '', sub: parts[2] || '', path: h };
+    }
     if (ROUTES[parts[0]]) return { name: parts[0] };
-    return { name: 'dashboard' };
+    return { name: window.OS && OS.NAV ? 'os' : 'dashboard', head: 'center', tab: '', sub: '', path: 'center' };
   }
 
   window.App = {
@@ -162,6 +167,11 @@
        Bold Red — rasmiy identitet va standart; qolganlari qo'llanmadagi
        shablonlar. id, qorong'imi, ko'rsatkich ranglari (fon, aksent).      */
     THEMES: [
+      /* Personal OS (2026-11) — yangi rasmiy identitet: tinch navy + ko'k amal.
+         Bold Red saqlanib qoldi: eski ko'rinishni Vault > Ko'rinish dan tanlash
+         mumkin, rasmiy hujjatlar (sertifikat) esa doim Bold Red.            */
+      { id: 'os',       dark: true,  sw: ['#0B1220', '#477DFF'] },  /* Personal OS · qorong'i */
+      { id: 'os-light', dark: false, sw: ['#F5F7FB', '#2F62DC'] },  /* Personal OS · yorug' */
       { id: 'dark',    dark: true,  sw: ['#07090d', '#f0384e'] },   /* Bold Red · rasmiy */
       { id: 'light',   dark: false, sw: ['#f6f7f9', '#e01e37'] },   /* Bold Red · qog'oz */
       { id: 'navy',    dark: true,  sw: ['#0b1f3a', '#c9a227'] },
@@ -376,7 +386,19 @@
     },
 
     render: function () {
-      var r = parseRoute();
+      /* Personal OS: eski YUQORI darajadagi manzil yangisiga ko'chadi.
+         Chuqur sahifalar (dars, kitob, mission ichi) tegilmaydi — ular
+         OS.NAV.KEEP ro'yxatida va o'z joyida ishlaydi (audit §10.5).   */
+      var rawHash = (location.hash || '').replace(/^#\/?/, '');
+      /* `classic/<marshrut>` — ataylab ESKI sahifani ochish yo'li.
+         Yangi studiyalar va kutubxona kurs sahifalarini shu bilan ochadi,
+         shuning uchun ular yo'naltirishga tushib qolmaydi.             */
+      var isClassic = /^classic\//.test(rawHash);
+      if (!isClassic && window.OS && OS.NAV) {
+        var to = OS.NAV.redirectFor(rawHash);
+        if (to) { location.replace('#/' + to); return; }
+      }
+      var r = parseRoute(isClassic ? rawHash.slice(8) : undefined);
       var prevRoute = currentRoute;
       currentRoute = r.name === 'lesson' ? 'lesson/' + r.day
         : r.name === 'englishDay' ? 'english/' + r.day
@@ -413,10 +435,20 @@
         : r.name === 'bookListening' ? 'books/l' + r.num
         : r.name === 'mission' ? 'mission' + (r.path ? '/' + r.path : '')
         : r.name === 'pyai' ? 'pyai' + (r.path ? '/' + r.path : '')
+        : r.name === 'os' ? r.path
         : r.name;
 
       var content = $('#content');
-      if (r.name === 'lesson') {
+      if (r.name === 'os' && window.OS && OS.pages) {
+        var page = OS.pages[r.head];
+        if (page) {
+          content.innerHTML = page.render(r.tab, r.sub);
+          if (page.mount) page.mount(r.tab, r.sub);
+        } else {
+          content.innerHTML = OS.pages.center.render('', '');
+          if (OS.pages.center.mount) OS.pages.center.mount('', '');
+        }
+      } else if (r.name === 'lesson') {
         content.innerHTML = PageLesson(r.day);
         PageLesson.mount(r.day);
       } else if (r.name === 'englishDay') {
@@ -539,15 +571,14 @@
         content.innerHTML = route.render();
         if (route.mount) route.mount();
       }
-      /* Coding — Python, DataCamp va Python & AI — Job Ready dasturi ichida: qaytish havolasi */
-      if (/^((python|datacamp|pyai)(\/|$)|lesson\/)/.test(currentRoute) && window.PageJobReady) {
-        var pg = content.querySelector('.page');
-        if (pg) pg.insertAdjacentHTML('afterbegin', '<button class="link-btn jr-crumb" data-go="jobready">← Job Ready: Python & AI Engineer</button>');
-      }
-      /* English, Speaking, BBC, Writing, Quick Repeat — IELTS Mission ichida: qaytish havolasi */
-      if (/^((english|speaking|writing|bbc|quick)(\/|$)|eng-skill\/)/.test(currentRoute) && window.PageMission) {
-        var pgE = content.querySelector('.page');
-        if (pgE) pgE.insertAdjacentHTML('afterbegin', '<button class="link-btn jr-crumb" data-go="mission">← IELTS Mission</button>');
+      /* Chuqur sahifa tepasida: qaysi studiyaga tegishli bo'lsa, o'shanga
+         qaytish havolasi (OS.NAV.CRUMB). Eski ikki qoida shuning ichida. */
+      if (r.name !== 'os' && window.OS && OS.shell) {
+        var cr = OS.shell.crumb(currentRoute);
+        if (cr) {
+          var pg = content.querySelector('.page');
+          if (pg) pg.insertAdjacentHTML('afterbegin', cr);
+        }
       }
 
       App.refreshChrome();
@@ -660,6 +691,10 @@
   }
 
   function renderNav() {
+    /* Personal OS yoqilgan bo'lsa — 8 manzilli yangi menyu (js/os/shell.js).
+       Eski 16 yozuvli menyu kodi pastda turibdi: OS o'chirilsa qaytadi.   */
+    if (window.OS && OS.shell && OS.shell.renderNav(currentRoute)) return;
+
     var openMis = Store.openMistakes().length;
     var noteN = Store.notesList().length;
 
@@ -976,6 +1011,8 @@
   /* ====================== ISHGA TUSHIRISH ============================== */
   function boot() {
     Store.init();
+    /* Personal OS: saqlangan maqsadlar markaziy sozlamaga qo'llanadi */
+    if (window.OS && OS.applySaved) OS.applySaved();
     /* ?lang=en&theme=navy — havola orqali til/mavzu (demo, video, ulashish uchun) */
     try {
       var qp = new URLSearchParams(location.search);

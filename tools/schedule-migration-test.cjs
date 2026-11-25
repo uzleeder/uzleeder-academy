@@ -121,7 +121,7 @@ const OLD = { v: 8, lang: 'en', theme: 'light', name: 'Leejon', scheduleVersion:
   notes: { '3': { text: 'py note' } }, copy: { vocab: { w1: { t: 'word' } }, english: {}, coding: {}, free: {} }, bookmarks: { b1: { route: 'x' } },
   profile: { bio: 'bio', certs: {}, projects: {} }, settings: { gate: true, books: { readingAnchor: { day: 3, no: 2 }, listeningAnchor: null } } };
 s = run(OLD);
-ok(s.v === 9 && s.calendarReset && s.calendarReset.on === '2026-10-25', 'reset: v9 + calendarReset belgisi');
+ok(s.v === 10 && s.calendarReset && s.calendarReset.on === '2026-10-25', 'reset: v9 kalendar + v10 Personal OS sxemasi');
 ok(!Object.keys(s.best).length && !Object.keys(s.scores).length, 'reset: Python ballari noldan');
 ok(!Object.keys(s.eng.done).length && !Object.keys(s.eng.tasks).length && !Object.keys(s.eng.scores).length, 'reset: ingliz tili kunlari/vazifalari/mock noldan');
 ok(!Object.keys(s.habit).length && !Object.keys(s.blockLog).length, 'reset: kunlik jadval belgilari noldan');
@@ -129,7 +129,12 @@ ok(!s.mistakes.length && !Object.keys(s.review).length && !Object.keys(s.quiz).l
 ok(!Object.keys(s.done).length && !Object.keys(s.activity).length && !Object.keys(s.sessions).length && !s.events.length, 'reset: bayroqlar (DataCamp va h.k.), faollik noldan');
 ok(!s.mission && !s.pyai, 'reset: IELTS Mission va Python & AI holati noldan');
 ok(!Object.keys(s.speak).length && !Object.keys(s.bbc).length && !Object.keys(s.read).length && !Object.keys(s.hours).length, "reset: Speaking, BBC, o'qish, soatlar noldan");
-ok(s.lang === 'en' && s.theme === 'light' && s.name === 'Leejon', 'saqlandi: til, mavzu, ism');
+/* v10 (Personal OS): STANDART Bold Red mavzusi yangi Personal OS
+   mavzusiga ko'chadi — light → os-light, dark → os. Til va ism tegilmaydi,
+   progress ham tegilmaydi: ko'chish FAQAT ko'rinishga tegishli.       */
+ok(s.lang === 'en' && s.theme === 'os-light' && s.name === 'Leejon', "saqlandi: til va ism; mavzu Personal OS ga ko'chdi");
+ok(run(Object.assign({}, OLD, { theme: 'dark' })).theme === 'os', 'v10: dark → os');
+ok(run(Object.assign({}, OLD, { theme: 'navy' })).theme === 'navy', "v10: o'zi tanlagan mavzu (navy) tegilmaydi");
 ok(s.settings.gate === true && s.settings.books.readingAnchor === null, 'saqlandi: sozlamalar (kitob joyi esa noldan)');
 ok(s.notes['3'].text === 'py note' && s.eng.notes['3'].text === 'eng note', 'saqlandi: eslatmalar');
 ok(s.copy.vocab.w1 && s.bookmarks.b1 && s.profile.bio === 'bio', 'saqlandi: daftarlar, saqlanganlar, profil');
@@ -137,7 +142,7 @@ ok(s.__backup === true, 'reset oldidan mahalliy zaxira nusxa yozildi');
 const again = run(Object.assign({}, s, { best: { '2': 7 } }));
 ok(again.best['2'] === 7 && again.calendarReset.at === s.calendarReset.at, 'reset bir marta: v9 holatdagi yangi progress tegilmaydi');
 const remote = run(undefined, OLD).__remote;
-ok(remote.v === 9 && !Object.keys(remote.best).length && !Object.keys(remote.eng.done).length && !remote.mission, 'bulutdan kelgan eski (v8) nusxa ham reset — eski progress sinxron orqali qaytmaydi');
+ok(remote.v === 10 && !Object.keys(remote.best).length && !Object.keys(remote.eng.done).length && !remote.mission, 'bulutdan kelgan eski (v8) nusxa ham reset — eski progress sinxron orqali qaytmaydi');
 
 /* ====================== v3: eski QAT'IY namoz qiymatlari ==============
    Eski modelda Bomdod 05:20 va Peshin 13:00 sozlamalarga `manual`
