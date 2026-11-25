@@ -13,7 +13,8 @@
   },
   "scripts": {
     "build": "node build/site.cjs",
-    "test": "node tools/api-test.cjs && node tools/storage-test.cjs && node tools/middleware-test.mjs && node tools/netlify-test.mjs && node tools/mission-test.cjs && node tools/pyai-engine-test.cjs && node tools/jobready-test.cjs && node tools/pyai-test.cjs && node tools/audit-english.cjs && node tools/schedule-migration-test.cjs && node tools/validate-schedule.cjs && node tools/validator-negative-test.cjs",
-    "docs:legacy-map": "node tools/gen-legacy-map.cjs"
+    "test": "node tools/os-test.cjs && node tools/no-upload-test.cjs && node tools/media-server-test.mjs && node tools/api-test.cjs && node tools/storage-test.cjs && node tools/middleware-test.mjs && node tools/netlify-test.mjs && node tools/mission-test.cjs && node tools/pyai-engine-test.cjs && node tools/jobready-test.cjs && node tools/pyai-test.cjs && node tools/audit-english.cjs && node tools/schedule-migration-test.cjs && node tools/validate-schedule.cjs && node tools/validator-negative-test.cjs",
+    "docs:legacy-map": "node tools/gen-legacy-map.cjs",
+    "media": "node server/media-server.mjs"
   }
 }
