@@ -336,6 +336,20 @@
       o = o || {}; o.prompt = true;
       App.ask(o, function (v) { if (onValue) onValue(v); });
     },
+    /* Progressni JSON qilib yuklab olish. Sozlamalar sahifasidagi
+       tugma ham, saqlash xatosi ogohlantirishi ham shuni chaqiradi —
+       ikki joyda ikki xil kod bo'lmasin.                                */
+    exportProgress: function () {
+      try {
+        var blob = new Blob([Store.exportJSON()], { type: 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'uzleeder-academy-progress-' + Store.dateKey() + '.json';
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+        toast(tr('exportOk'), 'ok');
+      } catch (e) { toast(tr('importFail'), 'warn'); }
+    },
     /* Tepadagi tugma: qorong'i ↔ yorug' (oxirgi tanlangan variantni eslaydi) */
     toggleTheme: function () {
       var t = App.themeOf(Store.get('theme'));
@@ -1047,6 +1061,24 @@
     if (window.Ctrl) Ctrl.init();                            // nazorat sessiyasi / chat (faqat Vercel'da faol)
     if (window.Clock) Clock.init();                          // tepadagi soat + flip clock
     Store.onChange(function () { Search.invalidate(); });   // daftar/xato o'zgarsa indeks qayta quriladi
+
+    /* Saqlash muvaffaqiyatsiz bo'lsa — JIM QOLMAYMIZ. Avval xato yutilardi
+       va o'quvchi butun kunini yo'qotishi mumkin edi (js/store.js write()).
+       Bu yerda bir marta jiddiy oyna chiqadi va darhol zaxira taklif
+       qilinadi; takror ogohlantirish 10 daqiqada bir martadan ko'p emas.  */
+    if (Store.onSaveError) Store.onSaveError(function (st) {
+      if (st.ok) { toast(tr('saveBack'), 'ok'); return; }
+      var now = Date.now();
+      if (App._lastSaveWarn && now - App._lastSaveWarn < 600000) return;
+      App._lastSaveWarn = now;
+      var kb = Math.round((st.bytes || 0) / 1024);
+      var text = st.kind === 'quota' ? tr('saveFullQ', { kb: kb })
+               : st.kind === 'blocked' ? tr('saveBlockedQ')
+               : tr('saveFailQ');
+      toast(tr('saveFail'), 'warn');
+      App.confirm({ text: text, title: tr('saveFailT'), ok: tr('saveExport'), danger: true },
+        function () { App.exportProgress(); });
+    });
     App.render();
     if (window.UZ_APP_READY) UZ_APP_READY();                // intro: 100% — ilova chizildi (real tayyorlik)
 

@@ -321,10 +321,62 @@
     if (state.events.length > 400) state.events = state.events.slice(-400);
   }
 
+  /* ====================== SAQLASH HOLATI ============================
+     Avval bu yerdagi `catch` bo'sh edi: joy tugasa yoki brauzer yozishga
+     ruxsat bermasa, xato JIMGINA yutilardi. Ilova ishlayverardi, lekin
+     progress saqlanmasdi va foydalanuvchi buni bilmasdi — ya'ni butun
+     kun yo'qolishi mumkin edi.
+
+     Endi: xato turi aniqlanadi, bir marta qayta urinib ko'riladi, keyin
+     holat yozib qo'yiladi va tinglovchilarga xabar beriladi (app.js
+     ogohlantirish ko'rsatadi). Ilova baribir to'xtamaydi — xotiradagi
+     holat ishlayveradi, faqat endi bu YASHIRILMAYDI.                   */
+  var saveState = { ok: true, kind: null, at: 0, bytes: 0, failedAt: 0 };
+  var saveListeners = [];
+
+  function emitSave() {
+    saveListeners.forEach(function (fn) { try { fn(saveState); } catch (e) {} });
+  }
+
+  /* Brauzerlar kvota xatosini har xil ataydi: nomi, kodi yoki eski
+     Firefox'ning NS_ERROR_DOM_QUOTA_REACHED (1014) kodi bilan.        */
+  function kindOf(e) {
+    if (!e) return 'unknown';
+    var n = e.name || '', c = e.code;
+    if (n === 'QuotaExceededError' || n === 'NS_ERROR_DOM_QUOTA_REACHED' || c === 22 || c === 1014) return 'quota';
+    if (n === 'SecurityError' || n === 'NS_ERROR_FILE_ACCESS_DENIED') return 'blocked';
+    return 'unknown';
+  }
+
   function write() {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); }
-    catch (e) { /* privat rejim yoki joy tugagan — ilova baribir ishlaydi */ }
+    var json;
+    try { json = JSON.stringify(state); }
+    catch (e) {
+      saveState = { ok: false, kind: 'serialize', at: Date.now(), bytes: 0, failedAt: Date.now() };
+      emitSave();
+      listeners.forEach(function (fn) { try { fn(state); } catch (e2) {} });
+      return false;
+    }
+
+    var wrote = false;
+    try { localStorage.setItem(KEY, json); wrote = true; }
+    catch (e) {
+      /* Bir marta qayta urinamiz — ba'zan xato vaqtinchalik bo'ladi
+         (masalan boshqa tab ayni paytda yozayotgan bo'lsa).           */
+      try { localStorage.setItem(KEY, json); wrote = true; }
+      catch (e2) {
+        var was = saveState.ok;
+        saveState = { ok: false, kind: kindOf(e2), at: Date.now(), bytes: json.length, failedAt: Date.now() };
+        if (was) emitSave();          /* faqat holat o'zgarganda xabar — spam bo'lmasin */
+      }
+    }
+    if (wrote) {
+      var recovered = !saveState.ok;
+      saveState = { ok: true, kind: null, at: Date.now(), bytes: json.length, failedAt: saveState.failedAt };
+      if (recovered) emitSave();
+    }
     listeners.forEach(function (fn) { try { fn(state); } catch (e) {} });
+    return wrote;
   }
 
   /* --- sana yordamchilari (mahalliy vaqt bo'yicha) --------------------- */
@@ -346,6 +398,15 @@
     init: function () { state = read(); return state; },
     all: function () { return state; },
     onChange: function (fn) { listeners.push(fn); },
+    /* Saqlash muvaffaqiyatsiz bo'lsa (joy tugadi / brauzer bloklagan) —
+       shu orqali xabar beriladi. app.js ogohlantirish ko'rsatadi.      */
+    onSaveError: function (fn) { saveListeners.push(fn); },
+    saveStatus: function () {
+      return { ok: saveState.ok, kind: saveState.kind, at: saveState.at,
+               bytes: saveState.bytes, failedAt: saveState.failedAt };
+    },
+    /* Hozirgi holat necha bayt joy egallaydi — Data & Storage uchun ham */
+    bytes: function () { try { return JSON.stringify(state).length; } catch (e) { return 0; } },
 
     /* --- oddiy get/set --- */
     get: function (k) { return state ? state[k] : DEFAULTS[k]; },

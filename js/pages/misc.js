@@ -526,15 +526,7 @@
     }
 
     var exportBtn = $('#exportBtn');
-    if (exportBtn) exportBtn.addEventListener('click', function () {
-      var blob = new Blob([Store.exportJSON()], { type: 'application/json' });
-      var a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'uzleeder-academy-progress-' + Store.dateKey() + '.json';
-      a.click();
-      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
-      toast(tr('exportOk'), 'ok');
-    });
+    if (exportBtn) exportBtn.addEventListener('click', function () { App.exportProgress(); });
 
     var file = $('#importFile');
     if (file) file.addEventListener('change', function () {
