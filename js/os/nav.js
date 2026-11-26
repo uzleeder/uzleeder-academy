@@ -72,7 +72,7 @@
         ['reading',   { uz: 'Oʻqish', en: 'Reading' }],
         ['listening', { uz: 'Tinglash', en: 'Listening' }],
         ['media',     { uz: 'Media', en: 'Media' }],
-        ['notes',     { uz: 'Eslatmalar', en: 'Notes' }],
+        ['notes',     { uz: 'Daftar va eslatma', en: 'Notebooks & notes' }],
         ['saved',     { uz: 'Saqlanganlar', en: 'Bookmarks' }]
       ]
     },

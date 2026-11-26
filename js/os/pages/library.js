@@ -122,12 +122,49 @@
       '</section>';
   }
 
-  /* ---------- 5. ESLATMALAR --------------------------------------------- */
+  /* ---------- 5. ESLATMALAR VA DAFTARLAR -------------------------------- */
+
+  /* To'rtta daftar: lug'at · ingliz tili · coding · erkin.
+     Eski #/copy/<kind> sahifalari o'z joyida ishlaydi — bu yerda ular
+     ko'rinadi va haqiqiy yozuvlar soni bilan ochiladi.                  */
+  var COPYBOOKS = [
+    ['vocab',   'mic',      { uz: 'Lugʻat daftari', en: 'Vocabulary notebook' },
+                            { uz: 'soʻz · transkripsiya · tarjima · misol', en: 'word · transcription · translation · example' }],
+    ['english', 'pen',      { uz: 'Ingliz tili daftari', en: 'English notebook' },
+                            { uz: 'grammatika · ibora · xato · fikr', en: 'grammar · phrase · mistake · note' }],
+    ['coding',  'code',     { uz: 'Coding daftari', en: 'Coding notebook' },
+                            { uz: 'sarlavha · til · kod · izoh', en: 'title · language · code · comment' }],
+    ['free',    'notebook', { uz: 'Erkin daftar', en: 'Free notebook' },
+                            { uz: 'boʻlinmagan katta varaq — nomini oʻzing qoʻyasan', en: 'one large sheet — you name it yourself' }]
+  ];
+
+  function copybookCards() {
+    var st = window.Store;
+    return '<section class="os-card" style="margin-bottom:var(--sp-4)">' +
+      '<div class="os-card-head"><h2>' + esc(L({ uz: 'Daftarlar', en: 'Notebooks' })) + '</h2>' +
+      '<button class="os-btn ghost" style="padding:4px 10px;font-size:12px" data-go="classic/notes">' +
+        esc(L({ uz: 'Eski daftar sahifasi', en: 'Classic notebook page' })) + '</button></div>' +
+      '<div class="os-grid c4">' + COPYBOOKS.map(function (c) {
+        var n = st && st.copyList ? st.copyList(c[0]).length : 0;
+        var route = c[0] === 'free' ? 'copy/free' : 'copy/' + c[0];
+        return '<button class="os-card pad-sm" data-go="' + route + '">' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px">' +
+            '<span style="width:26px;height:26px;border-radius:var(--r-sm);background:var(--surface-3);display:grid;place-items:center">' +
+            sh().icon(c[1]) + '</span>' +
+            (n ? '<span class="os-chip">' + n + '</span>' : '') +
+          '</div>' +
+          '<b style="font-size:13.5px;display:block">' + esc(L(c[2])) + '</b>' +
+          '<span style="font-size:11.5px;color:var(--muted)">' + esc(L(c[3])) + '</span>' +
+          '</button>';
+      }).join('') + '</div></section>';
+  }
+
   function viewNotes() {
     var st = window.Store;
     var notes = st && st.notesList ? st.notesList() : [];
     var free = st && st.copyList ? st.copyList('free') : [];
-    return '<div class="os-grid c2">' +
+    return copybookCards() +
+      '<div class="os-grid c2">' +
       '<section class="os-card">' +
         '<div class="os-card-head"><h2>' + esc(L({ uz: 'Dars eslatmalari', en: 'Lesson notes' })) + '</h2>' +
         sh().chip(notes.length) + '</div>' +
