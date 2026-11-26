@@ -17,11 +17,11 @@
   /* Salomlashish — mahalliy soatga qarab, soxta quvonchsiz */
   function greeting() {
     var h = new Date().getHours();
-    if (h < 5) return { uz: 'Tunggi ish', en: 'Late night' };
+    if (h < 5) return { uz: 'Tunggi iş', en: 'Late night' };
     if (h < 12) return { uz: 'Xayrli tong', en: 'Good morning' };
     if (h < 17) return { uz: 'Xayrli kun', en: 'Good afternoon' };
-    if (h < 22) return { uz: 'Xayrli kech', en: 'Good evening' };
-    return { uz: 'Kech boʻldi', en: 'Late evening' };
+    if (h < 22) return { uz: 'Xayrli keç', en: 'Good evening' };
+    return { uz: 'Keç böldi', en: 'Late evening' };
   }
 
   var MON = {
@@ -56,7 +56,7 @@
     var c = OS.CFG;
     var phase = m.phase
       ? esc(L(m.phase.title))
-      : esc(L({ uz: 'Missiya oynasidan tashqarida', en: 'Outside the mission window' }));
+      : esc(L({ uz: 'Missiya muddatidan taşqarida', en: 'Outside the mission window' }));
     var line = m.inMission
       ? esc(L({ uz: 'Missiya kuni', en: 'Mission day' })) + ' ' + m.dayNumber + ' / ' + m.totalDays
       : esc(L({ uz: 'Missiya ' + c.mission.start + ' da boshlanadi', en: 'The mission starts on ' + c.mission.start }));
@@ -74,7 +74,7 @@
       '</div>' +
       (m.inMission ? '<div style="margin-top:14px">' + sh().meter(m.dayNumber / m.totalDays * 100) +
         '<div class="s" style="margin-top:6px;font-size:12px;color:var(--faint)">' +
-        esc(L({ uz: 'Bu vaqt oʻlchovi — natija emas', en: 'This measures time, not results' })) +
+        esc(L({ uz: 'Bu vaqt ölçovi — natija emas', en: 'This measures time, not results' })) +
         '</div></div>' : '') +
       '</section>';
   }
@@ -83,8 +83,8 @@
   function cardNow(nn) {
     if (!nn.blocks.length) {
       return '<section class="os-card">' +
-        '<div class="os-eyebrow">' + esc(L({ uz: 'Keyingi ish', en: 'Next activity' })) + '</div>' +
-        sh().empty(L({ uz: 'Bugunga jadval yoʻq', en: 'No schedule for today' }),
+        '<div class="os-eyebrow">' + esc(L({ uz: 'Keyingi iş', en: 'Next activity' })) + '</div>' +
+        sh().empty(L({ uz: 'Bugunga jadval yöq', en: 'No schedule for today' }),
           L({ uz: 'Missiya rejasida kunlik jadvalni sozlang.', en: 'Set up the daily schedule in Mission Planner.' })) +
         '</section>';
     }
@@ -92,13 +92,13 @@
     var isNow = !!nn.now;
     if (!b) {
       return '<section class="os-card">' +
-        '<div class="os-eyebrow">' + esc(L({ uz: 'Keyingi ish', en: 'Next activity' })) + '</div>' +
+        '<div class="os-eyebrow">' + esc(L({ uz: 'Keyingi iş', en: 'Next activity' })) + '</div>' +
         '<p style="margin:0;color:var(--muted);font-size:13.5px">' +
         esc(L({ uz: 'Bugungi bloklar tugadi.', en: 'Todayʼs blocks are finished.' })) + '</p></section>';
     }
     return '<section class="os-card">' +
       '<div class="os-eyebrow">' +
-        esc(L(isNow ? { uz: 'Hozir', en: 'Now' } : { uz: 'Keyingi ish', en: 'Next activity' })) + '</div>' +
+        esc(L(isNow ? { uz: 'Hozir', en: 'Now' } : { uz: 'Keyingi iş', en: 'Next activity' })) + '</div>' +
       '<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">' +
         '<b style="font-family:var(--font-mono);font-size:17px;color:var(--brand)">' + esc(b.fromStr) + '</b>' +
         '<b style="font-size:16px">' + esc(L(b.t)) + '</b>' +
@@ -107,7 +107,7 @@
         esc(b.fromStr + '–' + b.toStr) + ' · ' + b.min + ' ' + esc(L({ uz: 'daqiqa', en: 'min' })) +
         (b.note ? ' · ' + esc(L(b.note)) : '') + '</p>' +
       '<button class="os-btn primary" data-go="planner/today">' +
-        esc(L({ uz: 'Kunlik jadvalni ochish', en: 'Open the daily schedule' })) + '</button>' +
+        esc(L({ uz: 'Kunlik jadvalni oçiş', en: 'Open the daily schedule' })) + '</button>' +
       '</section>';
   }
 
@@ -117,7 +117,7 @@
       return '<section class="os-card">' +
         '<div class="os-eyebrow">' + esc(L({ uz: 'Ustuvorliklar', en: 'Priorities' })) + '</div>' +
         '<p style="margin:0;color:var(--muted);font-size:13.5px">' +
-        esc(L({ uz: 'Ochiq ish yoʻq. Bu ham javob.', en: 'Nothing outstanding. That is an answer too.' })) +
+        esc(L({ uz: 'Oçiq iş yöq. Bu ham javob.', en: 'Nothing outstanding. That is an answer too.' })) +
         '</p></section>';
     }
     return '<section class="os-card">' +
@@ -140,7 +140,7 @@
       tiles.push(sh().stat(
         L({ uz: 'IELTS kunlari', en: 'IELTS days' }),
         ie.daysDone + '<small>/ ' + ie.daysTotal + '</small>',
-        ie.daysDone ? null : L({ uz: 'hali yozuv yoʻq', en: 'no records yet' })
+        ie.daysDone ? null : L({ uz: 'hali yozuv yöq', en: 'no records yet' })
       ));
     }
     if (ie && ie.lastMock) {
@@ -174,17 +174,17 @@
     }
     if (rv.allMistakes) {
       tiles.push(sh().stat(
-        L({ uz: 'Ochiq xatolar', en: 'Open mistakes' }),
+        L({ uz: 'Oçiq xatolar', en: 'Open mistakes' }),
         rv.openMistakes,
         L({ uz: 'jami', en: 'of' }) + ' ' + rv.allMistakes
       ));
     }
     if (min.total) {
       tiles.push(sh().stat(
-        L({ uz: 'Bugun oʻlchangan', en: 'Measured today' }),
+        L({ uz: 'Bugun ölçangan', en: 'Measured today' }),
         Math.round(min.total / 60 * 10) / 10 + '<small>' + L({ uz: ' soat', en: ' h' }) + '</small>',
-        min.measured ? L({ uz: 'oʻlchangan', en: 'timed' }) + ' ' + min.measured + ' ' +
-          L({ uz: 'daq', en: 'min' }) : L({ uz: 'qoʻlda yozilgan', en: 'entered by hand' })
+        min.measured ? L({ uz: 'ölçangan', en: 'timed' }) + ' ' + min.measured + ' ' +
+          L({ uz: 'daq', en: 'min' }) : L({ uz: 'qölda yozilgan', en: 'entered by hand' })
       ));
     }
 
@@ -212,7 +212,7 @@
     var short = lang === 'en' ? ['M', 'T', 'W', 'T', 'F', 'S', 'S'] : ['Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh', 'Ya'];
     return '<section class="os-card">' +
       '<div class="os-card-head"><div class="os-eyebrow" style="margin:0">' +
-        esc(L({ uz: 'Shu hafta', en: 'This week' })) + '</div>' +
+        esc(L({ uz: 'Şu hafta', en: 'This week' })) + '</div>' +
         '<button class="os-btn ghost" data-go="planner/week" style="padding:4px 10px;font-size:12px">' +
         esc(L({ uz: 'Hafta', en: 'Week' })) + '</button></div>' +
       '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">' +
@@ -234,12 +234,12 @@
   function cardCapture() {
     var recent = OS.data.captureList(3);
     return '<section class="os-card">' +
-      '<div class="os-eyebrow">' + esc(L({ uz: 'Tez yozib qoʻy', en: 'Quick capture' })) + '</div>' +
+      '<div class="os-eyebrow">' + esc(L({ uz: 'Tez yozib qöy', en: 'Quick capture' })) + '</div>' +
       '<div class="os-capture">' +
         '<input id="osCapture" type="text" autocomplete="off" placeholder="' +
           esc(L({ uz: 'Esda qolsin…', en: 'Note it down…' })) + '" aria-label="' +
-          esc(L({ uz: 'Tez yozib qoʻy', en: 'Quick capture' })) + '">' +
-        '<button class="os-btn primary" id="osCaptureBtn">' + esc(L({ uz: 'Saqlash', en: 'Save' })) + '</button>' +
+          esc(L({ uz: 'Tez yozib qöy', en: 'Quick capture' })) + '">' +
+        '<button class="os-btn primary" id="osCaptureBtn">' + esc(L({ uz: 'Saqlaş', en: 'Save' })) + '</button>' +
       '</div>' +
       (recent.length ? '<div style="margin-top:12px">' + recent.map(function (r) {
         return '<div class="os-row"><span class="os-row-main"><b>' + esc(r.title || '') + '</b></span></div>';
@@ -265,9 +265,9 @@
     var hi = L(greeting()) + (p.name ? ', ' + p.name : '');
 
     return '<div class="page os-page">' +
-      sh().head(hi, L({ uz: 'Bugun nimaga ahamiyat berish kerak', en: 'What deserves attention today' }),
+      sh().head(hi, L({ uz: 'Bugun nimaga eʼtibor qaratiş kerak', en: 'What deserves attention today' }),
         '<button class="os-btn ghost" data-go="planner/today">' + esc(L({ uz: 'Bugun', en: 'Today' })) + '</button>' +
-        '<button class="os-btn ghost" data-go="insights">' + esc(L({ uz: 'Koʻrsatkichlar', en: 'Insights' })) + '</button>') +
+        '<button class="os-btn ghost" data-go="insights">' + esc(L({ uz: 'Körsatkiçlar', en: 'Insights' })) + '</button>') +
       cardMetrics(ie, co, rv, min) +
       '<div class="os-grid c2" style="margin-top:var(--sp-4)">' +
         cardToday(m) + cardNow(nn) +

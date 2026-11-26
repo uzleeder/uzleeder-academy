@@ -21,14 +21,14 @@ window.MISSION_CFG = {
   target: 8.0,
 
   phases: [
-    { from: 1,  to: 1,  key: 'diag',   title: { uz: 'Diagnostika va boshlang\'ich nuqta', en: 'Diagnostics & baseline' },
-      focus: { uz: "Har ko'nikma bo'yicha qisqa diagnostika. Ball emas — dalil yig'ish.", en: 'A short diagnostic per skill. Not a score — evidence.' } },
+    { from: 1,  to: 1,  key: 'diag',   title: { uz: 'Diagnostika va boşlanğiç nuqta', en: 'Diagnostics & baseline' },
+      focus: { uz: "Har könikma böyiça qisqa diagnostika. Ball emas — dalil yiğiş.", en: 'A short diagnostic per skill. Not a score — evidence.' } },
     { from: 2,  to: 5,  key: 'found',  title: { uz: 'Poydevor: aniqlik', en: 'Foundation: accuracy' },
-      focus: { uz: "Eng ko'p takrorlanadigan grammatika xatolari, savol turlari, Section 1–2.", en: 'Most frequent grammar errors, question types, Sections 1–2.' } },
-    { from: 6,  to: 10, key: 'build',  title: { uz: 'Qurish: to\'liq vazifalar', en: 'Build: full tasks' },
-      focus: { uz: "To'liq matnlar vaqt bilan, Section 3–4, Task 1 va Task 2 to'liq.", en: 'Full passages under time, Sections 3–4, full Task 1 and Task 2.' } },
-    { from: 11, to: 14, key: 'exam',   title: { uz: 'Imtihon ko\'nikmasi', en: 'Exam skills' },
-      focus: { uz: "Aralash, vaqtli to'plamlar, tezlik va chidamlilik.", en: 'Mixed timed sets, speed and stamina.' } },
+      focus: { uz: "Eng köp takrorlanadigan grammatika xatolari, savol turlari, Section 1–2.", en: 'Most frequent grammar errors, question types, Sections 1–2.' } },
+    { from: 6,  to: 10, key: 'build',  title: { uz: 'Quriş: töliq vazifalar', en: 'Build: full tasks' },
+      focus: { uz: "Töliq matnlar vaqt bilan, Section 3–4, Task 1 va Task 2 töliq.", en: 'Full passages under time, Sections 3–4, full Task 1 and Task 2.' } },
+    { from: 11, to: 14, key: 'exam',   title: { uz: 'Imtihon könikmasi', en: 'Exam skills' },
+      focus: { uz: "Aralaş, vaqtli töplamlar, tezlik va çidamlilik.", en: 'Mixed timed sets, speed and stamina.' } },
     { from: 15, to: 16, key: 'final',  title: { uz: 'Mock va yakuniy takror', en: 'Mocks & final review' },
       focus: { uz: "Amaliy mock, xatolar banki, yakuniy profil.", en: 'Practice mocks, error bank, final profile.' } }
   ],
@@ -42,28 +42,28 @@ window.MISSION_CFG = {
     { key: '120', min: 120, label: { uz: '120 daqiqa', en: '120 minutes' } },
     { key: '195', min: 195, label: { uz: '195 daqiqa (intensiv)', en: '195 minutes (intensive)' } },
     { key: '240', min: 240, label: { uz: '240 daqiqa — English Daily Discipline', en: '240 minutes — English Daily Discipline' } },
-    { key: 'custom', min: 0, label: { uz: 'Boshqa', en: 'Custom' } }
+    { key: 'custom', min: 0, label: { uz: 'Boşqa', en: 'Custom' } }
   ],
   defaultMode: '240',
   /* English Daily Discipline — 240 daqiqa, 7 qat'iy blok (o'quvchi bergan tartib).
      '240' rejimida kunlik reja shu bloklardan yasaladi; mazmun (studiya, kitob,
      kurs qismlari, xatolar banki) har blok ichida dalil asosida tanlanadi.    */
   discipline: [
-    { sk: 'vocab', min: 30, title: { uz: 'Vocabulary & Spaced Repetition', en: 'Vocabulary & Spaced Repetition' }, d: { uz: "Eski so'zlarni eslash, 10–15 ta yangi so'z, har birini gapda ishlatish", en: 'Recall old words, 10–15 new words, use each one in a sentence' } },
-    { sk: 'grammar', min: 35, title: { uz: 'Grammar', en: 'Grammar' }, d: { uz: "Bitta mavzuni o'rganish, misollar va mashqlar, xatolarni tuzatish", en: 'Study one topic, examples and exercises, fix the errors' } },
-    { sk: 'listening', min: 45, title: { uz: 'Listening & Shadowing', en: 'Listening & Shadowing' }, d: { uz: 'Audio tinglash, transcript bilan tekshirish va jumlalarni talaffuz bilan takrorlash', en: 'Listen to audio, check with the transcript and repeat sentences with pronunciation' } },
-    { sk: 'speaking', min: 45, title: { uz: 'Speaking', en: 'Speaking' }, d: { uz: 'Savollarga javob berish, 2–5 daqiqalik nutq, ovozingni tinglash va qayta gapirish', en: 'Answer questions, a 2–5 minute talk, listen to your recording and speak again' } },
-    { sk: 'reading', min: 35, title: { uz: 'Reading', en: 'Reading' }, d: { uz: "Darajangga mos matn o'qish, asosiy fikrni topish va yangi iboralarni ajratish", en: 'Read a level-appropriate text, find the main idea and pick out new phrases' } },
-    { sk: 'writing', min: 35, title: { uz: 'Writing', en: 'Writing' }, d: { uz: "Paragraf, kundalik yoki qisqa essay yozish; grammar va vocabulary'ni qo'llash", en: 'Write a paragraph, a journal entry or a short essay; apply the grammar and vocabulary' } },
-    { sk: 'review', min: 15, title: { uz: 'Active Recall & Daily Review', en: 'Active Recall & Daily Review' }, d: { uz: 'Bugungi mavzuni kitobsiz tushuntirish, mini-test va ertangi reja', en: "Explain today's topic without the book, a mini-test and tomorrow's plan" } }
+    { sk: 'vocab', min: 30, title: { uz: 'Vocabulary & Spaced Repetition', en: 'Vocabulary & Spaced Repetition' }, d: { uz: "Eski sözlarni eslaş, 10–15 ta yangi söz, har birini gapda işlatiş", en: 'Recall old words, 10–15 new words, use each one in a sentence' } },
+    { sk: 'grammar', min: 35, title: { uz: 'Grammar', en: 'Grammar' }, d: { uz: "Bitta mavzuni örganiş, misollar va maşqlar, xatolarni tuzatiş", en: 'Study one topic, examples and exercises, fix the errors' } },
+    { sk: 'listening', min: 45, title: { uz: 'Listening & Shadowing', en: 'Listening & Shadowing' }, d: { uz: 'Audio tinglaş, transcript bilan tekşiriş va jumlalarni talaffuz bilan takrorlaş', en: 'Listen to audio, check with the transcript and repeat sentences with pronunciation' } },
+    { sk: 'speaking', min: 45, title: { uz: 'Speaking', en: 'Speaking' }, d: { uz: 'Savollarga javob beriş, 2–5 daqiqalik nutq, ovozingni tinglaş va qayta gapiriş', en: 'Answer questions, a 2–5 minute talk, listen to your recording and speak again' } },
+    { sk: 'reading', min: 35, title: { uz: 'Reading', en: 'Reading' }, d: { uz: "Darajangga mos matn öqiş, asosiy fikrni topiş va yangi iboralarni ajratiş", en: 'Read a level-appropriate text, find the main idea and pick out new phrases' } },
+    { sk: 'writing', min: 35, title: { uz: 'Writing', en: 'Writing' }, d: { uz: "Paragraf, kundalik yoki qisqa essay yoziş; grammar va vocabulary'ni qöllaş", en: 'Write a paragraph, a journal entry or a short essay; apply the grammar and vocabulary' } },
+    { sk: 'review', min: 15, title: { uz: 'Active Recall & Daily Review', en: 'Active Recall & Daily Review' }, d: { uz: 'Bugungi mavzuni kitobsiz tuşuntiriş, mini-test va ertangi reja', en: "Explain today's topic without the book, a mini-test and tomorrow's plan" } }
   ],
   /* Standart intensiv taqsimot (jami 195) */
   split: { reading: 45, listening: 45, vocab: 30, grammar: 30, speaking: 30, review: 15 },
 
   skills: {
-    reading:   { icon: 'doc',        title: { uz: "O'qish (Reading)", en: 'Reading' } },
-    listening: { icon: 'headphones', title: { uz: 'Tinglash (Listening)', en: 'Listening' } },
-    vocab:     { icon: 'notebook',   title: { uz: "Lug'at", en: 'Vocabulary' } },
+    reading:   { icon: 'doc',        title: { uz: "Öqiş (Reading)", en: 'Reading' } },
+    listening: { icon: 'headphones', title: { uz: 'Tinglaş (Listening)', en: 'Listening' } },
+    vocab:     { icon: 'notebook',   title: { uz: "Luğat", en: 'Vocabulary' } },
     grammar:   { icon: 'pen',        title: { uz: 'Grammatika va Writing', en: 'Grammar & Writing' } },
     speaking:  { icon: 'mic',        title: { uz: 'Speaking', en: 'Speaking' } },
     review:    { icon: 'refresh',    title: { uz: 'Xatolar takrori', en: 'Error review' } }
@@ -74,78 +74,78 @@ window.MISSION_CFG = {
 
   /* Grammatika: brief'dagi 10 toifa + ENG_GRAMMAR_EX kalitlari */
   grammarCats: {
-    verbforms:    { title: { uz: "Fe'l shakllari", en: 'Verb forms' }, keys: ['passive', 'reported-speech', 'modals', 'future-forms', 'future-continuous', 'future-perfect', 'future-perfect-continuous', 'used-to-would', 'causative'] },
-    tenses:       { title: { uz: 'Present Perfect va zamon tanlash', en: 'Present perfect & tense choice' }, keys: ['present-perfect', 'present-perfect-continuous', 'present-simple', 'present-continuous', 'past-simple', 'past-continuous', 'past-perfect', 'past-perfect-continuous', 'present-simple-vs-continuous', 'tense-contrast'] },
-    conditionals: { title: { uz: 'Shart gaplar', en: 'Conditionals' }, keys: ['conditionals', 'wish-if-only'] },
+    verbforms:    { title: { uz: "Feʼl şakllari", en: 'Verb forms' }, keys: ['passive', 'reported-speech', 'modals', 'future-forms', 'future-continuous', 'future-perfect', 'future-perfect-continuous', 'used-to-would', 'causative'] },
+    tenses:       { title: { uz: 'Present Perfect va zamon tanlaş', en: 'Present perfect & tense choice' }, keys: ['present-perfect', 'present-perfect-continuous', 'present-simple', 'present-continuous', 'past-simple', 'past-continuous', 'past-perfect', 'past-perfect-continuous', 'present-simple-vs-continuous', 'tense-contrast'] },
+    conditionals: { title: { uz: 'Şart gaplar', en: 'Conditionals' }, keys: ['conditionals', 'wish-if-only'] },
     articles:     { title: { uz: 'Artikl va determinantlar', en: 'Articles & determiners' }, keys: ['articles', 'countable-uncountable', 'quantifiers'] },
-    sva:          { title: { uz: "Ega–kesim moslashuvi", en: 'Subject–verb agreement' }, keys: ['subject-verb-agreement'] },
+    sva:          { title: { uz: "Ega–kesim moslaşuvi", en: 'Subject–verb agreement' }, keys: ['subject-verb-agreement'] },
     prepositions: { title: { uz: 'Predloglar', en: 'Prepositions' }, keys: ['prepositions'] },
-    verbpatterns: { title: { uz: "Fe'l qoliplari", en: 'Verb patterns' }, keys: ['gerund-infinitive'] },
-    structure:    { title: { uz: 'Gap tuzilishi', en: 'Sentence structure' }, keys: ['questions', 'question-tags', 'inversion-emphasis', 'word-forms', 'comparatives', 'so-such-too-enough'] },
-    complex:      { title: { uz: "Qo'shma gaplar", en: 'Complex sentences' }, keys: ['complex-sentences', 'noun-clauses', 'adjective-clauses', 'adverb-clauses', 'participle-clauses', 'nominalisation'] },
-    punctuation:  { title: { uz: 'Tinish belgilari va bog\'lanish', en: 'Punctuation & linking' }, keys: ['conjunctions-punctuation', 'cohesion', 'hedging', 'formality', 'paraphrasing'] }
+    verbpatterns: { title: { uz: "Feʼl qoliplari", en: 'Verb patterns' }, keys: ['gerund-infinitive'] },
+    structure:    { title: { uz: 'Gap tuzilişi', en: 'Sentence structure' }, keys: ['questions', 'question-tags', 'inversion-emphasis', 'word-forms', 'comparatives', 'so-such-too-enough'] },
+    complex:      { title: { uz: "Qöşma gaplar", en: 'Complex sentences' }, keys: ['complex-sentences', 'noun-clauses', 'adjective-clauses', 'adverb-clauses', 'participle-clauses', 'nominalisation'] },
+    punctuation:  { title: { uz: 'Tiniş belgilari va boğlaniş', en: 'Punctuation & linking' }, keys: ['conjunctions-punctuation', 'cohesion', 'hedging', 'formality', 'paraphrasing'] }
   },
 
   /* Tinglashda xato sababi — o'quvchi har xato uchun tanlaydi */
   listenReasons: {
-    distractor: { uz: "Chalg'ituvchi javob (avval aytilib, keyin tuzatilgan)", en: 'Distractor (said first, then corrected)' },
+    distractor: { uz: "Çalğituvçi javob (avval aytilib, keyin tuzatilgan)", en: 'Distractor (said first, then corrected)' },
     paraphrase: { uz: 'Parafrazni tanimadim', en: 'Did not recognise the paraphrase' },
     numbers:    { uz: 'Raqam / ism / sana', en: 'Number / name / date' },
     spelling:   { uz: 'Imlo xatosi', en: 'Spelling' },
-    plural:     { uz: 'Birlik / ko\'plik', en: 'Singular / plural' },
-    connected:  { uz: "Tez nutq (so'zlar qo'shilib ketdi)", en: 'Connected speech (words ran together)' },
-    lost:       { uz: "Joyni yo'qotdim (keyingi savolga o'tib ketdi)", en: 'Lost my place' },
-    unknown:    { uz: "Tushunmadim / so'zni bilmayman", en: 'Did not understand / unknown word' }
+    plural:     { uz: 'Birlik / köplik', en: 'Singular / plural' },
+    connected:  { uz: "Tez nutq (sözlar qöşilib ketdi)", en: 'Connected speech (words ran together)' },
+    lost:       { uz: "Joyni yöqotdim (keyingi savolga ötib ketdi)", en: 'Lost my place' },
+    unknown:    { uz: "Tuşunmadim / sözni bilmayman", en: 'Did not understand / unknown word' }
   },
   /* O'qishda xato sababi */
   readReasons: {
     locate:     { uz: "Javob joyini topa olmadim", en: 'Could not locate the answer' },
     paraphrase: { uz: 'Parafrazni tanimadim', en: 'Did not recognise the paraphrase' },
-    ngfalse:    { uz: 'NOT GIVEN va FALSE ni aralashtirdim', en: 'Confused NOT GIVEN and FALSE' },
-    vocab:      { uz: "So'z ma'nosini bilmadim", en: 'Did not know a word' },
-    inference:  { uz: 'Xulosa (inference) noto\'g\'ri', en: 'Wrong inference' },
+    ngfalse:    { uz: 'NOT GIVEN va FALSE ni aralaştirdim', en: 'Confused NOT GIVEN and FALSE' },
+    vocab:      { uz: "Söz maʼnosini bilmadim", en: 'Did not know a word' },
+    inference:  { uz: 'Xulosa (inference) notöğri', en: 'Wrong inference' },
     time:       { uz: 'Vaqt yetmadi', en: 'Ran out of time' },
-    careless:   { uz: "E'tiborsizlik / ko'chirishda xato", en: 'Careless / copying error' }
+    careless:   { uz: "Eʼtiborsizlik / köçirişda xato", en: 'Careless / copying error' }
   },
   /* Writing annotatsiya toifalari (grammatika toifalari + mezonlar) */
   writeCats: {
     task:      { uz: 'Vazifaga javob (TA/TR)', en: 'Task response / achievement' },
-    coherence: { uz: 'Izchillik va bog\'lanish (CC)', en: 'Coherence & cohesion (CC)' },
-    lexical:   { uz: "Lug'at (LR)", en: 'Lexical resource (LR)' },
-    length:    { uz: "So'z soni / tuzilma", en: 'Length / structure' }
+    coherence: { uz: 'Izçillik va boğlaniş (CC)', en: 'Coherence & cohesion (CC)' },
+    lexical:   { uz: "Luğat (LR)", en: 'Lexical resource (LR)' },
+    length:    { uz: "Söz soni / tuzilma", en: 'Length / structure' }
   },
 
   /* Writing mezonlari — IELTS'ga mos (o'z-o'zini baholash savollari platforma uchun yozilgan) */
   criteria: {
     1: [
       { k: 'ta',  name: 'Task Achievement', qs: [
-        { uz: "Umumiy ko'rinish (overview) bormi — eng asosiy tendensiya 1–2 gapda?", en: 'Is there an overview — the main trend(s) in 1–2 sentences?' },
+        { uz: "Umumiy köriniş (overview) bormi — eng asosiy tendensiya 1–2 gapda?", en: 'Is there an overview — the main trend(s) in 1–2 sentences?' },
         { uz: "Asosiy xususiyatlar raqamlar bilan tanlab berilganmi (hammasi emas)?", en: 'Are key features selected and supported with figures (not every number)?' },
-        { uz: "Shaxsiy fikr yoki sabab qo'shilmaganmi?", en: 'No personal opinion or invented reasons?' } ] },
+        { uz: "Şaxsiy fikr yoki sabab qöşilmaganmi?", en: 'No personal opinion or invented reasons?' } ] },
       { k: 'cc',  name: 'Coherence and Cohesion', qs: [
-        { uz: "Ma'lumot mantiqiy guruhlanganmi (har abzats bitta guruh)?", en: 'Is information grouped logically (one group per paragraph)?' },
-        { uz: "Bog'lovchilar xilma-xil va ortiqcha emasmi?", en: 'Are linking devices varied and not overused?' } ] },
+        { uz: "Maʼlumot mantiqiy guruhlanganmi (har abzats bitta guruh)?", en: 'Is information grouped logically (one group per paragraph)?' },
+        { uz: "Boğlovçilar xilma-xil va ortiqça emasmi?", en: 'Are linking devices varied and not overused?' } ] },
       { k: 'lr',  name: 'Lexical Resource', qs: [
-        { uz: "O'zgarish va taqqoslash so'zlari xilma-xilmi (rise, decline, fluctuate…)?", en: 'Varied language of change and comparison (rise, decline, fluctuate…)?' },
-        { uz: "Imlo xatolari yo'qmi?", en: 'No spelling errors?' } ] },
+        { uz: "Özgariş va taqqoslaş sözlari xilma-xilmi (rise, decline, fluctuate…)?", en: 'Varied language of change and comparison (rise, decline, fluctuate…)?' },
+        { uz: "Imlo xatolari yöqmi?", en: 'No spelling errors?' } ] },
       { k: 'gra', name: 'Grammatical Range and Accuracy', qs: [
-        { uz: "Murakkab gaplar (while, whereas, which…) to'g'ri ishlatilganmi?", en: 'Complex sentences (while, whereas, which…) used correctly?' },
-        { uz: "Zamon va artikl xatolari yo'qmi?", en: 'No tense or article errors?' } ] }
+        { uz: "Murakkab gaplar (while, whereas, whiç…) töğri işlatilganmi?", en: 'Complex sentences (while, whereas, which…) used correctly?' },
+        { uz: "Zamon va artikl xatolari yöqmi?", en: 'No tense or article errors?' } ] }
     ],
     2: [
       { k: 'tr',  name: 'Task Response', qs: [
         { uz: "Savolning HAR qismiga javob berilganmi?", en: 'Is EVERY part of the question answered?' },
-        { uz: "Pozitsiya aniq va boshidan oxirigacha bir xilmi?", en: 'Is the position clear and consistent throughout?' },
-        { uz: "Har asosiy fikr tushuntirilgan va misol bilan kengaytirilganmi?", en: 'Is each main idea explained and extended with an example?' } ] },
+        { uz: "Pozitsiya aniq va boşidan oxirigaça bir xilmi?", en: 'Is the position clear and consistent throughout?' },
+        { uz: "Har asosiy fikr tuşuntirilgan va misol bilan kengaytirilganmi?", en: 'Is each main idea explained and extended with an example?' } ] },
       { k: 'cc',  name: 'Coherence and Cohesion', qs: [
         { uz: "Har abzatsda bitta markaziy fikr va topic sentence bormi?", en: 'Does each paragraph have one central idea and a topic sentence?' },
-        { uz: "Bog'lanish tabiiymi (this + ot, which…), faqat 'Firstly/Moreover' emasmi?", en: 'Is cohesion natural (this + noun, which…), not just "Firstly/Moreover"?' } ] },
+        { uz: "Boğlaniş tabiiymi (this + ot, whiç…), faqat 'Firstly/Moreover' emasmi?", en: 'Is cohesion natural (this + noun, which…), not just "Firstly/Moreover"?' } ] },
       { k: 'lr',  name: 'Lexical Resource', qs: [
-        { uz: "Mavzuga oid aniq so'zlar va to'g'ri kollokatsiyalar bormi?", en: 'Precise topic vocabulary and correct collocations?' },
-        { uz: "Savoldagi so'zlar parafraz qilinganmi (ko'chirilmagan)?", en: 'Are the question words paraphrased (not copied)?' } ] },
+        { uz: "Mavzuga oid aniq sözlar va töğri kollokatsiyalar bormi?", en: 'Precise topic vocabulary and correct collocations?' },
+        { uz: "Savoldagi sözlar parafraz qilinganmi (köçirilmagan)?", en: 'Are the question words paraphrased (not copied)?' } ] },
       { k: 'gra', name: 'Grammatical Range and Accuracy', qs: [
-        { uz: "Murakkab tuzilmalar xilma-xilmi (shart, nisbiy, passiv)?", en: 'A range of complex structures (conditional, relative, passive)?' },
-        { uz: "Ko'p gaplar xatosizmi? (o'z xatolar bankingizdagi toifalarni tekshiring)", en: 'Are most sentences error-free? (check the categories in your error bank)' } ] }
+        { uz: "Murakkab tuzilmalar xilma-xilmi (şart, nisbiy, passiv)?", en: 'A range of complex structures (conditional, relative, passive)?' },
+        { uz: "Köp gaplar xatosizmi? (öz xatolar bankingizdagi toifalarni tekşiring)", en: 'Are most sentences error-free? (check the categories in your error bank)' } ] }
     ]
   },
 
@@ -217,12 +217,12 @@ window.MISSION_CFG = {
   /* Boshlang'ich profil — brief'da o'quvchi bergan DASTLABKI ko'rsatkichlar.
      Rasmiy emas; ishonch past; yangi dalil kelganda ularning o'rnini egallaydi. */
   prelim: [
-    { skill: 'reading',  kind: 'quiz', score: 5, total: 5, note: { uz: "Qisqa o'qish testi (dastlabki)", en: 'Short reading check (preliminary)' } },
+    { skill: 'reading',  kind: 'quiz', score: 5, total: 5, note: { uz: "Qisqa öqiş testi (dastlabki)", en: 'Short reading check (preliminary)' } },
     { skill: 'grammar',  kind: 'quiz', score: 2, total: 5, note: { uz: 'Qisqa grammatika testi (dastlabki)', en: 'Short grammar check (preliminary)' } },
-    { skill: 'writing',  kind: 'note', note: { uz: "Qisqa javob: tuzilma aniq, lekin Task 2 bahosi uchun juda qisqa", en: 'Short response: clear organisation, too short to represent a Task 2 assessment' } },
-    { skill: 'grammar',  kind: 'note', note: { uz: "Oldingi feedback: grammatik aniqlik va gap tuzish — yaxshilash kerak", en: 'Earlier feedback: grammar accuracy and sentence construction need work' } },
-    { skill: 'speaking', kind: 'note', note: { uz: "Fikr bildirish va argument tuzish yaxshi; to'liq baholanmagan", en: 'Expresses opinions and organises arguments; not fully assessed' } },
-    { skill: 'listening', kind: 'note', note: { uz: "To'liq baholanmagan", en: 'Not fully assessed' } }
+    { skill: 'writing',  kind: 'note', note: { uz: "Qisqa javob: tuzilma aniq, lekin Task 2 bahosi uçun juda qisqa", en: 'Short response: clear organisation, too short to represent a Task 2 assessment' } },
+    { skill: 'grammar',  kind: 'note', note: { uz: "Oldingi feedback: grammatik aniqlik va gap tuziş — yaxşilaş kerak", en: 'Earlier feedback: grammar accuracy and sentence construction need work' } },
+    { skill: 'speaking', kind: 'note', note: { uz: "Fikr bildiriş va argument tuziş yaxşi; töliq baholanmagan", en: 'Expresses opinions and organises arguments; not fully assessed' } },
+    { skill: 'listening', kind: 'note', note: { uz: "Töliq baholanmagan", en: 'Not fully assessed' } }
   ],
   interests: ['technology', 'AI', 'coding', 'education']
 };

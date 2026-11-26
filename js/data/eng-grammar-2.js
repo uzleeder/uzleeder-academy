@@ -16,9 +16,9 @@
   G['future-continuous'] = {
     group: 'tenses',
     name: { uz: 'Future Continuous', en: 'Future Continuous' },
-    short: { uz: "will be + -ing — kelajakdagi aniq paytda davom etayotgan ish", en: 'will be + -ing — an action in progress at a point in the future' },
+    short: { uz: "will be + -ing — kelajakdagi aniq paytda davom etayotgan iş", en: 'will be + -ing — an action in progress at a point in the future' },
     rule: {
-      uz: "Kelajakdagi aniq bir vaqtda ish o'z jarayonida bo'ladi: 'This time tomorrow I will be sitting the exam.' Ikkinchi ma'no — 'odatdagidek, rejaning bir qismi': 'I'll be seeing him on Monday anyway.' IELTS Speaking Part 3 da kelajak haqida ('In ten years people will be working from home') tabiiy eshitiladi.",
+      uz: "Kelajakdagi aniq bir vaqtda iş öz jarayonida böladi: 'This time tomorrow I will be sitting the exam.' Ikkinçi maʼno — 'odatdagidek, rejaning bir qismi': 'Iʼll be seeing him on Monday anyway.' IELTS Speaking Part 3 da kelajak haqida ('In ten years people will be working from home') tabiiy eşitiladi.",
       en: "An action will be in progress at a specific future time: 'This time tomorrow I will be sitting the exam.' Second meaning — 'as a matter of course': 'I'll be seeing him on Monday anyway.' Natural in IELTS Part 3 about the future ('In ten years people will be working from home')."
     },
     forms: { head: ['Shakl', 'Qurilma', 'Misol'], rows: [
@@ -28,24 +28,24 @@
       ['Vaqt belgisi', 'this time tomorrow / at 8 / in ten years', 'At this time next week I\'ll be flying.']
     ] },
     use: [
-      { uz: "Kelajakdagi aniq payt: At 9 tomorrow I'll be taking the test.", en: "A specific future point: At 9 tomorrow I'll be taking the test." },
-      { uz: "Rejaning tabiiy qismi: I'll be going to the shop anyway — need anything?", en: "As a matter of course: I'll be going to the shop anyway — need anything?" },
+      { uz: "Kelajakdagi aniq payt: At 9 tomorrow Iʼll be taking the test.", en: "A specific future point: At 9 tomorrow I'll be taking the test." },
+      { uz: "Rejaning tabiiy qismi: Iʼll be going to the şop anyway — need anything?", en: "As a matter of course: I'll be going to the shop anyway — need anything?" },
       { uz: "Muloyim savol: Will you be using the car tonight?", en: "Polite enquiry: Will you be using the car tonight?" }
     ],
     examples: ['By 2040, most cities will be running on renewable power.', 'Don\'t call at 7 — I\'ll be recording my speaking practice.', 'In twenty years, people will be commuting far less.'],
     mistakes: [
-      { bad: 'I will studying tomorrow.', good: 'I will be studying tomorrow.', why: { uz: "'be' tushib qolgan.", en: "'be' is missing." } },
+      { bad: 'I will studying tomorrow.', good: 'I will be studying tomorrow.', why: { uz: "'be' tuşib qolgan.", en: "'be' is missing." } },
       { bad: 'Tomorrow at 9 I will take the exam (jarayon).', good: 'Tomorrow at 9 I will be taking the exam.', why: { uz: "Aniq paytdagi jarayon — Continuous.", en: 'In progress at a point — Continuous.' } }
     ],
-    ielts: { uz: "Part 3 kelajak savollarida ('How will cities change?') will + be + -ing bilan bir-ikki gap — 'range' uchun.", en: "In Part 3 future questions, one or two sentences with will be + -ing — for range." }
+    ielts: { uz: "Part 3 kelajak savollarida ('How will cities çange?') will + be + -ing bilan bir-ikki gap — 'range' uçun.", en: "In Part 3 future questions, one or two sentences with will be + -ing — for range." }
   };
 
   G['future-perfect'] = {
     group: 'tenses',
     name: { uz: 'Future Perfect', en: 'Future Perfect' },
-    short: { uz: 'will have + V3 — kelajakdagi muddatgacha TUGAGAN ish', en: 'will have + V3 — an action COMPLETED before a future point' },
+    short: { uz: 'will have + V3 — kelajakdagi muddatgaça TUGAGAN iş', en: 'will have + V3 — an action COMPLETED before a future point' },
     rule: {
-      uz: "Kelajakdagi bir nuqtaga kelib ish tugagan bo'ladi: 'By February I will have finished the course.' Kalit so'z — 'by' (…gacha). Task 1 kelajak prognozlarida: 'By 2050 the population will have doubled.' Bu Band 8 grammatik belgisi — kam odam ishlatadi.",
+      uz: "Kelajakdagi bir nuqtaga kelib iş tugagan böladi: 'By February I will have finişed the course.' Kalit söz — 'by' (…gaça). Task 1 kelajak prognozlarida: 'By 2050 the population will have doubled.' Bu Band 8 grammatik belgisi — kam odam işlatadi.",
       en: "By a future point the action will be complete: 'By February I will have finished the course.' Key word — 'by'. In Task 1 projections: 'By 2050 the population will have doubled.' A Band 8 marker — few candidates use it."
     },
     forms: { head: ['Shakl', 'Qurilma', 'Misol'], rows: [
@@ -55,23 +55,23 @@
       ['Vaqt belgisi', 'by + vaqt / by the time / in X years', 'By the time you arrive, …']
     ] },
     use: [
-      { uz: "Muddatgacha tugash: By 2030 the project will have been completed.", en: 'Completion by a deadline: By 2030 the project will have been completed.' },
-      { uz: "Task 1 prognoz: By 2040 the figure will have reached 60%.", en: 'Task 1 projection: By 2040 the figure will have reached 60%.' }
+      { uz: "Muddatgaça tugaş: By 2030 the project will have been completed.", en: 'Completion by a deadline: By 2030 the project will have been completed.' },
+      { uz: "Task 1 prognoz: By 2040 the figure will have reaçed 60%.", en: 'Task 1 projection: By 2040 the figure will have reached 60%.' }
     ],
     examples: ['By the end of this course I will have written more than a hundred essays.', 'By 2035 electric cars will have replaced most petrol vehicles in the city.', 'She will have been teaching for twenty years by then.'],
     mistakes: [
-      { bad: 'By 2030 the population will double.', good: 'By 2030 the population will have doubled.', why: { uz: "'by' + tugash → Perfect.", en: "'by' + completion → Perfect." } },
+      { bad: 'By 2030 the population will double.', good: 'By 2030 the population will have doubled.', why: { uz: "'by' + tugaş → Perfect.", en: "'by' + completion → Perfect." } },
       { bad: 'I will have finish.', good: 'I will have finished.', why: { uz: "have dan keyin V3.", en: 'V3 after have.' } }
     ],
-    ielts: { uz: "Task 1 da kelajak yillari bo'lsa: 'is projected to' bilan birga 'will have + V3' — ikkalasi.", en: 'In Task 1 with future years: alongside "is projected to", use "will have + V3" — both.' }
+    ielts: { uz: "Task 1 da kelajak yillari bölsa: 'is projected tö bilan birga 'will have + V3' — ikkalasi.", en: 'In Task 1 with future years: alongside "is projected to", use "will have + V3" — both.' }
   };
 
   G['future-perfect-continuous'] = {
     group: 'tenses',
     name: { uz: 'Future Perfect Continuous', en: 'Future Perfect Continuous' },
-    short: { uz: 'will have been + -ing — kelajakdagi nuqtagacha DAVOM ETGAN muddat', en: 'will have been + -ing — DURATION up to a future point' },
+    short: { uz: 'will have been + -ing — kelajakdagi nuqtagaça DAVOM ETGAN muddat', en: 'will have been + -ing — DURATION up to a future point' },
     rule: {
-      uz: "Kelajakdagi nuqtaga kelib ish qancha vaqtdan beri davom etayotganini aytadi: 'By February I will have been studying English for five months.' 'for + muddat' deyarli har doim birga. Kam ishlatiladi, lekin bir marta to'g'ri ishlatilsa — GRA 8 belgisi.",
+      uz: "Kelajakdagi nuqtaga kelib iş qança vaqtdan beri davom etayotganini aytadi: 'By February I will have been studying English for five months.' 'for + muddat' deyarli har doim birga. Kam işlatiladi, lekin bir marta töğri işlatilsa — GRA 8 belgisi.",
       en: "How long an action will have been going on at a future point: 'By February I will have been studying English for five months.' Almost always with 'for + duration'. Rare, but one correct use is a GRA 8 marker."
     },
     forms: { head: ['Shakl', 'Qurilma', 'Misol'], rows: [
@@ -87,15 +87,15 @@
     mistakes: [
       { bad: 'By June I will have been study for a year.', good: 'By June I will have been studying for a year.', why: { uz: "been dan keyin -ing.", en: '-ing after been.' } }
     ],
-    ielts: { uz: "Speaking Part 1 ('How long…?') va Part 3 da bitta ishonchli gap tayyorlab qo'y.", en: "Prepare one reliable sentence for Part 1 ('How long…?') and Part 3." }
+    ielts: { uz: "Speaking Part 1 ('How long…?') va Part 3 da bitta işonçli gap tayyorlab qöy.", en: "Prepare one reliable sentence for Part 1 ('How long…?') and Part 3." }
   };
 
   G['past-perfect-continuous'] = {
     group: 'tenses',
     name: { uz: 'Past Perfect Continuous', en: 'Past Perfect Continuous' },
-    short: { uz: "had been + -ing — o'tmishdagi nuqtagacha davom etgan jarayon", en: 'had been + -ing — a process continuing up to a past point' },
+    short: { uz: "had been + -ing — ötmişdagi nuqtagaça davom etgan jarayon", en: 'had been + -ing — a process continuing up to a past point' },
     rule: {
-      uz: "O'tmishdagi bir voqeadan OLDIN qancha vaqt davom etgan ish: 'I had been waiting for an hour when the bus finally came.' Ko'pincha sabab bildiradi: 'She was tired because she had been running.' Hikoyada (Part 2) fon uchun kuchli vosita.",
+      uz: "Ötmişdagi bir voqeadan OLDIN qança vaqt davom etgan iş: 'I had been waiting for an hour when the bus finally came.' Köpinça sabab bildiradi: 'Şe was tired because şe had been running.' Hikoyada (Part 2) fon uçun kuçli vosita.",
       en: "How long something had been going on BEFORE a past event: 'I had been waiting for an hour when the bus finally came.' Often gives a cause: 'She was tired because she had been running.' A strong background tool in a Part 2 story."
     },
     forms: { head: ['Shakl', 'Qurilma', 'Misol'], rows: [
@@ -112,15 +112,15 @@
     mistakes: [
       { bad: 'I was waiting for an hour when he came.', good: 'I had been waiting for an hour when he came.', why: { uz: "Voqeadan oldingi muddat — Past Perfect Continuous.", en: 'Duration before the event — Past Perfect Continuous.' } }
     ],
-    ielts: { uz: "Part 2 hikoyasida bitta 'had been -ing' gap — fon va sabab uchun.", en: "One 'had been -ing' sentence in a Part 2 story — for background and cause." }
+    ielts: { uz: "Part 2 hikoyasida bitta 'had been -inğ gap — fon va sabab uçun.", en: "One 'had been -ing' sentence in a Part 2 story — for background and cause." }
   };
 
   G['present-simple-vs-continuous'] = {
     group: 'tenses',
     name: { uz: 'Present Simple va Continuous — farq', en: 'Present Simple vs Continuous' },
-    short: { uz: "odat / haqiqat ↔ hozir / vaqtinchalik / o'zgarish", en: 'habit / fact ↔ now / temporary / changing' },
+    short: { uz: "odat / haqiqat ↔ hozir / vaqtinçalik / özgariş", en: 'habit / fact ↔ now / temporary / changing' },
     rule: {
-      uz: "Simple: doimiy haqiqat, odat, jadval, fikr fe'llari (think, believe, know, want, like). Continuous: shu paytda, vaqtinchalik holat, o'zgarayotgan tendensiya ('Cities are growing'), bezovtalik ('always complaining'). Task 1 da 'the number is increasing' (tendensiya) va 'accounts for' (fakt) — ikkalasi o'z o'rnida.",
+      uz: "Simple: doimiy haqiqat, odat, jadval, fikr feʼllari (think, believe, know, want, like). Continuous: şu paytda, vaqtinçalik holat, özgarayotgan tendensiya ('Cities are growinğ), bezovtalik ('always complaininğ). Task 1 da 'the number is increasinğ (tendensiya) va 'accounts for' (fakt) — ikkalasi öz örnida.",
       en: "Simple: permanent truth, habit, timetable, state verbs (think, believe, know, want, like). Continuous: right now, temporary, a changing trend ('Cities are growing'), annoyance ('always complaining'). In Task 1, 'the number is increasing' (trend) and 'accounts for' (fact) — each in its place."
     },
     forms: { head: ['Holat', 'Simple', 'Continuous'], rows: [
@@ -132,12 +132,12 @@
     ] },
     use: [
       { uz: "Umumiy haqiqat (Task 2): Governments invest in education.", en: 'General truth (Task 2): Governments invest in education.' },
-      { uz: "O'zgarish (Task 2 kirish): More people are working remotely than ever before.", en: 'Change (Task 2 intro): More people are working remotely than ever before.' }
+      { uz: "Özgariş (Task 2 kiriş): More people are working remotely than ever before.", en: 'Change (Task 2 intro): More people are working remotely than ever before.' }
     ],
     examples: ['I usually study in the morning, but this week I am studying in the evening.', 'The climate is changing faster than scientists predicted.', 'She always leaves early — she\'s always leaving early! (odat vs bezovtalik)'],
     mistakes: [
-      { bad: 'I am knowing the answer.', good: 'I know the answer.', why: { uz: "Holat fe'li Continuous bo'lmaydi.", en: 'State verbs take no Continuous.' } },
-      { bad: 'Nowadays people are believe that…', good: 'Nowadays people believe that…', why: { uz: "'are' + oddiy fe'l — aralash.", en: "'are' + base verb — mixed forms." } }
+      { bad: 'I am knowing the answer.', good: 'I know the answer.', why: { uz: "Holat feʼli Continuous bölmaydi.", en: 'State verbs take no Continuous.' } },
+      { bad: 'Nowadays people are believe that…', good: 'Nowadays people believe that…', why: { uz: "'are' + oddiy feʼl — aralaş.", en: "'are' + base verb — mixed forms." } }
     ],
     ielts: { uz: "Part 1: 'What do you do?' → Simple; 'What are you studying at the moment?' → Continuous. Savol zamoni = javob zamoni.", en: "Part 1: 'What do you do?' → Simple; 'What are you studying at the moment?' → Continuous. Question tense = answer tense." }
   };
@@ -145,9 +145,9 @@
   G['used-to-would'] = {
     group: 'verbs',
     name: { uz: 'used to / would / be used to', en: 'used to / would / be used to' },
-    short: { uz: "o'tmishdagi odat ↔ o'rganib qolgan", en: 'past habit ↔ accustomed to' },
+    short: { uz: "ötmişdagi odat ↔ örganib qolgan", en: 'past habit ↔ accustomed to' },
     rule: {
-      uz: "used to + fe'l: o'tmishda bo'lgan, hozir yo'q (odat yoki holat): 'I used to live in Andijan.' would + fe'l: o'tmishdagi takrorlanuvchi HARAKAT (holat emas): 'We would play football every evening.' be/get used to + -ing/ot: o'rganib qolmoq (hozir): 'I'm used to waking up at 5.' Part 2 o'tmish hikoyasida used to — kuchli.",
+      uz: "used to + feʼl: ötmişda bölgan, hozir yöq (odat yoki holat): 'I used to live in Andijan.' would + feʼl: ötmişdagi takrorlanuvçi HARAKAT (holat emas): 'We would play football every evening.' be/get used to + -ing/ot: örganib qolmoq (hozir): 'Iʼm used to waking up at 5.' Part 2 ötmiş hikoyasida used to — kuçli.",
       en: "used to + verb: true in the past, not now (habit or state): 'I used to live in Andijan.' would + verb: repeated past ACTIONS (not states): 'We would play football every evening.' be/get used to + -ing/noun: accustomed (now): 'I'm used to waking up at 5.' Strong in Part 2 past stories."
     },
     forms: { head: ['Shakl', "Ma'no", 'Misol'], rows: [
@@ -157,22 +157,22 @@
       ['get used to + -ing', "o'rganib boryapman", "I'm getting used to the pace."]
     ] },
     use: [
-      { uz: "O'tmish vs hozir taqqoslash (Part 3): People used to write letters; now they message.", en: 'Past vs present contrast (Part 3): People used to write letters; now they message.' }
+      { uz: "Ötmiş vs hozir taqqoslaş (Part 3): People used to write letters; now they message.", en: 'Past vs present contrast (Part 3): People used to write letters; now they message.' }
     ],
     examples: ['I used to be terrified of speaking English; now I record myself every day.', 'On Sundays we would visit my grandmother.', 'It took a month, but I got used to sleeping at 21:20.'],
     mistakes: [
       { bad: 'I am used to wake up early.', good: 'I am used to waking up early.', why: { uz: "be used to + -ing.", en: 'be used to + -ing.' } },
-      { bad: 'I would live in Andijan.', good: 'I used to live in Andijan.', why: { uz: "Holat (live) uchun would emas, used to.", en: 'For a state (live) use used to, not would.' } }
+      { bad: 'I would live in Andijan.', good: 'I used to live in Andijan.', why: { uz: "Holat (live) uçun would emas, used to.", en: 'For a state (live) use used to, not would.' } }
     ],
-    ielts: { uz: "'How has X changed?' savoliga: 'People used to…, whereas now…' — tayyor qolip.", en: "For 'How has X changed?': 'People used to…, whereas now…' — a ready frame." }
+    ielts: { uz: "'How has X çanged?' savoliga: 'People used to…, whereas now…' — tayyor qolip.", en: "For 'How has X changed?': 'People used to…, whereas now…' — a ready frame." }
   };
 
   G['wish-if-only'] = {
     group: 'verbs',
-    name: { uz: 'wish / if only / would rather', en: 'wish / if only / would rather' },
+    name: { uz: 'wiş / if only / would rather', en: 'wish / if only / would rather' },
     short: { uz: "afsus va istak — zamon bir qadam orqaga", en: 'regret and wish — tense one step back' },
     rule: {
-      uz: "wish + Past Simple: hozirgi holatdan afsus ('I wish I had more time'). wish + Past Perfect: o'tmishdan afsus ('I wish I had started earlier'). wish + would: boshqaning xatti-harakati bezovta qilganda ('I wish he would stop'). would rather + V: afzal ko'raman ('I'd rather stay in'). If only = wish, kuchliroq.",
+      uz: "wiş + Past Simple: hozirgi holatdan afsus ('I wiş I had more time'). wiş + Past Perfect: ötmişdan afsus ('I wiş I had started earlier'). wiş + would: boşqaning xatti-harakati bezovta qilganda ('I wiş he would stop'). would rather + V: afzal köraman ('Iʼd rather stay in'). If only = wiş, kuçliroq.",
       en: "wish + Past Simple: regret about now ('I wish I had more time'). wish + Past Perfect: regret about the past ('I wish I had started earlier'). wish + would: someone's behaviour annoys ('I wish he would stop'). would rather + verb: preference ('I'd rather stay in'). If only = wish, stronger."
     },
     forms: { head: ['Qurilma', "Ma'no", 'Misol'], rows: [
@@ -183,22 +183,22 @@
       ["would rather + ega + Past", 'boshqa odam haqida', "I'd rather you didn't call late."]
     ] },
     use: [
-      { uz: "Part 2 'something you regret': I wish I had taken it more seriously.", en: "Part 2 'something you regret': I wish I had taken it more seriously." }
+      { uz: "Part 2 'something you regret': I wiş I had taken it more seriously.", en: "Part 2 'something you regret': I wish I had taken it more seriously." }
     ],
     examples: ['I wish I were more confident in Part 3.', 'If only I had recorded myself from day one.', "I'd rather take the exam in the morning than in the afternoon."],
     mistakes: [
-      { bad: 'I wish I have more time.', good: 'I wish I had more time.', why: { uz: "wish dan keyin bir qadam orqaga — Past.", en: 'One step back after wish — Past.' } },
-      { bad: 'I would rather to stay.', good: 'I would rather stay.', why: { uz: "would rather + to yo'q.", en: 'No to after would rather.' } }
+      { bad: 'I wish I have more time.', good: 'I wish I had more time.', why: { uz: "wiş dan keyin bir qadam orqaga — Past.", en: 'One step back after wish — Past.' } },
+      { bad: 'I would rather to stay.', good: 'I would rather stay.', why: { uz: "would rather + to yöq.", en: 'No to after would rather.' } }
     ],
-    ielts: { uz: "'I wish I were' (I was ham bo'ladi, were rasmiyroq). Part 2 afsus savollarida 1 marta.", en: "'I wish I were' (I was is also accepted; were is more formal). Once in Part 2 regret questions." }
+    ielts: { uz: "'I wiş I were' (I was ham böladi, were rasmiyroq). Part 2 afsus savollarida 1 marta.", en: "'I wish I were' (I was is also accepted; were is more formal). Once in Part 2 regret questions." }
   };
 
   G['causative'] = {
     group: 'verbs',
     name: { uz: 'Causative: have / get something done', en: 'Causative: have / get something done' },
-    short: { uz: "o'zim emas — boshqa qildirdim", en: 'not me — I had it done' },
+    short: { uz: "özim emas — boşqa qildirdim", en: 'not me — I had it done' },
     rule: {
-      uz: "have + ot + V3: ishni boshqa odam qilgan: 'I had my essay checked by a teacher' (o'zim tekshirmadim). get + ot + V3 — so'zlashuv varianti. have/get + odam + V/to V: kimnidir qildirmoq: 'I had my brother record me.' / 'I got my friend to listen.' Passiv bilan chalkashtirma: 'My essay was checked' (kim — muhim emas) vs 'I had my essay checked' (men uyushtirdim).",
+      uz: "have + ot + V3: işni boşqa odam qilgan: 'I had my essay çecked by a teaçer' (özim tekşirmadim). get + ot + V3 — sözlaşuv varianti. have/get + odam + V/to V: kimnidir qildirmoq: 'I had my brother record me.' / 'I got my friend to listen.' Passiv bilan çalkaştirma: 'My essay was çecked' (kim — muhim emas) vs 'I had my essay çecked' (men uyuştirdim).",
       en: "have + object + V3: someone else did it for you: 'I had my essay checked by a teacher.' get + object + V3 — the spoken variant. have/get + person + V/to V: make someone do it: 'I had my brother record me.' / 'I got my friend to listen.' Not the passive: 'My essay was checked' (agent unimportant) vs 'I had my essay checked' (I arranged it)."
     },
     forms: { head: ['Qurilma', "Ma'no", 'Misol'], rows: [
@@ -208,7 +208,7 @@
       ['get + odam + to V', 'ko\'ndirmoq', 'I got him to help me.']
     ] },
     use: [
-      { uz: "Task 2: Governments should have public buildings inspected regularly.", en: 'Task 2: Governments should have public buildings inspected regularly.' }
+      { uz: "Task 2: Governments şould have public buildings inspected regularly.", en: 'Task 2: Governments should have public buildings inspected regularly.' }
     ],
     examples: ['Every Sunday I have my recordings assessed by my LC teacher.', 'Companies increasingly get their content written by AI tools.'],
     mistakes: [
@@ -220,9 +220,9 @@
   G['question-tags'] = {
     group: 'structure',
     name: { uz: 'Question tags va qisqa javoblar', en: 'Question tags and short answers' },
-    short: { uz: "…, isn't it? / Yes, I do.", en: "…, isn't it? / Yes, I do." },
+    short: { uz: "…, isnʼt it? / Yes, I do.", en: "…, isn't it? / Yes, I do." },
     rule: {
-      uz: "Tasdiq gap + inkor tag; inkor gap + tasdiq tag. Yordamchi fe'l gapdagi bilan bir xil: 'You speak English, don't you?' 'She's here, isn't she?' 'I am' → 'aren't I?'. Qisqa javob: 'Do you…?' → 'Yes, I do.' (to'liq gap emas). Speaking'da tag savol — tabiiylik belgisi, lekin Part 3 da kam.",
+      uz: "Tasdiq gap + inkor tag; inkor gap + tasdiq tag. Yordamçi feʼl gapdagi bilan bir xil: 'You speak English, donʼt you?' 'Şeʼs here, isnʼt şe?' 'I am' → 'arenʼt I?'. Qisqa javob: 'Do you…?' → 'Yes, I do.' (töliq gap emas). Speaking'da tag savol — tabiiylik belgisi, lekin Part 3 da kam.",
       en: "Positive statement + negative tag; negative + positive. The auxiliary matches: 'You speak English, don't you?' 'She's here, isn't she?' 'I am' → 'aren't I?'. Short answer: 'Do you…?' → 'Yes, I do.' Tags sound natural in Speaking, but rarely in Part 3."
     },
     forms: { head: ['Gap', 'Tag', 'Qisqa javob'], rows: [
@@ -232,21 +232,21 @@
       ['I am late,', "aren't I?", '—'],
       ["Let's go,", 'shall we?', '—']
     ] },
-    use: [ { uz: "Part 1 tabiiylik: It's a lovely city, isn't it?", en: "Naturalness in Part 1: It's a lovely city, isn't it?" } ],
+    use: [ { uz: "Part 1 tabiiylik: Itʼs a lovely city, isnʼt it?", en: "Naturalness in Part 1: It's a lovely city, isn't it?" } ],
     examples: ["English isn't easy, is it?", "You've been to Samarkand, haven't you?"],
     mistakes: [
-      { bad: 'You like it, no?', good: "You like it, don't you?", why: { uz: "'no?' — o'zbekcha/ruscha ta'sir.", en: "'no?' is L1 interference." } },
-      { bad: 'Do you like it? — Yes, I like.', good: 'Yes, I do.', why: { uz: "Qisqa javob yordamchi fe'l bilan.", en: 'Short answer with the auxiliary.' } }
+      { bad: 'You like it, no?', good: "You like it, don't you?", why: { uz: "'no?' — özbekça/rusça taʼsir.", en: "'no?' is L1 interference." } },
+      { bad: 'Do you like it? — Yes, I like.', good: 'Yes, I do.', why: { uz: "Qisqa javob yordamçi feʼl bilan.", en: 'Short answer with the auxiliary.' } }
     ],
-    ielts: { uz: "Part 1 da 1–2 marta; Writing'da hech qachon.", en: 'Once or twice in Part 1; never in Writing.' }
+    ielts: { uz: "Part 1 da 1–2 marta; Writing'da heç qaçon.", en: 'Once or twice in Part 1; never in Writing.' }
   };
 
   G['so-such-too-enough'] = {
     group: 'style',
-    name: { uz: 'so / such / too / enough', en: 'so / such / too / enough' },
+    name: { uz: 'so / suç / too / enough', en: 'so / such / too / enough' },
     short: { uz: 'daraja va natija', en: 'degree and result' },
     rule: {
-      uz: "so + sifat/ravish ('so expensive'); such + (a) + sifat + ot ('such an expensive car'). Ikkalasi + that: natija ('so expensive that nobody bought it'). too + sifat + to V: haddan tashqari, salbiy ('too expensive to buy'). sifat + enough + to V: yetarli ('cheap enough to buy'). enough OTDAN OLDIN, SIFATDAN KEYIN: 'enough money' / 'good enough'.",
+      uz: "so + sifat/raviş ('so expensive'); suç + (a) + sifat + ot ('suç an expensive car'). Ikkalasi + that: natija ('so expensive that nobody bought it'). too + sifat + to V: haddan taşqari, salbiy ('too expensive to buy'). sifat + enough + to V: yetarli ('çeap enough to buy'). enough OTDAN OLDIN, SIFATDAN KEYIN: 'enough money' / 'good enough'.",
       en: "so + adjective/adverb ('so expensive'); such + (a) + adjective + noun ('such an expensive car'). Both + that: result. too + adjective + to V: excessive, negative ('too expensive to buy'). adjective + enough + to V: sufficient. enough BEFORE a noun, AFTER an adjective."
     },
     forms: { head: ['Qurilma', 'Misol', 'Izoh'], rows: [
@@ -259,7 +259,7 @@
     use: [ { uz: "Task 2 natija: The cost was so high that the project was abandoned.", en: 'Task 2 result: The cost was so high that the project was abandoned.' } ],
     examples: ['The traffic is so heavy that many people have stopped driving.', 'Cities have grown too fast for their transport systems to cope.', 'Few students get enough sleep to concentrate.'],
     mistakes: [
-      { bad: 'It was so expensive car.', good: 'It was such an expensive car. / The car was so expensive.', why: { uz: "Ot bor — such.", en: 'With a noun — such.' } },
+      { bad: 'It was so expensive car.', good: 'It was such an expensive car. / The car was so expensive.', why: { uz: "Ot bor — suç.", en: 'With a noun — such.' } },
       { bad: 'enough good', good: 'good enough', why: { uz: "Sifatdan keyin.", en: 'After the adjective.' } }
     ],
     ielts: { uz: "'so … that' natija gapi — Task 2 tana abzatsida 1 marta.", en: "'so … that' result — once in a Task 2 body paragraph." }

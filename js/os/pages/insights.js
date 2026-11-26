@@ -30,7 +30,7 @@
     ['all',    { uz: 'Umumiy', en: 'Overall' }],
     ['ielts',  { uz: 'IELTS', en: 'IELTS' }],
     ['coding', { uz: 'Coding', en: 'Coding' }],
-    ['vocab',  { uz: 'Lugʻat', en: 'Vocabulary' }]
+    ['vocab',  { uz: 'Luğat', en: 'Vocabulary' }]
   ];
 
   var scope = 'all';
@@ -48,18 +48,18 @@
     var m = OS.data.minutesRange(r.from, r.to);
     if (!m.total) {
       return '<section class="os-card">' +
-        '<div class="os-eyebrow">' + esc(L({ uz: 'Oʻquv vaqti', en: 'Study time' })) + '</div>' +
+        '<div class="os-eyebrow">' + esc(L({ uz: 'Öquv vaqti', en: 'Study time' })) + '</div>' +
         sh().empty(L({ uz: 'Vaqt yozilmagan', en: 'No time recorded' }),
-          L({ uz: 'Bu yerda faqat oʻlchangan yoki qoʻlda yozilgan vaqt koʻrsatiladi — rejadagi daqiqalar emas.',
+          L({ uz: 'Bu yerda faqat ölçangan yoki qölda yozilgan vaqt körsatiladi — rejadagi daqiqalar emas.',
               en: 'Only measured or hand-entered time is shown here — never planned minutes.' })) +
         '</section>';
     }
     return '<section class="os-card">' +
-      '<div class="os-eyebrow">' + esc(L({ uz: 'Oʻquv vaqti', en: 'Study time' })) + '</div>' +
+      '<div class="os-eyebrow">' + esc(L({ uz: 'Öquv vaqti', en: 'Study time' })) + '</div>' +
       '<div class="os-grid c3">' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Jami', en: 'Total' })) + '</div><div class="v">' +
           (Math.round(m.total / 60 * 10) / 10) + '<small> ' + esc(L({ uz: 'soat', en: 'h' })) + '</small></div></div>' +
-        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Oʻlchangan', en: 'Timed' })) + '</div><div class="v">' +
+        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Ölçangan', en: 'Timed' })) + '</div><div class="v">' +
           (Math.round(m.measured / 60 * 10) / 10) + '<small> ' + esc(L({ uz: 'soat', en: 'h' })) + '</small></div></div>' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Faol kunlar', en: 'Active days' })) + '</div><div class="v">' +
           m.activeDays + '<small>/ ' + m.days + '</small></div></div>' +
@@ -82,15 +82,15 @@
     }
     if (!total && !blocksTotal) {
       return '<section class="os-card">' +
-        '<div class="os-eyebrow">' + esc(L({ uz: 'Bajarilgan ish', en: 'Completed work' })) + '</div>' +
-        sh().empty(L({ uz: 'Yozuv yoʻq', en: 'No records' }), '') + '</section>';
+        '<div class="os-eyebrow">' + esc(L({ uz: 'Bajarilgan iş', en: 'Completed work' })) + '</div>' +
+        sh().empty(L({ uz: 'Yozuv yöq', en: 'No records' }), '') + '</section>';
     }
     return '<section class="os-card">' +
-      '<div class="os-eyebrow">' + esc(L({ uz: 'Bajarilgan ish', en: 'Completed work' })) + '</div>' +
+      '<div class="os-eyebrow">' + esc(L({ uz: 'Bajarilgan iş', en: 'Completed work' })) + '</div>' +
       '<div class="os-grid c4">' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Vazifa', en: 'Tasks' })) + '</div><div class="v">' + done + '<small>/ ' + total + '</small></div></div>' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Qisman', en: 'Partial' })) + '</div><div class="v">' + partial + '</div></div>' +
-        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Oʻtkazilgan', en: 'Skipped' })) + '</div><div class="v">' + skipped + '</div></div>' +
+        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Ötkazilgan', en: 'Skipped' })) + '</div><div class="v">' + skipped + '</div></div>' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Yadro bloklar', en: 'Core blocks' })) + '</div><div class="v">' + blocksDone + '<small>/ ' + blocksTotal + '</small></div></div>' +
       '</div></section>';
   }
@@ -128,8 +128,8 @@
     if (!scores.length) {
       return '<section class="os-card">' +
         '<div class="os-eyebrow">IELTS</div>' +
-        sh().empty(L({ uz: 'Mock natijasi yoʻq', en: 'No mock results' }),
-          L({ uz: 'Birinchi mock pre-launch bosqichida (26–30 noyabr 2026).',
+        sh().empty(L({ uz: 'Mock natijasi yöq', en: 'No mock results' }),
+          L({ uz: 'Birinçi mock pre-launch bosqiçida (26–30 noyabr 2026).',
               en: 'The first mock is in the pre-launch phase (26–30 November 2026).' })) +
         '</section>';
     }
@@ -161,7 +161,7 @@
     var co = OS.data.coding();
     if (!co || (!co.pythonDone && !co.quizAttempts)) {
       return '<section class="os-card"><div class="os-eyebrow">Coding</div>' +
-        sh().empty(L({ uz: 'Coding yozuvi yoʻq', en: 'No coding records' }), '') + '</section>';
+        sh().empty(L({ uz: 'Coding yozuvi yöq', en: 'No coding records' }), '') + '</section>';
     }
     return '<section class="os-card">' +
       '<div class="os-eyebrow">Coding</div>' +
@@ -170,7 +170,7 @@
           '<div class="v">' + co.pythonDone + '<small>/ ' + co.pythonTotal + '</small></div></div>' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Test aniqligi', en: 'Quiz accuracy' })) + '</div>' +
           '<div class="v">' + (co.quizAccuracy != null ? co.quizAccuracy + '%' : '—') + '</div></div>' +
-        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Oʻrtacha ball', en: 'Average score' })) + '</div>' +
+        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Örtaça ball', en: 'Average score' })) + '</div>' +
           '<div class="v">' + (co.avgScore || '—') + '</div></div>' +
       '</div></section>';
   }
@@ -181,21 +181,21 @@
     var items = [];
     try { items = Review.list().filter(function (it) { return it.kind === 'vocab' || it.kind === 'bw'; }); } catch (e) {}
     if (!items.length) {
-      return '<section class="os-card"><div class="os-eyebrow">' + esc(L({ uz: 'Lugʻat', en: 'Vocabulary' })) + '</div>' +
-        sh().empty(L({ uz: 'Lugʻat yozuvi yoʻq', en: 'No vocabulary records' }), '') + '</section>';
+      return '<section class="os-card"><div class="os-eyebrow">' + esc(L({ uz: 'Luğat', en: 'Vocabulary' })) + '</div>' +
+        sh().empty(L({ uz: 'Luğat yozuvi yöq', en: 'No vocabulary records' }), '') + '</section>';
     }
     var reps = items.reduce(function (a, it) { return a + (it.reps || 0); }, 0);
     var lapses = items.reduce(function (a, it) { return a + (it.lapses || 0); }, 0);
     var acc = reps ? Math.round((reps - lapses) / reps * 100) : null;
     return '<section class="os-card">' +
-      '<div class="os-eyebrow">' + esc(L({ uz: 'Lugʻat', en: 'Vocabulary' })) + '</div>' +
+      '<div class="os-eyebrow">' + esc(L({ uz: 'Luğat', en: 'Vocabulary' })) + '</div>' +
       '<div class="os-grid c3">' +
-        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Soʻzlar', en: 'Words' })) + '</div><div class="v">' + items.length + '</div></div>' +
+        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Sözlar', en: 'Words' })) + '</div><div class="v">' + items.length + '</div></div>' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Takror aniqligi', en: 'Review accuracy' })) + '</div><div class="v">' + (acc != null ? acc + '%' : '—') + '</div></div>' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Unutilgan', en: 'Lapses' })) + '</div><div class="v">' + lapses + '</div></div>' +
       '</div>' +
       '<p style="margin:12px 0 0;font-size:12px;color:var(--faint)">' +
-      esc(L({ uz: 'Aniqlik = (takror − unutilgan) / takror. Haqiqiy baholashlardan.',
+      esc(L({ uz: 'Aniqlik = (takror − unutilgan) / takror. Haqiqiy baholaşlardan.',
               en: 'Accuracy = (reps − lapses) / reps, from real ratings.' })) + '</p>' +
       '</section>';
   }
@@ -205,10 +205,10 @@
     if (!rv.allMistakes) return '';
     var resolved = rv.allMistakes - rv.openMistakes;
     return '<section class="os-card">' +
-      '<div class="os-eyebrow">' + esc(L({ uz: 'Xatolarni tuzatish', en: 'Mistake resolution' })) + '</div>' +
+      '<div class="os-eyebrow">' + esc(L({ uz: 'Xatolarni tuzatiş', en: 'Mistake resolution' })) + '</div>' +
       '<div class="os-grid c3">' +
-        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Hal boʻlgan', en: 'Resolved' })) + '</div><div class="v">' + resolved + '<small>/ ' + rv.allMistakes + '</small></div></div>' +
-        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Ochiq', en: 'Open' })) + '</div><div class="v">' + rv.openMistakes + '</div></div>' +
+        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Hal bölgan', en: 'Resolved' })) + '</div><div class="v">' + resolved + '<small>/ ' + rv.allMistakes + '</small></div></div>' +
+        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Oçiq', en: 'Open' })) + '</div><div class="v">' + rv.openMistakes + '</div></div>' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Takror navbatida', en: 'Due' })) + '</div><div class="v">' + rv.due + '</div></div>' +
       '</div>' +
       sh().meter(rv.allMistakes ? resolved / rv.allMistakes * 100 : 0, 'green') +
@@ -246,7 +246,7 @@
     if (cons) body += '<div style="margin-top:var(--sp-4)">' + cons + '</div>';
 
     body += '<div class="os-note info" style="margin-top:var(--sp-4)">' + sh().icon('bulb') + '<div>' +
-      esc(L({ uz: 'Bu sahifadagi hech bir raqam rejadan hisoblanmaydi. Yozuv boʻlmasa — "maʼlumot yoʻq" deb turadi.',
+      esc(L({ uz: 'Bu sahifadagi heç bir raqam rejadan hisoblanmaydi. Yozuv bölmasa — "maʼlumot yöq" deb turadi.',
               en: 'No number on this page is derived from the plan. With no records it says so, rather than showing zero as an achievement.' })) +
       '</div></div>';
 

@@ -47,7 +47,7 @@
       from: '2026-11-26', to: '2026-11-30',
       title: { uz: 'Pre-launch', en: 'Pre-launch' },
       focus: {
-        uz: 'Boshlangʼich oʻlchov: diagnostika, mock, resurslarni tayyorlash. Ball emas — dalil.',
+        uz: 'Boşlanğiç ölçov: diagnostika, mock, resurslarni tayyorlaş. Ball emas — dalil.',
         en: 'Baseline measurement: diagnostic, mock, resource setup. Not a score — evidence.'
       }
     },
@@ -56,16 +56,16 @@
       from: '2026-12-01', to: '2027-01-31',
       title: { uz: 'Asosiy ijro', en: 'Main execution' },
       focus: {
-        uz: 'Kunlik ish: lugʻat, oʻqish, tinglash, yozish, gapirish, grammatika, Python.',
+        uz: 'Kunlik iş: luğat, öqiş, tinglaş, yoziş, gapiriş, grammatika, Python.',
         en: 'Daily work: vocabulary, reading, listening, writing, speaking, grammar, Python.'
       }
     },
     {
       key: 'final', n: 2,
       from: '2027-02-01', to: '2027-02-19',
-      title: { uz: 'Yakuniy mustahkamlash', en: 'Final consolidation' },
+      title: { uz: 'Yakuniy mustahkamlaş', en: 'Final consolidation' },
       focus: {
-        uz: 'Zaif joyni tuzatish, vaqtli mashq, mock, xatolar daftari, dam va uyqu.',
+        uz: 'Zaif joyni tuzatiş, vaqtli maşq, mock, xatolar daftari, dam va uyqu.',
         en: 'Weak-skill repair, timed practice, mocks, error log, rest and sleep.'
       }
     }
@@ -77,7 +77,7 @@
     mission: {
       id: 'ielts-2027-02',
       title: { uz: 'IELTS Academic 7.5', en: 'IELTS Academic 7.5' },
-      /* Butun missiya oynasi: pre-launch boshidan yakuniy kungacha */
+      /* Butun missiya muddati: pre-launch boshidan yakuniy kungacha */
       start: '2026-11-26',
       end: '2027-02-19',          // missiya oxiri (brief: 19 fevral 2027)
       exam: '2027-02-20',         // IELTS Academic imtihoni
@@ -96,21 +96,21 @@
     /* Pre-launch vazifalari — brief 7-bo'lim. Har biri Mission Planner'da
        haqiqiy vazifa bo'lib tushadi (evidence: qanday dalil kutiladi).   */
     prelaunch: [
-      { id: 'pl-diag',    sk: 'all',       min: 60, t: { uz: 'Boshlangʼich diagnostika (4 koʻnikma)', en: 'Baseline diagnostic (4 skills)' }, ev: 'assessment' },
+      { id: 'pl-diag',    sk: 'all',       min: 60, t: { uz: 'Boşlanğiç diagnostika (4 könikma)', en: 'Baseline diagnostic (4 skills)' }, ev: 'assessment' },
       { id: 'pl-mock',    sk: 'all',       min: 165, t: { uz: 'Cambridge mock imtihoni', en: 'Cambridge mock examination' }, ev: 'mock' },
-      { id: 'pl-listen',  sk: 'listening', min: 45, t: { uz: 'Listening Booster: boshlangʼich oʻlchov', en: 'Listening Booster: baseline' }, ev: 'attempt' },
+      { id: 'pl-listen',  sk: 'listening', min: 45, t: { uz: 'Listening Booster: boşlanğiç ölçov', en: 'Listening Booster: baseline' }, ev: 'attempt' },
       { id: 'pl-read',    sk: 'reading',   min: 45, t: { uz: 'Reading Explorer: tezlik va aniqlik', en: 'Reading Explorer: speed and accuracy' }, ev: 'attempt' },
-      { id: 'pl-vocab',   sk: 'vocab',     min: 40, t: { uz: 'Lugʻat tahlili: bilaman / bilmayman', en: 'Vocabulary analysis: known / unknown' }, ev: 'assessment' },
-      { id: 'pl-speak',   sk: 'speaking',  min: 30, t: { uz: 'Speaking yozib olish (Part 1–2)', en: 'Speaking recording (Parts 1–2)' }, ev: 'recording' },
-      { id: 'pl-write',   sk: 'writing',   min: 60, t: { uz: 'Writing mashqi: Task 1 va Task 2', en: 'Writing practice: Task 1 and Task 2' }, ev: 'artifact' },
-      { id: 'pl-errors',  sk: 'review',    min: 20, t: { uz: 'Xatolar daftarini tayyorlash', en: 'Error Log preparation' }, ev: 'setup' },
-      { id: 'pl-setup',   sk: 'all',       min: 30, t: { uz: 'Resurslar va jadvalni sozlash', en: 'Resource and schedule setup' }, ev: 'setup' }
+      { id: 'pl-vocab',   sk: 'vocab',     min: 40, t: { uz: 'Luğat tahlili: bilaman / bilmayman', en: 'Vocabulary analysis: known / unknown' }, ev: 'assessment' },
+      { id: 'pl-speak',   sk: 'speaking',  min: 30, t: { uz: 'Speaking yozib oliş (Part 1–2)', en: 'Speaking recording (Parts 1–2)' }, ev: 'recording' },
+      { id: 'pl-write',   sk: 'writing',   min: 60, t: { uz: 'Writing maşqi: Task 1 va Task 2', en: 'Writing practice: Task 1 and Task 2' }, ev: 'artifact' },
+      { id: 'pl-errors',  sk: 'review',    min: 20, t: { uz: 'Xatolar daftarini tayyorlaş', en: 'Error Log preparation' }, ev: 'setup' },
+      { id: 'pl-setup',   sk: 'all',       min: 30, t: { uz: 'Resurslar va jadvalni sozlaş', en: 'Resource and schedule setup' }, ev: 'setup' }
     ],
 
     /* Asosiy ijro yo'nalishlari — original rejadan saqlangan (brief 7-bo'lim) */
     tracks: [
-      { id: 'vocab',     sk: 'vocab',     t: { uz: 'Lugʻat: faol eslash', en: 'Vocabulary: active recall' } },
-      { id: 'reading',   sk: 'reading',   t: { uz: 'Oʻqish: matn va skanerlash', en: 'Reading: passages and scanning' } },
+      { id: 'vocab',     sk: 'vocab',     t: { uz: 'Luğat: faol eslaş', en: 'Vocabulary: active recall' } },
+      { id: 'reading',   sk: 'reading',   t: { uz: 'Öqiş: matn va skanerlaş', en: 'Reading: passages and scanning' } },
       { id: 'lboost',    sk: 'listening', t: { uz: 'Listening Booster', en: 'Listening Booster' } },
       { id: 'lmaps',     sk: 'listening', t: { uz: 'Listening Section 2: xaritalar', en: 'Listening Section 2: maps' } },
       { id: 'l34',       sk: 'listening', t: { uz: 'Listening Section 3–4', en: 'Listening Sections 3–4' } },
@@ -123,14 +123,14 @@
 
     /* Yakuniy 19 kun — yangi material EMAS (brief: oxirgi kunlarni yuklamang) */
     finalFocus: [
-      { id: 'f-weak',   t: { uz: 'Zaif koʻnikmani tuzatish', en: 'Weak-skill repair' } },
-      { id: 'f-revise', t: { uz: 'Maqsadli takrorlash', en: 'Targeted revision' } },
-      { id: 'f-timed',  t: { uz: 'Vaqt bilan mashq', en: 'Timed practice' } },
+      { id: 'f-weak',   t: { uz: 'Zaif könikmani tuzatiş', en: 'Weak-skill repair' } },
+      { id: 'f-revise', t: { uz: 'Maqsadli takrorlaş', en: 'Targeted revision' } },
+      { id: 'f-timed',  t: { uz: 'Vaqt bilan maşq', en: 'Timed practice' } },
       { id: 'f-mock',   t: { uz: 'Mock imtihonlar', en: 'Mock examinations' } },
       { id: 'f-errors', t: { uz: 'Xatolar daftari takrori', en: 'Error Log revision' } },
-      { id: 'f-speak',  t: { uz: 'Speaking mashqi', en: 'Speaking practice' } },
+      { id: 'f-speak',  t: { uz: 'Speaking maşqi', en: 'Speaking practice' } },
       { id: 'f-exam',   t: { uz: 'Imtihonga tayyorgarlik', en: 'Exam preparation' } },
-      { id: 'f-rest',   t: { uz: 'Dam olish va uyqu', en: 'Recovery and sleep' } }
+      { id: 'f-rest',   t: { uz: 'Dam oliş va uyqu', en: 'Recovery and sleep' } }
     ],
 
     /* Dars/ko'nikma holati — "ochilgan" o'rganilgan degani emas (brief 4C) */
@@ -139,12 +139,12 @@
     taskStatus: ['pending', 'active', 'done', 'partial', 'skipped'],
 
     skills: {
-      listening: { icon: 'headphones', t: { uz: 'Tinglash', en: 'Listening' } },
-      reading:   { icon: 'doc',        t: { uz: 'Oʻqish', en: 'Reading' } },
-      writing:   { icon: 'pen',        t: { uz: 'Yozish', en: 'Writing' } },
-      speaking:  { icon: 'mic',        t: { uz: 'Gapirish', en: 'Speaking' } },
+      listening: { icon: 'headphones', t: { uz: 'Tinglaş', en: 'Listening' } },
+      reading:   { icon: 'doc',        t: { uz: 'Öqiş', en: 'Reading' } },
+      writing:   { icon: 'pen',        t: { uz: 'Yoziş', en: 'Writing' } },
+      speaking:  { icon: 'mic',        t: { uz: 'Gapiriş', en: 'Speaking' } },
       grammar:   { icon: 'grid',       t: { uz: 'Grammatika', en: 'Grammar' } },
-      vocab:     { icon: 'notebook',   t: { uz: 'Lugʻat', en: 'Vocabulary' } },
+      vocab:     { icon: 'notebook',   t: { uz: 'Luğat', en: 'Vocabulary' } },
       coding:    { icon: 'code',       t: { uz: 'Kod', en: 'Coding' } },
       review:    { icon: 'refresh',    t: { uz: 'Takror', en: 'Review' } }
     },
@@ -208,7 +208,7 @@
     return out;
   }
 
-  /* Missiya oynasi ichidami */
+  /* Missiya muddati ichidami */
   function inMission(dateKey) {
     return dateKey >= CFG.mission.start && dateKey <= CFG.mission.end;
   }

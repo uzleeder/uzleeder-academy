@@ -33,7 +33,7 @@
           '<span>' + esc(L(p.desc) || '') + '</span></span>' +
           (steps ? sh().chip(doneSteps + '/' + steps, doneSteps === steps ? 'on' : '') : '') +
           '</button>';
-      }).join('') : sh().empty(L({ uz: 'Loyiha yoʻq', en: 'No projects' }), '')) +
+      }).join('') : sh().empty(L({ uz: 'Loyiha yöq', en: 'No projects' }), '')) +
       '<div style="margin-top:14px"><button class="os-btn ghost" data-go="classic/projects">' +
         esc(L({ uz: 'Loyihalar sahifasi', en: 'Projects page' })) + '</button></div>' +
       '</section>';
@@ -51,10 +51,10 @@
           sh().stat(L({ uz: 'Bajarilgan', en: 'Completed' }), cap.done != null ? cap.done : '—') +
           sh().stat(L({ uz: 'Jami', en: 'Total' }), cap.total != null ? cap.total : '—') +
           '</div>'
-        : sh().empty(L({ uz: 'Capstone boshlanmagan', en: 'Capstone not started' }),
-            L({ uz: 'Python & AI yoʻlining yakuniy ishi.', en: 'The final piece of the Python & AI pathway.' }))) +
+        : sh().empty(L({ uz: 'Capstone boşlanmagan', en: 'Capstone not started' }),
+            L({ uz: 'Python & AI yölining yakuniy işi.', en: 'The final piece of the Python & AI pathway.' }))) +
       '<div style="margin-top:14px"><button class="os-btn ghost" data-go="pyai">' +
-        esc(L({ uz: 'Python & AI yoʻli', en: 'Python & AI pathway' })) + '</button></div>' +
+        esc(L({ uz: 'Python & AI yöli', en: 'Python & AI pathway' })) + '</button></div>' +
       '</section>';
   }
 
@@ -68,13 +68,13 @@
 
     return '<div class="os-grid c2">' +
       '<section class="os-card">' +
-        '<div class="os-card-head"><h2>' + esc(L({ uz: 'Portfel ishlari', en: 'Portfolio work' })) + '</h2>' +
+        '<div class="os-card-head"><h2>' + esc(L({ uz: 'Portfel işlari', en: 'Portfolio work' })) + '</h2>' +
         sh().chip(pprojs.length) + '</div>' +
         (pprojs.length ? pprojs.map(function (p) {
           return '<div class="os-row"><span class="os-row-main"><b>' + esc(p.name || '') + '</b>' +
             '<span>' + esc(String(p.desc || '').slice(0, 80)) + '</span></span></div>';
-        }).join('') : sh().empty(L({ uz: 'Ish qoʻshilmagan', en: 'Nothing added' }),
-            L({ uz: 'Profil sahifasidan qoʻshiladi.', en: 'Added from the profile page.' }))) +
+        }).join('') : sh().empty(L({ uz: 'Iş qöşilmagan', en: 'Nothing added' }),
+            L({ uz: 'Profil sahifasidan qöşiladi.', en: 'Added from the profile page.' }))) +
       '</section>' +
       '<section class="os-card">' +
         '<div class="os-card-head"><h2>' + esc(L({ uz: 'Sertifikatlar', en: 'Certificates' })) + '</h2>' +
@@ -83,8 +83,8 @@
           return '<div class="os-row"><span class="os-row-main"><b>' + esc(c.name || '') + '</b>' +
             '<span>' + esc(c.issuer || '') + '</span></span>' +
             '<time>' + esc(c.date || '') + '</time></div>';
-        }).join('') : sh().empty(L({ uz: 'Sertifikat yoʻq', en: 'No certificates' }),
-            L({ uz: 'Faqat haqiqiy sertifikatlar qoʻshiladi.', en: 'Only real certificates are added.' }))) +
+        }).join('') : sh().empty(L({ uz: 'Sertifikat yöq', en: 'No certificates' }),
+            L({ uz: 'Faqat haqiqiy sertifikatlar qöşiladi.', en: 'Only real certificates are added.' }))) +
       '</section>' +
       (jr ? '<section class="os-card">' +
         '<h2>' + esc(L({ uz: 'Job Ready dalili', en: 'Job Ready evidence' })) + '</h2>' +
@@ -93,7 +93,7 @@
         '<div class="s">' + esc(L({ uz: 'dalil asosida hisoblanadi', en: 'computed from evidence' })) + '</div></div>' +
         (jr.pct != null ? sh().meter(jr.pct) : '') +
         '<div style="margin-top:14px"><button class="os-btn ghost" data-go="classic/jobready">' +
-          esc(L({ uz: 'Dasturni ochish', en: 'Open the programme' })) + '</button></div>' +
+          esc(L({ uz: 'Dasturni oçiş', en: 'Open the programme' })) + '</button></div>' +
         '</section>' : '') +
       '</div>';
   }
@@ -101,15 +101,15 @@
   /* ---------- 4. KARYERA (ikkilamchi) ---------------------------------- */
   function viewCareer() {
     return '<div class="os-note info" style="margin-bottom:var(--sp-4)">' + sh().icon('bulb') + '<div>' +
-      esc(L({ uz: 'Karyera rejasi bajarilgan ishdan keyin keladi. Avval loyiha — keyin reja.',
+      esc(L({ uz: 'Karyera rejasi bajarilgan işdan keyin keladi. Avval loyiha — keyin reja.',
               en: 'Career planning comes after the work. Projects first, plan second.' })) +
       '</div></div>' +
       '<section class="os-card">' +
-        '<h2>' + esc(L({ uz: 'Karyera yoʻli', en: 'Career path' })) + '</h2>' +
+        '<h2>' + esc(L({ uz: 'Karyera yöli', en: 'Career path' })) + '</h2>' +
         '<p style="margin:0 0 14px;color:var(--muted);font-size:13px">' +
-          esc(L({ uz: 'Mavjud karyera sahifasi saqlanib qoldi — endi shu boʻlim ichida.',
+          esc(L({ uz: 'Mavjud karyera sahifasi saqlanib qoldi — endi şu bölim içida.',
                   en: 'The existing career page is preserved — now inside this section.' })) + '</p>' +
-        '<button class="os-btn ghost" data-go="classic/career">' + esc(L({ uz: 'Ochish', en: 'Open' })) + '</button>' +
+        '<button class="os-btn ghost" data-go="classic/career">' + esc(L({ uz: 'Oçiş', en: 'Open' })) + '</button>' +
       '</section>';
   }
 

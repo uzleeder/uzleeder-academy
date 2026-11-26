@@ -11,7 +11,7 @@ window.ENG_READ_HIST_1 = [
   n: 1, tier: 'easy',
   title: 'The Silk Road Was Never One Road',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Buyuk Ipak yo'li — nomi yangi, yo'llari qadim.", en: 'The Silk Road: a modern name for an ancient network.' },
+  note: { uz: "Buyuk Ipak yöli — nomi yangi, yöllari qadim.", en: 'The Silk Road: a modern name for an ancient network.' },
   paras: [
     { id: 'A', t: "The name is misleading in two ways. There was no single road, and silk was only one of the things that travelled along it. What historians call the Silk Road was a web of routes — across deserts, over mountain passes, through oasis cities — that connected China with Central Asia, Persia, India and, eventually, the Mediterranean. The name itself was invented in 1877 by a German geographer, Ferdinand von Richthofen. Nobody who actually travelled the routes ever used it." },
     { id: 'B', t: "The network took shape in the second century BC. The Chinese emperor Wu of the Han dynasty sent an envoy named Zhang Qian westwards to look for allies against the nomads on his northern border. Zhang Qian was captured, held for ten years, escaped, and returned with detailed reports of the lands beyond the mountains — including the powerful horses of the Fergana Valley, which the Chinese wanted badly. Trade followed the reports." },
@@ -63,7 +63,7 @@ window.ENG_READ_HIST_1 = [
   n: 3, tier: 'easy',
   title: 'Ulugh Beg: The King Who Measured the Sky',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Mirzo Ulug'bek (1394–1449) va Samarqand rasadxonasi.", en: 'Ulugh Beg (1394–1449) and the Samarkand observatory.' },
+  note: { uz: "Mirzo Uluğbek (1394–1449) va Samarqand rasadxonasi.", en: 'Ulugh Beg (1394–1449) and the Samarkand observatory.' },
   paras: [
     { id: 'A', t: "Ulugh Beg was Temur's grandson, born in 1394 while his grandfather was on campaign. He was made governor of Samarkand at sixteen and ruled it for nearly forty years. He was not a successful soldier and did not pretend to be. His interests were mathematics, astronomy and teaching, and he did something no other ruler of his time did: he became a working scientist himself." },
     { id: 'B', t: "In the 1420s he built an observatory on a hill outside Samarkand. Its main instrument was enormous — a curved stone track, part of a circle with a radius of about forty metres, set into a trench cut into the hill so that the lower part was underground. Along this track an observer could measure the height of the sun, moon and planets with a precision that no hand-held instrument could match. The size was the point: the larger the arc, the finer the divisions that could be marked on it." },
@@ -141,7 +141,7 @@ window.ENG_READ_HIST_1 = [
   n: 6, tier: 'easy',
   title: 'The Black Death',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "1347–1351: Yevropa tarixidagi eng katta o'lat.", en: 'The plague of 1347–1351.' },
+  note: { uz: "1347–1351: Yevropa tarixidagi eng katta ölat.", en: 'The plague of 1347–1351.' },
   paras: [
     { id: 'A', t: "In October 1347 twelve ships from the Black Sea arrived at the port of Messina in Sicily. Most of the sailors on board were dead, and those still alive were covered in dark swellings. The ships were ordered to leave, but it was too late. Within five years the disease they carried had killed somewhere between a third and a half of the population of Europe — perhaps twenty-five million people — and it did not stop at Europe's borders." },
     { id: 'B', t: "The disease was plague, caused by a bacterium called Yersinia pestis that lives in rodents and is carried between them, and to humans, by fleas. It had spread west along the trade routes from Central Asia, where an outbreak in the 1330s is recorded, through the Mongol territories to the ports of the Black Sea. From there Genoese trading ships carried it into the Mediterranean, and from the ports it moved inland at the speed of a walking man, following rivers and roads." },

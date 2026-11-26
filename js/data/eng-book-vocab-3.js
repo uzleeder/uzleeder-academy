@@ -90,7 +90,7 @@ window.ENG_BOOK_VOCAB_3 = [
 
 {
   n: 24,
-  theme: { uz: 'His-tuyg\'u, muvozanat va yirtqichlar', en: 'Feeling, balance and predators' },
+  theme: { uz: 'His-tuyğu, muvozanat va yirtqiçlar', en: 'Feeling, balance and predators' },
   words: [
     { w: 'cherish', pos: 'v', syn: ['treasure', 'value', 'prize', 'hold dear'], ex: 'She cherishes the letters her grandfather sent.' },
     { w: 'compassion', pos: 'n', syn: ['sympathy', 'empathy', 'kindness', 'mercy'], ex: 'The doctor treated everyone with genuine compassion.' },
@@ -198,7 +198,7 @@ window.ENG_BOOK_VOCAB_3 = [
 
 {
   n: 28,
-  theme: { uz: "Qo'rquv, ta'rif va yolg'izlik", en: 'Fear, definition and solitude' },
+  theme: { uz: "Qörquv, taʼrif va yolğizlik", en: 'Fear, definition and solitude' },
   words: [
     { w: 'avail', pos: 'v', syn: ['help', 'benefit', 'be of use', 'profit'], ex: 'Protests availed them nothing in the end.' },
     { w: 'expand', pos: 'v', syn: ['enlarge', 'grow', 'extend', 'broaden'], ex: 'The firm plans to expand into new markets.' },

@@ -17,7 +17,7 @@ window.ENG_READ_REL_1 = [
   n: 1, tier: 'easy',
   title: 'Abu Bakr: The Friend in the Cave',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Birinchi xalifa Abu Bakr Siddiq (r.a.) — Payg'ambar (s.a.v.) ning eng yaqin do'sti.", en: 'Abu Bakr as-Siddiq, the first caliph and the closest friend of the Prophet (peace be upon him).' },
+  note: { uz: "Birinçi xalifa Abu Bakr Siddiq (r.a.) — Payğambar (s.a.v.) ning eng yaqin dösti.", en: 'Abu Bakr as-Siddiq, the first caliph and the closest friend of the Prophet (peace be upon him).' },
   paras: [
     { id: 'A', t: "Abu Bakr was a merchant of Mecca, a man known for honesty in trade and for knowing the family histories of the Arab tribes better than almost anyone. He was two years younger than the Prophet Muhammad (peace be upon him) and had been his friend since long before the first revelation. When the Prophet told him about the message he had received, Abu Bakr did not hesitate, argue or ask for proof. He accepted at once, and the Prophet later said that everyone he had invited to Islam had paused except Abu Bakr." },
     { id: 'B', t: "His wealth went quickly. In the early years in Mecca, Muslims who were slaves were treated cruelly by their owners, and Abu Bakr spent his money buying them and setting them free. Among them was Bilal, an Abyssinian who was being tortured in the desert heat. Abu Bakr's father asked him why he freed weak men who could not repay him. He answered that he did it for the sake of God, not for repayment." },
@@ -43,7 +43,7 @@ window.ENG_READ_REL_1 = [
   n: 2, tier: 'easy',
   title: 'Umar: The Caliph Who Walked at Night',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Ikkinchi xalifa Umar ibn Xattob (r.a.) — al-Foruq, adolat timsoli.", en: 'Umar ibn al-Khattab, the second caliph, known as al-Faruq.' },
+  note: { uz: "Ikkinçi xalifa Umar ibn Xattob (r.a.) — al-Foruq, adolat timsoli.", en: 'Umar ibn al-Khattab, the second caliph, known as al-Faruq.' },
   paras: [
     { id: 'A', t: "Before he became a Muslim, Umar ibn al-Khattab was one of Islam's fiercest opponents. He was a tall, strong man, respected and feared in Mecca, and one day he set out with his sword to kill the Prophet (peace be upon him). On the way he was told that his own sister Fatimah and her husband had accepted the new religion. He went to their house in anger, heard them reciting, and struck his sister. When he saw her bleeding and unafraid, something changed in him. He asked to see the page they were reading — it was from the chapter called Ta-Ha — and by the end of it he asked to be taken to the Prophet, where he declared his faith." },
     { id: 'B', t: "His conversion changed the position of the Muslims in Mecca. Until then they had prayed in secret. Umar insisted on praying openly at the Kaaba, and the Meccans, who had no wish to fight him, allowed it. The Prophet gave him the title al-Faruq, 'the one who distinguishes truth from falsehood'." },
@@ -69,7 +69,7 @@ window.ENG_READ_REL_1 = [
   n: 3, tier: 'easy',
   title: 'Uthman: The Man Who Bought a Well',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Uchinchi xalifa Usmon ibn Affon (r.a.) — Zun-Nurayn, Qur'on mushafini birlashtirgan.", en: 'Uthman ibn Affan, the third caliph, called Dhun-Nurayn.' },
+  note: { uz: "Uçinçi xalifa Usmon ibn Affon (r.a.) — Zun-Nurayn, Qurʼon muşafini birlaştirgan.", en: 'Uthman ibn Affan, the third caliph, called Dhun-Nurayn.' },
   paras: [
     { id: 'A', t: "Uthman ibn Affan was one of the wealthiest merchants of Mecca and one of the earliest people to accept Islam, brought to the faith by his friend Abu Bakr. He was a gentle, modest man who was known to blush easily, and the Prophet (peace be upon him) said that even the angels were shy before Uthman. He married the Prophet's daughter Ruqayyah, and after her death he married her sister Umm Kulthum. Because he was the son-in-law of the Prophet twice, he was given the title Dhun-Nurayn, 'the possessor of two lights'." },
     { id: 'B', t: "His generosity is the thing most remembered about him. When the Muslims arrived in Medina, the only sweet water came from a well owned by a man who sold it at a high price. The Prophet said that whoever bought the well and gave it to the community would be rewarded in Paradise. Uthman bought half of it, then the whole, and made it free for everyone. Years later, when the army was being prepared for the expedition to Tabuk and money was short, Uthman provided hundreds of camels and a large sum of gold, and the Prophet said that nothing Uthman did after that day could harm him." },
@@ -95,7 +95,7 @@ window.ENG_READ_REL_1 = [
   n: 4, tier: 'easy',
   title: 'Ali: The Boy Who Slept in the Prophet\'s Bed',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "To'rtinchi xalifa Ali ibn Abu Tolib (r.a.) — Payg'ambar (s.a.v.) ning amakivachchasi va kuyovi.", en: 'Ali ibn Abi Talib, the fourth caliph, cousin and son-in-law of the Prophet.' },
+  note: { uz: "Törtinçi xalifa Ali ibn Abu Tolib (r.a.) — Payğambar (s.a.v.) ning amakivaççasi va kuyovi.", en: 'Ali ibn Abi Talib, the fourth caliph, cousin and son-in-law of the Prophet.' },
   paras: [
     { id: 'A', t: "Ali was the son of Abu Talib, the Prophet's uncle and protector. When Mecca suffered a year of hunger and Abu Talib had many children to feed, the Prophet (peace be upon him) took the young Ali into his own house to raise him. So Ali grew up beside the Prophet from childhood and was, according to most accounts, the first boy to accept Islam, when he was about ten years old." },
     { id: 'B', t: "On the night the Prophet left Mecca for Medina, the leaders of the city had planned to kill him in his bed. The Prophet asked Ali to lie in the bed and cover himself with the Prophet's green cloak, so that the watchers outside would believe he was still there. Ali, who was about twenty-two, did so without hesitation, knowing that the men at the door meant to kill whoever was under the cloak. In the morning they found Ali, and the Prophet was already gone. Ali stayed behind for three more days to return the goods that people had left with the Prophet for safekeeping, and then followed on foot." },
@@ -121,7 +121,7 @@ window.ENG_READ_REL_1 = [
   n: 5, tier: 'easy',
   title: 'Bilal: The Voice of the Call to Prayer',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Bilol ibn Raboh (r.a.) — birinchi muazzin.", en: 'Bilal ibn Rabah, the first muezzin.' },
+  note: { uz: "Bilol ibn Raboh (r.a.) — birinçi muazzin.", en: 'Bilal ibn Rabah, the first muezzin.' },
   paras: [
     { id: 'A', t: "Bilal was born in Mecca to a mother who had been brought from Abyssinia as a slave, and he was a slave himself, owned by a Meccan named Umayyah ibn Khalaf. He was among the first people to accept Islam, and because he had no tribe to protect him, he was among the first to suffer for it." },
     { id: 'B', t: "Umayyah took him out into the desert at midday, laid him on the burning sand, and had a heavy stone placed on his chest. He told Bilal he would stay there until he died or rejected Muhammad and worshipped the idols of Mecca. Bilal's answer was one word, repeated again and again: Ahad, Ahad — 'One, One'. He would not say anything else. The punishment went on for days." },
@@ -147,7 +147,7 @@ window.ENG_READ_REL_1 = [
   n: 6, tier: 'easy',
   title: 'Yusuf: From the Well to the Palace',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Yusuf (a.s.) qissasi — Qur'ondagi 'eng go'zal qissa' (Yusuf surasi).", en: 'The story of the Prophet Yusuf (Joseph), told in the Qur\'an as "the best of stories".' },
+  note: { uz: "Yusuf (a.s.) qissasi — Qurʼondagi 'eng gözal qissa' (Yusuf surasi).", en: 'The story of the Prophet Yusuf (Joseph), told in the Qur\'an as "the best of stories".' },
   paras: [
     { id: 'A', t: "Yusuf was the son of the Prophet Yaqub (Jacob) and the most beloved of his twelve sons. As a boy he told his father a dream: he had seen eleven stars, the sun and the moon bowing down to him. Yaqub understood the dream and warned him not to tell his brothers, because their jealousy was already dangerous." },
     { id: 'B', t: "The brothers asked to take Yusuf out to play in the fields. There they threw him into a well and returned in the evening weeping, carrying his shirt stained with false blood, and told their father that a wolf had eaten him. Yaqub saw that the shirt was not torn and did not believe them, but he had no power to do anything except wait. He said only that patience was beautiful, and that he would ask help from God." },

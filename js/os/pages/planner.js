@@ -40,7 +40,7 @@
     var map = {
       done:    ['on',   { uz: 'bajarildi', en: 'done' }],
       partial: ['warn', { uz: 'qisman', en: 'partial' }],
-      skipped: ['off',  { uz: 'oʻtkazildi', en: 'skipped' }],
+      skipped: ['off',  { uz: 'ötkazildi', en: 'skipped' }],
       active:  ['now',  { uz: 'jarayonda', en: 'in progress' }],
       pending: ['',     { uz: 'kutilmoqda', en: 'pending' }]
     };
@@ -57,16 +57,16 @@
         '<span>' + (t.time ? esc(t.time) + ' · ' : '') +
           (t.min ? t.min + ' ' + esc(L({ uz: 'daq', en: 'min' })) + ' · ' : '') +
           esc(L(cat.t)) +
-          (t.moved ? ' · ' + esc(L({ uz: 'koʻchirilgan', en: 'moved' })) : '') +
+          (t.moved ? ' · ' + esc(L({ uz: 'köçirilgan', en: 'moved' })) : '') +
         '</span>' +
       '</span>' +
       statusChip(t.status) +
       '<span style="display:flex;gap:4px">' +
         '<button class="os-btn ghost" style="padding:4px 8px;font-size:11px" data-task-st="done" data-id="' + esc(t.id) + '" title="' + esc(L({ uz: 'Bajarildi', en: 'Done' })) + '">✓</button>' +
         '<button class="os-btn ghost" style="padding:4px 8px;font-size:11px" data-task-st="partial" data-id="' + esc(t.id) + '" title="' + esc(L({ uz: 'Qisman', en: 'Partial' })) + '">½</button>' +
-        '<button class="os-btn ghost" style="padding:4px 8px;font-size:11px" data-task-st="skipped" data-id="' + esc(t.id) + '" title="' + esc(L({ uz: 'Oʻtkazildi', en: 'Skipped' })) + '">–</button>' +
-        '<button class="os-btn ghost" style="padding:4px 8px;font-size:11px" data-task-move="' + esc(t.id) + '" title="' + esc(L({ uz: 'Ertaga koʻchirish', en: 'Move to tomorrow' })) + '">→</button>' +
-        '<button class="os-btn ghost" style="padding:4px 8px;font-size:11px" data-task-del="' + esc(t.id) + '" title="' + esc(L({ uz: 'Oʻchirish', en: 'Delete' })) + '">×</button>' +
+        '<button class="os-btn ghost" style="padding:4px 8px;font-size:11px" data-task-st="skipped" data-id="' + esc(t.id) + '" title="' + esc(L({ uz: 'Ötkazildi', en: 'Skipped' })) + '">–</button>' +
+        '<button class="os-btn ghost" style="padding:4px 8px;font-size:11px" data-task-move="' + esc(t.id) + '" title="' + esc(L({ uz: 'Ertaga köçiriş', en: 'Move to tomorrow' })) + '">→</button>' +
+        '<button class="os-btn ghost" style="padding:4px 8px;font-size:11px" data-task-del="' + esc(t.id) + '" title="' + esc(L({ uz: 'Öçiriş', en: 'Delete' })) + '">×</button>' +
       '</span>' +
       '</div>';
   }
@@ -76,7 +76,7 @@
       return '<option value="' + k + '">' + esc(L(T().CATS[k].t)) + '</option>';
     }).join('');
     return '<form class="os-card pad-sm" id="osTaskForm" style="display:grid;gap:8px">' +
-      '<div class="os-eyebrow" style="margin:0">' + esc(L({ uz: 'Vazifa qoʻshish', en: 'Add a task' })) + '</div>' +
+      '<div class="os-eyebrow" style="margin:0">' + esc(L({ uz: 'Vazifa qöşiş', en: 'Add a task' })) + '</div>' +
       '<input name="title" type="text" required placeholder="' + esc(L({ uz: 'Nima qilinadi', en: 'What will be done' })) + '" ' +
         'style="padding:9px 12px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px">' +
       '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px">' +
@@ -85,7 +85,7 @@
         '<input name="min" type="number" min="0" max="600" step="5" placeholder="' + esc(L({ uz: 'daqiqa', en: 'minutes' })) + '" style="padding:8px 10px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);color:var(--ink);font:inherit;font-size:13px">' +
         '<select name="cat" style="padding:8px 10px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);color:var(--ink);font:inherit;font-size:13px">' + cats + '</select>' +
       '</div>' +
-      '<button class="os-btn primary" type="submit" style="justify-self:start">' + esc(L({ uz: 'Qoʻshish', en: 'Add' })) + '</button>' +
+      '<button class="os-btn primary" type="submit" style="justify-self:start">' + esc(L({ uz: 'Qöşiş', en: 'Add' })) + '</button>' +
       '</form>';
   }
 
@@ -122,10 +122,10 @@
     html += '<section class="os-card">' +
       '<div class="os-card-head"><h2>' + esc(L({ uz: 'Kunlik jadval', en: 'Daily schedule' })) + '</h2>' +
       '<button class="os-btn ghost" data-go="planner/schedule" style="padding:4px 10px;font-size:12px">' +
-        esc(L({ uz: 'Tahrirlash', en: 'Edit' })) + '</button></div>';
+        esc(L({ uz: 'Tahrirlaş', en: 'Edit' })) + '</button></div>';
     if (!blocks.length) {
-      html += sh().empty(L({ uz: 'Bu kunga jadval yoʻq', en: 'No schedule for this day' }),
-        L({ uz: 'Jadval missiya oynasi ichidagi kunlarga tuziladi.', en: 'Schedules are generated for days inside the mission window.' }));
+      html += sh().empty(L({ uz: 'Bu kunga jadval yöq', en: 'No schedule for this day' }),
+        L({ uz: 'Jadval missiya muddati içidagi kunlarga tuziladi.', en: 'Schedules are generated for days inside the mission window.' }));
     } else {
       html += '<div class="os-timeline">' + blocks.map(function (b) {
         var cls = b.status === 'done' ? 'done' : b.status === 'partial' ? 'partial'
@@ -144,7 +144,7 @@
           '</div>';
       }).join('') + '</div>';
       html += '<p style="margin:12px 0 0;font-size:12px;color:var(--faint)">' +
-        esc(L({ uz: 'Oʻtkazib yuborilgan blok qarz boʻlib yigʻilmaydi — bu oʻlchov, jazo emas.',
+        esc(L({ uz: 'Ötkazib yuborilgan blok qarz bölib yiğilmaydi — bu ölçov, jazo emas.',
                 en: 'A skipped block does not accumulate as debt — this is measurement, not punishment.' })) + '</p>';
     }
     html += '</section>';
@@ -156,8 +156,8 @@
       '</div>';
     html += tasks.length
       ? tasks.map(taskRow).join('')
-      : sh().empty(L({ uz: 'Vazifa yoʻq', en: 'No tasks' }),
-          L({ uz: 'Pastdagi shakl bilan qoʻshing.', en: 'Add one with the form below.' }));
+      : sh().empty(L({ uz: 'Vazifa yöq', en: 'No tasks' }),
+          L({ uz: 'Pastdagi şakl bilan qöşing.', en: 'Add one with the form below.' }));
     html += '<div style="margin-top:var(--sp-4)">' + addForm(key) + '</div>';
     html += '</section>';
 
@@ -230,10 +230,10 @@
     var html = '<div class="os-grid c2">';
 
     html += '<section class="os-card">' +
-      '<div class="os-card-head"><h2>' + esc(L({ uz: 'Kun shabloni', en: 'Day template' })) + '</h2>' +
+      '<div class="os-card-head"><h2>' + esc(L({ uz: 'Kun şabloni', en: 'Day template' })) + '</h2>' +
       sh().chip(type || '—', 'now') + '</div>' +
       '<p style="margin:0 0 14px;color:var(--muted);font-size:13px">' +
-      esc(L({ uz: 'Shablon hafta kunidan kelib chiqadi: yakshanba tiklanish, dushanba va chorshanba gibrid, seshanba/payshanba/shanba LC, juma oddiy.',
+      esc(L({ uz: 'Şablon hafta kunidan kelib çiqadi: yakşanba tiklaniş, duşanba va çorşanba gibrid, seşanba/payşanba/şanba LC, juma oddiy.',
               en: 'The template follows the weekday: Sunday recovery, Monday and Wednesday hybrid, Tuesday/Thursday/Saturday LC, Friday standard.' })) +
       '</p>' +
       (sleep ? '<div class="os-note ok">' + sh().icon('check') + '<div>' +
@@ -252,13 +252,13 @@
           '<span class="bd"><b>' + esc(L(b.t)) + '</b><span>' + esc(b.fromStr + '–' + b.toStr) + ' · ' + b.min + ' ' + esc(L({ uz: 'daq', en: 'min' })) + '</span></span>' +
           '<span>' + statusChip(b.status) + '</span></div>';
       }).join('') + '</div>'
-        : sh().empty(L({ uz: 'Blok yoʻq', en: 'No blocks' }), '')) +
+        : sh().empty(L({ uz: 'Blok yöq', en: 'No blocks' }), '')) +
       '</section>';
 
     html += '</div>';
 
     html += '<div class="os-note info" style="margin-top:var(--sp-4)">' + sh().icon('bulb') + '<div>' +
-      esc(L({ uz: 'Jadval 16 ta qoida boʻyicha tekshiriladi (tools/validate-schedule.cjs): kun 1440 daqiqa, uyqu normada, yadro bloklar oʻlchamda, namoz vaqtlariga bogʻlangan.',
+      esc(L({ uz: 'Jadval 16 ta qoida böyiça tekşiriladi (tools/validate-schedule.cjs): kun 1440 daqiqa, uyqu normada, yadro bloklar ölçamda, namoz vaqtlariga boğlangan.',
               en: 'The schedule is validated against 16 rules (tools/validate-schedule.cjs): a 1440-minute day, sleep within norms, core blocks within limits, prayer anchors respected.' })) +
       '</div></div>';
 
@@ -277,14 +277,14 @@
       '<div class="os-card-head"><h2>' + esc(L({ uz: 'Hafta', en: 'Week' })) + '</h2>' +
         '<span style="display:flex;gap:6px">' +
         '<button class="os-btn ghost" data-week="-7">←</button>' +
-        '<button class="os-btn ghost" data-week="0">' + esc(L({ uz: 'Shu hafta', en: 'This week' })) + '</button>' +
+        '<button class="os-btn ghost" data-week="0">' + esc(L({ uz: 'Şu hafta', en: 'This week' })) + '</button>' +
         '<button class="os-btn ghost" data-week="7">→</button></span>' +
       '</div>' +
       '<div class="os-table-wrap"><table class="os-table">' +
       '<thead><tr><th>' + esc(L({ uz: 'Kun', en: 'Day' })) + '</th>' +
         '<th>' + esc(L({ uz: 'Yadro bloklar', en: 'Core blocks' })) + '</th>' +
         '<th>' + esc(L({ uz: 'Vazifalar', en: 'Tasks' })) + '</th>' +
-        '<th>' + esc(L({ uz: 'Oʻlchangan vaqt', en: 'Measured time' })) + '</th></tr></thead><tbody>' +
+        '<th>' + esc(L({ uz: 'Ölçangan vaqt', en: 'Measured time' })) + '</th></tr></thead><tbody>' +
       wk.map(function (d) {
         var c = T().countsOn(d.date);
         return '<tr' + (d.isToday ? ' style="outline:1px solid var(--brand)"' : '') + '>' +
@@ -295,7 +295,7 @@
           '</tr>';
       }).join('') + '</tbody></table></div>' +
       '<p style="margin:12px 0 0;font-size:12px;color:var(--faint)">' +
-      esc(L({ uz: 'Oʻlchangan vaqt — rejalashtirilgan daqiqa emas, haqiqatan yozilgan vaqt.',
+      esc(L({ uz: 'Ölçangan vaqt — rejalaştirilgan daqiqa emas, haqiqatan yozilgan vaqt.',
               en: 'Measured time is time actually recorded, not planned minutes.' })) + '</p>' +
       '<div style="margin-top:var(--sp-4)"><button class="os-btn ghost" data-go="classic/week">' +
       esc(L({ uz: 'Eski hafta sahifasi', en: 'Classic week page' })) + '</button></div>' +
@@ -324,26 +324,26 @@
         '<div class="os-card-head"><h3 style="margin:0">' + esc(L({ uz: 'IELTS Academic', en: 'IELTS Academic' })) + '</h3>' +
         sh().chip(c.mission.exam, 'warn') + '</div>' +
         '<p style="margin:0 0 12px;color:var(--muted);font-size:13px">' +
-          esc(L({ uz: 'Imtihon sanasi oʻzgarmaydi. Maqsad: overall ' + c.target.overall + '.',
+          esc(L({ uz: 'Imtihon sanasi özgarmaydi. Maqsad: overall ' + c.target.overall + '.',
                   en: 'The exam date does not move. Target: overall ' + c.target.overall + '.' })) + '</p>' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Qolgan kun', en: 'Days left' })) + '</div>' +
         '<div class="v">' + k.diffDays(today, c.mission.exam) + '</div></div>' +
       '</section>' +
       '</div>' +
       '<div class="os-note warn" style="margin-top:var(--sp-4)">' + sh().icon('alert') + '<div>' +
-        esc(L({ uz: 'Ball kafolatlanmaydi. Bu reja — ishning tartibi, vaʻda emas.',
+        esc(L({ uz: 'Ball kafolatlanmaydi. Bu reja — işning tartibi, vaʼda emas.',
                 en: 'No score is guaranteed. This plan is an order of work, not a promise.' })) +
       '</div></div>' +
       '<div class="os-card" style="margin-top:var(--sp-4)">' +
         '<h2>' + esc(L({ uz: 'Yakuniy 19 kun', en: 'The final 19 days' })) + '</h2>' +
         '<p style="margin:0 0 12px;color:var(--muted);font-size:13px">' +
-          esc(L({ uz: 'Yangi material emas — zaif joyni tuzatish va tayyorgarlik.',
+          esc(L({ uz: 'Yangi material emas — zaif joyni tuzatiş va tayyorgarlik.',
                   en: 'No new material — weak-skill repair and preparation.' })) + '</p>' +
         '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
           c.finalFocus.map(function (f) { return sh().chip(L(f.t)); }).join('') +
         '</div>' +
         '<div style="margin-top:var(--sp-4);display:flex;gap:8px;flex-wrap:wrap">' +
-          '<button class="os-btn ghost" data-go="classic/roadmap">' + esc(L({ uz: 'Eski yoʻl xaritasi', en: 'Classic roadmap' })) + '</button>' +
+          '<button class="os-btn ghost" data-go="classic/roadmap">' + esc(L({ uz: 'Eski yöl xaritasi', en: 'Classic roadmap' })) + '</button>' +
           '<button class="os-btn ghost" data-go="classic/goal">' + esc(L({ uz: 'Eski maqsad sahifasi', en: 'Classic goal page' })) + '</button>' +
         '</div>' +
       '</div>';
@@ -366,7 +366,7 @@
       }
       var def = c.skills[sk] || { t: { uz: sk, en: sk } };
       return '<tr>' +
-        '<td data-l="' + esc(L({ uz: 'Koʻnikma', en: 'Skill' })) + '"><b>' + esc(L(def.t)) + '</b></td>' +
+        '<td data-l="' + esc(L({ uz: 'Könikma', en: 'Skill' })) + '"><b>' + esc(L(def.t)) + '</b></td>' +
         '<td data-l="' + esc(L({ uz: 'Maqsad', en: 'Target' })) + '">' +
           '<input type="number" step="0.5" min="4" max="9" value="' + c.target.skills[sk] + '" data-goal="' + sk + '" ' +
           'style="width:72px;padding:5px 8px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);color:var(--ink);font:inherit;font-size:13px"></td>' +
@@ -380,7 +380,7 @@
       '<section class="os-card">' +
         '<h2>' + esc(L({ uz: 'IELTS maqsadlari', en: 'IELTS targets' })) + '</h2>' +
         '<div class="os-table-wrap"><table class="os-table"><thead><tr>' +
-          '<th>' + esc(L({ uz: 'Koʻnikma', en: 'Skill' })) + '</th>' +
+          '<th>' + esc(L({ uz: 'Könikma', en: 'Skill' })) + '</th>' +
           '<th>' + esc(L({ uz: 'Maqsad', en: 'Target' })) + '</th>' +
           '<th>' + esc(L({ uz: 'Oxirgi mock', en: 'Last mock' })) + '</th>' +
           '<th>' + esc(L({ uz: 'Farq', en: 'Gap' })) + '</th>' +
@@ -396,7 +396,7 @@
             '<div class="v">' + ie.mockCount + '</div>' +
             '<div class="s">' + esc(L({ uz: 'natijalar Insights da', en: 'results in Insights' })) + '</div></div>'
           : sh().empty(L({ uz: 'Hali mock yozilmagan', en: 'No mock recorded yet' }),
-              L({ uz: 'Birinchi mock pre-launch bosqichida.', en: 'The first mock is in the pre-launch phase.' }))) +
+              L({ uz: 'Birinçi mock pre-launch bosqiçida.', en: 'The first mock is in the pre-launch phase.' }))) +
       '</section>' +
       '</div>';
   }
@@ -410,19 +410,19 @@
         '<div class="os-card-head"><h2>' + esc(L({ uz: 'Kunlik odatlar', en: 'Daily routines' })) + '</h2>' +
         sh().chip(L({ uz: 'ixtiyoriy', en: 'optional' }), 'off') + '</div>' +
         '<p style="margin:0 0 12px;color:var(--muted);font-size:13px">' +
-          esc(L({ uz: 'Namoz va duo boʻlimlari asosiy menyudan olib tashlandi — ular shu yerda, ixtiyoriy odat sifatida.',
+          esc(L({ uz: 'Namoz va duo bölimlari asosiy menyudan olib taşlandi — ular şu yerda, ixtiyoriy odat sifatida.',
                   en: 'Prayer and dua were removed from the primary navigation — they live here as optional routines.' })) + '</p>' +
         (blocks.length ? '<div class="os-timeline">' + blocks.map(function (b) {
           return '<div class="os-block ' + (b.status === 'done' ? 'done' : '') + '">' +
             '<time>' + esc(b.fromStr) + '</time><span class="bar"></span>' +
             '<span class="bd"><b>' + esc(L(b.t)) + '</b><span>' + b.min + ' ' + esc(L({ uz: 'daq', en: 'min' })) + '</span></span>' +
             '<span>' + statusChip(b.status) + '</span></div>';
-        }).join('') + '</div>' : sh().empty(L({ uz: 'Odat bloki yoʻq', en: 'No routine blocks' }), '')) +
+        }).join('') + '</div>' : sh().empty(L({ uz: 'Odat bloki yöq', en: 'No routine blocks' }), '')) +
       '</section>' +
       '<section class="os-card">' +
         '<h2>' + esc(L({ uz: 'Duolar', en: 'Duas' })) + '</h2>' +
         '<p style="margin:0 0 12px;color:var(--muted);font-size:13px">' +
-          esc(L({ uz: 'Toʻplamlar saqlanib qoldi.', en: 'The collections are preserved.' })) + '</p>' +
+          esc(L({ uz: 'Töplamlar saqlanib qoldi.', en: 'The collections are preserved.' })) + '</p>' +
         '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
           ['morning', 'study', 'evening', 'sleep'].map(function (s) {
             return '<button class="os-btn ghost" data-go="dua/' + s + '">' + esc(s) + '</button>';
@@ -444,15 +444,15 @@
           return '<div class="os-row"><span class="os-row-main"><b>' + esc(e.title || e.ref) + '</b>' +
             '<span>' + esc(e.type) + '</span></span>' +
             '<time>' + new Date(e.at).toISOString().slice(0, 10) + '</time></div>';
-        }).join('') : sh().empty(L({ uz: 'Hali yozuv yoʻq', en: 'No records yet' }), '')) +
+        }).join('') : sh().empty(L({ uz: 'Hali yozuv yöq', en: 'No records yet' }), '')) +
       '</section>' +
       '<section class="os-card">' +
-        '<h2>' + esc(L({ uz: 'Koʻchirilgan vazifalar', en: 'Rescheduled tasks' })) + '</h2>' +
+        '<h2>' + esc(L({ uz: 'Köçirilgan vazifalar', en: 'Rescheduled tasks' })) + '</h2>' +
         (moved.length ? moved.map(function (t) {
           return '<div class="os-row"><span class="os-row-main"><b>' + esc(t.title) + '</b>' +
-            '<span>' + esc(L({ uz: 'koʻchirilgan', en: 'moved' })) + ' ×' + t.moved + '</span></span>' +
+            '<span>' + esc(L({ uz: 'köçirilgan', en: 'moved' })) + ' ×' + t.moved + '</span></span>' +
             '<time>' + esc(t.date) + '</time></div>';
-        }).join('') : sh().empty(L({ uz: 'Koʻchirilgan vazifa yoʻq', en: 'Nothing rescheduled' }), '')) +
+        }).join('') : sh().empty(L({ uz: 'Köçirilgan vazifa yöq', en: 'Nothing rescheduled' }), '')) +
       '</section>' +
       '</div>';
   }

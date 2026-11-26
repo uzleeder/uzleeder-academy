@@ -82,7 +82,7 @@
         var mv = Mission.day(Store.dateKey()), mDone = mv.tasks.filter(function (x) { return x.state.st === 'done'; }).length;
         var mIdx = Mission.dayIndex(), msDue = Mission.errors.due().length;
         h += '<div class="ms-dashstrip">' +
-          '<button class="ms-dcard" data-go="mission"><span class="ms-ic">' + IC.target + '</span><span><b>IELTS Mission</b><small>' + esc(mIdx < 1 ? L({ uz: 'Boshlanishiga ' + (1 - mIdx) + ' kun · diagnostika ochiq', en: 'Starts in ' + (1 - mIdx) + ' day(s) · diagnostics open' }) : L({ uz: mIdx + '-kun · ' + mDone + '/' + mv.tasks.length + ' vazifa · ' + mv.planned + ' daq reja', en: 'Day ' + mIdx + ' · ' + mDone + '/' + mv.tasks.length + ' tasks · ' + mv.planned + ' min planned' })) + (msDue ? ' · ' + esc(L({ uz: msDue + ' xato takrori', en: msDue + ' error reviews' })) : '') + '</small></span>' + IC.arrowR + '</button>' +
+          '<button class="ms-dcard" data-go="mission"><span class="ms-ic">' + IC.target + '</span><span><b>IELTS Mission</b><small>' + esc(mIdx < 1 ? L({ uz: 'Boşlanişiga ' + (1 - mIdx) + ' kun · diagnostika ochiq', en: 'Starts in ' + (1 - mIdx) + ' day(s) · diagnostics open' }) : L({ uz: mIdx + '-kun · ' + mDone + '/' + mv.tasks.length + ' vazifa · ' + mv.planned + ' daq reja', en: 'Day ' + mIdx + ' · ' + mDone + '/' + mv.tasks.length + ' tasks · ' + mv.planned + ' min planned' })) + (msDue ? ' · ' + esc(L({ uz: msDue + ' xato takrori', en: msDue + ' error reviews' })) : '') + '</small></span>' + IC.arrowR + '</button>' +
           (function () {
             /* Job Ready — Coding — Python + DataCamp + Python & AI bitta dasturda */
             var js = window.JobReady ? JobReady.nextSteps()[0] : null, jst = window.JobReady ? JobReady.status() : null;

@@ -12,7 +12,7 @@ window.ENG_READ_REL_2 = [
   n: 7, tier: 'easy',
   title: 'Khadijah: The First to Believe',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Xadicha (r.a.) — Payg'ambar (s.a.v.) ning birinchi rafiqasi va birinchi mo'mina.", en: 'Khadijah, the first wife of the Prophet and the first believer.' },
+  note: { uz: "Xadiça (r.a.) — Payğambar (s.a.v.) ning birinçi rafiqasi va birinçi mömina.", en: 'Khadijah, the first wife of the Prophet and the first believer.' },
   paras: [
     { id: 'A', t: "Khadijah bint Khuwaylid was one of the most successful merchants of Mecca. She had been widowed twice, was wealthy in her own right, and ran a trading business that sent caravans to Syria. She did not travel with them herself; she employed agents, and she chose them carefully. When she heard of a young man known throughout the city as al-Amin, 'the trustworthy', she hired him to take her goods north." },
     { id: 'B', t: "The young man was Muhammad (peace be upon him), then about twenty-five. Her servant, who travelled with him, reported back on his honesty and his character, and the caravan returned with unusually good profits. Khadijah, who was around forty, sent a proposal of marriage through a friend. He accepted. For the next twenty-five years he had no other wife, and their marriage was, by every account, one of deep affection. Six children were born to them; only the daughters survived to adulthood." },
@@ -38,7 +38,7 @@ window.ENG_READ_REL_2 = [
   n: 8, tier: 'easy',
   title: 'Ibrahim: The Man Who Broke the Idols',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Ibrohim (a.s.) — Xalilulloh, Ka'bani qurgan payg'ambar.", en: 'The Prophet Ibrahim (Abraham), the Friend of God.' },
+  note: { uz: "Ibrohim (a.s.) — Xalilulloh, Kaʼbani qurgan payğambar.", en: 'The Prophet Ibrahim (Abraham), the Friend of God.' },
   paras: [
     { id: 'A', t: "Ibrahim grew up among people who worshipped statues, and his own father made them. As a young man he asked the questions a child asks: how can something that cannot see or hear help anyone? The Qur'an describes him looking at a star, then the moon, then the sun, and rejecting each as it set — 'I do not love things that disappear' — until he turned to the One who made them all." },
     { id: 'B', t: "One day, when the people had gone to a festival, he went into the temple and broke every idol except the largest, and hung the axe on it. When they returned and asked who had done this, he told them to ask the big one. They knew the statue could not speak, and for a moment they saw the point. Then they were angry, and they built a great fire and threw him into it. The Qur'an says that God commanded the fire: 'Be cool and safe for Ibrahim.' He walked out unharmed." },
@@ -64,7 +64,7 @@ window.ENG_READ_REL_2 = [
   n: 9, tier: 'easy',
   title: 'Musa: A Basket on the River',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Muso (a.s.) — Kalimulloh, Fir'avn bilan yuzlashgan payg'ambar.", en: 'The Prophet Musa (Moses).' },
+  note: { uz: "Muso (a.s.) — Kalimulloh, Firʼavn bilan yuzlaşgan payğambar.", en: 'The Prophet Musa (Moses).' },
   paras: [
     { id: 'A', t: "The Pharaoh of Egypt had ordered that the baby boys of the Israelites be killed. Musa's mother, afraid for her newborn son, was inspired to place him in a basket and set it on the river. The basket floated to the palace itself, where Pharaoh's wife Asiya found the child and persuaded her husband to keep him. Musa's sister had followed the basket along the bank; when the palace looked for a nurse, she suggested a woman who turned out to be the baby's own mother. So Musa grew up in the palace of the man who had wanted him dead, and was fed by the mother who had given him up." },
     { id: 'B', t: "As a young man he saw an Egyptian beating an Israelite and struck the Egyptian, who died. Frightened, he fled east across the desert to Midian. There, at a well, he watered the sheep of two young women who were being pushed aside by the shepherds. Their father, an old man, took him in, and Musa married one of the daughters and worked for him as a shepherd for many years." },
@@ -142,7 +142,7 @@ window.ENG_READ_REL_2 = [
   n: 12, tier: 'easy',
   title: 'Khalid: The Sword That Was Never Broken',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Xolid ibn Valid (r.a.) — Sayfulloh, hech qachon yengilmagan sarkarda.", en: 'Khalid ibn al-Walid, the Sword of God.' },
+  note: { uz: "Xolid ibn Valid (r.a.) — Sayfulloh, heç qaçon yengilmagan sarkarda.", en: 'Khalid ibn al-Walid, the Sword of God.' },
   paras: [
     { id: 'A', t: "Khalid ibn al-Walid was born into the family that led Mecca's cavalry, and he grew up learning to fight from horseback. For years he fought against the Muslims. At the battle of Uhud in 625, when the Muslim archers left their hill against orders, it was Khalid who saw the gap and led his horsemen around it, turning a Muslim victory into a defeat." },
     { id: 'B', t: "In 629 he changed sides. He later said that he had come to see that Muhammad (peace be upon him) was a prophet and that fighting him was fighting the truth. He travelled to Medina with two other Meccans and declared his faith. The Prophet welcomed him and said that Mecca had sent them its best men." },
@@ -168,7 +168,7 @@ window.ENG_READ_REL_2 = [
   n: 13, tier: 'easy',
   title: 'Aisha: The Teacher of the Companions',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Oisha (r.a.) — mo'minlar onasi, olima, ming-minglab hadis rivoyat qilgan.", en: 'Aisha, Mother of the Believers and scholar.' },
+  note: { uz: "Oişa (r.a.) — möminlar onasi, olima, ming-minglab hadis rivoyat qilgan.", en: 'Aisha, Mother of the Believers and scholar.' },
   paras: [
     { id: 'A', t: "Aisha was the daughter of Abu Bakr and the wife of the Prophet (peace be upon him), and she lived in the small room beside the mosque of Medina where he received revelation, prayed, and died. She was young, quick-minded and, by her own description, competitive. She raced the Prophet on foot and won; years later, when she had grown heavier, he raced her again, won, and said, 'This one is for that one.'" },
     { id: 'B', t: "After his death she lived for almost fifty more years, and in that time she became one of the most important teachers of the first generation. She had memorised a great deal of the Qur'an and knew the circumstances in which many verses had been revealed. She had seen the Prophet's private life — how he prayed at night, how he behaved at home, what he ate, how he treated his family — which the men who met him only in public did not know." },
@@ -194,7 +194,7 @@ window.ENG_READ_REL_2 = [
   n: 14, tier: 'easy',
   title: 'Umar ibn Abdul-Aziz: Two Years That Changed an Empire',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Umar ibn Abdulaziz — 'beshinchi rashid xalifa' deb atalgan Umaviy hukmdor.", en: 'Umar ibn Abdul-Aziz, the Umayyad caliph often called the fifth rightly guided caliph.' },
+  note: { uz: "Umar ibn Abdulaziz — 'beşinçi raşid xalifa' deb atalgan Umaviy hukmdor.", en: 'Umar ibn Abdul-Aziz, the Umayyad caliph often called the fifth rightly guided caliph.' },
   paras: [
     { id: 'A', t: "Umar ibn Abdul-Aziz was a prince of the Umayyad dynasty, born in Medina in 682, and the great-grandson, through his mother, of the caliph Umar ibn al-Khattab. He grew up rich. He was known in his youth for fine clothes and expensive perfume, and for walking with a proud step that people imitated. Nothing about him suggested what he would become." },
     { id: 'B', t: "In 717 the dying caliph Sulayman, on the advice of a scholar, named Umar as his successor instead of his own sons. When the will was read, Umar went pale and said he had not wanted it. He asked the people to release him from the oath; they refused. He wept, went home, and was found by his wife lying on the floor. He told her that he had been made responsible for every Muslim in the world, from Spain to India, and would be asked about each one of them." },
@@ -220,7 +220,7 @@ window.ENG_READ_REL_2 = [
   n: 15, tier: 'easy',
   title: 'Isa: The Son of Maryam',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Iso (a.s.) — Qur'ondagi qissa: Maryam, mo'jizalar, ko'tarilish.", en: 'The Prophet Isa (Jesus) as told in the Qur\'an.' },
+  note: { uz: "Iso (a.s.) — Qurʼondagi qissa: Maryam, möjizalar, kötariliş.", en: 'The Prophet Isa (Jesus) as told in the Qur\'an.' },
   paras: [
     { id: 'A', t: "Maryam was raised in the temple, dedicated to God by her mother before she was born, and cared for by the Prophet Zakariya. When he visited her room he found fruit there that was out of season, and asked where it came from; she answered that it was from God. She was still a young woman when an angel appeared to her in the form of a man and told her that she would have a son. She asked how, when no man had touched her. The angel replied that for God this was easy." },
     { id: 'B', t: "She withdrew to a distant place and gave birth beneath a palm tree, alone and in pain, wishing she had died before this. A voice told her not to grieve, to shake the tree so that dates would fall, and to drink from the stream beside her. When she carried the child back to her people, they accused her. She did not answer but pointed to the baby. The infant spoke: 'I am the servant of God. He has given me the Book and made me a prophet.' This is the first miracle of Isa in the Qur'an." },
@@ -289,7 +289,7 @@ window.ENG_READ_REL_2 = [
   n: 17, tier: 'ielts',
   title: 'Imam al-Bukhari: Six Hundred Thousand Reports',
   level: 'IELTS 7–8',
-  note: { uz: "Imom Buxoriy (810–870) — 'Sahih' muallifi, Buxoroda tug'ilgan, Samarqand yaqinida dafn etilgan.", en: 'Imam al-Bukhari (810–870), compiler of the Sahih.' },
+  note: { uz: "Imom Buxoriy (810–870) — 'Sahih' muallifi, Buxoroda tuğilgan, Samarqand yaqinida dafn etilgan.", en: 'Imam al-Bukhari (810–870), compiler of the Sahih.' },
   paras: [
     { id: 'A', t: "Muhammad ibn Ismail al-Bukhari was born in Bukhara in 810, the son of a scholar who died when he was a child. As a boy he lost his sight, and it returned — his mother attributed it to a dream. By ten he was studying hadith, the recorded sayings and actions of the Prophet (peace be upon him), and by sixteen he had memorised the collections of the leading scholars of his city and was correcting their teachers." },
     { id: 'B', t: "The problem he devoted his life to was one of authenticity. Two centuries after the Prophet's death, hundreds of thousands of reports circulated in his name. Many were genuine; many were pious inventions, political forgeries or honest confusions. Each report came with a chain of transmitters — 'A told me that B told him that C heard the Prophet say' — and the science that had grown up around these chains examined every link: whether each person had actually met the next, whether he was known for accuracy, whether he had lied about anything else." },
@@ -330,7 +330,7 @@ window.ENG_READ_REL_2 = [
   n: 18, tier: 'ielts',
   title: 'Abu Hurayrah: The Man with the Kitten',
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Abu Hurayra (r.a.) — eng ko'p hadis rivoyat qilgan sahoba.", en: 'Abu Hurayrah, the most prolific narrator of hadith.' },
+  note: { uz: "Abu Hurayra (r.a.) — eng köp hadis rivoyat qilgan sahoba.", en: 'Abu Hurayrah, the most prolific narrator of hadith.' },
   paras: [
     { id: 'A', t: "His real name is uncertain — most sources give Abd al-Rahman ibn Sakhr — because everyone called him by his nickname. Abu Hurayrah means 'father of the kitten', and it was given to him, he said, because as a boy he carried a small cat in his sleeve. He came from Yemen, from a poor family, and arrived in Medina in the year 629, only about three years before the Prophet's death (peace be upon him). Those three years are the reason his name is known." },
     { id: 'B', t: "Unlike companions who had trades, farms or families to attend to, Abu Hurayrah had nothing and wanted nothing except to be near the Prophet. He lived on the platform in the mosque with the other poor, ate what he was given, and followed the Prophet from morning till night. He said openly that the migrants were busy in the markets and the helpers were busy on their land, and that he alone was there for everything. He asked the Prophet to help his memory, and the Prophet told him to spread out his cloak, spoke into it, and told him to gather it to his chest; after that, he said, he never forgot anything." },
@@ -371,7 +371,7 @@ window.ENG_READ_REL_2 = [
   n: 19, tier: 'ielts',
   title: 'Fatimah: The Daughter Who Was Like Her Father',
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Fotima Zahro (r.a.) — Payg'ambar (s.a.v.) ning kenja qizi.", en: 'Fatimah az-Zahra, the youngest daughter of the Prophet.' },
+  note: { uz: "Fotima Zahro (r.a.) — Payğambar (s.a.v.) ning kenja qizi.", en: 'Fatimah az-Zahra, the youngest daughter of the Prophet.' },
   paras: [
     { id: 'A', t: "Fatimah was the youngest of the Prophet's daughters (peace be upon him) and the only one to outlive him, though by less than a year. She was born in Mecca, before the first revelation, and grew up through the hardest years: the boycott, the death of her mother Khadijah when she was still young, the insults in the streets. When the Meccans threw filth onto her father's back as he prayed, it was Fatimah, still a girl, who ran to clean it off and wept while she did so." },
     { id: 'B', t: "In Medina she married Ali, who was poor. His wedding gift was a shield he sold to buy what was needed. Their house had a bed of palm fibre, and Fatimah ground grain by hand until her palms were calloused and carried water until the strap marked her shoulder. When prisoners of war were distributed as servants, she went to ask her father for one. He refused, saying he would not give her a servant while the poor of the platform went hungry, and taught her instead to recite words of praise before sleep, which, he said, were better for her than a servant." },
@@ -412,7 +412,7 @@ window.ENG_READ_REL_2 = [
   n: 20, tier: 'ielts',
   title: "Mus'ab: The First Ambassador",
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Mus'ab ibn Umayr (r.a.) — Islomning birinchi elchisi, Uhudda shahid.", en: "Mus'ab ibn Umayr, the first envoy of Islam." },
+  note: { uz: "Musʼab ibn Umayr (r.a.) — Islomning birinçi elçisi, Uhudda şahid.", en: "Mus'ab ibn Umayr, the first envoy of Islam." },
   paras: [
     { id: 'A', t: "Before Islam, Mus'ab ibn Umayr was the best-dressed young man in Mecca. His mother was rich and indulgent; he wore the finest cloth, the best perfume, and shoes imported from Yemen, and people said the girls of the city watched him pass. He was also intelligent and well-spoken, which is why what happened next was such a shock to the city." },
     { id: 'B', t: "He heard the Prophet (peace be upon him) at the house of al-Arqam, where the early Muslims met in secret, and believed. He hid it from his mother for as long as he could. When she found out, she locked him in the house and withheld everything — clothes, food, money — hoping that comfort would win him back. It did not. He escaped and joined the small group of Muslims who sailed to Abyssinia to escape persecution, and returned some years later thin, in patched clothes, with his skin peeling. The Prophet looked at him and wept at the change, and the companions who remembered his old clothes wept with him." },
@@ -453,7 +453,7 @@ window.ENG_READ_REL_2 = [
   n: 21, tier: 'ielts',
   title: 'Abu Ubaydah: The Trusted One of the Nation',
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Abu Ubayda ibn Jarroh (r.a.) — ummatning amini, Shom fotihi.", en: 'Abu Ubaydah ibn al-Jarrah, the Trustee of the Nation.' },
+  note: { uz: "Abu Ubayda ibn Jarroh (r.a.) — ummatning amini, Şom fotihi.", en: 'Abu Ubaydah ibn al-Jarrah, the Trustee of the Nation.' },
   paras: [
     { id: 'A', t: "Among the ten companions whom the Prophet (peace be upon him) named as promised Paradise, Abu Ubaydah is the one about whom the fewest stories are told, and this is itself the story. He was thin, tall, quiet and modest, without the eloquence of Ali or the fierceness of Umar, and the title the Prophet gave him was not a sword or a lion but Amin al-Ummah — the Trusted One of the Nation." },
     { id: 'B', t: "He accepted Islam early, through Abu Bakr, and suffered for it in Mecca. At the battle of Badr he faced his own father, who was fighting for the Meccans, and killed him; a verse of the Qur'an is said to refer to him, praising those who love God more than their own fathers. At Uhud, when two rings of the Prophet's helmet were driven into his cheek, Abu Ubaydah pulled them out with his teeth and lost two of his own front teeth doing so." },
@@ -494,7 +494,7 @@ window.ENG_READ_REL_2 = [
   n: 22, tier: 'ielts',
   title: "The Family of Yasir: The First Martyrs",
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Sumayya, Yosir va Ammor (r.a.) — Islomning birinchi shahidlari.", en: 'Sumayyah, Yasir and Ammar — the first martyrs of Islam.' },
+  note: { uz: "Sumayya, Yosir va Ammor (r.a.) — Islomning birinçi şahidlari.", en: 'Sumayyah, Yasir and Ammar — the first martyrs of Islam.' },
   paras: [
     { id: 'A', t: "The first person to die for Islam was a woman. Sumayyah bint Khayyat was an elderly slave in Mecca, freed by her owner and married to Yasir, a man from Yemen who had come to the city looking for a lost brother and stayed. They had a son, Ammar, who was about the same age as the Prophet (peace be upon him). All three accepted Islam early, and because they had no tribe to protect them, all three paid for it." },
     { id: 'B', t: "The family that had freed Sumayyah, the clan of Makhzum, took them out to the desert at the hottest part of the day and tortured them — with heat, with stones, with fire — to make them curse the new religion. The Prophet passed them and could not stop it; he had no power in Mecca. He said: 'Patience, family of Yasir. Your meeting place is Paradise.' It was all he could offer." },
@@ -535,7 +535,7 @@ window.ENG_READ_REL_2 = [
   n: 23, tier: 'ielts',
   title: 'Nuh: Nine Hundred and Fifty Years',
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Nuh (a.s.) — kema va to'fon.", en: 'The Prophet Nuh (Noah), the ark and the flood.' },
+  note: { uz: "Nuh (a.s.) — kema va töfon.", en: 'The Prophet Nuh (Noah), the ark and the flood.' },
   paras: [
     { id: 'A', t: "The Qur'an says that Nuh lived among his people for nine hundred and fifty years, calling them to worship one God. It is the longest mission of any prophet and, measured by numbers, the least successful: a handful believed, and the rest mocked him. He called them by day and by night, in public and in private, and they put their fingers in their ears and pulled their cloaks over their heads so as not to see him. He complained to God that his calling had only made them run further away." },
     { id: 'B', t: "The objections of the leaders are recorded and are the objections that every prophet met. He was only a man like them, they said, and if God had wanted to send a message He would have sent an angel. Only the poorest and lowest people followed him, and the leaders would not sit with such people. They demanded that he drive his followers away before they would listen. He refused: he would not drive away those who believed, and he had not claimed to be an angel or to know the unseen." },
@@ -576,7 +576,7 @@ window.ENG_READ_REL_2 = [
   n: 24, tier: 'ielts',
   title: 'Sulayman: The King Who Understood the Ants',
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Sulaymon (a.s.) — payg'ambar podshoh, Bilqis va taxt qissasi.", en: 'The Prophet Sulayman (Solomon), the king who was given a kingdom like no other.' },
+  note: { uz: "Sulaymon (a.s.) — payğambar podşoh, Bilqis va taxt qissasi.", en: 'The Prophet Sulayman (Solomon), the king who was given a kingdom like no other.' },
   paras: [
     { id: 'A', t: "Sulayman was the son of the Prophet Dawud (David) and inherited both his kingdom and his prophethood. The Qur'an says he asked for a kingdom that would belong to no one after him, and was given one unlike any other: the wind was made to carry him, a month's journey in a morning; the jinn were made to work for him, building and diving; and he was taught the speech of birds. He knew, and said, that all of it was a test of whether he would be grateful." },
     { id: 'B', t: "The chapter of the Qur'an named after the ant takes its title from a single scene. Sulayman's army — men, jinn and birds — was marching through a valley when an ant called out to the others to enter their homes so that the army would not crush them without noticing. Sulayman heard it, understood it, and smiled; and the prayer he made at that moment was not for more power but that he be enabled to be thankful for what he had, and to do good, and to be counted among the righteous." },

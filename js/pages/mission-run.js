@@ -484,8 +484,8 @@
   /* ====================== WRITING STUDIO =============================== */
   var BANDS = [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9];
   var GUIDE = {
-    1: { uz: "Tuzilma: 1) kirish — savolni parafraz; 2) overview — 1–2 asosiy tendensiya (raqamsiz); 3–4) tafsilotlar — guruhlab, raqamlar bilan taqqoslash. 150+ so'z, ~20 daqiqa. Fikr bildirmang.", en: 'Structure: 1) introduction — paraphrase the question; 2) overview — 1–2 main trends (no figures); 3–4) details — grouped, compared with figures. 150+ words, ~20 minutes. No opinions.' },
-    2: { uz: "Tuzilma: 1) kirish — parafraz + aniq pozitsiya; 2–3) har abzats: topic sentence → tushuntirish → misol → bog'lash; 4) xulosa — pozitsiyani qayta aytish. 250+ so'z, ~40 daqiqa. Savolning HAR qismiga javob.", en: 'Structure: 1) introduction — paraphrase + clear position; 2–3) each paragraph: topic sentence → explanation → example → link back; 4) conclusion — restate the position. 250+ words, ~40 minutes. Answer EVERY part of the question.' }
+    1: { uz: "Tuzilma: 1) kiriş — savolni parafraz; 2) overview — 1–2 asosiy tendensiya (raqamsiz); 3–4) tafsilotlar — guruhlab, raqamlar bilan taqqoslaş. 150+ söz, ~20 daqiqa. Fikr bildirmang.", en: 'Structure: 1) introduction — paraphrase the question; 2) overview — 1–2 main trends (no figures); 3–4) details — grouped, compared with figures. 150+ words, ~20 minutes. No opinions.' },
+    2: { uz: "Tuzilma: 1) kiriş — parafraz + aniq pozitsiya; 2–3) har abzats: topic sentence → tuşuntiriş → misol → boğlaş; 4) xulosa — pozitsiyani qayta aytiş. 250+ söz, ~40 daqiqa. Savolning HAR qismiga javob.", en: 'Structure: 1) introduction — paraphrase + clear position; 2–3) each paragraph: topic sentence → explanation → example → link back; 4) conclusion — restate the position. 250+ words, ~40 minutes. Answer EVERY part of the question.' }
   };
   function pickPrompt(task) {
     var used = {}; M().studio.list().forEach(function (p) { if (p.promptId) used[p.promptId] = 1; });

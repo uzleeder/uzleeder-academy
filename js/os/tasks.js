@@ -24,10 +24,10 @@
     ielts:    { t: { uz: 'IELTS', en: 'IELTS' } },
     coding:   { t: { uz: 'Kod', en: 'Coding' } },
     review:   { t: { uz: 'Takror', en: 'Review' } },
-    reading:  { t: { uz: 'Oʻqish', en: 'Reading' } },
+    reading:  { t: { uz: 'Öqiş', en: 'Reading' } },
     routine:  { t: { uz: 'Odat', en: 'Routine' } },
     rest:     { t: { uz: 'Dam', en: 'Rest' } },
-    other:    { t: { uz: 'Boshqa', en: 'Other' } }
+    other:    { t: { uz: 'Boşqa', en: 'Other' } }
   };
 
   function all() {

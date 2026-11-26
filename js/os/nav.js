@@ -21,7 +21,7 @@
   var DEST = [
     {
       key: 'center', route: 'center', icon: 'home',
-      t: { uz: 'Boshqaruv markazi', en: 'Command Center' },
+      t: { uz: 'Boşqaruv markazi', en: 'Command Center' },
       d: { uz: 'Bugun nima muhim', en: 'What matters today' },
       tabs: []
     },
@@ -34,7 +34,7 @@
         ['calendar',  { uz: 'Kalendar', en: 'Calendar' }],
         ['schedule',  { uz: 'Kunlik jadval', en: 'Daily schedule' }],
         ['week',      { uz: 'Hafta', en: 'Week' }],
-        ['phases',    { uz: 'Bosqichlar', en: 'Phases' }],
+        ['phases',    { uz: 'Bosqiçlar', en: 'Phases' }],
         ['goals',     { uz: 'Maqsadlar', en: 'Goals' }],
         ['routines',  { uz: 'Odatlar', en: 'Routines' }],
         ['history',   { uz: 'Tarix', en: 'History' }]
@@ -42,7 +42,7 @@
     },
     {
       key: 'studio', route: 'studio', icon: 'book',
-      t: { uz: 'Oʻquv studiyalari', en: 'Learning Studios' },
+      t: { uz: 'Öquv studiyalari', en: 'Learning Studios' },
       d: { uz: 'IELTS va Coding — bitta joyda', en: 'IELTS and Coding in one place' },
       tabs: [
         ['ielts',  { uz: 'IELTS Studio', en: 'IELTS Studio' }],
@@ -56,7 +56,7 @@
       tabs: [
         ['due',       { uz: 'Navbat', en: 'Due' }],
         ['mistakes',  { uz: 'Xatolar daftari', en: 'Error Log' }],
-        ['vocab',     { uz: 'Lugʻat', en: 'Vocabulary' }],
+        ['vocab',     { uz: 'Luğat', en: 'Vocabulary' }],
         ['grammar',   { uz: 'Grammatika', en: 'Grammar' }],
         ['cards',     { uz: 'Kartalar', en: 'Flashcards' }],
         ['sheets',    { uz: 'Cheatsheet', en: 'Cheatsheets' }],
@@ -69,8 +69,8 @@
       d: { uz: 'Kitob, matn, audio, eslatma', en: 'Books, texts, audio, notes' },
       tabs: [
         ['books',     { uz: 'Kitoblar', en: 'Books' }],
-        ['reading',   { uz: 'Oʻqish', en: 'Reading' }],
-        ['listening', { uz: 'Tinglash', en: 'Listening' }],
+        ['reading',   { uz: 'Öqiş', en: 'Reading' }],
+        ['listening', { uz: 'Tinglaş', en: 'Listening' }],
         ['media',     { uz: 'Media', en: 'Media' }],
         ['notes',     { uz: 'Daftar va eslatma', en: 'Notebooks & notes' }],
         ['saved',     { uz: 'Saqlanganlar', en: 'Bookmarks' }]
@@ -78,14 +78,14 @@
     },
     {
       key: 'insights', route: 'insights', icon: 'trend',
-      t: { uz: 'Koʻrsatkichlar', en: 'Insights' },
-      d: { uz: 'Haqiqiy oʻlchov, oʻylab topilgan ball emas', en: 'Real measurement, not invented scores' },
+      t: { uz: 'Körsatkiçlar', en: 'Insights' },
+      d: { uz: 'Haqiqiy ölçov, öylab topilgan ball emas', en: 'Real measurement, not invented scores' },
       tabs: []
     },
     {
       key: 'portfolio', route: 'portfolio', icon: 'rocket',
       t: { uz: 'Loyihalar va portfel', en: 'Projects & Portfolio' },
-      d: { uz: 'Bajarilgan ish — dalil bilan', en: 'Work done, with evidence' },
+      d: { uz: 'Bajarilgan iş — dalil bilan', en: 'Work done, with evidence' },
       tabs: [
         ['projects',  { uz: 'Loyihalar', en: 'Projects' }],
         ['capstone',  { uz: 'Capstone', en: 'Capstone' }],
@@ -99,7 +99,7 @@
       d: { uz: 'Profil, zaxira, xavfsizlik', en: 'Profile, backup, security' },
       tabs: [
         ['profile',  { uz: 'Profil', en: 'Profile' }],
-        ['look',     { uz: 'Koʻrinish', en: 'Appearance' }],
+        ['look',     { uz: 'Köriniş', en: 'Appearance' }],
         ['mission',  { uz: 'Missiya', en: 'Mission' }],
         ['data',     { uz: 'Maʼlumot', en: 'Data' }],
         ['backup',   { uz: 'Zaxira', en: 'Backup' }],
@@ -183,7 +183,7 @@
     [/^(habit|week|dua|roadmap|goal|plan|today)(\/|$)/,        'planner/today', { uz: 'Missiya rejasi', en: 'Mission Planner' }],
     [/^(projects|career)(\/|$)/,                              'portfolio/projects', { uz: 'Loyihalar', en: 'Projects' }],
     [/^(profile|settings)(\/|$)/,                             'vault',         { uz: 'Sozlamalar', en: 'Settings' }],
-    [/^(analytics|weekly|monthly)(\/|$)/,                     'insights',      { uz: 'Koʻrsatkichlar', en: 'Insights' }]
+    [/^(analytics|weekly|monthly)(\/|$)/,                     'insights',      { uz: 'Körsatkiçlar', en: 'Insights' }]
   ];
 
   /* Yangi manzil marshrutlari (App ularni taniydi) */

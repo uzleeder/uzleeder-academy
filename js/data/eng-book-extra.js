@@ -18,7 +18,7 @@ window.ENG_BOOKS_EXTRA = {
     id: 'ra', skill: 'reading', icon: 'doc',
     title: 'Pre-IELTS Reading Accelerator',
     tag: { uz: '35 matn · har 3 kunda 1', en: '35 texts · one every 3 days' },
-    desc: { uz: "IELTS formatidagi qisqa matnlar va savollar (TRUE/FALSE/NOT GIVEN, moslashtirish, to'ldirish). Har matn ~20 daqiqa. Kitobda javoblar kaliti yo'q — javobni matndan dalil bilan tekshiring.", en: 'Short IELTS-format passages with questions (TRUE/FALSE/NOT GIVEN, matching, completion). About 20 minutes each. The book has no answer key — check each answer against evidence in the text.' },
+    desc: { uz: "IELTS formatidagi qisqa matnlar va savollar (TRUE/FALSE/NOT GIVEN, moslaştiriş, töldiriş). Har matn ~20 daqiqa. Kitobda javoblar kaliti yöq — javobni matndan dalil bilan tekşiring.", en: 'Short IELTS-format passages with questions (TRUE/FALSE/NOT GIVEN, matching, completion). About 20 minutes each. The book has no answer key — check each answer against evidence in the text.' },
     unitName: { uz: 'matn', en: 'text' },
     start: '2026-10-25', every: 3, defTotal: 10, min: 20,
     pdfOffset: 2,            // PDF beti = kitob beti + 2 (muqova va mundarija)
@@ -37,9 +37,9 @@ window.ENG_BOOKS_EXTRA = {
   s1: {
     id: 's1', skill: 'listening', icon: 'headphones',
     title: 'IELTS Listening — Section 1',
-    tag: { uz: "~18 to'plam · har 6 kunda 1", en: '~18 sets · one every 6 days' },
-    desc: { uz: "Cambridge testlaridan yig'ilgan Section 1 topshiriqlari (forma, jadval, eslatma to'ldirish; 10 savol). Audio va javoblar kaliti PDF ichida yo'q — o'sha Cambridge kitobining audiosi va kaliti kerak.", en: 'Section 1 tasks collected from Cambridge tests (form, table, note completion; 10 questions). The PDF has no audio or answer key — you need the audio and key of the matching Cambridge book.' },
-    unitName: { uz: "to'plam", en: 'set' },
+    tag: { uz: "~18 töplam · har 6 kunda 1", en: '~18 sets · one every 6 days' },
+    desc: { uz: "Cambridge testlaridan yiğilgan Section 1 topşiriqlari (forma, jadval, eslatma töldiriş; 10 savol). Audio va javoblar kaliti PDF içida yöq — öşa Cambridge kitobining audiosi va kaliti kerak.", en: 'Section 1 tasks collected from Cambridge tests (form, table, note completion; 10 questions). The PDF has no audio or answer key — you need the audio and key of the matching Cambridge book.' },
+    unitName: { uz: "töplam", en: 'set' },
     start: '2026-10-26', every: 6, defTotal: 10, min: 15,
     pdfOffset: 0,
     /* Skanerlangan fayl: taxminiy bo'linish — har to'plam 2 bet. Agar topshiriq

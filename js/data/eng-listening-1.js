@@ -25,11 +25,11 @@ window.ENG_LISTENING_1 = [
 
 {
   n: 1, section: 1, type: 'form',
-  title: { uz: 'Til kursiga yozilish', en: 'Enrolling on a language course' },
-  context: { uz: "Talaba til markaziga qo'ng'iroq qilib, kurs haqida so'raydi.",
+  title: { uz: 'Til kursiga yoziliş', en: 'Enrolling on a language course' },
+  context: { uz: "Talaba til markaziga qönğiroq qilib, kurs haqida söraydi.",
              en: 'A student phones a language centre to ask about a course.' },
   speakers: ['Receptionist', 'Daniel'],
-  instruction: { uz: "Har bo'shliqqa BIR SO'Z VA/YOKI RAQAM yozing.", en: 'Write ONE WORD AND/OR A NUMBER for each answer.' },
+  instruction: { uz: "Har böşliqqa BIR SÖZ VA/YOKI RAQAM yozing.", en: 'Write ONE WORD AND/OR A NUMBER for each answer.' },
   script: [
     { s: 'Receptionist', t: "Good morning, Northbridge Language Centre. How can I help?" },
     { s: 'Daniel', t: "Hello. I'd like to ask about your evening English courses." },
@@ -71,11 +71,11 @@ window.ENG_LISTENING_1 = [
 
 {
   n: 2, section: 2, type: 'matching',
-  title: { uz: 'Shahar velosiped tarmog\'i', en: 'The city cycle network' },
-  context: { uz: "Shahar hokimiyati vakili yangi velosiped yo'llari haqida gapiradi.",
+  title: { uz: 'Şahar velosiped tarmoği', en: 'The city cycle network' },
+  context: { uz: "Şahar hokimiyati vakili yangi velosiped yöllari haqida gapiradi.",
              en: 'A council officer describes a new network of cycle routes.' },
   speakers: ['Officer'],
-  instruction: { uz: "1–6: har yo'lga to'g'ri xususiyatni tanlang. 7–10: BIR SO'Z yoki RAQAM.",
+  instruction: { uz: "1–6: har yölga töğri xususiyatni tanlang. 7–10: BIR SÖZ yoki RAQAM.",
                  en: 'Q1–6: choose the correct feature for each route. Q7–10: ONE WORD OR A NUMBER.' },
   script: [
     { s: 'Officer', t: "Thank you all for coming. I want to take you through the six new cycle routes that open next month, because each one has been designed for a rather different kind of rider." },
@@ -111,10 +111,10 @@ window.ENG_LISTENING_1 = [
 {
   n: 3, section: 3, type: 'mcq',
   title: { uz: 'Kurs loyihasi muhokamasi', en: 'Discussing a course project' },
-  context: { uz: "Ikki talaba va o'qituvchi loyiha rejasini muhokama qiladi.",
+  context: { uz: "Ikki talaba va öqituvçi loyiha rejasini muhokama qiladi.",
              en: 'Two students and a tutor discuss a project plan.' },
   speakers: ['Tutor', 'Maya', 'Tom'],
-  instruction: { uz: "To'g'ri javobni tanlang.", en: 'Choose the correct answer.' },
+  instruction: { uz: "Töğri javobni tanlang.", en: 'Choose the correct answer.' },
   script: [
     { s: 'Tutor', t: "So, you two are looking at food waste in university canteens. How far have you got?" },
     { s: 'Maya', t: "We've collected two weeks of data from the main canteen. Originally we planned four weeks, but the kitchen staff couldn't keep weighing everything, so we cut it." },
@@ -160,11 +160,11 @@ window.ENG_LISTENING_1 = [
 
 {
   n: 4, section: 4, type: 'notes',
-  title: { uz: "Ma'ruza: shahar daraxtlari", en: 'Lecture: urban trees' },
-  context: { uz: "Ekologiya bo'yicha ma'ruza — shahardagi daraxtlarning roli.",
+  title: { uz: "Maʼruza: şahar daraxtlari", en: 'Lecture: urban trees' },
+  context: { uz: "Ekologiya böyiça maʼruza — şahardagi daraxtlarning roli.",
              en: 'An ecology lecture on the role of trees in cities.' },
   speakers: ['Lecturer'],
-  instruction: { uz: "Har bo'shliqqa BIR SO'Z yozing.", en: 'Write ONE WORD for each answer.' },
+  instruction: { uz: "Har böşliqqa BIR SÖZ yozing.", en: 'Write ONE WORD for each answer.' },
   script: [
     { s: 'Lecturer', t: "Good afternoon. Today I want to look at urban trees — not as decoration, but as infrastructure, because that is increasingly how planners treat them." },
     { s: 'Lecturer', t: "Let me start with temperature. A city centre is typically several degrees warmer than the countryside around it, an effect known as the urban heat island. Trees reduce this in two ways. The obvious one is shade. The less obvious one, and the more powerful, is transpiration — water evaporating from the leaves, which cools the surrounding air much as sweating cools the body." },

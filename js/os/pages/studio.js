@@ -31,11 +31,11 @@
     return 'mastered';
   }
   var MASTERY_T = {
-    'not-started': { uz: 'boshlanmagan', en: 'not started' },
+    'not-started': { uz: 'boşlanmagan', en: 'not started' },
     'in-progress': { uz: 'jarayonda', en: 'in progress' },
     'completed':   { uz: 'bajarilgan', en: 'completed' },
-    'practiced':   { uz: 'mashq qilingan', en: 'practiced' },
-    'mastered':    { uz: 'oʻzlashtirilgan', en: 'mastered' }
+    'practiced':   { uz: 'maşq qilingan', en: 'practiced' },
+    'mastered':    { uz: 'özlaştirilgan', en: 'mastered' }
   };
   function masteryChip(level) {
     var cls = level === 'mastered' ? 'on' : level === 'practiced' ? 'on'
@@ -92,7 +92,7 @@
         masteryChip(level) +
       '</div>' +
       '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px">' +
-        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Urinish', en: 'Attempts' })) + '</div><div class="v" style="font-size:19px">' + (ev.attempts || '—') + '</div></div>' +
+        '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Uriniş', en: 'Attempts' })) + '</div><div class="v" style="font-size:19px">' + (ev.attempts || '—') + '</div></div>' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Aniqlik', en: 'Accuracy' })) + '</div><div class="v" style="font-size:19px">' + (ev.acc != null ? ev.acc + '%' : '—') + '</div></div>' +
         '<div class="os-stat"><div class="k">' + esc(L({ uz: 'Xato', en: 'Mistakes' })) + '</div><div class="v" style="font-size:19px">' + (ev.mistakes || '—') + '</div></div>' +
       '</div>' +
@@ -100,7 +100,7 @@
         esc(L({ uz: 'Maqsad', en: 'Target' })) + ': ' + target + '</div>' : '') +
       '<div style="display:flex;gap:6px;flex-wrap:wrap">' +
         '<button class="os-btn primary" style="padding:6px 12px;font-size:12.5px" data-go="' + def.route + '">' +
-          esc(L({ uz: 'Davom etish', en: 'Continue' })) + '</button>' +
+          esc(L({ uz: 'Davom etiş', en: 'Continue' })) + '</button>' +
         def.mats.map(function (m) {
           return '<button class="os-btn ghost" style="padding:6px 11px;font-size:12px" data-go="' + m + '">' +
             esc(L({ uz: 'Material', en: 'Material' })) + '</button>';
@@ -137,7 +137,7 @@
             ' · W ' + (ie.lastMock.w != null ? ie.lastMock.w : '–') + ' · S ' + (ie.lastMock.s != null ? ie.lastMock.s : '–') + '</span></span>' +
             '<time>' + (ie.lastMock.at ? new Date(ie.lastMock.at).toISOString().slice(0, 10) : '') + '</time></div>'
           : sh().empty(L({ uz: 'Mock yozilmagan', en: 'No mock recorded' }),
-              L({ uz: 'Natija yozilgandan keyin shu yerda va Insights da koʻrinadi.',
+              L({ uz: 'Natija yozilgandan keyin şu yerda va Insightsʼda körinadi.',
                   en: 'Once a result is recorded it appears here and in Insights.' }))) +
         '<div style="margin-top:12px"><button class="os-btn ghost" data-go="mission">' +
           esc(L({ uz: 'Mission dvigateli', en: 'Mission engine' })) + '</button></div>' +
@@ -155,7 +155,7 @@
   function recommendation(ie) {
     if (!ie || !ie.lastMock) {
       return '<p style="margin:0;color:var(--muted);font-size:13.5px">' +
-        esc(L({ uz: 'Tavsiya berish uchun dalil yetarli emas. Birinchi diagnostika va mockdan keyin bu yerda aniq zaif koʻnikma koʻrsatiladi.',
+        esc(L({ uz: 'Tavsiya beriş uçun dalil yetarli emas. Birinçi diagnostika va mockdan keyin bu yerda aniq zaif könikma körsatiladi.',
                 en: 'There is not enough evidence to recommend anything yet. After the first diagnostic and mock, the weakest skill will be named here.' })) +
         '</p>';
     }
@@ -169,10 +169,10 @@
     var worst = gaps[0];
     var sk = OS.CFG.skills[worst.k];
     return '<p style="margin:0 0 12px;font-size:13.5px">' +
-      esc(L({ uz: 'Maqsaddan eng uzoq koʻnikma', en: 'Furthest from target' })) + ': <b>' + esc(L(sk.t)) + '</b> (' +
+      esc(L({ uz: 'Maqsaddan eng uzoq könikma', en: 'Furthest from target' })) + ': <b>' + esc(L(sk.t)) + '</b> (' +
       (worst.g >= 0 ? '+' : '') + (Math.round(worst.g * 10) / 10) + ')</p>' +
       '<button class="os-btn primary" data-go="eng-skill/' + worst.k + '">' +
-      esc(L({ uz: 'Shu koʻnikma ustida ishlash', en: 'Work on this skill' })) + '</button>';
+      esc(L({ uz: 'Şu könikma ustida işlaş', en: 'Work on this skill' })) + '</button>';
   }
 
   /* ====================== CODING STUDIO =============================== */
@@ -193,10 +193,10 @@
     html += '<div class="os-grid c4" style="margin-bottom:var(--sp-4)">' +
       sh().stat(L({ uz: 'Python kunlari', en: 'Python days' }),
         co && co.pythonTotal ? co.pythonDone + '<small>/ ' + co.pythonTotal + '</small>' : '—',
-        co && co.avgScore ? L({ uz: 'oʻrtacha ball', en: 'average score' }) + ' ' + co.avgScore : null) +
+        co && co.avgScore ? L({ uz: 'örtaça ball', en: 'average score' }) + ' ' + co.avgScore : null) +
       sh().stat(L({ uz: 'Test aniqligi', en: 'Quiz accuracy' }),
         co && co.quizAccuracy != null ? co.quizAccuracy + '%' : '—',
-        co && co.quizAttempts ? co.quizAttempts + ' ' + L({ uz: 'urinish', en: 'attempts' }) : null) +
+        co && co.quizAttempts ? co.quizAttempts + ' ' + L({ uz: 'uriniş', en: 'attempts' }) : null) +
       sh().stat(L({ uz: 'PyAI darslari', en: 'PyAI lessons' }),
         pyai && pyai.lessons != null ? pyai.lessons : (window.PYAI && PYAI.lessons ? '0<small>/ ' + Object.keys(PYAI.lessons).length + '</small>' : '—'), null) +
       sh().stat(L({ uz: 'Job Ready', en: 'Job Ready' }),
@@ -219,9 +219,9 @@
         d: { uz: 'Tayyorlik dalili', en: 'Readiness evidence' } }
     ];
 
-    html += '<section class="os-card"><h2>' + esc(L({ uz: 'Yagona oʻquv yoʻli', en: 'One learning pathway' })) + '</h2>' +
+    html += '<section class="os-card"><h2>' + esc(L({ uz: 'Yagona öquv yöli', en: 'One learning pathway' })) + '</h2>' +
       '<p style="margin:0 0 14px;color:var(--muted);font-size:13px">' +
-      esc(L({ uz: 'Python, DataCamp va AI Engineering endi raqobatlashmaydi — bitta tartib.',
+      esc(L({ uz: 'Python, DataCamp va AI Engineering endi raqobatlaşmaydi — bitta tartib.',
               en: 'Python, DataCamp and AI Engineering no longer compete — one order.' })) + '</p>' +
       path.map(function (p, i) {
         return '<button class="os-row" style="width:100%;background:none;border:0;border-bottom:1px solid var(--line-soft);text-align:left;cursor:pointer;font:inherit;color:inherit" data-go="' + p.route + '">' +
@@ -232,7 +232,7 @@
       }).join('') + '</section>';
 
     html += '<div class="os-note info" style="margin-top:var(--sp-4)">' + sh().icon('bulb') + '<div>' +
-      esc(L({ uz: 'Darsning ochilishi oʻzlashtirish degani emas. Holat faqat dalil bilan koʻtariladi: bajarildi → mashq qilindi → oʻzlashtirildi.',
+      esc(L({ uz: 'Darsning oçilişi özlaştiriş degani emas. Holat faqat dalil bilan kötariladi: bajarildi → maşq qilindi → özlaştirildi.',
               en: 'Opening a lesson is not mastery. Status rises only with evidence: completed → practiced → mastered.' })) +
       '</div></div>';
 

@@ -263,7 +263,7 @@
     h += sec('example', t('4. Ishlaydigan misol va 5. izoh', '4. Worked example and 5. walkthrough'), codeBlock(Ls.example.code, 'Python') + '<ol class="py-walk">' + Ls.example.walk.map(function (w) { return '<li><b>' + t(w[0] + '-qator', 'line ' + w[0]) + ':</b> ' + md(w[1]) + '</li>'; }).join('') + '</ol>', IC.code);
     /* 6. Taxmin */
     var pk = id + ':predict';
-    h += sec('predict', t('6. Ishga tushirishdan oldin taxmin qiling', '6. Predict before running'), mcqBlock(pk, { q: { uz: 'Natija qanday bo\'ladi?', en: 'What happens?' }, opts: Ls.predict.opts, a: Ls.predict.a, why: Ls.predict.why }, { code: Ls.predict.code }), IC.brain);
+    h += sec('predict', t('6. Ishga tushirishdan oldin taxmin qiling', '6. Predict before running'), mcqBlock(pk, { q: { uz: 'Natija qanday böladi?', en: 'What happens?' }, opts: Ls.predict.opts, a: Ls.predict.a, why: Ls.predict.why }, { code: Ls.predict.code }), IC.brain);
     /* Keng tarqalgan xato */
     h += card(t('Keng tarqalgan xato', 'Common mistake'), '<div class="py-two">' + codeBlock(Ls.mistake.bad, t("Noto'g'ri", 'Wrong'), { runnable: false }) + codeBlock(Ls.mistake.good, t("To'g'ri", 'Right'), { runnable: false }) + '</div><p>' + md(Ls.mistake.why) + '</p>', IC.alert);
     /* 7–9. Mashqlar */

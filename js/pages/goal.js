@@ -10,17 +10,17 @@
      Ustunlar: infratuzilma · asosiy arxitektura va vazifa · ekotizimga ulanish */
   window.GOAL_CITY = [
     { ic: 'building', n: { uz: 'Singularity Tower', en: 'Singularity Tower' },
-      a: { uz: "Markaziy shtab-kvartira — to'q dengiz ko'ki va tilla rangdagi monolit osmono'par bino.", en: 'A monolithic dark navy and gold skyscraper serving as the central HQ.' },
-      e: { uz: 'Asosiy AI/AGI server infratuzilmasini joylashtiradi.', en: 'Houses the main AI/AGI server infrastructure.' } },
+      a: { uz: "Markaziy ştab-kvartira — töq dengiz köki va tilla rangdagi monolit osmonöpar bino.", en: 'A monolithic dark navy and gold skyscraper serving as the central HQ.' },
+      e: { uz: 'Asosiy AI/AGI server infratuzilmasini joylaştiradi.', en: 'Houses the main AI/AGI server infrastructure.' } },
     { ic: 'mosque', n: { uz: 'Cultural Core', en: 'Cultural Core' },
-      a: { uz: "Monumental masjid — nurlanuvchi neyron-tarmoq ko'rinishidagi AI muzeyi bilan birlashtirilgan.", en: 'Monumental mosque integrated with a glowing, neural-network AI Museum.' },
-      e: { uz: "100% foizsiz islomiy moliya iqtisodiyotining tayanchi.", en: 'Anchors the 100% zero-interest Islamic finance economy.' } },
+      a: { uz: "Monumental masjid — nurlanuvçi neyron-tarmoq körinişidagi AI muzeyi bilan birlaştirilgan.", en: 'Monumental mosque integrated with a glowing, neural-network AI Museum.' },
+      e: { uz: "100% foizsiz islomiy moliya iqtisodiyotining tayançi.", en: 'Anchors the 100% zero-interest Islamic finance economy.' } },
     { ic: 'book', n: { uz: 'Education Hub', en: 'Education Hub' },
       a: { uz: 'MIT, Harvard va Stanford filial kampuslari.', en: 'Branch campuses for MIT, Harvard, and Stanford.' },
-      e: { uz: "Dunyoning eng kuchli muhandislik iste'dodlarini to'g'ridan-to'g'ri Leeder Corp'ga yetkazib beradi.", en: 'Feeds top global engineering talent directly into Leeder Corp.' } },
+      e: { uz: "Dunyoning eng kuçli muhandislik isteʼdodlarini töğridan-töğri Leeder Corpʼga yetkazib beradi.", en: 'Feeds top global engineering talent directly into Leeder Corp.' } },
     { ic: 'home', n: { uz: 'Residential Zones', en: 'Residential Zones' },
-      a: { uz: 'Ichki hovlili zamonaviy, minimalist aqlli villalar.', en: 'Modern, minimalist smart-villas designed with internal courtyards.' },
-      e: { uz: "100% yashil energiya tarmog'i va avtonom logistika bilan ta'minlanadi.", en: 'Powered by a 100% green energy grid and autonomous logistics.' } }
+      a: { uz: 'Içki hovlili zamonaviy, minimalist aqlli villalar.', en: 'Modern, minimalist smart-villas designed with internal courtyards.' },
+      e: { uz: "100% yaşil energiya tarmoği va avtonom logistika bilan taʼminlanadi.", en: 'Powered by a 100% green energy grid and autonomous logistics.' } }
   ];
 
   /* Leeder City — bosqichma-bosqich reja. Har bosqich: yillar, nima
@@ -28,23 +28,23 @@
      Sanalar 0→ekspert xaritasining davomi: 2030 gacha ekspert, keyin shahar. */
   window.GOAL_CITY_PHASES = [
     { y: '2026 – 2027', k: 'foundation', build: [],
-      t: { uz: 'Poydevor: IELTS 8.0 + Python + birinchi ish', en: 'Foundation: IELTS 8.0 + Python + first job' },
-      d: { uz: "Shu platformadagi 108 kun (25-okt → 10-fev). Har kun 4 soat ingliz, 2–4 soat coding. 20-fevral — IELTS, 1-iyun — birinchi ish. Shaharning bironta g'ishti ham hali yo'q — lekin uni quradigan odam shu yerda yasaladi.", en: 'The 108 days on this platform (25 Oct → 10 Feb). 4 h English and 2–4 h coding every day. 20 Feb — IELTS, 1 June — first job. Not one brick of the city yet — but the person who builds it is being made here.' } },
+      t: { uz: 'Poydevor: IELTS 8.0 + Python + birinçi iş', en: 'Foundation: IELTS 8.0 + Python + first job' },
+      d: { uz: "Şu platformadagi 108 kun (25-okt → 10-fev). Har kun 4 soat ingliz, 2–4 soat coding. 20-fevral — IELTS, 1-iyun — birinçi iş. Şaharning bironta ğişti ham hali yöq — lekin uni quradigan odam şu yerda yasaladi.", en: 'The 108 days on this platform (25 Oct → 10 Feb). 4 h English and 2–4 h coding every day. 20 Feb — IELTS, 1 June — first job. Not one brick of the city yet — but the person who builds it is being made here.' } },
     { y: '2027 – 2030', k: 'expert', build: [],
       t: { uz: 'Ekspert: senior AI muhandisi + magistratura', en: 'Expert: senior AI engineer + master\'s' },
-      d: { uz: "Ish bilan parallel: Data Science → mid → senior/MLOps. Magistratura (IELTS 8.0 bilan grant). Ochiq manba loyihalar. Kapital: daromadning 30% jamg'arma — foizsiz, halol.", en: 'Alongside work: Data Science → mid → senior/MLOps. Master\'s (scholarship with IELTS 8.0). Open-source projects. Capital: 30% of income saved — interest-free, halal.' } },
+      d: { uz: "Iş bilan parallel: Data Science → mid → senior/MLOps. Magistratura (IELTS 8.0 bilan grant). Oçiq manba loyihalar. Kapital: daromadning 30% jamğarma — foizsiz, halol.", en: 'Alongside work: Data Science → mid → senior/MLOps. Master\'s (scholarship with IELTS 8.0). Open-source projects. Capital: 30% of income saved — interest-free, halal.' } },
     { y: '2030 – 2033', k: 'corp', build: [],
-      t: { uz: 'Leeder Corp: kompaniya va birinchi mahsulot', en: 'Leeder Corp: the company and the first product' },
-      d: { uz: "AI mahsuloti (agentlar / ta'lim / moliya). 10 → 50 kishilik jamoa. Birinchi daromad. Islomiy moliya modeli kompaniyaning ichida sinovdan o'tadi — keyin shaharga ko'chadi.", en: 'An AI product (agents / education / finance). Team of 10 → 50. First revenue. The Islamic finance model is tested inside the company — then moves to the city.' } },
+      t: { uz: 'Leeder Corp: kompaniya va birinçi mahsulot', en: 'Leeder Corp: the company and the first product' },
+      d: { uz: "AI mahsuloti (agentlar / taʼlim / moliya). 10 → 50 kişilik jamoa. Birinçi daromad. Islomiy moliya modeli kompaniyaning içida sinovdan ötadi — keyin şaharga köçadi.", en: 'An AI product (agents / education / finance). Team of 10 → 50. First revenue. The Islamic finance model is tested inside the company — then moves to the city.' } },
     { y: '2033 – 2036', k: 'tower', build: [0],
-      t: { uz: 'Singularity Tower: yer, loyiha, qurilish', en: 'Singularity Tower: land, design, construction' },
-      d: { uz: "Yer maydoni va bosh reja. Tower — shtab-kvartira va AI/AGI server infratuzilmasi. Shu bosqichda MIT/Harvard/Stanford bilan hamkorlik muzokaralari boshlanadi.", en: 'Land and master plan. The Tower — HQ and AI/AGI server infrastructure. Partnership talks with MIT/Harvard/Stanford start in this phase.' } },
+      t: { uz: 'Singularity Tower: yer, loyiha, quriliş', en: 'Singularity Tower: land, design, construction' },
+      d: { uz: "Yer maydoni va boş reja. Tower — ştab-kvartira va AI/AGI server infratuzilmasi. Şu bosqiçda MIT/Harvard/Stanford bilan hamkorlik muzokaralari boşlanadi.", en: 'Land and master plan. The Tower — HQ and AI/AGI server infrastructure. Partnership talks with MIT/Harvard/Stanford start in this phase.' } },
     { y: '2036 – 2040', k: 'hub', build: [2, 1],
       t: { uz: 'Education Hub + Cultural Core', en: 'Education Hub + Cultural Core' },
-      d: { uz: "Filial kampuslar ochiladi — iste'dod oqimi Leeder Corp'ga. Masjid va AI muzeyi — shaharning ma'naviy va ilmiy markazi. Foizsiz moliya tizimi shahar iqtisodiyotiga aylanadi.", en: 'Branch campuses open — talent flows into Leeder Corp. The mosque and AI Museum — the city\'s spiritual and scientific centre. The zero-interest finance system becomes the city economy.' } },
+      d: { uz: "Filial kampuslar oçiladi — isteʼdod oqimi Leeder Corpʼga. Masjid va AI muzeyi — şaharning maʼnaviy va ilmiy markazi. Foizsiz moliya tizimi şahar iqtisodiyotiga aylanadi.", en: 'Branch campuses open — talent flows into Leeder Corp. The mosque and AI Museum — the city\'s spiritual and scientific centre. The zero-interest finance system becomes the city economy.' } },
     { y: '2040 +', k: 'city', build: [3],
-      t: { uz: 'Residential Zones: to\'liq shahar', en: 'Residential Zones: the full city' },
-      d: { uz: "Aqlli villalar, 100% yashil energiya, avtonom logistika. Leeder City — yashaydigan, o'qiydigan, ibodat qiladigan va quradigan shahar.", en: 'Smart villas, 100% green energy, autonomous logistics. Leeder City — a city that lives, learns, prays and builds.' } }
+      t: { uz: 'Residential Zones: töliq şahar', en: 'Residential Zones: the full city' },
+      d: { uz: "Aqlli villalar, 100% yaşil energiya, avtonom logistika. Leeder City — yaşaydigan, öqiydigan, ibodat qiladigan va quradigan şahar.", en: 'Smart villas, 100% green energy, autonomous logistics. Leeder City — a city that lives, learns, prays and builds.' } }
   ];
 
   /* Shahar silueti (SVG). Har bino GOAL_CITY tartibida id oladi (b0–b3);

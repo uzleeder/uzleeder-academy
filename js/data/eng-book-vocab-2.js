@@ -6,7 +6,7 @@ window.ENG_BOOK_VOCAB_2 = [
 
 {
   n: 11,
-  theme: { uz: 'Madaniyat, san\'at va to\'siqlar', en: 'Culture, art and obstacles' },
+  theme: { uz: 'Madaniyat, sanʼat va tösiqlar', en: 'Culture, art and obstacles' },
   words: [
     { w: 'alliance', pos: 'n', syn: ['partnership', 'union', 'coalition', 'pact'], ex: 'The two nations formed a defensive alliance.' },
     { w: 'applause', pos: 'n', syn: ['clapping', 'ovation', 'acclaim'], ex: 'The performance ended to loud applause.' },
@@ -33,7 +33,7 @@ window.ENG_BOOK_VOCAB_2 = [
 
 {
   n: 12,
-  theme: { uz: 'Ziddiyat, jur\'at va geografiya', en: 'Conflict, courage and terrain' },
+  theme: { uz: 'Ziddiyat, jurʼat va geografiya', en: 'Conflict, courage and terrain' },
   words: [
     { w: 'alternative', pos: 'n', syn: ['option', 'choice', 'substitute', 'other possibility'], ex: 'Cycling is a cheap alternative to driving.' },
     { w: 'avenue', pos: 'n', syn: ['street', 'boulevard', 'route', 'path'], ex: 'This opens a promising avenue for research.' },
@@ -60,7 +60,7 @@ window.ENG_BOOK_VOCAB_2 = [
 
 {
   n: 13,
-  theme: { uz: 'Salomatlik, mashq va taqdir', en: 'Health, exercise and destiny' },
+  theme: { uz: 'Salomatlik, maşq va taqdir', en: 'Health, exercise and destiny' },
   words: [
     { w: 'affect', pos: 'v', syn: ['influence', 'impact', 'alter', 'touch'], ex: 'Poor sleep affects concentration the next day.' },
     { w: 'autograph', pos: 'n', syn: ['signature', 'inscription'], ex: 'Fans queued for the player\'s autograph.' },
@@ -87,7 +87,7 @@ window.ENG_BOOK_VOCAB_2 = [
 
 {
   n: 14,
-  theme: { uz: 'Qurilish, pishirish va sinish', en: 'Building, baking and breaking' },
+  theme: { uz: 'Quriliş, pişiriş va siniş', en: 'Building, baking and breaking' },
   words: [
     { w: 'brick', pos: 'n', syn: ['block', 'building block'], ex: 'The house is built of red brick.' },
     { w: 'crumble', pos: 'v', syn: ['disintegrate', 'collapse', 'decay', 'break up'], ex: 'The cliff face is slowly crumbling into the sea.' },
@@ -114,7 +114,7 @@ window.ENG_BOOK_VOCAB_2 = [
 
 {
   n: 15,
-  theme: { uz: 'Ob-havo, o\'lchov va tadqiqot', en: 'Weather, measurement and research' },
+  theme: { uz: 'Ob-havo, ölçov va tadqiqot', en: 'Weather, measurement and research' },
   words: [
     { w: 'although', pos: 'conj', syn: ['though', 'even though', 'while'], ex: 'Although costs are high, demand keeps rising.' },
     { w: 'apply', pos: 'v', syn: ['use', 'employ', 'request', 'put into practice'], ex: 'The same rule applies to all applicants.' },
@@ -168,7 +168,7 @@ window.ENG_BOOK_VOCAB_2 = [
 
 {
   n: 17,
-  theme: { uz: 'Tsivilizatsiya, tabiat va shahar', en: 'Civilisation, nature and the city' },
+  theme: { uz: 'Tsivilizatsiya, tabiat va şahar', en: 'Civilisation, nature and the city' },
   words: [
     { w: 'civilization', pos: 'n', syn: ['society', 'culture', 'community'], ex: 'Ancient civilizations traded across vast distances.' },
     { w: 'convenient', pos: 'adj', syn: ['handy', 'practical', 'accessible', 'suitable'], ex: 'The station is convenient for the whole neighbourhood.' },
@@ -195,7 +195,7 @@ window.ENG_BOOK_VOCAB_2 = [
 
 {
   n: 18,
-  theme: { uz: 'Kundalik hayot va o\'ylash', en: 'Everyday life and reflection' },
+  theme: { uz: 'Kundalik hayot va öylaş', en: 'Everyday life and reflection' },
   words: [
     { w: 'accent', pos: 'n', syn: ['pronunciation', 'intonation', 'emphasis'], ex: 'She speaks English with a slight accent.' },
     { w: 'barber', pos: 'n', syn: ['hairdresser', 'hairstylist'], ex: 'The barber has worked on this street for forty years.' },
@@ -249,7 +249,7 @@ window.ENG_BOOK_VOCAB_2 = [
 
 {
   n: 20,
-  theme: { uz: 'Xiyonat, mudofaa va e\'tiqod', en: 'Betrayal, defence and faith' },
+  theme: { uz: 'Xiyonat, mudofaa va eʼtiqod', en: 'Betrayal, defence and faith' },
   words: [
     { w: 'betray', pos: 'v', syn: ['deceive', 'double-cross', 'reveal', 'inform on'], ex: 'He felt his closest ally had betrayed him.' },
     { w: 'blast', pos: 'n', syn: ['explosion', 'burst', 'gust', 'shock wave'], ex: 'The blast shattered windows across the street.' },

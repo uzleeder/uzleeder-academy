@@ -38,12 +38,12 @@
     }
 
     return '<div class="os-grid c3">' +
-      tile('books/vocab', { uz: 'Destination B2', en: 'Destination B2' }, { uz: 'Lugʻat va grammatika unitlari', en: 'Vocabulary and grammar units' }, 'book') +
-      tile('books/reading', { uz: 'Oʻqish markazi', en: 'Reading centre' }, { uz: 'Uch yoʻnalish: ebook, diniy, tarixiy', en: 'Three tracks: ebook, religious, history' }, 'doc') +
-      tile('books/listen', { uz: 'Tinglash boʻlimlari', en: 'Listening sections' }, { uz: 'Kitob audio boʻlimlari', en: 'Book audio sections' }, 'headphones') +
-      tile('books/ess4', { uz: 'Essential 4', en: 'Essential 4' }, { uz: 'Ixtiyoriy lugʻat roʻyxati', en: 'Optional vocabulary list' }, 'notebook') +
-      tile('books/ra', { uz: 'Reading Accelerator', en: 'Reading Accelerator' }, { uz: 'Shaxsiy PDF nusxa', en: 'Your own PDF copy' }, 'doc') +
-      tile('books/s1', { uz: 'Listening Section 1', en: 'Listening Section 1' }, { uz: 'Shaxsiy PDF nusxa', en: 'Your own PDF copy' }, 'headphones') +
+      tile('books/vocab', { uz: 'Destination B2', en: 'Destination B2' }, { uz: 'Luğat va grammatika unitlari', en: 'Vocabulary and grammar units' }, 'book') +
+      tile('books/reading', { uz: 'Öqiş markazi', en: 'Reading centre' }, { uz: 'Uç yönaliş: ebook, diniy, tarixiy', en: 'Three tracks: ebook, religious, history' }, 'doc') +
+      tile('books/listen', { uz: 'Tinglaş bölimlari', en: 'Listening sections' }, { uz: 'Kitob audio bölimlari', en: 'Book audio sections' }, 'headphones') +
+      tile('books/ess4', { uz: 'Essential 4', en: 'Essential 4' }, { uz: 'Ixtiyoriy luğat röyxati', en: 'Optional vocabulary list' }, 'notebook') +
+      tile('books/ra', { uz: 'Reading Accelerator', en: 'Reading Accelerator' }, { uz: 'Şaxsiy PDF nusxa', en: 'Your own PDF copy' }, 'doc') +
+      tile('books/s1', { uz: 'Listening Section 1', en: 'Listening Section 1' }, { uz: 'Şaxsiy PDF nusxa', en: 'Your own PDF copy' }, 'headphones') +
       '</div>' +
       (list.length ? '<section class="os-card" style="margin-top:var(--sp-4)">' +
         '<h2>' + esc(L({ uz: 'Manbalar', en: 'Sources' })) + '</h2>' +
@@ -52,7 +52,7 @@
             (b.author ? '<span>' + esc(b.author) + '</span>' : '') + '</span></div>';
         }).join('') +
         '<p style="margin:12px 0 0;font-size:12px;color:var(--faint)">' +
-        esc(L({ uz: 'Kitob matni saytga koʻchirilmaydi — oʻz nusxangizdan ishlaysiz.',
+        esc(L({ uz: 'Kitob matni saytga köçirilmaydi — öz nusxangizdan işlaysiz.',
                 en: 'Book text is not copied into the site — you work from your own copy.' })) + '</p>' +
         '</section>' : '');
   }
@@ -63,11 +63,11 @@
     var read = st && st.readList ? st.readList() : {};
     var keys = Object.keys(read);
     return '<div class="os-grid c3" style="margin-bottom:var(--sp-4)">' +
-      tile('books/reading', { uz: 'Ebook', en: 'Ebook' }, { uz: 'Asosiy oʻqish matnlari', en: 'Main reading passages' }, 'doc') +
+      tile('books/reading', { uz: 'Ebook', en: 'Ebook' }, { uz: 'Asosiy öqiş matnlari', en: 'Main reading passages' }, 'doc') +
       tile('books/religious', { uz: 'Diniy', en: 'Religious' }, { uz: 'Diniy matnlar', en: 'Religious texts' }, 'book') +
       tile('books/history', { uz: 'Tarixiy', en: 'History' }, { uz: 'Tarixiy matnlar', en: 'Historical texts' }, 'layers') +
       '</div>' +
-      '<section class="os-card"><h2>' + esc(L({ uz: 'Oʻqish natijalari', en: 'Reading results' })) + '</h2>' +
+      '<section class="os-card"><h2>' + esc(L({ uz: 'Öqiş natijalari', en: 'Reading results' })) + '</h2>' +
       (keys.length ? '<div class="os-table-wrap"><table class="os-table"><thead><tr>' +
         '<th>' + esc(L({ uz: 'Matn', en: 'Passage' })) + '</th><th>WPM</th>' +
         '<th>' + esc(L({ uz: 'Ball', en: 'Score' })) + '</th><th>' + esc(L({ uz: 'Sana', en: 'Date' })) + '</th>' +
@@ -78,8 +78,8 @@
             '<td data-l="' + esc(L({ uz: 'Ball', en: 'Score' })) + '">' + (r.score != null ? r.score : '—') + '</td>' +
             '<td data-l="' + esc(L({ uz: 'Sana', en: 'Date' })) + '">' + (r.at ? new Date(r.at).toISOString().slice(0, 10) : '—') + '</td></tr>';
         }).join('') + '</tbody></table></div>'
-        : sh().empty(L({ uz: 'Natija yoʻq', en: 'No results' }),
-            L({ uz: 'Matn oʻqilib natija yozilganda shu yerda koʻrinadi.', en: 'Results appear here once a passage is read and recorded.' }))) +
+        : sh().empty(L({ uz: 'Natija yöq', en: 'No results' }),
+            L({ uz: 'Matn öqilib natija yozilganda şu yerda körinadi.', en: 'Results appear here once a passage is read and recorded.' }))) +
       '</section>';
   }
 
@@ -89,11 +89,11 @@
     var done = st && st.bbcDoneCount ? st.bbcDoneCount() : 0;
     return '<div class="os-grid c3" style="margin-bottom:var(--sp-4)">' +
       tile('bbc/6min', { uz: 'BBC 6 Minute English', en: 'BBC 6 Minute English' }, { uz: 'Epizodlar va transkript', en: 'Episodes and transcript' }, 'headphones') +
-      tile('books/listen', { uz: 'Kitob tinglash', en: 'Book listening' }, { uz: 'Section mashqlari', en: 'Section exercises' }, 'headphones') +
-      tile('books/dict/1/1', { uz: 'Diktant', en: 'Dictation' }, { uz: 'Yozib olish mashqlari', en: 'Transcription exercises' }, 'pen') +
+      tile('books/listen', { uz: 'Kitob tinglaş', en: 'Book listening' }, { uz: 'Section maşqlari', en: 'Section exercises' }, 'headphones') +
+      tile('books/dict/1/1', { uz: 'Diktant', en: 'Dictation' }, { uz: 'Yozib oliş maşqlari', en: 'Transcription exercises' }, 'pen') +
       '</div>' +
       '<section class="os-card">' +
-        '<div class="os-card-head"><h2>' + esc(L({ uz: 'Tinglash yozuvi', en: 'Listening record' })) + '</h2>' +
+        '<div class="os-card-head"><h2>' + esc(L({ uz: 'Tinglaş yozuvi', en: 'Listening record' })) + '</h2>' +
         sh().chip(done + ' ' + L({ uz: 'epizod bajarildi', en: 'episodes done' }), done ? 'on' : 'off') + '</div>' +
         (done ? '' : '<p style="margin:0;color:var(--muted);font-size:13px">' +
           esc(L({ uz: 'Hali epizod belgilanmagan.', en: 'No episode marked yet.' })) + '</p>') +
@@ -108,15 +108,15 @@
       '<div class="os-card-head"><h2>' + esc(L({ uz: 'Ingliz tili media', en: 'English media' })) + '</h2>' +
       sh().chip(L({ uz: 'ixtiyoriy', en: 'optional' }), 'off') + '</div>' +
       '<p style="margin:0 0 14px;color:var(--muted);font-size:13px">' +
-        esc(L({ uz: 'Kino va video — qoʻshimcha manba. Fayllar shu qurilmada (IndexedDB) saqlanadi.',
+        esc(L({ uz: 'Kino va video — qöşimça manba. Fayllar şu qurilmada (IndexedDB) saqlanadi.',
                 en: 'Films and video are a supplementary source. Files stay on this device (IndexedDB).' })) + '</p>' +
       (movies.length ? movies.slice(0, 20).map(function (m) {
         return '<button class="os-row" style="width:100%;background:none;border:0;border-bottom:1px solid var(--line-soft);text-align:left;cursor:pointer;font:inherit;color:inherit" data-go="movies/' + esc(m.id) + '">' +
           '<span class="os-row-main"><b>' + esc(m.title || m.id) + '</b>' +
           '<span>' + (m.dur ? esc(String(m.dur)) + ' · ' : '') + esc(m.src || '') + '</span></span>' +
-          (m.done ? sh().chip(L({ uz: 'koʻrilgan', en: 'watched' }), 'on') : '') + '</button>';
-      }).join('') : sh().empty(L({ uz: 'Media yoʻq', en: 'No media' }),
-          L({ uz: 'Kino qoʻshilganda shu yerda koʻrinadi.', en: 'Films appear here once added.' }))) +
+          (m.done ? sh().chip(L({ uz: 'körilgan', en: 'watched' }), 'on') : '') + '</button>';
+      }).join('') : sh().empty(L({ uz: 'Media yöq', en: 'No media' }),
+          L({ uz: 'Kino qöşilganda şu yerda körinadi.', en: 'Films appear here once added.' }))) +
       '<div style="margin-top:14px"><button class="os-btn ghost" data-go="classic/movies">' +
         esc(L({ uz: 'Media sahifasi', en: 'Media page' })) + '</button></div>' +
       '</section>';
@@ -128,14 +128,14 @@
      Eski #/copy/<kind> sahifalari o'z joyida ishlaydi — bu yerda ular
      ko'rinadi va haqiqiy yozuvlar soni bilan ochiladi.                  */
   var COPYBOOKS = [
-    ['vocab',   'mic',      { uz: 'Lugʻat daftari', en: 'Vocabulary notebook' },
-                            { uz: 'soʻz · transkripsiya · tarjima · misol', en: 'word · transcription · translation · example' }],
+    ['vocab',   'mic',      { uz: 'Luğat daftari', en: 'Vocabulary notebook' },
+                            { uz: 'söz · transkripsiya · tarjima · misol', en: 'word · transcription · translation · example' }],
     ['english', 'pen',      { uz: 'Ingliz tili daftari', en: 'English notebook' },
                             { uz: 'grammatika · ibora · xato · fikr', en: 'grammar · phrase · mistake · note' }],
     ['coding',  'code',     { uz: 'Coding daftari', en: 'Coding notebook' },
                             { uz: 'sarlavha · til · kod · izoh', en: 'title · language · code · comment' }],
     ['free',    'notebook', { uz: 'Erkin daftar', en: 'Free notebook' },
-                            { uz: 'boʻlinmagan katta varaq — nomini oʻzing qoʻyasan', en: 'one large sheet — you name it yourself' }]
+                            { uz: 'bölinmagan katta varaq — nomini özing qöyasan', en: 'one large sheet — you name it yourself' }]
   ];
 
   function copybookCards() {
@@ -171,7 +171,7 @@
         (notes.length ? notes.slice(0, 12).map(function (n) {
           return '<div class="os-row"><span class="os-row-main"><b>' + esc(L({ uz: 'Kun', en: 'Day' })) + ' ' + esc(n.day) + '</b>' +
             '<span>' + esc(String(n.text || '').slice(0, 90)) + '</span></span></div>';
-        }).join('') : sh().empty(L({ uz: 'Eslatma yoʻq', en: 'No notes' }), '')) +
+        }).join('') : sh().empty(L({ uz: 'Eslatma yöq', en: 'No notes' }), '')) +
       '</section>' +
       '<section class="os-card">' +
         '<div class="os-card-head"><h2>' + esc(L({ uz: 'Erkin daftar', en: 'Free notebook' })) + '</h2>' +
@@ -179,10 +179,10 @@
         (free.length ? free.slice(0, 12).map(function (n) {
           return '<div class="os-row"><span class="os-row-main"><b>' + esc(n.title || '') + '</b>' +
             '<span>' + (n.at ? new Date(n.at).toISOString().slice(0, 10) : '') + '</span></span></div>';
-        }).join('') : sh().empty(L({ uz: 'Yozuv yoʻq', en: 'Nothing written' }),
-            L({ uz: 'Boshqaruv markazidagi "tez yozib qoʻy" shu yerga tushadi.', en: 'Quick capture from the Command Center lands here.' }))) +
+        }).join('') : sh().empty(L({ uz: 'Yozuv yöq', en: 'Nothing written' }),
+            L({ uz: 'Boşqaruv markazidagi "tez yozib qöy" şu yerga tuşadi.', en: 'Quick capture from the Command Center lands here.' }))) +
         '<div style="margin-top:14px"><button class="os-btn ghost" data-go="copy/free">' +
-          esc(L({ uz: 'Daftarni ochish', en: 'Open the notebook' })) + '</button></div>' +
+          esc(L({ uz: 'Daftarni oçiş', en: 'Open the notebook' })) + '</button></div>' +
       '</section>' +
       '</div>';
   }
@@ -199,8 +199,8 @@
           '<span class="os-row-main"><b>' + esc(b.title || b.id) + '</b>' +
           '<span>' + esc(b.kind || '') + '</span></span>' +
           '<time>' + (b.at ? new Date(b.at).toISOString().slice(0, 10) : '') + '</time></button>';
-      }).join('') : sh().empty(L({ uz: 'Saqlangan yoʻq', en: 'Nothing saved' }),
-          L({ uz: 'Sahifadagi saqlash belgisi bilan qoʻshiladi.', en: 'Added with the bookmark icon on a page.' }))) +
+      }).join('') : sh().empty(L({ uz: 'Saqlangan yöq', en: 'Nothing saved' }),
+          L({ uz: 'Sahifadagi saqlaş belgisi bilan qöşiladi.', en: 'Added with the bookmark icon on a page.' }))) +
       '</section>';
   }
 
