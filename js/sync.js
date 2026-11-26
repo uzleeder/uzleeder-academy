@@ -34,6 +34,27 @@
   var META_KEY = 'uzla.sync';
   var PUSH_DELAY = 1500;
 
+  /* ====================== 2026-11: LOCAL-FIRST =========================
+     Personal OS qoidasi (brief 8-bo'lim, audit S1/S2): shaxsiy o'quv
+     yozuvlari QURILMADA qoladi. Avtomatik push/pull O'CHIQ.
+
+     Nima o'chdi:
+       • har o'zgarishdan keyingi avtomatik push (Store.onChange)
+       • sahifa ochilganda va tabga qaytganda avtomatik pull
+       • pagehide dagi keepalive beacon
+
+     Nima qoldi:
+       • autentifikatsiya (login/logout/parol) — bu progress emas
+       • ANIQ so'rov bilan bir martalik import: Sync.importOnce()
+       • xohlasa, foydalanuvchi o'zi yoqishi mumkin: Vault > Xavfsizlik
+
+     Hech narsa jimgina yuborilmaydi.                                    */
+  function autoEnabled() {
+    try {
+      return !!(window.Store && Store.setting && Store.setting('cloudSync') === true);
+    } catch (e) { return false; }
+  }
+
   var meta = { rev: 0, at: 0 };
   var status = 'off';          // off | out | in | error | busy | env
   var envMissing = [];         // env — server sozlanmagan (Vercel o'zgaruvchilari yo'q)
@@ -217,6 +238,8 @@
 
   /* ---------- push ------------------------------------------------------- */
   function push(now) {
+    /* Local-first: avtomatik yuborish o'chiq bo'lsa, hech narsa ketmaydi */
+    if (!autoEnabled()) return Promise.resolve(false);
     if (!available() || status === 'out' || status === 'off' || status === 'env') return Promise.resolve(false);
     dirty = true;
     if (!now) {
@@ -257,6 +280,9 @@
       if (r.status === 200) {
         user = r.body.user || u;
         meta = { rev: 0, at: 0, user: user }; writeMeta();
+        /* Local-first: login AUTENTIFIKATSIYA, progress emas. Avtomatik
+           sinxron o'chiq bo'lsa, hech narsa tortilmaydi va yuborilmaydi. */
+        if (!autoEnabled()) { setStatus('off'); return { ok: true }; }
         return pull().then(function () { return { ok: true }; });
       }
       if (r.status === 429) return { ok: false, reason: 'locked', retryMin: r.body.retryMin };
@@ -310,9 +336,33 @@
   }
 
   /* ---------- boshlash --------------------------------------------------- */
+  /* ---------- bir martalik ANIQ import ----------------------------------
+     Foydalanuvchi Vault > Xavfsizlik dan bosadi. Bulutdagi nusxa olinadi
+     va MAHALLIY holat bilan birlashtiriladi (hech narsa o'chmaydi).
+     Bu yagona yo'l: boshqa hech qayerda pull chaqirilmaydi.            */
+  function importOnce() {
+    if (!available()) return Promise.resolve({ ok: false, reason: 'offline' });
+    return api('GET', 'state').then(function (r) {
+      if (r.status === 401) return { ok: false, reason: 'auth' };
+      if (r.status !== 200) return { ok: false, reason: 'http-' + r.status };
+      var doc = r.body;
+      if (!doc || !doc.state) return { ok: false, reason: 'empty' };
+      var merged = mergeStates(Store.all(), doc.state);
+      merged.lang = Store.get('lang');
+      merged.theme = Store.get('theme');
+      merged.settings = Store.all().settings;
+      Store.replace(merged, true);
+      meta.rev = doc.rev || 0; meta.at = Date.now(); writeMeta();
+      return { ok: true, rev: meta.rev };
+    }).catch(function (e) { return { ok: false, reason: String(e && e.message || e) }; });
+  }
+
   function init() {
     readMeta();
     if (!available()) { setStatus('off'); return; }
+    /* Local-first: avtomatik sinxron o'chiq bo'lsa — tarmoqqa chiqmaymiz.
+       Sahifa ochilganda /api/state ga BIRORTA so'rov ketmaydi.          */
+    if (!autoEnabled()) { setStatus('off'); return; }
     setStatus('out');
     Store.onChange(function () { push(false); });
     // Tab'ga qaytilganda yangilash — kecha ochiq qolgan tab uchun
@@ -336,6 +386,12 @@
 
   window.Sync = {
     init: init, pull: pull, push: function () { return push(true); },
+    autoEnabled: autoEnabled, importOnce: importOnce,
+    setAuto: function (on) {
+      if (window.Store && Store.setSetting) Store.setSetting('cloudSync', !!on);
+      if (on) init(); else setStatus('off');
+      return autoEnabled();
+    },
     login: login, logout: logout, changePassword: changePassword, changeUsername: changeUsername,
     status: function () { return status; },
     envMissing: function () { return envMissing; },

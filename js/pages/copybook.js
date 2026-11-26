@@ -313,9 +313,10 @@
     $$('[data-cbdel]').forEach(function (b) {
       if (b.dataset.bound) return; b.dataset.bound = '1';
       b.addEventListener('click', function () {
-        if (!confirm(tr('copyDelQ'))) return;
-        var ent = Store.copyGet(kind, b.dataset.cbdel); if (ent && ent.audioUrl && window.MediaCloud) MediaCloud.del(ent.audioUrl);
-        Store.copyDel(kind, b.dataset.cbdel); AudioDB.del(b.dataset.cbdel).catch(function () {}); App.render();
+        App.confirm({ text: tr('copyDelQ'), danger: true }, function () {
+          var ent = Store.copyGet(kind, b.dataset.cbdel); if (ent && ent.audioUrl && window.MediaCloud) MediaCloud.del(ent.audioUrl);
+          Store.copyDel(kind, b.dataset.cbdel); AudioDB.del(b.dataset.cbdel).catch(function () {}); App.render();
+        });
       });
     });
     $$('[data-rec]').forEach(function (b) {

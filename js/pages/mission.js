@@ -271,7 +271,7 @@
         try { M().results.add(o); toast(t('Saqlandi', 'Saved'), 'ok'); App.render(); }
         catch (er) { toast(er.message === 'band' ? t("Band 0–9, 0.5 qadam bilan", 'Band must be 0–9 in 0.5 steps') : t('Kamida bitta band kiriting', 'Enter at least one band'), 'warn'); }
       });
-      $$('[data-resdel]').forEach(function (b) { b.addEventListener('click', function () { if (confirm(t("Natijani o'chirasizmi?", 'Delete this result?'))) { M().results.del(b.dataset.resdel); App.render(); } }); });
+      $$('[data-resdel]').forEach(function (b) { b.addEventListener('click', function () { App.confirm({ text: t("Natijani o'chirasizmi?", 'Delete this result?'), danger: true }, function () { M().results.del(b.dataset.resdel); App.render(); }); }); });
     };
     return h + '</div>';
   };
@@ -443,7 +443,7 @@
         if (f && window.MissionMedia) MissionMedia.put('cu:' + id, f).then(fin, function () { m.custom[id].audio = false; fin(); toast(t("Audio saqlanmadi (brauzer xotirasi)", 'Audio not stored (browser storage)'), 'warn'); });
         else fin();
       });
-      $$('[data-cudel]').forEach(function (b) { b.addEventListener('click', function () { if (!confirm(t("Testni o'chirasizmi? (natijalar tarixda qoladi)", 'Delete this test? (results stay in history)'))) return; delete m.custom[b.dataset.cudel]; if (window.MissionMedia) MissionMedia.del('cu:' + b.dataset.cudel); M().save(); App.render(); }); });
+      $$('[data-cudel]').forEach(function (b) { b.addEventListener('click', function () { App.confirm({ text: t("Testni o'chirasizmi? (natijalar tarixda qoladi)", 'Delete this test? (results stay in history)'), danger: true }, function () { delete m.custom[b.dataset.cudel]; if (window.MissionMedia) MissionMedia.del('cu:' + b.dataset.cudel); M().save(); App.render(); }); }); });
     };
     return h + '</div>';
   };
@@ -459,10 +459,12 @@
       var fm = $('#ivForm'); if (fm) fm.addEventListener('submit', function (e) { e.preventDefault(); var v = fm.iv.value.split(',').map(function (x) { return Math.round(Number(x)); }).filter(function (x) { return x > 0 && x <= 90; }); var okInc = v.every(function (x, i) { return !i || x > v[i - 1]; }); if (v.length < 2 || !okInc) { toast(t("Kamida 2 ta o'sib boruvchi son (1–90)", 'At least 2 increasing numbers (1–90)'), 'warn'); return; } s.ivls = v; M().save(); toast(t('Saqlandi', 'Saved'), 'ok'); App.render(); });
       var r = $('#ivReset'); if (r) r.addEventListener('click', function () { s.ivls = null; M().save(); App.render(); });
       var rs = $('#msReset'); if (rs) rs.addEventListener('click', function () {
-        if (!confirm(t("Faqat IELTS Mission ma'lumoti (rejalar, urinishlar, xatolar banki, Studio ishlari) o'chadi. Boshqa kurslar va eski ingliz tili progressi saqlanadi. Davom etasizmi?", 'Only IELTS Mission data (plans, attempts, error bank, Studio work) will be removed. Other courses and earlier English progress are kept. Continue?'))) return;
-        if ((prompt(t("Tasdiqlash uchun MISSION deb yozing", 'Type MISSION to confirm')) || '').trim().toUpperCase() !== 'MISSION') return;
-        try { localStorage.setItem('uzla.mission.backup.' + Date.now(), JSON.stringify(M().M())); } catch (e) {}
-        Store.all().mission = null; M().M(); M().save(); toast(t('Tozalandi (zaxira saqlandi)', 'Reset (a backup was kept)'), 'ok'); App.go('mission');
+        App.confirm({ text: t("Faqat IELTS Mission ma'lumoti (rejalar, urinishlar, xatolar banki, Studio ishlari) o'chadi. Boshqa kurslar va eski ingliz tili progressi saqlanadi. Davom etasizmi?", 'Only IELTS Mission data (plans, attempts, error bank, Studio work) will be removed. Other courses and earlier English progress are kept. Continue?'), danger: true }, function () {
+          App.prompt({ text: t("Tasdiqlash uchun MISSION deb yozing", 'Type MISSION to confirm'), match: 'MISSION', placeholder: 'MISSION', danger: true }, function () {
+            try { localStorage.setItem('uzla.mission.backup.' + Date.now(), JSON.stringify(M().M())); } catch (e) {}
+            Store.all().mission = null; M().M(); M().save(); toast(t('Tozalandi (zaxira saqlandi)', 'Reset (a backup was kept)'), 'ok'); App.go('mission');
+          });
+        });
       });
     };
     return h + '</div>';

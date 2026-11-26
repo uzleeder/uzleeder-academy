@@ -1,318 +1,248 @@
 /* ==========================================================================
-   HABIT — kunlik intizom jadvali
+   HABIT - kunlik intizom jadvali (Uzlat & Ribat, namozga anchor qilingan)
    --------------------------------------------------------------------------
-   Kun QAT'IY vaqtlar ustiga qurilgan: 05:20 da uyg'onish, 21:20 da yotish.
-   Har blokning boshlanish soati aniq yozilgan.
+   Kun QAT'IY SOATGA emas, NAMOZ VAQTLARIGA qurilgan. Toshkentda 26-okt ->
+   10-fev oynasida Bomdod 55, Asr 65, Shom 67 daqiqa suriladi - shuning
+   uchun blok vaqtlarini qotirib qo'yish 108 kundan 65 kuni namozni o'z
+   vaqtidan oldin o'qishga olib keladi. Jadval har kuni qayta hisoblanadi
+   (js/habit.js -> buildChain, js/prayer.js -> Prayer.times).
 
-   UYQU — 8 SOAT, himoyalangan blok.
-     21:20 → 05:20 = aniq 8 soat. Uyqu jadvalning qoldig'i emas, ASOSI:
-     qolgan hamma narsa shundan keyin joylashadi. Kam uxlagan miya yangi
-     material yodda saqlamaydi — ya'ni uyquni qisqartirish o'qishni
-     tezlashtirmaydi, sekinlashtiradi.
+   CHORCHO'BA (16 hafta o'zgarmaydi):
+     Tahajjud 02:00 - 60 daq namoz, keyin 1-pora.
+     Har kuni 3 pora Qur'on x 90 daqiqa: Tahajjudda, Bomdoddan keyin va
+     Peshindan oldin (Gibrid kunida 3-pora mavsumga qarab Shomdan keyin).
+     Yakshanba ham to'xtamaydi: haftada 21 pora, butun Qur'on 10 kunda.
 
-   YADRO YUKLAMA ~6 SOAT/KUN — ataylab. 9–10 soatlik kunlar 3–6-haftada
-     charchashga olib keladi; band 8 ko'proq soatdan emas, sekin va
-     TUZATILGAN ishdan keladi. Og'ir kun 360 daq, LC kuni 375 daq (LC bilan),
-     yakshanba 130 daq (bitta test bloki). Har shablon aynan 1440 daqiqa,
-     bloklar ustma-ust tushmaydi (yt ham alohida slot).
+   UYQU - 390 DAQIQA (6 soat 30 daqiqa), IKKI BO'LAKDA, KAFOLATLANGAN:
+     asosiy uyqu + "qayta uyqu" (04:30 -> Bomdod). Bomdod surilganda qayta
+     uyqu 44-100 daqiqa orasida o'zgaradi, asosiy uyqu esa shunga qarab
+     moslashadi - jami har kuni aniq 390 daqiqa. Shuning uchun yotish vaqti
+     20:15 (oktabr) dan 21:10 (yanvar) gacha suriladi. Agar 21:00 qotirib
+     qo'yilsa, 108 kundan 15 kuni 6 soatdan kam uxlanadi - shuning uchun
+     qotirilmaydi. Kun ulgurmasa dars qisqaradi, uyqu emas.
 
-   CODING — HAR KUNI: Python 30 kun (25-okt → 23-noy, kuniga 1 dars) +
-     DataCamp treki (25-okt dan, kuniga 1 bob). Og'ir kun 100 daq
-     (Python 60 + DataCamp 40), LC kuni 90 daq, yakshanba: Python oyida
-     45 daq dars, keyin shu slot SRS takrori. Coding takrori — ixtiyoriy.
+   TO'RT SHABLON:
+     gibrid     Du . Ch        oshxona va ro'zg'or + podkast, Tech 2 qismda
+     lc         Se . Pa . Sha  Everest LC 16:30-18:30 + 45 daq yo'l
+     oddiy      Ju             Uzlat master plan + juma namozi
+     tiklanish  Yak            yangi mavzu yo'q, haftalik hisobot, oila
 
-   QARZ — ko'pi bilan meta.debtCap (3) kun: undan ortiq to'planmaydi,
-     bosqichlar 3 kundan ko'p surilmaydi, roast darajasi o'smaydi.
+   QARZ - shanba oqshomida yopiladi (lc shablonidagi `c-debt` bloki).
+     Haftalik nol: qarz keyingi haftaga o'tmaydi.
 
-   WORK — loyiha ustida ish: KETMA-KET 3 SOAT, bitta blok. Og'ir kun va
-     yakshanba: 16:00–19:00. LC kuni: LC dan keyin (18:50–21:10 = 2s 20d —
-     21:20 uyqu himoyalangan, 3 soat sig'maydi; farq halol ko'rsatiladi).
-     Ish davri Sozlamalarda (work: on/from/to). Ish kunida kechqurungi
-     bloklar HABIT.work[type] bo'yicha qayta joylanadi: kino tushga ko'chadi,
-     speaking/lug'at testi/kitob/yakun ishdan keyin. Har kun baribir 1440.
-     Writing bloki 25-oktabrgacha jadvalda YO'Q (Writing kursi shu kundan).
-
-   KINO — har kuni, 35–45 daqiqa (yakshanba 45).
-     Nega har kuni: (1) chegarasi bor dam chegarasizidan yaxshi — aks holda
-     kechqurun uyqu vaqtiga o'tib ketadi; (2) inglizcha ko'rilsa, bu dam
-     bo'lgani holda Listening mashqi ham bo'ladi. Uyqudan oldin oxirgi blok
-     emas — orasida qisqa yakun bloki turadi.
-
-   Uch xil kun:
-     heavy  Du · Ch · Ju   ingliz tili to'liq + PYTHON
-     class  Se · Pa · Sha  Everest LC 16:30–18:30 + ingliz tili
-     rest   Yakshanba      dam + takror/test kuni
-
-   Blok: { id, kind, at, min, t, note?, core?, link? }
-     at    — boshlanish vaqti "HH:MM"
-     firstOnly — faqat rasmiy start kuni (notFirst juftligi)
-     noDc  — o'sha kuni DataCamp bobi rejalashtirilgan bo'lsa blok tashlanadi
-             (dcOnly juftligi: ikkalasi bir slot, faqat bittasi chiqadi)
-     prayer— 'fajr' | 'dhuhr' — vaqti sozlamadan olinadi
-     kind  pray | quran | eng | py | lc | hw | speak | review | meal | rest | movie | sleep
+   Blok: { id, kind, min?, anchor?, flex?, until?, flexTo?, when?, core?, w?, t, note?, link? }
+     Semantikasi shablonlar ustidagi izohda.
+     kind  pray | quran | eng | py | kitchen | lc | speak | review | meal | rest | sleep
    ========================================================================== */
 window.HABIT = {
 
   meta: {
-    from: '2026-10-25',          // jadval boshlanishi = RASMIY start (2026-10 kalendar reseti)
-    official: '2026-10-25',      // RASMIY start (kickoff, yakshanba) — Python 1-kun, DataCamp 1-kun, yangi davr
-    to: '2027-02-10',
-    dayStart: '05:20',
-    dayEnd: '21:20',
-    sleepFrom: '21:20',
-    sleepHours: 8,
-    debtCap: 3,                  // qarz ko'pi bilan 3 kun hisoblanadi — "roast" spiralga tushmasin
+    from: '2026-10-25',          // jadval boshlanishi = RASMIY start
+    official: '2026-10-25',      // RASMIY start (kickoff, yakshanba)
+    to: '2027-02-10',            // marafon oxiri; 11-20 fev - imtihon sprinti
+    tahajjud: '02:00',           // Tahajjud bloki boshlanishi (chorcho'ba)
+    juz: 90,                     // bir pora qiroati, daqiqa
+    juzPerDay: 3,                // Tahajjud . Bomdod . Peshindan oldin
+    dayStart: '02:00',           // uyg'onish (Tahajjud)
+    dayEnd: '20:15-21:10',       // yotish - mavsum bilan suriladi
+    sleepMin: 390,               // JAMI uyqu (asosiy + qayta), qat'iy
+    sleepHours: 6.5,
+    reSleepFrom: '04:30',        // qayta uyqu boshlanishi (Tahajjud + 150)
+    debtCap: 3,
+    debtWeekly: true,            // qarz shanba oqshomida nolga tushadi
     title: { uz: 'Kunlik intizom', en: 'Daily discipline' },
     lede: {
-      uz: "25-oktabrdan 10-fevralgacha — har bir kun, soatma-soat. Uyg'onish 05:20, yotish 21:20 — aniq 8 soat uyqu.",
-      en: 'From 25 October to 10 February — every day, hour by hour. Wake at 05:20, sleep at 21:20 — exactly eight hours.'
+      uz: "25-oktabrdan 10-fevralgaça - har kuni Tahajjud 02:00, 3 pora Qurʼon, uyqu 6 soat 30 daqiqa ikki bölakda. Bloklar namoz vaqtlariga boğlangan va har kuni qayta hisoblanadi.",
+      en: 'From 25 October to 10 February - Tahajjud at 02:00 every day, three juz of recitation, six and a half hours of sleep in two parts. Blocks are anchored to the prayer times and recomputed daily.'
     },
     note: {
-      uz: "Bomdod va Peshin jadval ustuni — standart 05:20 va 13:00, Sozlamalardan o'zgartiriladi. Asr, Shom va Xufton hisoblanadi, chunki ular mavsum bilan 2 soatgacha suriladi. Hisob taxminiy — mahalliy taqvim bilan solishtir.",
-      en: 'Fajr and Dhuhr are the pillars of the schedule — 05:20 and 13:00 by default, changeable in Settings. Asr, Maghrib and Isha are calculated, because they shift by up to two hours across the season. The calculation is approximate — check it against your local calendar.'
+      uz: "Barça beş namoz hisoblanadi (Hanafiy asr, 18 daraja bomdod/xufton) va Sozlamalarda qölda tuzatiladi. Hisob taxminiy - mahalliy taqvim bilan soliştir. Tahajjud - nafl, majburiy namozlardan alohida körsatiladi.",
+      en: 'All five prayers are calculated (Hanafi asr, 18 degree fajr/isha) and can be corrected by hand in Settings. The calculation is approximate - check it against your local calendar. Tahajjud is voluntary and shown separately from the obligatory prayers.'
     },
     sleepNote: {
-      uz: "8 soat uyqu — himoyalangan blok, jadvalning qoldig'i emas. Kam uxlagan miya yangi materialni yodda saqlamaydi: uyquni qisqartirish o'qishni tezlashtirmaydi, sekinlashtiradi. Agar kun ulgurmasa — dars qisqarsin, uyqu emas.",
-      en: 'Eight hours of sleep is a protected block, not what is left over. A short-slept brain does not retain new material: cutting sleep does not speed learning up, it slows it down. If a day overruns, shorten a lesson — never the sleep.'
+      uz: "Uyqu 390 daqiqa - himoyalangan, jadvalning qoldiği emas. Ikki bölakda: asosiy uyqu va qayta uyqu (04:30 -> Bomdod). Bomdod surilsa bölaklar nisbati özgaradi, jami özgarmaydi. Kam uxlagan miya yangi materialni yodda saqlamaydi: agar kun ulgurmasa - dars qisqarsin, uyqu emas.",
+      en: 'Sleep is 390 minutes - protected, not what is left over. In two parts: the main sleep and the second sleep (04:30 until Fajr). When Fajr shifts, the split changes but the total does not. A short-slept brain does not retain new material: if a day overruns, shorten a lesson, never the sleep.'
+    },
+    quranNote: {
+      uz: "Kuniga 3 pora x 90 daqiqa = 4 soat 30 daqiqa. Haftada 21 pora, butun Qurʼon 10 kunda. Bu uyqudan keyingi eng katta blok - Teçʼdan ham köproq. Yakşanba ham töxtamaydi.",
+      en: 'Three juz a day times 90 minutes = four and a half hours. Twenty-one juz a week; the whole book in ten days. After sleep this is the largest block of the day, larger than Tech. It does not stop on Sunday either.'
     },
     restNote: {
-      uz: "Yakshanba — dam kuni. Yangi mavzu yo'q, LC yo'q, uy vazifasi yo'q. Majburiy ish bittasi: haftalik test (Listening + Reading, 100 daqiqa). Python oyida (23-noyabrgacha) 45 daqiqalik dars ham bor — 30/30 sig'ishi uchun. Qolgani — sayr, oila, kino. Dam olish \"hech narsa qilmaslik\" emas, \"yangi narsa boshlamaslik\" degani.",
-      en: 'Sunday is the rest day. No new material, no LC, no homework. One compulsory task: the weekly test (Listening + Reading, 100 minutes). During Python month (until 23 November) there is also a 45-minute lesson, so that 30 lessons fit in 30 days. The rest is walks, family, a film. Resting means not starting something new, not doing nothing.'
+      uz: "Yakşanba - tiklaniş kuni. Yangi mavzu yöq, LC yöq, kod yöq. Yagona majburiy iş - haftalik hisobot (45 daqiqa, Bomdoddan keyin). Qolgani: sayr, oila, uy işlari, uzun qaylula. Tahajjud va 3 pora qiroat yakşanbada ham davom etadi.",
+      en: 'Sunday is the recovery day. No new material, no LC, no code. The only compulsory task is the weekly report (45 minutes, after Fajr). The rest is walking, family, chores and a longer qaylula. Tahajjud and the three juz continue on Sunday too.'
     },
     loadNote: {
-      uz: "Kun to'liq ochiq yozilgan: dars, uy vazifasi, namoz, ovqat, kino, erkin vaqt va uyqu — hammasi blok. Erkin vaqt ham rejaning bir qismi, uni to'ldirishga urinma.",
-      en: 'The day is written out in full: lessons, homework, prayers, meals, the film block, free time and sleep are all blocks. Free time is part of the plan too — do not try to fill it.'
+      uz: "Kun töliq oçiq yozilgan: namoz, qiroat, dars, ovqat, yöl, erkin vaqt va uyqu - hammasi blok. Erkin vaqt ham rejaning bir qismi, uni töldirişga urinma.",
+      en: 'The day is written out in full: prayers, recitation, lessons, meals, travel, free time and sleep are all blocks. Free time is part of the plan too - do not try to fill it.'
     },
-    movieNote: {
-      uz: "Kino bloki inglizcha ko'rilsa, u dam bo'lgani holda Listening mashqi ham bo'ladi. Subtitr bilan boshla, keyin subtitrsizga o't. Bu blok chegarali — aks holda kechqurun uyqu vaqtiga o'tib ketadi.",
-      en: 'If the film block is watched in English it is rest that doubles as listening practice. Start with subtitles, then drop them. The block is bounded on purpose — otherwise the evening eats into sleep.'
+    debtNote: {
+      uz: "Yopilmagan iş şanba oqşomida yopiladi - qarz keyingi haftaga ötmaydi. Şuning uçun haftalik hisobot yakşanba ertalab, toza varaqdan boşlanadi.",
+      en: 'Unfinished work is cleared on Saturday evening - debt does not roll into the next week. That is why the weekly report on Sunday morning starts from a clean sheet.'
     }
   },
 
-  /* Sinov kunlari (17–19-sen) shabloni OLIB TASHLANGAN — 25-okt dan rasmiy jadval. */
+  /* ====================== TO'RT SHABLON (zanjir) =======================
+     Blok vaqti QAT'IY emas — zanjir bo'ylab hisoblanadi:
+       anchor: '<namoz>'  blok shu namoz vaqtida boshlanadi (soat shunga
+                          ko'chadi; oldidagi `flex` blok farqni yutadi).
+                          `soft: true` — namoz vaqti o'tib ketgan bo'lsa
+                          blok joyida qoladi (orqaga sakramaydi).
+       flex: true         davomiyligi hisoblanadi: keyingi anchor vaqtidan
+       until: '<namoz>'   oradagi qat'iy bloklar ayirilib chiqadi.
+       flexTo: 'bed'      yotish vaqtigacha (uyqu 390 daq kafolatlangan).
+       when: 'juzEvening' | 'juzMorning' — Gibrid kunida 3-pora joyi
+                          mavsumga qarab tanlanadi (js/habit.js).
+     Yadro (core) bloklari: w = hard | med | light — validator shuni sanaydi.
+     `fixed: true` — tashqi dars (Everest LC): yakka ish yukiga kirmaydi.  */
 
-  heavy: {
-    key: 'heavy',
-    name: { uz: "Og'ir kun", en: 'Heavy day' },
-    sub: { uz: "Ingliz tili 3s 15d + Coding 1s 40d · LC yo'q", en: 'English 3h15 + Coding 1h40 · no LC' },
-    load: { uz: 'Yadro 6s · Ingliz 3s 15d · Coding 1s 40d · Kino 45d · Dam 4s 30d', en: 'Core 6h · English 3h15 · Coding 1h40 · Film 45m · Rest 4h30' },
+  /* --- GIBRID: dushanba va chorshanba — oshxona va ro'zg'or kuni ------ */
+  gibrid: {
+    key: 'gibrid',
+    /* Oshxona bloki ertalabni egallaydi, shuning uchun Tech tushdan keyin
+       IKKI qismda bajariladi (Uzlat gibrid kun mantigi). Validatorning
+       "tushdan keyin <= 1 OG'IR blok" qoidasi shu shablon uchun 2.      */
+    limits: { pmHardMax: 2 },
+    name: { uz: 'Gibrid kun', en: 'Hybrid day' },
+    sub: { uz: "Oşxona va rözğor + podkast · Teç ikki qismda", en: 'Kitchen and chores + podcast · Tech in two parts' },
+    load: { uz: "3 pora Qurʼon · Oşxona ~3s (podkast 1.5x) · Teç ~3.5s · Keçqurun IELTS", en: "3 juz · Kitchen ~3h (podcast 1.5x) · Tech ~3.5h · Evening IELTS" },
+    chain: true,
     blocks: [
-      { id: 'h-fajr',  kind: 'pray',  prayer: 'fajr', min: 25, t: { uz: 'Bomdod namozi', en: 'Fajr prayer' } },
-      { id: 'h-quran', kind: 'quran', at: '05:45', min: 20, t: { uz: "Qur'on tilovati", en: "Qur'an recitation" },
-        note: { uz: "Kunning eng tinch vaqti — miya toza.", en: 'The calmest part of the day; the mind is clear.' } },
-
-      /* 1-YADRO · Ingliz tili (ertalab) — grammatika + lug'at bitta blokda.
-         Ilgari ikki blok edi (45 + 35, orada nonushta). Birlashtirildi:
-         qoidani o'rganib, o'sha zahoti yangi so'zlar bilan ishlatasan.      */
-      { id: 'h-eng-am', kind: 'eng', at: '06:05', min: 75, core: true, w: 'hard', link: 'english/{engDay}',
-        t: { uz: 'YADRO 1 · Ingliz tili — grammatika va lug\'at', en: 'CORE 1 · English — grammar and vocabulary' },
-        note: { uz: "45 daq grammatika (cheatsheet + mashqlar, qoidani O'Z gaplaringda ishlat), 30 daq lug'at (Destination B2 bo'limi + 10 savollik test). Xato gapni daftarga to'g'rilab yoz. 5 soniya testi kechqurun.", en: '45 min grammar (cheatsheet + exercises — use the rule in YOUR sentences), 30 min vocabulary (the Destination B2 section + the 10-question quiz). Rewrite every wrong sentence in the copybook. The 5-second test is in the evening.' } },
-      { id: 'h-meal1', kind: 'meal', at: '07:20', min: 25, t: { uz: 'Nonushta', en: 'Breakfast' } },
-
-      /* 2-YADRO · Coding — Python va DataCamp ketma-ket, bitta o'tirishda.
-         Ilgari ular orasida ingliz tili bloki bor edi (kontekst almashuvi).  */
-      { id: 'h-code', kind: 'py', at: '07:45', min: 100, core: true, w: 'hard', link: 'lesson/{pyDay}',
-        t: { uz: 'YADRO 2 · Coding — Python va DataCamp', en: 'CORE 2 · Coding — Python and DataCamp' },
-        note: { uz: "60 daq Python darsi (nazariya + kod maydonida har misolni ishga tushir + test), keyin 40 daq DataCamp bobi (mashqlar DataCamp'da, bob testi shu yerda). Bitta o'tirish — muharrirdan chiqmaysan.", en: '60 min Python lesson (theory + run every example + quiz), then the 40-minute DataCamp chapter (exercises on DataCamp, the chapter quiz here). One sitting — you stay in the editor.' },
-        after: { kind: 'py', link: 'plan',
-          t: { uz: 'YADRO 2 · DataCamp (Python tugadi)', en: 'CORE 2 · DataCamp (Python done)' },
-          note: { uz: "Python 30 kuni tugadi — butun blok DataCamp trekiga o'tadi.", en: 'The 30 Python days are done — the whole block moves to the DataCamp track.' } } },
-      { id: 'h-br1', kind: 'meal', at: '09:25', min: 15, t: { uz: 'Tanaffus', en: 'Break' } },
-
-      /* 3-YADRO · Ingliz tili (qabul) — tinglash + o'qish, ikkalasi ham
-         "kirish" ko'nikmasi: bir xil rejimda ishlaydi, almashuv arzon.      */
-      { id: 'h-eng-mid', kind: 'eng', at: '09:40', min: 75, core: true, w: 'med', link: 'books/listen',
-        t: { uz: 'YADRO 3 · Ingliz tili — tinglash va o\'qish', en: 'CORE 3 · English — listening and reading' },
-        note: { uz: "35 daq Target Listening (6 diktant + 15 test savoli), 40 daq o'qish: bitta matn vaqt bilan (20 daq) + har xato javobning SABABI (20 daq).", en: '35 min Target Listening (6 dictations + 15 test questions), 40 min reading: one passage timed (20 min) + the REASON behind every wrong answer (20 min).' } },
-
-      { id: 'h-walk', kind: 'rest', at: '10:55', min: 65, t: { uz: 'SAYR / DAM — ekransiz', en: 'WALK / REST — no screens' },
-        note: { uz: "Tiklanish ham reja. Ertalabki uch yadro blokidan keyin miya bu tanaffusni talab qiladi — uni o'qish bilan to'ldirma.", en: 'Recovery is part of the plan. After three core blocks the brain needs this break — do not fill it with study.' } },
-      { id: 'h-yt', kind: 'yt', at: '12:00', min: 25,
-        t: { uz: 'YOUTUBE · inglizcha kanal', en: 'YOUTUBE · English channel' },
-        note: { uz: "Har kuni 25 daqiqa. Subtitrsiz, 1.25× tezlikda. Kanal yuqorida.", en: 'Every day, 25 minutes. No subtitles, at 1.25× speed. The channel is shown above.' } },
-      { id: 'h-free1', kind: 'rest', at: '12:25', min: 35, t: { uz: 'Erkin vaqt', en: 'Free time' } },
-
-      { id: 'h-dhuhr', kind: 'pray', prayer: 'dhuhr', min: 20, t: { uz: 'Peshin namozi', en: 'Dhuhr prayer' } },
-      { id: 'h-meal2', kind: 'meal', at: '13:20', min: 60, t: { uz: 'Tushlik va dam', en: 'Lunch and rest' },
-        note: { uz: "Ekransiz dam ol — kunning ikkinchi yarmi shunga bog'liq.", en: 'Rest without a screen; the second half depends on it.' } },
-
-      /* 4-YADRO · Ingliz tili (ishlab chiqarish) — yozish + gapirish.
-         Kunning yagona tushdan keyingi OG'IR bloki (validator qoidasi).     */
-      { id: 'h-eng-pm', kind: 'eng', at: '14:20', min: 65, core: true, w: 'hard', link: 'writing', writing: true,
-        t: { uz: 'YADRO 4 · Ingliz tili — yozish va gapirish', en: 'CORE 4 · English — writing and speaking' },
-        note: { uz: "40 daq writing (kam yoz, ko'p tuzat: 1 abzats → tekshir → qayta yoz), 25 daq speaking treki (2 yozuv: sovuq → tuzatilgan, WPM va pauza hisobi). Writing kursi 25-oktabrdan.", en: '40 min writing (write less, correct more: one paragraph → check → rewrite), 25 min of the speaking track (2 recordings: cold → corrected, WPM and pause count). The Writing course starts 25 Oct.' } },
-
-      { id: 'h-free2', kind: 'rest', at: '15:25', min: 105, t: { uz: 'Erkin vaqt / oila', en: 'Free time / family' },
-        note: { uz: "Asr namozi shu oraliqda.", en: 'Asr falls in here.' } },
-      { id: 'h-meal3', kind: 'meal', at: '17:10', min: 40, t: { uz: 'Kechki ovqat', en: 'Dinner' } },
-      { id: 'h-free3', kind: 'rest', at: '17:50', min: 70, t: { uz: 'Erkin vaqt', en: 'Free time' } },
-      { id: 'h-movie', kind: 'movie', at: '19:00', min: 45, movie: true,
-        t: { uz: 'KINO', en: 'FILM' },
-        note: { uz: "Inglizcha, inglizcha subtitr bilan. Kunning filmi yuqorida.", en: 'In English with English subtitles. The day\'s film is shown above.' } },
-
-      /* 5-YADRO · Kun yakuni — lug'at testi, kitob, xatolar daftari.
-         Uchta qisqa blok bitta yengil blokka yig'ildi.                      */
-      { id: 'h-close', kind: 'review', at: '19:45', min: 45, core: true, w: 'light', link: 'books/vocab',
-        t: { uz: 'YADRO 5 · Kun yakuni', en: 'CORE 5 · Day close' },
-        note: { uz: "15 daq lug'at 5 soniya testi (ko'r → 5 soniyada gap; ikkilangani daftarga), 15 daq MUCIZATI AHMADIY 3–4 sahifa, 15 daq xatolar daftari + ertangi kunni ochish.", en: '15 min vocabulary 5-second test (see → sentence in 5 s; hesitations go to the copybook), 15 min MUCIZATI AHMADIY 3–4 pages, 15 min error log + open tomorrow\'s lesson.' } },
-      { id: 'h-wind', kind: 'rest', at: '20:30', min: 50, t: { uz: 'Tayyorgarlik / dam — ekransiz', en: 'Wind down — no screens' },
-        note: { uz: "21:20 da yotasan. Uyqudan oldingi soat telefonsiz — ertangi dars shunga bog'liq.", en: 'Lights out at 21:20. The hour before sleep is phone-free — tomorrow\'s lesson depends on it.' } },
-
-      { id: 'h-sleep', kind: 'sleep', at: '21:20', min: 480,
-        t: { uz: 'UYQU · 8 soat', en: 'SLEEP · 8 hours' },
-        note: { uz: "21:20 → 05:20. Himoyalangan blok: kun ulgurmasa dars qisqarsin, uyqu emas.", en: '21:20 → 05:20. Protected: if the day overruns, shorten a lesson, never the sleep.' } }
+      { id: 'g-tahajjud', kind: 'pray', anchor: 'tahajjud', min: 60, t: { uz: 'Tahajjud namozi', en: 'Tahajjud prayer' },
+        note: { uz: "Keçaning oxirgi uçdan birida. Kunlik niyat şu yerda yangilanadi.", en: 'In the last third of the night. The daily intention is renewed here.' } },
+      { id: 'g-juz1', kind: 'quran', min: 90, t: { uz: "1-pora — Qurʼon qiroati", en: "Juz 1 — Qur'an recitation" } },
+      { id: 'g-resleep', kind: 'sleep', flex: true, until: 'fajr', t: { uz: 'Qayta uyqu', en: 'Second sleep' },
+        note: { uz: 'Bomdodgaça. Asosiy uyqu bilan jami 6 soat 30 daqiqa.', en: 'Until Fajr. Together with the main sleep, six and a half hours.' } },
+      { id: 'g-fajr', kind: 'pray', anchor: 'fajr', min: 15, t: { uz: 'Bomdod namozi', en: 'Fajr prayer' } },
+      { id: 'g-juz2', kind: 'quran', min: 90, t: { uz: "2-pora — Qurʼon qiroati", en: "Juz 2 — Qur'an recitation" } },
+      { id: 'g-meal1', kind: 'meal', min: 45, t: { uz: "Nonuşta va yangi luğat", en: 'Breakfast and new vocabulary' }, link: 'books/vocab' },
+      { id: 'g-kitchen', kind: 'kitchen', flex: true, until: 'dhuhr', core: true, w: 'med', longOk: true,
+        t: { uz: "OŞXONA va rözğor + inglizça podkast 1.5x", en: 'KITCHEN and chores + English podcast at 1.5x' },
+        note: { uz: 'Qöl işda, quloq darsda: faqat tinglaş maşqi hisoblanadi, yangi mavzu emas.', en: 'Hands busy, ears learning: this counts as listening practice, not new material.' } },
+      { id: 'g-juz3am', kind: 'quran', min: 90, when: 'juzMorning', t: { uz: "3-pora — Qurʼon qiroati", en: "Juz 3 — Qur'an recitation" } },
+      { id: 'g-dhuhr', kind: 'pray', anchor: 'dhuhr', min: 90, t: { uz: 'Peşin, tuşlik va qaylula', en: 'Dhuhr, lunch and qaylula' },
+        note: { uz: '20–30 daqiqalik qaylula — kunning ikkinçi yarmi uçun.', en: 'A 20–30 minute qaylula — for the second half of the day.' } },
+      { id: 'g-tech1', kind: 'py', flex: true, until: 'asr', core: true, w: 'hard', link: 'jobready',
+        t: { uz: 'Deep Work Teç — 1-qism', en: 'Deep Work Tech — part 1' } },
+      { id: 'g-asr', kind: 'pray', anchor: 'asr', min: 15, t: { uz: 'Asr namozi va tez takror', en: 'Asr prayer and quick recall' } },
+      { id: 'g-tech2', kind: 'py', flex: true, until: 'maghrib', core: true, w: 'hard', link: 'jobready',
+        t: { uz: 'Deep Work Teç — 2-qism', en: 'Deep Work Tech — part 2' } },
+      { id: 'g-maghrib', kind: 'pray', anchor: 'maghrib', min: 15, t: { uz: 'Şom namozi', en: 'Maghrib prayer' } },
+      { id: 'g-juz3pm', kind: 'quran', min: 90, when: 'juzEvening', t: { uz: "3-pora — Qurʼon qiroati", en: "Juz 3 — Qur'an recitation" } },
+      { id: 'g-free', kind: 'rest', flex: true, until: 'isha', when: 'juzMorning',
+        t: { uz: 'Oila va dam - ekransiz', en: 'Family and rest - no screens' } },
+      { id: 'g-isha', kind: 'pray', anchor: 'isha', soft: true, min: 20, t: { uz: 'Xufton namozi', en: 'Isha prayer' } },
+      { id: 'g-meal3', kind: 'meal', min: 35, t: { uz: 'Keçki ovqat', en: 'Dinner' } },
+      { id: 'g-eve', kind: 'eng', flexTo: 'bed', core: true, w: 'med', shortOk: true, link: 'mission',
+        t: { uz: 'IELTS, luğat testi va muhosaba', en: 'IELTS, vocabulary test and muhasabah' } },
+      { id: 'g-sleep', kind: 'sleep', flexTo: 'tahajjud', t: { uz: 'Asosiy uyqu', en: 'Main sleep' } }
     ]
   },
 
-  /* ====================== LC KUNI (Se · Pa · Sha) =======================
-     Everest LC 16:30–18:30 qat'iy. Yadro yuklama LC bilan 6s 15d (375 daq):
-     LC 120 · Ingliz 130 (grammatika 40, lug'at 30, writing 30, listening 30)
-     · Coding 90 (Python 60 + DataCamp 30) · lug'at testi 15 · kitob 10 ·
-     yakun 10. Kechki speaking yo'q — LC o'zi gapirish darsi.               */
-  class: {
-    key: 'class',
+  /* --- LC: seshanba, payshanba, shanba — Everest LC darsi kuni -------- */
+  lc: {
+    key: 'lc',
     name: { uz: 'LC kuni', en: 'LC day' },
-    sub: { uz: "Everest LC 16:30–18:30 · Coding 1s 30d (Python + DataCamp)", en: 'Everest LC 16:30–18:30 · Coding 1h30 (Python + DataCamp)' },
-    load: { uz: 'Yadro 6s 15d (LC bilan) · Ingliz 2s 10d + LC 2s · Coding 1s 30d · Kino 40d', en: 'Core 6h15 (incl. LC) · English 2h10 + LC 2h · Coding 1h30 · Film 40m' },
+    sub: { uz: "Everest LC 16:30–18:30 + yöl · Teç ertalab", en: 'Everest LC 16:30–18:30 + travel · Tech in the morning' },
+    load: { uz: "3 pora Qurʼon · Teç ~2.5s · IELTS Input ~2s · LC 2s", en: '3 juz · Tech ~2.5h · IELTS Input ~2h · LC 2h' },
+    chain: true,
     blocks: [
-      { id: 'c-fajr',  kind: 'pray',  prayer: 'fajr', min: 25, t: { uz: 'Bomdod namozi', en: 'Fajr prayer' } },
-      { id: 'c-quran', kind: 'quran', at: '05:45', min: 20, t: { uz: "Qur'on tilovati", en: "Qur'an recitation" } },
-
-      /* 1-YADRO · Ingliz tili — grammatika + lug'at (og'ir kundagi kabi,
-         lekin qisqaroq: kechqurun LC bor).                                  */
-      { id: 'c-eng', kind: 'eng', at: '06:05', min: 70, core: true, w: 'hard', link: 'english/{engDay}',
-        t: { uz: 'YADRO 1 · Ingliz tili — grammatika va lug\'at', en: 'CORE 1 · English — grammar and vocabulary' },
-        note: { uz: "40 daq grammatika (cheatsheet + mashqlar), 30 daq lug'at bo'limi + test. LC kuni tinglash bloki YO'Q — LC ning o'zi ikki soatlik tinglash va gapirish.", en: '40 min grammar (cheatsheet + exercises), 30 min vocabulary section + quiz. No listening block on an LC day — LC itself is two hours of listening and speaking.' } },
-      { id: 'c-meal1', kind: 'meal', at: '07:15', min: 25, t: { uz: 'Nonushta', en: 'Breakfast' } },
-
-      /* 2-YADRO · Coding — Python + DataCamp bitta o'tirishda. */
-      { id: 'c-code', kind: 'py', at: '07:40', min: 90, core: true, w: 'hard', link: 'lesson/{pyDay}',
-        t: { uz: 'YADRO 2 · Coding — Python va DataCamp', en: 'CORE 2 · Coding — Python and DataCamp' },
-        note: { uz: "60 daq Python darsi + test, keyin 30 daq DataCamp bobi. Bitta o'tirish.", en: '60 min Python lesson + quiz, then the 30-minute DataCamp chapter. One sitting.' },
-        after: { kind: 'py', link: 'plan',
-          t: { uz: 'YADRO 2 · DataCamp (Python tugadi)', en: 'CORE 2 · DataCamp (Python done)' },
-          note: { uz: "Python 30 kuni tugadi — butun blok DataCamp trekiga o'tadi.", en: 'The 30 Python days are done — the whole block moves to the DataCamp track.' } } },
-      { id: 'c-br1', kind: 'meal', at: '09:10', min: 15, t: { uz: 'Tanaffus', en: 'Break' } },
-
-      /* 3-YADRO · Writing — LC kunida yagona ishlab chiqarish bloki.
-         Ilgari tinglashga ketgan 30 daqiqa shu yerga qo'shildi (LC takrori). */
-      { id: 'c-write', kind: 'eng', at: '09:25', min: 50, core: true, w: 'hard', link: 'writing', writing: true,
-        t: { uz: 'YADRO 3 · Writing', en: 'CORE 3 · Writing' },
-        note: { uz: "Kam yoz, ko'p tuzat: 1 abzats → tekshir → qayta yoz. Ilgari bu yerda tinglash ham bor edi — LC bilan takrorlanmasin deb olib tashlandi. Writing kursi 25-oktabrdan.", en: 'Write less, correct more: one paragraph → check → rewrite. There used to be a listening slot here — removed so it does not duplicate LC. The Writing course starts 25 Oct.' } },
-
-      { id: 'c-walk', kind: 'rest', at: '10:15', min: 75, t: { uz: 'SAYR / DAM — ekransiz', en: 'WALK / REST — no screens' } },
-      { id: 'c-yt', kind: 'yt', at: '11:30', min: 25,
-        t: { uz: 'YOUTUBE · inglizcha kanal', en: 'YOUTUBE · English channel' } },
-      { id: 'c-free1', kind: 'rest', at: '11:55', min: 65, t: { uz: 'Erkin vaqt', en: 'Free time' } },
-
-      { id: 'c-dhuhr', kind: 'pray', prayer: 'dhuhr', min: 20, t: { uz: 'Peshin namozi', en: 'Dhuhr prayer' } },
-      { id: 'c-meal2', kind: 'meal', at: '13:20', min: 70, t: { uz: 'Tushlik va dam', en: 'Lunch and rest' } },
-      { id: 'c-free2', kind: 'rest', at: '14:30', min: 75, t: { uz: 'Erkin vaqt / tayyorgarlik', en: 'Free time / preparation' },
-        note: { uz: "Asr namozi shu oraliqda. LC ga borishdan oldin dam ol.", en: 'Asr falls in here. Rest before heading to LC.' } },
-      { id: 'c-road', kind: 'meal', at: '15:45', min: 45, t: { uz: "Yo'l va tayyorgarlik", en: 'Travel and preparation' } },
-
-      /* 4-YADRO · Everest LC — tashqi dars, vaqti qat'iy (16:30–18:30).
-         `fixed: true` — validator uni yakka ish yukiga qo'shmaydi.          */
-      { id: 'c-lc', kind: 'lc', at: '16:30', min: 120, core: true, w: 'med', fixed: true,
-        t: { uz: 'YADRO 4 · Everest LC', en: 'CORE 4 · Everest LC' },
-        note: { uz: "Tashqi dars, 16:30–18:30 qat'iy. Ikki soatlik tinglash va gapirish — shuning uchun bugun alohida listening va speaking bloklari yo'q.", en: 'External class, 16:30–18:30 fixed. Two hours of listening and speaking — which is why there are no separate listening or speaking blocks today.' } },
-
-      { id: 'c-meal3', kind: 'meal', at: '18:30', min: 35, t: { uz: 'Kechki ovqat', en: 'Dinner' } },
-      { id: 'c-free3', kind: 'rest', at: '19:05', min: 15, t: { uz: 'Tanaffus', en: 'Break' } },
-      { id: 'c-movie', kind: 'movie', at: '19:20', min: 40, movie: true,
-        t: { uz: 'KINO', en: 'FILM' },
-        note: { uz: "Inglizcha, inglizcha subtitr bilan.", en: 'In English with English subtitles.' } },
-
-      /* 5-YADRO · Kun yakuni — lug'at testi, kitob, LC xulosasi. */
-      { id: 'c-close', kind: 'review', at: '20:00', min: 45, core: true, w: 'light', link: 'books/vocab',
-        t: { uz: 'YADRO 5 · Kun yakuni', en: 'CORE 5 · Day close' },
-        note: { uz: "15 daq lug'at 5 soniya testi, 15 daq MUCIZATI AHMADIY, 15 daq LC xulosasi (3 qator) + xatolar daftari + ertangi kun.", en: '15 min vocabulary 5-second test, 15 min MUCIZATI AHMADIY, 15 min LC summary (three lines) + error log + tomorrow.' } },
-      { id: 'c-wind', kind: 'rest', at: '20:45', min: 35, t: { uz: 'Tayyorgarlik / dam — ekransiz', en: 'Wind down — no screens' } },
-
-      { id: 'c-sleep', kind: 'sleep', at: '21:20', min: 480,
-        t: { uz: 'UYQU · 8 soat', en: 'SLEEP · 8 hours' },
-        note: { uz: '21:20 → 05:20.', en: '21:20 → 05:20.' } }
+      { id: 'c-tahajjud', kind: 'pray', anchor: 'tahajjud', min: 60, t: { uz: 'Tahajjud namozi', en: 'Tahajjud prayer' } },
+      { id: 'c-juz1', kind: 'quran', min: 90, t: { uz: "1-pora — Qurʼon qiroati", en: "Juz 1 — Qur'an recitation" } },
+      { id: 'c-resleep', kind: 'sleep', flex: true, until: 'fajr', t: { uz: 'Qayta uyqu', en: 'Second sleep' } },
+      { id: 'c-fajr', kind: 'pray', anchor: 'fajr', min: 15, t: { uz: 'Bomdod namozi', en: 'Fajr prayer' } },
+      { id: 'c-juz2', kind: 'quran', min: 90, t: { uz: "2-pora — Qurʼon qiroati", en: "Juz 2 — Qur'an recitation" } },
+      { id: 'c-meal1', kind: 'meal', min: 45, t: { uz: "Nonuşta va yangi luğat", en: 'Breakfast and new vocabulary' }, link: 'books/vocab' },
+      { id: 'c-tech', kind: 'py', flex: true, until: 'dhuhr', core: true, w: 'hard', link: 'jobready',
+        t: { uz: 'Deep Work: Teç va AI', en: 'Deep Work: Tech and AI' } },
+      { id: 'c-juz3', kind: 'quran', min: 90, t: { uz: "3-pora — Qurʼon qiroati", en: "Juz 3 — Qur'an recitation" } },
+      { id: 'c-dhuhr', kind: 'pray', anchor: 'dhuhr', min: 60, t: { uz: 'Peşin va qaylula', en: 'Dhuhr and qaylula' } },
+      { id: 'c-input', kind: 'eng', flex: true, untilBlock: 'c-lc', core: true, w: 'med', link: 'mission',
+        t: { uz: 'IELTS Input — Reading va Listening', en: 'IELTS Input — Reading and Listening' } },
+      { id: 'c-meal3', kind: 'meal', min: 35, t: { uz: "Keçki ovqat — jönaşdan oldin", en: 'Dinner — before leaving' },
+        note: { uz: "LC dan 19:15 da qaytiladi; ovqat şu yerda, aks holda keçqurun siğmaydi.", en: 'You return from LC at 19:15; dinner goes here, otherwise the evening does not fit.' } },
+      { id: 'c-road1', kind: 'rest', min: 45, t: { uz: "Yöl — Everest LC", en: 'Travel — Everest LC' } },
+      { id: 'c-lc', kind: 'lc', min: 120, core: true, w: 'med', fixed: true, at: '16:30',
+        t: { uz: 'EVEREST LC darsi', en: 'Everest LC class' },
+        note: { uz: 'Şom namozi dars vaqtiga tuşadi — tanaffusda yoki darsdan oldin.', en: 'Maghrib falls during the class — pray in the break or before it.' } },
+      { id: 'c-road2', kind: 'rest', min: 45, t: { uz: "Yöl — uyga", en: 'Travel — home' } },
+      { id: 'c-isha', kind: 'pray', anchor: 'isha', soft: true, min: 20, t: { uz: 'Xufton namozi', en: 'Isha prayer' } },
+      { id: 'c-close', kind: 'review', min: 20, core: true, w: 'light', shortOk: true, link: 'mission',
+        t: { uz: 'Muhosaba va ertangi reja', en: 'Muhasabah and tomorrow plan' } },
+      { id: 'c-debt', kind: 'review', min: 20, satOnly: true, core: true, w: 'light', shortOk: true,
+        t: { uz: 'QARZNI YOPIŞ — haftalik yakun', en: 'CLEAR THE DEBT — weekly close' },
+        note: { uz: "Yopilmagan iş şanba oqşomida tugaydi. Töliq hisobot — yakşanba ertalab.", en: 'Unfinished work ends on Saturday evening. The full report is on Sunday morning.' } },
+      { id: 'c-wind', kind: 'rest', flexTo: 'bed', t: { uz: 'Dam — ekransiz', en: 'Wind down — no screens' } },
+      { id: 'c-sleep', kind: 'sleep', flexTo: 'tahajjud', t: { uz: 'Asosiy uyqu', en: 'Main sleep' } }
     ]
   },
 
-  /* ====================== DAM KUNI (Yakshanba) ==========================
-     HAQIQIY dam: yangi mavzu yo'q, LC yo'q, BITTA test bloki (Listening +
-     Reading, 100 daq) — hafta shu bilan yakunlanadi. Python oyida (25-okt →
-     23-noy) 45 daqiqalik Python darsi — 30/30 muddatga sig'ishi uchun;
-     undan keyin o'sha slot SRS takroriga aylanadi. Kickoff yakshanbasida
-     (25-okt) DataCamp 1-bob; boshqa yakshanbalarda shu slot — sayr.
-     Coding takrori (30 savol) ixtiyoriy — yadroga kirmaydi.
-     Yadro: test 100 · kitob 15 · hafta yakuni 15 (+ Python oyida 45).      */
-  rest: {
-    key: 'rest',
-    name: { uz: 'Dam kuni', en: 'Rest day' },
-    sub: { uz: "Yangi mavzu yo'q · bitta haftalik test · dam", en: 'No new material · one weekly test · rest' },
-    load: { uz: 'Yadro 2s 10d · Test 1s 40d · Kino 45d · Dam 6s+', en: 'Core 2h10 · Test 1h40 · Film 45m · Rest 6h+' },
+  /* --- ODDIY: juma — Uzlat master plan + juma namozi ------------------ */
+  oddiy: {
+    key: 'oddiy',
+    name: { uz: 'Oddiy kun', en: 'Standard day' },
+    sub: { uz: 'Uzlat master plan + juma namozi', en: 'Uzlat master plan + Jumuah' },
+    load: { uz: "3 pora Qurʼon · Teç ~2.8s · IELTS Input ~2s · Output ~1s", en: '3 juz · Tech ~2.8h · IELTS Input ~2h · Output ~1h' },
+    chain: true,
     blocks: [
-      { id: 'r-fajr',  kind: 'pray',  prayer: 'fajr', min: 25, t: { uz: 'Bomdod namozi', en: 'Fajr prayer' } },
-      { id: 'r-quran', kind: 'quran', at: '05:45', min: 30, t: { uz: "Qur'on tilovati", en: "Qur'an recitation" },
-        note: { uz: 'Yakshanba — uzunroq tilovat uchun qulay kun', en: 'Sunday leaves room for a longer session' } },
-      { id: 'r-rest1', kind: 'rest', at: '06:15', min: 105, t: { uz: 'DAM — ekransiz', en: 'REST — no screens' },
-        note: { uz: "Uxlash, sayr, oila. Haftada bir marta miya to'liq to'xtashi kerak.", en: 'Sleep, a walk, family. Once a week the brain needs a full stop.' } },
-      { id: 'r-meal1', kind: 'meal', at: '08:00', min: 40, t: { uz: 'Nonushta', en: 'Breakfast' } },
+      { id: 'h-tahajjud', kind: 'pray', anchor: 'tahajjud', min: 60, t: { uz: 'Tahajjud namozi', en: 'Tahajjud prayer' } },
+      { id: 'h-juz1', kind: 'quran', min: 90, t: { uz: "1-pora — Qurʼon qiroati", en: "Juz 1 — Qur'an recitation" } },
+      { id: 'h-resleep', kind: 'sleep', flex: true, until: 'fajr', t: { uz: 'Qayta uyqu', en: 'Second sleep' } },
+      { id: 'h-fajr', kind: 'pray', anchor: 'fajr', min: 15, t: { uz: 'Bomdod namozi', en: 'Fajr prayer' } },
+      { id: 'h-juz2', kind: 'quran', min: 90, t: { uz: "2-pora — Qurʼon qiroati", en: "Juz 2 — Qur'an recitation" } },
+      { id: 'h-meal1', kind: 'meal', min: 45, t: { uz: "Nonuşta va yangi luğat", en: 'Breakfast and new vocabulary' }, link: 'books/vocab' },
+      { id: 'h-tech', kind: 'py', flex: true, until: 'dhuhr', core: true, w: 'hard', link: 'jobready',
+        t: { uz: 'Deep Work: Teç va AI', en: 'Deep Work: Tech and AI' } },
+      { id: 'h-juz3', kind: 'quran', min: 90, t: { uz: "3-pora — Qurʼon qiroati", en: "Juz 3 — Qur'an recitation" } },
+      { id: 'h-juma', kind: 'pray', anchor: 'dhuhr', min: 90, t: { uz: "JUMA NAMOZI va masjid yöli", en: 'JUMUAH PRAYER and travel to the mosque' } },
+      { id: 'h-input', kind: 'eng', flex: true, until: 'asr', core: true, w: 'med', link: 'mission',
+        t: { uz: 'IELTS Input — Reading va Listening', en: 'IELTS Input — Reading and Listening' } },
+      { id: 'h-asr', kind: 'pray', anchor: 'asr', min: 45, t: { uz: 'Asr namozi, sayr va takror', en: 'Asr prayer, a walk and recall' } },
+      { id: 'h-output', kind: 'speak', flex: true, until: 'maghrib', core: true, w: 'hard', link: 'speaking',
+        t: { uz: 'IELTS Output — Speaking va Writing', en: 'IELTS Output — Speaking and Writing' } },
+      { id: 'h-maghrib', kind: 'pray', anchor: 'maghrib', min: 50, t: { uz: 'Şom namozi va keçki ovqat', en: 'Maghrib prayer and dinner' } },
+      { id: 'h-free', kind: 'rest', flex: true, until: 'isha', t: { uz: 'Dam — ekransiz', en: 'Rest — no screens' } },
+      { id: 'h-isha', kind: 'pray', anchor: 'isha', soft: true, min: 20, t: { uz: 'Xufton namozi', en: 'Isha prayer' } },
+      { id: 'h-close', kind: 'review', flexTo: 'bed', core: true, w: 'light', link: 'mission',
+        t: { uz: "Luğat testi, muhosaba va ertangi reja", en: 'Vocabulary test, muhasabah and tomorrow plan' } },
+      { id: 'h-sleep', kind: 'sleep', flexTo: 'tahajjud', t: { uz: 'Asosiy uyqu', en: 'Main sleep' } }
+    ]
+  },
 
-      /* 1-YADRO · Haftalik test — haftaning yagona majburiy ishi. */
-      { id: 'r-test', kind: 'eng', at: '08:40', min: 100, core: true, w: 'hard', link: 'books',
-        t: { uz: 'YADRO 1 · HAFTALIK TEST — Listening 40 + Reading 60', en: 'CORE 1 · WEEKLY TEST — Listening 40 + Reading 60' },
-        note: { uz: "Bitta blok, real vaqt, soat qo'yib: avval Listening (bir marta tinglash), keyin Reading (3 matn, 40 savol). Natija jadvalga.", en: 'One block, real timing: Listening first (single play), then Reading (3 passages, 40 questions). The result goes on the board.' } },
-      { id: 'r-br1', kind: 'meal', at: '10:20', min: 10, t: { uz: 'Tanaffus', en: 'Break' } },
-
-      /* 2-YADRO · Bitta slot, IKKI shartli variant (bir-birini istisno qiladi):
-           r-focus-dc  dcOnly  — o'sha yakshanba DataCamp bobi rejalashtirilgan
-           r-focus     noDc    — aks holda Python darsi / SRS takrori
-         Validator bularni to'qnashuv deb HISOBLAMAYDI (§6, §10).            */
-      { id: 'r-focus-dc', kind: 'dc', at: '10:30', min: 60, core: true, w: 'med', link: 'datacamp', dcOnly: true,
-        t: { uz: 'YADRO 2 · DataCamp bobi', en: 'CORE 2 · DataCamp chapter' },
-        note: { uz: "Bugun DataCamp bobi rejalashtirilgan: nazariya + mashqlar DataCamp'da, keyin platformada bob testi.", en: 'A DataCamp chapter is scheduled today: theory + exercises on DataCamp, then the chapter quiz here.' } },
-      { id: 'r-focus', kind: 'py', at: '10:30', min: 60, core: true, w: 'med', link: 'lesson/{pyDay}', noDc: true,
-        t: { uz: 'YADRO 2 · Python darsi', en: 'CORE 2 · Python lesson' },
-        note: { uz: "Faqat Python oyida (25-okt → 23-noy): 30 dars 30 kunga sig'ishi uchun. Keyin bu slot — haftalik takror.", en: 'Only in Python month (25 Oct → 23 Nov): so 30 lessons fit in 30 days. Afterwards this slot becomes the weekly review.' },
-        after: { kind: 'review', link: 'review',
-          t: { uz: 'YADRO 2 · TAKROR — SRS navbati', en: 'CORE 2 · REVIEW — SRS queue' },
-          note: { uz: "Python tugadi — bu slot haftalik takror: navbatdagi konspekt va so'zlar.", en: 'Python is done — this slot is the weekly review: due summaries and words.' } } },
-
-      { id: 'r-walk', kind: 'rest', at: '11:30', min: 45, t: { uz: 'SAYR — ekransiz', en: 'WALK — no screens' } },
-      { id: 'r-rest2', kind: 'rest', at: '12:15', min: 45, t: { uz: 'DAM / oila', en: 'REST / family' } },
-
-      { id: 'r-dhuhr', kind: 'pray', prayer: 'dhuhr', min: 20, t: { uz: 'Peshin namozi', en: 'Dhuhr prayer' } },
-      { id: 'r-meal2', kind: 'meal', at: '13:20', min: 100, t: { uz: 'Tushlik va uzoq dam', en: 'Lunch and a long rest' } },
-      { id: 'r-rest3', kind: 'rest', at: '15:00', min: 60, t: { uz: 'Oila / sayr', en: 'Family / walk' } },
-      { id: 'r-yt', kind: 'yt', at: '16:00', min: 25,
-        t: { uz: 'YOUTUBE · inglizcha kanal', en: 'YOUTUBE · English channel' },
-        note: { uz: 'Dam kunida ham — 25 daqiqa, subtitrsiz.', en: 'Even on the rest day — 25 minutes, no subtitles.' } },
-      { id: 'r-rest4', kind: 'rest', at: '16:25', min: 85, t: { uz: 'Erkin vaqt', en: 'Free time' },
-        note: { uz: "Asr namozi shu oraliqda.", en: 'Asr falls in here.' } },
-      { id: 'r-meal3', kind: 'meal', at: '17:50', min: 45, t: { uz: 'Kechki ovqat', en: 'Dinner' } },
-
-      /* Ikkinchi shartli juftlik (18:35) — ixtiyoriy, yadroga kirmaydi:
-           r-code  notFirst  — coding takrori
-           r-kick  firstOnly — kickoff kuni takror qiladigan narsa yo'q       */
-      { id: 'r-code', kind: 'dc', at: '18:35', min: 30, link: 'practice/coding', notFirst: true,
-        t: { uz: 'IXTIYORIY · Coding takrori (30 savol)', en: 'OPTIONAL · Coding review (30 questions)' },
-        note: { uz: "Xohlasang: shu haftagacha o'tilgan Python + DataCamp bo'yicha savollar. Yadroga kirmaydi — qilmasang qarz yo'q.", en: 'If you like: questions on every Python lesson and DataCamp chapter so far. Not core — skipping it is not debt.' } },
-      { id: 'r-kick', kind: 'rest', at: '18:35', min: 30, firstOnly: true,
-        t: { uz: 'DAM — birinchi kun yakuni', en: 'REST — end of the first day' },
-        note: { uz: "Rasmiy startning birinchi kuni: hali takror qiladigan narsa yo'q. Ertaga og'ir kun — dam ol.", en: 'First day of the official start: nothing to review yet. Tomorrow is a heavy day — rest.' } },
-
-      { id: 'r-movie', kind: 'movie', at: '19:05', min: 45, movie: true,
-        t: { uz: 'KINO', en: 'FILM' },
-        note: { uz: "Yakshanba — uzunroq. Kunning filmi yuqorida.", en: 'Longer on Sunday. The day\'s film is shown above.' } },
-
-      /* 3-YADRO · Hafta yakuni — kitob + maqsad doskasi + haftalik xulosa. */
-      { id: 'r-close', kind: 'review', at: '19:50', min: 45, core: true, w: 'light', link: 'goal',
-        t: { uz: 'YADRO 3 · Hafta yakuni', en: 'CORE 3 · Week close' },
-        note: { uz: "15 daq MUCIZATI AHMADIY 3–4 sahifa, 30 daq hafta yakuni: test natijasi, haftaning 3 xatosi, keyingi haftaning bitta maqsadi.", en: '15 min MUCIZATI AHMADIY 3–4 pages, 30 min week close: the test result, the week\'s three mistakes, one goal for next week.' } },
-      { id: 'r-wind', kind: 'rest', at: '20:35', min: 45, t: { uz: 'Tayyorgarlik / dam — ekransiz', en: 'Wind down — no screens' },
-        note: { uz: "Dushanba og'ir kun — 21:20 da yot.", en: 'Monday is a heavy day — lights out at 21:20.' } },
-
-      { id: 'r-sleep', kind: 'sleep', at: '21:20', min: 480,
-        t: { uz: 'UYQU · 8 soat', en: 'SLEEP · 8 hours' },
-        note: { uz: '21:20 → 05:20.', en: '21:20 → 05:20.' } }
+  /* --- TIKLANISH: yakshanba — Strategic Recovery ----------------------
+     Miyani zo'riqtirish yo'q: yangi mavzu, kod va dars YO'Q. Tahajjud va
+     3 pora qiroat esa to'xtamaydi. Haftalik hisobot shu kun ertalab —
+     shanba oqshomida faqat qarz yopiladi (c-debt).                      */
+  tiklanish: {
+    key: 'tiklanish',
+    name: { uz: 'Tiklaniş kuni', en: 'Recovery day' },
+    sub: { uz: "Yangi mavzu yöq · haftalik hisobot · oila va sayr", en: 'No new material · weekly report · family and walks' },
+    load: { uz: "3 pora Qurʼon · Hisobot 45d · Ekransiz dam ~6.5s", en: '3 juz · Report 45m · Screen-free rest ~6.5h' },
+    chain: true,
+    blocks: [
+      { id: 'r-tahajjud', kind: 'pray', anchor: 'tahajjud', min: 60, t: { uz: 'Tahajjud namozi', en: 'Tahajjud prayer' } },
+      { id: 'r-juz1', kind: 'quran', min: 90, t: { uz: "1-pora — Qurʼon qiroati", en: "Juz 1 — Qur'an recitation" } },
+      { id: 'r-resleep', kind: 'sleep', flex: true, until: 'fajr', t: { uz: 'Qayta uyqu', en: 'Second sleep' } },
+      { id: 'r-fajr', kind: 'pray', anchor: 'fajr', min: 15, t: { uz: 'Bomdod namozi', en: 'Fajr prayer' } },
+      { id: 'r-juz2', kind: 'quran', min: 90, t: { uz: "2-pora — Qurʼon qiroati", en: "Juz 2 — Qur'an recitation" } },
+      { id: 'r-week', kind: 'review', min: 45, core: true, w: 'light', link: 'week',
+        t: { uz: 'HAFTALIK HISOBOT va keyingi hafta rejasi', en: 'WEEKLY REPORT and next week plan' },
+        note: { uz: 'Haftaning yagona majburiy işi. Qolgani — dam.', en: 'The only compulsory task of the day. The rest is rest.' } },
+      { id: 'r-meal1', kind: 'meal', min: 45, t: { uz: 'Nonuşta', en: 'Breakfast' } },
+      { id: 'r-out1', kind: 'rest', flex: true, until: 'dhuhr', t: { uz: "Sayr, oila va uy işlari — ekransiz", en: 'Walk, family and chores — no screens' } },
+      { id: 'r-juz3', kind: 'quran', min: 90, t: { uz: "3-pora — Qurʼon qiroati", en: "Juz 3 — Qur'an recitation" } },
+      { id: 'r-dhuhr', kind: 'pray', anchor: 'dhuhr', min: 20, t: { uz: 'Peşin namozi', en: 'Dhuhr prayer' } },
+      { id: 'r-meal2', kind: 'meal', min: 60, t: { uz: 'Tuşlik', en: 'Lunch' } },
+      { id: 'r-qaylula', kind: 'sleep', min: 45, t: { uz: 'Uzun qaylula', en: 'Long qaylula' },
+        note: { uz: 'Yakşanba qaylulasi uzunroq — haftalik tiklaniş.', en: 'The Sunday qaylula is longer — weekly recovery.' } },
+      { id: 'r-fam1', kind: 'rest', flex: true, until: 'asr', t: { uz: 'Oila va dam', en: 'Family and rest' } },
+      { id: 'r-asr', kind: 'pray', anchor: 'asr', min: 15, t: { uz: 'Asr namozi', en: 'Asr prayer' } },
+      { id: 'r-out2', kind: 'rest', flex: true, until: 'maghrib', t: { uz: 'Sayr — tabiat, ekransiz', en: 'Walk — outdoors, no screens' } },
+      { id: 'r-maghrib', kind: 'pray', anchor: 'maghrib', min: 15, t: { uz: 'Şom namozi', en: 'Maghrib prayer' } },
+      { id: 'r-meal3', kind: 'meal', min: 45, t: { uz: 'Keçki ovqat', en: 'Dinner' } },
+      { id: 'r-fam2', kind: 'rest', flex: true, until: 'isha', t: { uz: 'Oila', en: 'Family' } },
+      { id: 'r-isha', kind: 'pray', anchor: 'isha', soft: true, min: 20, t: { uz: 'Xufton namozi', en: 'Isha prayer' } },
+      { id: 'r-prep', kind: 'rest', flexTo: 'bed', t: { uz: 'Ertangi Gibrid kunga tayyorgarlik', en: 'Preparing for tomorrow hybrid day' } },
+      { id: 'r-sleep', kind: 'sleep', flexTo: 'tahajjud', t: { uz: 'Asosiy uyqu', en: 'Main sleep' } }
     ]
   },
 
@@ -331,18 +261,18 @@ window.HABIT = {
       drop: ['h-yt', 'h-free1', 'h-free2', 'h-meal3', 'h-free3', 'h-movie', 'h-close', 'h-wind'],
       add: [
         { id: 'h-movie', kind: 'movie', at: '12:00', min: 45, movie: true,
-          t: { uz: 'KINO (ish kuni — tushda)', en: 'FILM (work day — at midday)' },
-          note: { uz: "Ish kunida kino tushga ko'chadi — kechqurun ish bloki. Inglizcha subtitr bilan.", en: 'On a work day the film moves to midday — the evening is the work block. English subtitles.' } },
+          t: { uz: 'KINO (iş kuni — tuşda)', en: 'FILM (work day — at midday)' },
+          note: { uz: "Iş kunida kino tuşga köçadi — keçqurun iş bloki. Inglizça subtitr bilan.", en: 'On a work day the film moves to midday — the evening is the work block. English subtitles.' } },
         { id: 'h-free1', kind: 'rest', at: '12:45', min: 15, t: { uz: 'Erkin vaqt', en: 'Free time' } },
         { id: 'h-free2', kind: 'rest', at: '15:25', min: 35, t: { uz: 'Tanaffus', en: 'Break' },
-          note: { uz: "Asr namozi ish bloki ichida — o'z vaqtida o'qib, davom et.", en: 'Asr falls inside the work block — pray on time and continue.' } },
+          note: { uz: "Asr namozi iş bloki içida — öz vaqtida öqib, davom et.", en: 'Asr falls inside the work block — pray on time and continue.' } },
         { id: 'h-work', kind: 'work', at: '16:00', min: 180, core: true, w: 'hard', fixed: true,
-          t: { uz: 'ISH · loyiha — 3 soat', en: 'WORK · project — 3 hours' },
-          note: { uz: "Bitta uzluksiz blok. Telefon boshqa xonada; 50/10 ritm (50 daq ish, 10 daq tanaffus). Ish davri Sozlamalarda (sana oralig'i).", en: 'One unbroken block. Phone in another room; 50/10 rhythm (50 min work, 10 min break). The work period is set in Settings (date range).' } },
-        { id: 'h-meal3', kind: 'meal', at: '19:00', min: 30, t: { uz: 'Kechki ovqat', en: 'Dinner' } },
+          t: { uz: 'IŞ · loyiha — 3 soat', en: 'WORK · project — 3 hours' },
+          note: { uz: "Bitta uzluksiz blok. Telefon boşqa xonada; 50/10 ritm (50 daq iş, 10 daq tanaffus). Iş davri Sozlamalarda (sana oraliği).", en: 'One unbroken block. Phone in another room; 50/10 rhythm (50 min work, 10 min break). The work period is set in Settings (date range).' } },
+        { id: 'h-meal3', kind: 'meal', at: '19:00', min: 30, t: { uz: 'Keçki ovqat', en: 'Dinner' } },
         { id: 'h-close', kind: 'review', at: '19:30', min: 45, core: true, w: 'light', link: 'books/vocab',
           t: { uz: 'YADRO 5 · Kun yakuni', en: 'CORE 5 · Day close' },
-          note: { uz: "Lug'at 5 soniya testi, kitob, xatolar daftari + ertangi kun.", en: 'Vocabulary 5-second test, the book, the error log + tomorrow.' } },
+          note: { uz: "Luğat 5 soniya testi, kitob, xatolar daftari + ertangi kun.", en: 'Vocabulary 5-second test, the book, the error log + tomorrow.' } },
         { id: 'h-wind', kind: 'rest', at: '20:15', min: 65, t: { uz: 'Tayyorgarlik / dam — ekransiz', en: 'Wind down — no screens' },
           note: { uz: '21:20 da yotasan.', en: 'Lights out at 21:20.' } }
       ]
@@ -351,34 +281,34 @@ window.HABIT = {
       drop: ['c-free1', 'c-meal3', 'c-free3', 'c-movie', 'c-close', 'c-wind'],
       add: [
         { id: 'c-movie', kind: 'movie', at: '11:55', min: 40, movie: true,
-          t: { uz: 'KINO (ish kuni — tushda)', en: 'FILM (work day — at midday)' },
-          note: { uz: "LC kunida kino tushga ko'chadi — kechqurun LC + ish.", en: 'On an LC day the film moves to midday — the evening is LC + work.' } },
+          t: { uz: 'KINO (iş kuni — tuşda)', en: 'FILM (work day — at midday)' },
+          note: { uz: "LC kunida kino tuşga köçadi — keçqurun LC + iş.", en: 'On an LC day the film moves to midday — the evening is LC + work.' } },
         { id: 'c-free1', kind: 'rest', at: '12:35', min: 25, t: { uz: 'Erkin vaqt', en: 'Free time' } },
-        { id: 'c-meal3', kind: 'meal', at: '18:30', min: 20, t: { uz: 'Kechki ovqat (tez)', en: 'Dinner (quick)' } },
+        { id: 'c-meal3', kind: 'meal', at: '18:30', min: 20, t: { uz: 'Keçki ovqat (tez)', en: 'Dinner (quick)' } },
         { id: 'c-work', kind: 'work', at: '18:50', min: 140, core: true, w: 'hard', fixed: true, short: 40,
-          t: { uz: 'ISH · loyiha — LC dan keyin (2s 20d)', en: 'WORK · project — after LC (2h20)' },
-          note: { uz: "LC dan keyin uzluksiz. 3 soat sig'maydi: 21:20 uyqu himoyalangan — 40 daqiqa kamomad, uni ish kunlari (og'ir kun/yakshanba) qoplaydi. Telefon boshqa xonada.", en: 'Unbroken after LC. Three hours do not fit: sleep at 21:20 is protected — a 40-minute shortfall, covered on heavy days/Sunday. Phone in another room.' } },
+          t: { uz: 'IŞ · loyiha — LC dan keyin (2s 20d)', en: 'WORK · project — after LC (2h20)' },
+          note: { uz: "LC dan keyin uzluksiz. 3 soat siğmaydi: 21:20 uyqu himoyalangan — 40 daqiqa kamomad, uni iş kunlari (oğir kun/yakşanba) qoplaydi. Telefon boşqa xonada.", en: 'Unbroken after LC. Three hours do not fit: sleep at 21:20 is protected — a 40-minute shortfall, covered on heavy days/Sunday. Phone in another room.' } },
         { id: 'c-close', kind: 'review', at: '21:10', min: 10, core: true, w: 'light', shortOk: true,
           t: { uz: 'Yakun: 3 qator LC xulosasi + ertangi kun', en: 'Close: three lines of LC summary + tomorrow' },
-          note: { uz: "Ish kunida qisqartirilgan yakun — 10 daqiqa (validator uchun ataylab ruxsat etilgan istisno).", en: 'A shortened close on a work day — 10 minutes (an explicitly allowed validator exception).' } }
+          note: { uz: "Iş kunida qisqartirilgan yakun — 10 daqiqa (validator uçun ataylab ruxsat etilgan istisno).", en: 'A shortened close on a work day — 10 minutes (an explicitly allowed validator exception).' } }
       ]
     },
     rest: {
       drop: ['r-yt', 'r-rest3', 'r-rest4', 'r-meal3', 'r-code', 'r-kick', 'r-movie', 'r-close', 'r-wind'],
       add: [
-        { id: 'r-yt', kind: 'yt', at: '15:00', min: 25, t: { uz: 'YOUTUBE · inglizcha kanal', en: 'YOUTUBE · English channel' } },
+        { id: 'r-yt', kind: 'yt', at: '15:00', min: 25, t: { uz: 'YOUTUBE · inglizça kanal', en: 'YOUTUBE · English channel' } },
         { id: 'r-rest3', kind: 'rest', at: '15:25', min: 35, t: { uz: 'Dam / oila', en: 'Rest / family' } },
         { id: 'r-work', kind: 'work', at: '16:00', min: 180, core: true, w: 'hard', fixed: true,
-          t: { uz: 'ISH · loyiha — 3 soat', en: 'WORK · project — 3 hours' },
-          note: { uz: "Yakshanbada ham ish davrida 16:00–19:00. Bitta uzluksiz blok, 50/10 ritm. Ish davri Sozlamalarda.", en: 'On Sunday too, during the work period: 16:00–19:00. One unbroken block, 50/10 rhythm. The work period is set in Settings.' } },
-        { id: 'r-meal3', kind: 'meal', at: '19:00', min: 35, t: { uz: 'Kechki ovqat', en: 'Dinner' } },
+          t: { uz: 'IŞ · loyiha — 3 soat', en: 'WORK · project — 3 hours' },
+          note: { uz: "Yakşanbada ham iş davrida 16:00–19:00. Bitta uzluksiz blok, 50/10 ritm. Iş davri Sozlamalarda.", en: 'On Sunday too, during the work period: 16:00–19:00. One unbroken block, 50/10 rhythm. The work period is set in Settings.' } },
+        { id: 'r-meal3', kind: 'meal', at: '19:00', min: 35, t: { uz: 'Keçki ovqat', en: 'Dinner' } },
         { id: 'r-movie', kind: 'movie', at: '19:35', min: 40, movie: true, t: { uz: 'KINO', en: 'FILM' },
           note: { uz: "Kunning filmi yuqorida.", en: 'The day\'s film is shown above.' } },
         { id: 'r-close', kind: 'review', at: '20:15', min: 45, core: true, w: 'light', link: 'goal',
           t: { uz: 'YADRO 3 · Hafta yakuni', en: 'CORE 3 · Week close' },
           note: { uz: "Kitob, test natijasi, haftaning 3 xatosi, keyingi haftaning bitta maqsadi.", en: 'The book, the test result, the week\'s three mistakes, one goal for next week.' } },
         { id: 'r-wind', kind: 'rest', at: '21:00', min: 20, t: { uz: 'Tayyorgarlik — ekransiz', en: 'Wind down — no screens' },
-          note: { uz: "Dushanba og'ir kun — 21:20 da yot.", en: 'Monday is a heavy day — lights out at 21:20.' } }
+          note: { uz: "Duşanba oğir kun — 21:20 da yot.", en: 'Monday is a heavy day — lights out at 21:20.' } }
       ]
     }
   },
@@ -417,17 +347,19 @@ window.HABIT = {
   /* Blok turlari — rang va ikonka uchun */
   kinds: {
     pray:   { icon: 'mosque',    name: { uz: 'Namoz', en: 'Prayer' } },
-    quran:  { icon: 'book',      name: { uz: "Qur'on", en: "Qur'an" } },
+    quran:  { icon: 'book',      name: { uz: "Qurʼon", en: "Qur'an" } },
     eng:    { icon: 'globe',     name: { uz: 'Ingliz tili', en: 'English' } },
     py:     { icon: 'code',      name: { uz: 'Python', en: 'Python' } },
     dc:     { icon: 'layers',    name: { uz: 'DataCamp', en: 'DataCamp' } },
-    work:   { icon: 'rocket',    name: { uz: 'Ish (loyiha)', en: 'Work (project)' } },
+    work:   { icon: 'rocket',    name: { uz: 'Iş (loyiha)', en: 'Work (project)' } },
     lc:     { icon: 'user',      name: { uz: 'LC darsi', en: 'LC class' } },
     hw:     { icon: 'pen',       name: { uz: 'Uy vazifasi', en: 'Homework' } },
     speak:  { icon: 'mic',       name: { uz: 'Speaking', en: 'Speaking' } },
     review: { icon: 'checklist', name: { uz: 'Takror', en: 'Review' } },
     meal:   { icon: 'clock',     name: { uz: 'Tanaffus', en: 'Break' } },
     rest:   { icon: 'flame',     name: { uz: 'Dam', en: 'Rest' } },
+    kitchen:{ icon: 'clock',     name: { uz: 'Oşxona', en: 'Kitchen' } },
+    proj:   { icon: 'rocket',    name: { uz: 'Loyiha', en: 'Project' } },
     movie:  { icon: 'film',      name: { uz: 'Kino', en: 'Film' } },
     yt:     { icon: 'play',      name: { uz: 'YouTube', en: 'YouTube' } },
     book:   { icon: 'book',      name: { uz: 'Kitob', en: 'Book' } },

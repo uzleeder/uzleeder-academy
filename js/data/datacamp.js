@@ -22,11 +22,11 @@ window.DCTRACK = {
     start: '2026-10-25',
     hours: 16, level: 'Basic',
     lede: {
-      uz: "DataCamp'ning 16 soatlik treki: 4 kurs, 13 bob, 1 loyiha. Kuniga bitta bob — nazariya va mashqlar DataCamp'da, keyin shu yerda bob testi. Yakshanba: shu haftagacha o'tilgan hamma narsa bo'yicha KATTA coding testi.",
+      uz: "DataCamp'ning 16 soatlik treki: 4 kurs, 13 bob, 1 loyiha. Kuniga bitta bob — nazariya va maşqlar DataCamp'da, keyin şu yerda bob testi. Yakşanba: şu haftagaça ötilgan hamma narsa böyiça KATTA coding testi.",
       en: "DataCamp's 16-hour track: 4 courses, 13 chapters, 1 project. One chapter a day — theory and exercises on DataCamp, then the chapter quiz here. Sunday: the BIG coding test on everything covered so far."
     },
     rule: {
-      uz: "Qoida: bob DataCamp'da 100% tugallanmaguncha va shu yerdagi testdan 4/5 olmaguncha \"bajarildi\" belgilanmaydi. Platformadagi Python darsi va DataCamp bobi — bitta kunlik codingning ikki qismi (og'ir kun 4 soat, LC kuni 2 soat).",
+      uz: "Qoida: bob DataCamp'da 100% tugallanmagunça va şu yerdagi testdan 4/5 olmagunça \"bajarildi\" belgilanmaydi. Platformadagi Python darsi va DataCamp bobi — bitta kunlik codingning ikki qismi (oğir kun 4 soat, LC kuni 2 soat).",
       en: 'Rule: a chapter is not "done" until it is 100% complete on DataCamp AND you score 4/5 on the quiz here. The platform Python lesson and the DataCamp chapter are two halves of one daily coding block (4h on heavy days, 2h on LC days).'
     },
     how: {
@@ -39,7 +39,7 @@ window.DCTRACK = {
     /* ---------------------------------------------------------------- */
     { id: 'intro', n: 1, title: 'Introduction to Python for Developers', hours: 3.2, videos: 12, exercises: 39,
       url: 'https://app.datacamp.com/learn/courses/introduction-to-python-for-developers',
-      desc: { uz: "Python asoslari: o'zgaruvchi, turlar, ro'yxat, lug'at, shart, sikl. Platformadagi 1–8-darslar bilan bir mavzu.", en: 'Python basics: variables, types, lists, dicts, conditions, loops. Same ground as lessons 1–8 here.' },
+      desc: { uz: "Python asoslari: özgaruvçi, turlar, röyxat, luğat, şart, sikl. Platformadagi 1–8-darslar bilan bir mavzu.", en: 'Python basics: variables, types, lists, dicts, conditions, loops. Same ground as lessons 1–8 here.' },
       chapters: [
         { id: 'intro-1', title: 'Introduction to Python', min: 60, py: [1, 2],
           lessons: ['What is Python?', 'Running your first Python script', 'Writing your first Python script', 'Python variables, strings, and integers', 'Storing variables', 'Updating variables', 'Common data types', 'Working with number variables', 'Working with booleans', 'Checking data types'],
@@ -76,7 +76,7 @@ window.DCTRACK = {
     /* ---------------------------------------------------------------- */
     { id: 'inter', n: 2, title: 'Intermediate Python for Developers', hours: 2.2, videos: 11, exercises: 38,
       url: 'https://app.datacamp.com/learn/courses/intermediate-python-for-developers',
-      desc: { uz: "O'rnatilgan funksiyalar, modullar va paketlar, o'z funksiyang, lambda va xatolar bilan ishlash. Platformadagi 9–15-darslar.", en: 'Built-in functions, modules and packages, your own functions, lambda and error handling. Lessons 9–15 here.' },
+      desc: { uz: "Örnatilgan funksiyalar, modullar va paketlar, öz funksiyang, lambda va xatolar bilan işlaş. Platformadagi 9–15-darslar.", en: 'Built-in functions, modules and packages, your own functions, lambda and error handling. Lessons 9–15 here.' },
       chapters: [
         { id: 'inter-1', title: 'The Python Ecosystem', min: 45, py: [9, 12],
           lessons: ['Built-in functions', 'Calculating key metrics', 'Finding the average', 'Sorting lists', 'Modules', 'What is a module?', 'Working with the os module', 'Working with the string module', 'Packages', 'Package or module', 'Working with pandas', 'Reading files with pandas'],
@@ -113,7 +113,7 @@ window.DCTRACK = {
     /* ---------------------------------------------------------------- */
     { id: 'toolbox', n: 3, title: 'Python Toolbox', hours: 4.2, videos: 12, exercises: 46,
       url: 'https://app.datacamp.com/learn/courses/python-toolbox',
-      desc: { uz: "Iteratorlar, enumerate/zip, list comprehension, generatorlar va katta faylni bo'laklab o'qish. Platformadagi 16–22-darslar.", en: 'Iterators, enumerate/zip, list comprehensions, generators and reading large files in chunks. Lessons 16–22 here.' },
+      desc: { uz: "Iteratorlar, enumerate/zip, list comprehension, generatorlar va katta faylni bölaklab öqiş. Platformadagi 16–22-darslar.", en: 'Iterators, enumerate/zip, list comprehensions, generators and reading large files in chunks. Lessons 16–22 here.' },
       chapters: [
         { id: 'tb-1', title: 'Using Iterators in PythonLand', min: 80, py: [16, 17],
           lessons: ['Introduction to iterators', 'Iterators vs. Iterables', 'Iterating over iterables (1)', 'Iterating over iterables (2)', 'Iterators as function arguments', 'Playing with iterators', 'Using enumerate', 'Using zip', "Using * and zip to 'unzip'", 'Using iterators to load large files into memory', 'Processing large amounts of Twitter data', 'Extracting information for large amounts of Twitter data', 'Congratulations!'],
@@ -150,7 +150,7 @@ window.DCTRACK = {
     /* ---------------------------------------------------------------- */
     { id: 'types', n: 4, title: 'Data Types in Python', hours: 4.25, videos: 15, exercises: 47,
       url: 'https://app.datacamp.com/learn/courses/data-types-in-python',
-      desc: { uz: "Ro'yxat, kortej, satr, lug'at, son, mantiq, to'plam va collections (Counter, defaultdict, namedtuple, dataclass). Platformadagi 23–28-darslar.", en: 'Lists, tuples, strings, dicts, numbers, booleans, sets and collections (Counter, defaultdict, namedtuple, dataclass). Lessons 23–28 here.' },
+      desc: { uz: "Röyxat, kortej, satr, luğat, son, mantiq, töplam va collections (Counter, defaultdict, namedtuple, dataclass). Platformadagi 23–28-darslar.", en: 'Lists, tuples, strings, dicts, numbers, booleans, sets and collections (Counter, defaultdict, namedtuple, dataclass). Lessons 23–28 here.' },
       chapters: [
         { id: 'dt-1', title: 'Fundamental Sequence Data Types', min: 65, py: [3, 23],
           lessons: ['Introduction and lists', 'Manipulating lists for fun and profit', 'Looping over lists', 'Meet the tuples', 'Data type usage', 'Using and unpacking tuples', 'Making tuples by accident', 'Strings', 'Formatted String Literals ("f" strings)', 'Combining multiple strings', 'Finding strings in other strings'],
@@ -199,7 +199,7 @@ window.DCTRACK = {
   project: {
     id: 'proj', title: 'Creating Functions to Register App Users', min: 60, py: [11, 15],
     url: 'https://app.datacamp.com/learn/projects/creating-functions-to-register-app-users',
-    desc: { uz: "Yangi foydalanuvchi ro'yxatdan o'tganda xatolarni ushlaydigan funksiyalar: nom/email/parol tekshiruvi, raise bilan xato, try/except.", en: 'Functions that catch errors when new users register: name/email/password validation, raising errors, try/except.' },
+    desc: { uz: "Yangi foydalanuvçi röyxatdan ötganda xatolarni uşlaydigan funksiyalar: nom/email/parol tekşiruvi, raise bilan xato, try/except.", en: 'Functions that catch errors when new users register: name/email/password validation, raising errors, try/except.' },
     lessons: ['validate_user(name, email, password, dob) — every rule as a check', 'raise ValueError with a clear message', 'register_user(...) — returns a dict or False', 'Test with valid and invalid data'],
     goals: { uz: ['Bir necha tekshiruvni bitta funksiyaga yig‘ish', 'raise / try / except — real ish oqimida', 'Lug‘at qaytaruvchi funksiya va False holati'], en: ['Combine several checks in one function', 'raise / try / except in a real flow', 'A function returning a dict, or False'] },
     quiz: [

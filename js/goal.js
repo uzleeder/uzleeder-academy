@@ -18,29 +18,29 @@
     { k: 'kickoff',    date: '2026-10-25', t: { uz: 'RASMIY START — kickoff: Python 1-kun, DataCamp 1-kun', en: 'OFFICIAL START — kickoff: Python day 1, DataCamp day 1' }, track: 'coding', hard: true },
     { k: 'eng-start',  date: '2026-10-26', t: { uz: 'Ingliz tili: 1-kun (108 kunlik kurs)', en: 'English: day 1 (108-day course)' },      track: 'english' },
     { k: 'py-start',   date: '2026-10-25', t: { uz: 'Python: 1-dars (har kuni)', en: 'Python: lesson 1 (daily)' },   track: 'coding' },
-    { k: 'writing',    date: '2026-10-25', t: { uz: 'Writing chuqur kursi boshlandi', en: 'Writing deep course begins' }, track: 'english' },
+    { k: 'writing',    date: '2026-10-25', t: { uz: 'Writing çuqur kursi boşlandi', en: 'Writing deep course begins' }, track: 'english' },
     { k: 'dc-track',   date: '2026-11-09', t: { uz: 'DataCamp: Python Programming Fundamentals treki tugadi (4 kurs + loyiha)', en: 'DataCamp: Python Programming Fundamentals track done (4 courses + project)' }, track: 'coding', hard: true },
-    { k: 'cbook',      date: '2026-11-08', t: { uz: "Lug'at: C-book 15 kun × 40 so'z = 600 so'z daftarda", en: 'Vocabulary: C-book 15 days × 40 words = 600 words in the copybook' }, track: 'english' },
-    { k: 'ess4',       date: '2026-11-09', t: { uz: "Lug'at: 4000 Essential Words 4 boshlandi (kuniga 2 unit)", en: 'Vocabulary: 4000 Essential Words 4 begins (2 units a day)' }, track: 'english' },
+    { k: 'cbook',      date: '2026-11-08', t: { uz: "Luğat: C-book 15 kun × 40 söz = 600 söz daftarda", en: 'Vocabulary: C-book 15 days × 40 words = 600 words in the copybook' }, track: 'english' },
+    { k: 'ess4',       date: '2026-11-09', t: { uz: "Luğat: 4000 Essential Words 4 boşlandi (kuniga 2 unit)", en: 'Vocabulary: 4000 Essential Words 4 begins (2 units a day)' }, track: 'english' },
     { k: 'py-end',     date: '2026-11-23', t: { uz: 'PYTHON KURSI TUGADI (30/30) — muddat', en: 'PYTHON COURSE DONE (30/30) — deadline' }, track: 'coding', hard: true },
     { k: 'speak30',    date: '2026-11-24', t: { uz: 'Speaking 30 kun — trek tugadi', en: 'Speaking 30 — track complete' }, track: 'english' },
-    { k: 'mock1',      date: '2026-11-22', t: { uz: '1-mock (28-kun): boshlang\'ich nuqta', en: 'Mock 1 (day 28): baseline' }, track: 'english' },
-    { k: 'dc1',        date: '2026-11-15', t: { uz: 'DataCamp 2-bosqich: NumPy · pandas · OOP', en: 'DataCamp phase 2: NumPy · pandas · OOP' }, track: 'coding' },
+    { k: 'mock1',      date: '2026-11-22', t: { uz: '1-mock (28-kun): boşlanğiç nuqta', en: 'Mock 1 (day 28): baseline' }, track: 'english' },
+    { k: 'dc1',        date: '2026-11-15', t: { uz: 'DataCamp 2-bosqiç: NumPy · pandas · OOP', en: 'DataCamp phase 2: NumPy · pandas · OOP' }, track: 'coding' },
     { k: 'mock2',      date: '2026-12-20', t: { uz: '2-mock (56-kun): 6.5 kutiladi', en: 'Mock 2 (day 56): 6.5 expected' }, track: 'english' },
-    { k: 'dc2',        date: '2026-11-30', t: { uz: 'DataCamp 3-bosqich: AI nazariyasi', en: 'DataCamp phase 3: AI theory' }, track: 'coding' },
+    { k: 'dc2',        date: '2026-11-30', t: { uz: 'DataCamp 3-bosqiç: AI nazariyasi', en: 'DataCamp phase 3: AI theory' }, track: 'coding' },
     { k: 'mock3',      date: '2027-01-17', t: { uz: '3-mock (84-kun): 7.0 kutiladi', en: 'Mock 3 (day 84): 7.0 expected' }, track: 'english' },
-    { k: 'dc4',        date: '2027-01-20', t: { uz: 'DataCamp 4-bosqich: OpenAI API · LangChain · agentlar', en: 'DataCamp phase 4: OpenAI API · LangChain · agents' }, track: 'coding' },
+    { k: 'dc4',        date: '2027-01-20', t: { uz: 'DataCamp 4-bosqiç: OpenAI API · LangChain · agentlar', en: 'DataCamp phase 4: OpenAI API · LangChain · agents' }, track: 'coding' },
     { k: 'dc5',        date: '2027-02-05', t: { uz: 'DataCamp sertifikat + 1-loyiha GitHub\'da', en: 'DataCamp certificate + project 1 on GitHub' }, track: 'coding' },
     { k: 'eng-end',    date: '2027-02-10', t: { uz: 'Ingliz tili kursi tugadi (108/108)', en: 'English course complete (108/108)' }, track: 'english' },
     { k: 'ielts',      date: '2027-02-20', t: { uz: 'IELTS IMTIHONI — maqsad 8.0', en: 'IELTS EXAM — target 8.0' }, track: 'english', hard: true },
     { k: 'ielts-res',  date: '2027-03-05', t: { uz: 'IELTS natijasi', en: 'IELTS result' }, track: 'english' },
-    { k: 'apply',      date: '2027-04-01', t: { uz: 'Ishga arizalar boshlanadi (junior AI/Python)', en: 'Job applications begin (junior AI/Python)' }, track: 'career' },
-    { k: 'portfolio',  date: '2027-04-15', t: { uz: 'Portfolio: 3 ishlaydigan loyiha (GitHub)', en: 'Portfolio: 3 working projects (GitHub)' }, track: 'coding' },
+    { k: 'apply',      date: '2027-04-01', t: { uz: 'Işga arizalar boşlanadi (junior AI/Python)', en: 'Job applications begin (junior AI/Python)' }, track: 'career' },
+    { k: 'portfolio',  date: '2027-04-15', t: { uz: 'Portfolio: 3 işlaydigan loyiha (GitHub)', en: 'Portfolio: 3 working projects (GitHub)' }, track: 'coding' },
     { k: 'masters',    date: '2027-05-01', t: { uz: 'Magistratura / grant arizalari (IELTS 8.0 bilan)', en: 'Master\'s / scholarship applications (with IELTS 8.0)' }, track: 'career' },
-    { k: 'job',        date: '2027-06-01', t: { uz: 'BIRINCHI ISH — junior AI Engineer / Python dev', en: 'FIRST JOB — junior AI Engineer / Python dev' }, track: 'career', hard: true },
-    { k: 'lvC',        date: '2028-03-31', t: { uz: 'C daraja: Data Scientist / ML (ish bilan parallel)', en: 'Level C: Data Scientist / ML (alongside work)' }, track: 'career' },
+    { k: 'job',        date: '2027-06-01', t: { uz: 'BIRINÇI IŞ — junior AI Engineer / Python dev', en: 'FIRST JOB — junior AI Engineer / Python dev' }, track: 'career', hard: true },
+    { k: 'lvC',        date: '2028-03-31', t: { uz: 'C daraja: Data Scientist / ML (iş bilan parallel)', en: 'Level C: Data Scientist / ML (alongside work)' }, track: 'career' },
     { k: 'mid',        date: '2028-09-01', t: { uz: 'Mid-level AI Engineer', en: 'Mid-level AI Engineer' }, track: 'career' },
-    { k: 'expert',     date: '2030-06-01', t: { uz: 'EKSPERT: senior / MLOps / ochiq manba', en: 'EXPERT: senior / MLOps / open source' }, track: 'career', hard: true }
+    { k: 'expert',     date: '2030-06-01', t: { uz: 'EKSPERT: senior / MLOps / oçiq manba', en: 'EXPERT: senior / MLOps / open source' }, track: 'career', hard: true }
   ];
 
   function status(k) {
@@ -153,14 +153,16 @@
       var i = (dayN + debtDays().days) % arr.length;
       return arr[i];
     },
-    /* Bugungi talab: ingliz 240 daq har kuni; coding 240 (og'ir) / 120 (LC), yakshanba 0 */
+    /* Bugungi talab: ingliz 240 daq har kuni; coding 240 (gibrid/oddiy) / 120 (LC), yakshanba 0 */
     required: function (key) {
       key = key || Store.dateKey();
-      var type = window.HabitPlan ? HabitPlan.typeOf(key) : 'heavy';
+      var type = window.HabitPlan ? HabitPlan.typeOf(key) : 'oddiy';
       var pyMonth = window.HabitPlan && HabitPlan.pyDayOf(key) > 0;
       var s = Store.all().settings || {};
       var eng = s.targetEng || 240, heavy = s.targetCodeHeavy || 240, cls = s.targetCodeClass || 120;
-      return { eng: eng, code: type === 'rest' ? (pyMonth ? 60 : 0) : type === 'class' ? cls : heavy };
+      /* tiklanish — kod yo'q (Python oyida 60 daq takror); LC kuni dars
+         vaqtini oladi, shuning uchun kam; gibrid/oddiy — to'liq.        */
+      return { eng: eng, code: type === 'tiklanish' ? (pyMonth ? 60 : 0) : type === 'lc' ? cls : heavy };
     },
     /* Bugungi bajarilgan daqiqalar: jadvaldagi belgilangan bloklardan */
     doneMinutes: function (key) {

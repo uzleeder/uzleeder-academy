@@ -224,11 +224,11 @@
 
   /* ---------- tavsiyalar (shaffof qoidalar) ---------- */
   var RULES = [
-    { lesson: 'm1-collections', why: { uz: "Lug'at (dict) mashqlari va savollarida takroriy xato", en: 'Repeated mistakes in dictionary exercises and questions' } },
+    { lesson: 'm1-collections', why: { uz: "Luğat (dict) maşqlari va savollarida takroriy xato", en: 'Repeated mistakes in dictionary exercises and questions' } },
     { lesson: 'm1-functions', why: { uz: "Funksiya va return xatti-harakatida xatolar", en: 'Mistakes in function return behaviour' } },
-    { lesson: 'm1-errors', why: { uz: "Istisnolarni boshqarish mashqlarida xatolar", en: 'Mistakes in exception-handling exercises' } },
-    { lesson: 'm2-testing', why: { uz: "Testlash mashqlari yoki loyihada testlar belgilanmagan", en: 'Testing exercises failing, or project tests not done' } },
-    { lesson: 'm6-retrieve', why: { uz: "Retrieval/RAG mashqlarida xatolar — RAG debugging", en: 'Retrieval/RAG exercises failing — RAG debugging' } }
+    { lesson: 'm1-errors', why: { uz: "Istisnolarni boşqariş maşqlarida xatolar", en: 'Mistakes in exception-handling exercises' } },
+    { lesson: 'm2-testing', why: { uz: "Testlaş maşqlari yoki loyihada testlar belgilanmagan", en: 'Testing exercises failing, or project tests not done' } },
+    { lesson: 'm6-retrieve', why: { uz: "Retrieval/RAG maşqlarida xatolar — RAG debugging", en: 'Retrieval/RAG exercises failing — RAG debugging' } }
   ];
   function lessonFailures(lid, days) {
     var since = SRS2.addDays(today(), -(days || 21)), n = 0;
@@ -240,14 +240,14 @@
   function recommend() {
     var out = [];
     var due = reviewDue().length;
-    if (due) out.push({ route: 'pyai/review', title: { uz: due + ' ta takror kutmoqda', en: due + ' reviews due' }, why: { uz: "Takror muddati keldi — kechiktirilsa unutiladi", en: 'Review date reached — delaying leads to forgetting' } });
+    if (due) out.push({ route: 'pyai/review', title: { uz: due + ' ta takror kutmoqda', en: due + ' reviews due' }, why: { uz: "Takror muddati keldi — keçiktirilsa unutiladi", en: 'Review date reached — delaying leads to forgetting' } });
     RULES.forEach(function (r) {
       var f = lessonFailures(r.lesson); if (r.lesson === 'm2-testing') { var p1 = projectStatus('p1'); if (p1.repo && !p1.selfAssessed) f += 2; }
-      if (f >= 2) out.push({ route: 'pyai/l/' + r.lesson, title: { uz: 'Qayta ko\'rish: ' + lesson(r.lesson).title.uz, en: 'Revisit: ' + lesson(r.lesson).title.en }, why: { uz: r.why.uz + ' (' + f + ' ta, 21 kun)', en: r.why.en + ' (' + f + ' in 21 days)' } });
+      if (f >= 2) out.push({ route: 'pyai/l/' + r.lesson, title: { uz: 'Qayta köriş: ' + lesson(r.lesson).title.uz, en: 'Revisit: ' + lesson(r.lesson).title.en }, why: { uz: r.why.uz + ' (' + f + ' ta, 21 kun)', en: r.why.en + ' (' + f + ' in 21 days)' } });
     });
     Object.keys(P().lessons).forEach(function (lid) {
       if (RULES.some(function (r) { return r.lesson === lid; })) return;
-      var f = lessonFailures(lid); if (f >= 3) out.push({ route: 'pyai/l/' + lid, title: { uz: 'Qayta ko\'rish: ' + lesson(lid).title.uz, en: 'Revisit: ' + lesson(lid).title.en }, why: { uz: f + ' ta xato (21 kun)', en: f + ' mistakes (21 days)' } });
+      var f = lessonFailures(lid); if (f >= 3) out.push({ route: 'pyai/l/' + lid, title: { uz: 'Qayta köriş: ' + lesson(lid).title.uz, en: 'Revisit: ' + lesson(lid).title.en }, why: { uz: f + ' ta xato (21 kun)', en: f + ' mistakes (21 days)' } });
     });
     var nx = nextLesson(); if (nx) out.push({ route: 'pyai/l/' + nx.id, title: { uz: 'Keyingi dars: ' + nx.lesson.title.uz, en: 'Next lesson: ' + nx.lesson.title.en }, why: nx.why });
     return out.slice(0, 6);
@@ -255,7 +255,7 @@
   function nextLesson() {
     var d = S().diag, order = lessonOrder();
     var startIdx = d && d.start ? Math.max(0, order.indexOf(d.start)) : 0;
-    for (var i = startIdx; i < order.length; i++) { var s = lessonStatus(order[i]); if (!s.completed) return { id: order[i], lesson: lesson(order[i]), why: d && i === startIdx ? { uz: 'Diagnostika natijasi bo\'yicha boshlash nuqtasi', en: 'Your start point from the diagnostic' } : { uz: 'Tartibdagi birinchi tugallanmagan dars', en: 'First unfinished lesson in order' } }; }
+    for (var i = startIdx; i < order.length; i++) { var s = lessonStatus(order[i]); if (!s.completed) return { id: order[i], lesson: lesson(order[i]), why: d && i === startIdx ? { uz: 'Diagnostika natijasi böyiça boşlaş nuqtasi', en: 'Your start point from the diagnostic' } : { uz: 'Tartibdagi birinçi tugallanmagan dars', en: 'First unfinished lesson in order' } }; }
     for (i = 0; i < startIdx; i++) { s = lessonStatus(order[i]); if (!s.completed) return { id: order[i], lesson: lesson(order[i]), why: { uz: 'Diagnostikadan oldingi, hali tugallanmagan dars', en: 'An earlier lesson not finished yet' } }; }
     return null;
   }

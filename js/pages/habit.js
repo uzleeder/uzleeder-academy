@@ -62,7 +62,11 @@
         '<div class="hb-t"><span class="hb-ic">' + (IC[kind.icon] || IC.spark) + '</span>' +
           esc(L(b.t)) +
           (b.inside ? ' <span class="hb-opt warn">' + esc(tr(b.insideFixed ? 'habInClass' : 'habDuring')) + '</span>' : '') +
-          (b.core ? '' : ' <span class="hb-opt">' + esc(tr('habExtra')) + '</span>') +
+          /* "qo'shimcha" faqat HAQIQATAN ixtiyoriy bloklarga. Namoz,
+             qiroat va uyqu yadro yukiga kirmaydi, lekin ixtiyoriy emas —
+             ularni "qo'shimcha" deb atash chalg'ituvchi bo'lardi.      */
+          (b.core || b.kind === 'pray' || b.kind === 'quran' || b.kind === 'sleep'
+            ? '' : ' <span class="hb-opt">' + esc(tr('habExtra')) + '</span>') +
         '</div>' +
         (b.book ? '<div class="hb-book">' + IC.book + esc(b.book) + '</div>' : '') +
         (b.note ? '<div class="hb-note">' + esc(L(b.note)) + '</div>'
@@ -175,8 +179,17 @@
       '<div class="crumb">' + esc(HabitPlan.index(key) + ' / ' + HabitPlan.total()) + ' · ' + esc(dowName(d.getDay())) + '</div>' +
       '<h1>' + esc(fmtDateKey(key)) + '</h1>' +
       '<div class="lesson-meta">' +
-        '<span class="chip ' + (plan.type === 'rest' ? 'review' : plan.type === 'class' ? 'lc' : 'topic') + '">' +
+        '<span class="chip ' + (plan.type === 'tiklanish' ? 'review' : plan.type === 'lc' ? 'lc' : 'topic') + '">' +
           esc(L(plan.tpl.name)) + '</span>' +
+        /* Makro-tizim: shu sana qaysi bosqichda (js/data/phases.js) */
+        (function () {
+          if (!window.PHASES) return '';
+          if (PHASES.isSprint(key)) return '<span class="chip lc">' + esc(L(PHASES.meta.sprint.title)) + '</span>';
+          var e = PHASES.elapsed(key);
+          if (!e) return '';
+          return '<span class="chip topic">' + esc(tr('phaseN', { n: e.phase.n }) + ' · ' + L(e.phase.title)) + '</span>' +
+            '<span>' + esc(tr('phaseDay', { d: e.day, t: e.total })) + '</span>';
+        })() +
         '<span>' + esc(L(plan.tpl.sub)) + '</span>' +
         '<span>·</span><span>' + esc(tr('habWake')) + ' ' + esc(HABIT.meta.dayStart) +
           ' · ' + esc(tr('habBed')) + ' ' + esc(HABIT.meta.dayEnd) + '</span>' +

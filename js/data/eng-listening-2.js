@@ -9,11 +9,11 @@ window.ENG_LISTENING_2 = [
 
 {
   n: 5, section: 1, type: 'form',
-  title: { uz: 'Uy-joy agentligiga qo\'ng\'iroq', en: 'Calling a homestay agency' },
-  context: { uz: "Chet ellik talaba oila yonida turish uchun agentlikka qo'ng'iroq qiladi.",
+  title: { uz: 'Uy-joy agentligiga qönğiroq', en: 'Calling a homestay agency' },
+  context: { uz: "Çet ellik talaba oila yonida turiş uçun agentlikka qönğiroq qiladi.",
              en: 'An international student phones an agency about staying with a host family.' },
   speakers: ['Agent', 'Marta'],
-  instruction: { uz: "Har bo'shliqqa BIR SO'Z VA/YOKI RAQAM yozing.", en: 'Write ONE WORD AND/OR A NUMBER for each answer.' },
+  instruction: { uz: "Har böşliqqa BIR SÖZ VA/YOKI RAQAM yozing.", en: 'Write ONE WORD AND/OR A NUMBER for each answer.' },
   script: [
     { s: 'Agent', t: "Good afternoon, Riverside Homestay Services. Sofia speaking." },
     { s: 'Marta', t: "Hello. I'm starting a course in September and I'd like to arrange accommodation with a family." },
@@ -57,10 +57,10 @@ window.ENG_LISTENING_2 = [
 {
   n: 6, section: 2, type: 'matching',
   title: { uz: 'Jamoat sport markazi', en: 'Community sports centre' },
-  context: { uz: "Markaz rahbari yangi a'zolarga binoni tanishtiradi.",
+  context: { uz: "Markaz rahbari yangi aʼzolarga binoni taniştiradi.",
              en: 'A centre manager introduces the building to new members.' },
   speakers: ['Manager'],
-  instruction: { uz: "Har savol uchun TO'G'RI variantni tanlang.", en: 'Choose the correct option for each question.' },
+  instruction: { uz: "Har savol uçun TÖĞRI variantni tanlang.", en: 'Choose the correct option for each question.' },
   script: [
     { s: 'Manager', t: "Welcome, everyone, and thank you for coming to this short introduction to the Eastbrook Centre. I'll take you round properly afterwards, but let me explain how the building works, because it confuses people for the first week or two." },
     { s: 'Manager', t: "You've come in through the main entrance on Chapel Street. There's a second entrance at the back, off the car park, but that one is card-access only and it's locked at eight in the evening — the main door stays open until ten." },
@@ -99,10 +99,10 @@ window.ENG_LISTENING_2 = [
 {
   n: 7, section: 3, type: 'mcq',
   title: { uz: 'Dala tadqiqoti hisoboti', en: 'A field study report' },
-  context: { uz: "Ikki talaba o'qituvchi bilan hisobot muammolarini muhokama qiladi.",
+  context: { uz: "Ikki talaba öqituvçi bilan hisobot muammolarini muhokama qiladi.",
              en: 'Two students discuss problems with their report with a tutor.' },
   speakers: ['Tutor', 'Priya', 'Sam'],
-  instruction: { uz: "TO'G'RI javobni tanlang.", en: 'Choose the correct answer.' },
+  instruction: { uz: "TÖĞRI javobni tanlang.", en: 'Choose the correct answer.' },
   script: [
     { s: 'Tutor', t: "So, your river study. I've read the draft. Before I give you my comments — what do the two of you think is the weakest part?" },
     { s: 'Priya', t: "The sample size, probably. We only measured at six points along the river." },
@@ -149,11 +149,11 @@ window.ENG_LISTENING_2 = [
 
 {
   n: 8, section: 4, type: 'notes',
-  title: { uz: "Ma'ruza: qushlar qanday yo'l topadi", en: 'Lecture: how birds find their way' },
-  context: { uz: "Biologiya ma'ruzasi — migratsiyada yo'l topish mexanizmlari.",
+  title: { uz: "Maʼruza: quşlar qanday yöl topadi", en: 'Lecture: how birds find their way' },
+  context: { uz: "Biologiya maʼruzasi — migratsiyada yöl topiş mexanizmlari.",
              en: 'A biology lecture on navigation mechanisms in migration.' },
   speakers: ['Lecturer'],
-  instruction: { uz: "Har bo'shliqqa KO'PI BILAN IKKI SO'Z yozing.", en: 'Write NO MORE THAN TWO WORDS for each answer.' },
+  instruction: { uz: "Har böşliqqa KÖPI BILAN IKKI SÖZ yozing.", en: 'Write NO MORE THAN TWO WORDS for each answer.' },
   script: [
     { s: 'Lecturer', t: "Today I want to look at bird navigation, and I want to start by separating two problems that are often treated as one. The first is orientation — knowing which direction is north. The second is navigation — knowing where you are, and therefore which direction you need. A compass solves the first. It does not solve the second, and for a long time we assumed birds only had the first." },
     { s: 'Lecturer', t: "The evidence for a sun compass came from experiments in which caged birds were shown an artificially shifted daylight cycle. Their preferred direction shifted by exactly the amount predicted if they were reading the sun's position against an internal clock. That last point is important: a sun compass is useless without a sense of time, because the sun moves." },
@@ -180,11 +180,11 @@ window.ENG_LISTENING_2 = [
 
 {
   n: 9, section: 1, type: 'form',
-  title: { uz: 'Ko\'ngilli sifatida ro\'yxatdan o\'tish', en: 'Registering as a volunteer' },
-  context: { uz: "Daryoni tozalash aksiyasiga ko'ngilli yozilmoqda.",
+  title: { uz: 'Köngilli sifatida röyxatdan ötiş', en: 'Registering as a volunteer' },
+  context: { uz: "Daryoni tozalaş aksiyasiga köngilli yozilmoqda.",
              en: 'Someone signs up for a river clean-up project.' },
   speakers: ['Coordinator', 'Tom'],
-  instruction: { uz: "Har bo'shliqqa BIR SO'Z VA/YOKI RAQAM yozing.", en: 'Write ONE WORD AND/OR A NUMBER for each answer.' },
+  instruction: { uz: "Har böşliqqa BIR SÖZ VA/YOKI RAQAM yozing.", en: 'Write ONE WORD AND/OR A NUMBER for each answer.' },
   script: [
     { s: 'Coordinator', t: "Hello, Greenway River Project — Aisha speaking." },
     { s: 'Tom', t: "Hi, I saw your poster about the clean-up days and I'd like to volunteer." },
@@ -226,11 +226,11 @@ window.ENG_LISTENING_2 = [
 
 {
   n: 10, section: 2, type: 'matching',
-  title: { uz: 'Shahar oziq-ovqat festivali', en: 'City food festival' },
-  context: { uz: "Radio e'loni: festival dasturi va joylashuvi.",
+  title: { uz: 'Şahar oziq-ovqat festivali', en: 'City food festival' },
+  context: { uz: "Radio eʼloni: festival dasturi va joylaşuvi.",
              en: 'A radio announcement about the festival programme and layout.' },
   speakers: ['Presenter'],
-  instruction: { uz: "TO'G'RI variantni tanlang.", en: 'Choose the correct option.' },
+  instruction: { uz: "TÖĞRI variantni tanlang.", en: 'Choose the correct option.' },
   script: [
     { s: 'Presenter', t: "If you're anywhere near the city centre this weekend, you'll know the food festival is back. Here's what you need to know before you go, because it has changed quite a bit since last year." },
     { s: 'Presenter', t: "First, the location. For the last six years it's been held in Market Square. This year it's moved to Victoria Park, mainly because the square simply couldn't take the numbers any more. So do not go to Market Square — you'll find nothing there but the usual Saturday stalls." },

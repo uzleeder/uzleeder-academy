@@ -37,13 +37,15 @@
   'use strict';
 
   var KEY = 'uzla.state';
-  var SCHEMA = 9;   // v8: ingliz tili kunlari qayta raqamlangan (1–4 kirish → 'i1'…'i4', 5–144 → 1–140)
+  var SCHEMA = 10;  // v8: ingliz tili kunlari qayta raqamlangan (1–4 kirish → 'i1'…'i4', 5–144 → 1–140)
                     // v9: yangi kalendar 2026-10-25 → 2027-02-10 — barcha progress noldan (migrateCalendarReset)
+                    // v10: Personal OS — faqat KO'RINISH (mavzu) ko'chadi, PROGRESS TEGILMAYDI
+                    // scheduleVersion 3: eski qat'iy namoz qiymatlari tozalanadi — PROGRESS TEGILMAYDI
 
   var DEFAULTS = {
     v: SCHEMA,
     lang: 'uz',
-    theme: 'dark',
+    theme: 'os',     /* Personal OS — yangi standart (v10) */
     name: '',
     scores: {},
     best: {},
@@ -54,7 +56,7 @@
     eng: { done: {}, tasks: {}, scores: {}, notes: {} },
     habit: {},            // "2026-09-10": { "h-fajr": true, … }
     habitLegacy: {},      // eski jadval (v1) bloklari — migratsiyada saqlangan tarix, hisobga kirmaydi
-    scheduleVersion: 2,   // kunlik jadval versiyasi (migrateScheduleV2)
+    scheduleVersion: 3,   // kunlik jadval versiyasi (migrateScheduleV2 / V3)
     /* Blok yakuni (§15): "2026-10-05|h-code" → { st, note, at }
        st: done | partial | skipped.  `done`/`partial` habit belgisini qo'yadi,
        `partial` qo'shimcha takrorga tushadi. Jazolash yo'q — bu o'lchov.   */
@@ -74,12 +76,23 @@
     bookmarks: {},        // id → { route, title, kind, at }
     done: {},             // umumiy "bajarildi" bayroqlari: "spk-ck:12:2", "gr:present-perfect", "proj:p1:3" → true
     sessions: {},         // "2026-09-16": { min } — Today sahifasida o'lchangan o'quv vaqti
+    /* Personal OS (v10): Missiya rejasidagi vazifalar — id -> {date,time,min,cat,
+       title,note,status,ref,src,at,up}. 8-bosqichda IndexedDB `tasks` omboriga
+       ko'chadi; shakl o'zgarmaydi, shuning uchun id va vaqt belgilari saqlanadi. */
+    osTasks: {},
+    /* Xatolar daftari uchun QO'SHIMCHA maydonlar (asl 4 ustunga tegilmaydi):
+       id -> { why, cat, difficulty, resolvedBy, at } */
+    osMistakeMeta: {},
     events: [],           // faollik jurnali: { id, at, type, ref, title } — Controller/Teacher vaqt chizig'i (REAL hodisalar)
     settings: {
       gate: false,        // ketma-ket rejim: standart o'chiq (hamma dars ochiq)
       shuffle: true,      // test variantlarini aralashtirish: standart yoqilgan
       playground: true,   // kod maydoni: standart yoqilgan
       notify: false,      // brauzer bildirishnomalari (ruxsat so'raladi)
+      /* Bulut sinxroni: STANDART O'CHIQ (Personal OS, local-first).
+         Yoqilsa BUTUN shaxsiy holat /api/state ga yuboriladi — shuning
+         uchun bu faqat foydalanuvchi o'zi yoqadigan sozlama.          */
+      cloudSync: false,
       /* Namoz vaqti sozlamalari — O'zbekiston uchun standart:
          Hanafiy mazhab (Asr soyasi 2×), Bomdod va Xufton 18°.
          manual — qo'lda kiritilgan vaqtlar hisobning ustiga qo'yiladi.
@@ -181,7 +194,7 @@
      Yolg'on "bajarildi" qo'yilmaydi.
 
      Idempotent: `scheduleVersion` maydoni bilan bir marta ishlaydi.        */
-  var SCHEDULE_VERSION = 2;
+  var SCHEDULE_VERSION = 3;   // v3: eski qat'iy namoz qiymatlari tozalanadi (migrateScheduleV3)
 
   /* yangi id → uni tashkil qilgan eski id lar */
   var SCHEDULE_MAP_V2 = {
@@ -201,6 +214,35 @@
   /* Yangi jadvalda o'rni yo'q (LC bilan takrorlanmasin deb olib tashlangan):
      faqat tarixiy yozuv sifatida saqlanadi. */
   var SCHEDULE_DROPPED_V2 = ['c-l3'];
+
+  /* --- v3: eski jadvalning QAT'IY namoz qiymatlari ------------------
+     Eski modelda Bomdod 05:20 va Peshin 13:00 jadvalning "ustunlari" edi
+     va sozlamalarga `manual` sifatida yozilgan. Yangi modelda bloklar
+     haqiqiy namoz vaqtlariga bog'langan, shuning uchun bu qiymatlar
+     hisobni buzadi: 26-oktabrda Peshin haqiqatda 12:08 da kiradi, 13:00
+     esa 52 daqiqa keyin — ya'ni jadval ham, namoz ham surilib ketadi.
+
+     Faqat AYNAN eski standart qiymatlar o'chiriladi (05:20 / 13:00).
+     Foydalanuvchi mahalliy taqvimga qarab o'zi kiritgan boshqa qiymat
+     TEGILMAYDI, va o'chirilgani tarixda qoladi (prayerMigration).      */
+  var LEGACY_PRAYER_V3 = { fajr: '05:20', dhuhr: '13:00' };
+
+  function migrateScheduleV3(s) {
+    var pr = (s.settings && s.settings.prayer) || null;
+    var man = pr && pr.manual;
+    var removed = {}, kept = {}, n = 0;
+    if (man) {
+      Object.keys(man).forEach(function (k) {
+        if (LEGACY_PRAYER_V3[k] && man[k] === LEGACY_PRAYER_V3[k]) {
+          removed[k] = man[k]; delete man[k]; n++;
+        } else kept[k] = man[k];
+      });
+      if (!Object.keys(man).length) delete pr.manual;
+    }
+    s.prayerMigration = { at: Date.now(), to: 3, removed: removed, kept: kept, count: n };
+    s.scheduleVersion = SCHEDULE_VERSION;
+    return s;
+  }
 
   function migrateScheduleV2(s) {
     var days = s.habit || {};
@@ -264,6 +306,17 @@
     return out;
   }
 
+  /* v9 → v10 · Personal OS.
+     FAQAT ko'rinish ko'chadi: Bold Red standart mavzusida o'tirgan odam
+     yangi Personal OS mavzusiga chiqadi. O'zi ATAYLAB boshqa mavzu
+     (navy, emerald, …) tanlagan bo'lsa — tegilmaydi.
+     PROGRESS, XATOLAR, ESLATMALAR — hech biri o'zgarmaydi.             */
+  function migratePersonalOS(s) {
+    if (s.theme === 'dark') s.theme = 'os';
+    else if (s.theme === 'light') s.theme = 'os-light';
+    return s;
+  }
+
   function read() {
     var raw = null;
     try { raw = JSON.parse(localStorage.getItem(KEY)); } catch (e) { raw = null; }
@@ -271,8 +324,10 @@
     if (raw && (raw.v || 1) < 4) s = migrateEngToDays(s);
     if (raw && (raw.v || 1) < 8) s = migrateEngRenumber(s);
     /* Jadval migratsiyasi — sxema versiyasidan MUSTAQIL, o'z hisoblagichi bilan */
-    if (raw && (raw.scheduleVersion || 1) < SCHEDULE_VERSION) s = migrateScheduleV2(s);
+    if (raw && (raw.scheduleVersion || 1) < 2) s = migrateScheduleV2(s);
+    if (raw && (raw.scheduleVersion || 1) < 3) s = migrateScheduleV3(s);
     if (raw && (raw.v || 1) < 9) s = migrateCalendarReset(s, true);
+    if (raw && (raw.v || 1) < 10) s = migratePersonalOS(s);
     s.v = SCHEMA;
     if (!raw) s = migrateLegacy(s);
     return s;
@@ -290,10 +345,62 @@
     if (state.events.length > 400) state.events = state.events.slice(-400);
   }
 
+  /* ====================== SAQLASH HOLATI ============================
+     Avval bu yerdagi `catch` bo'sh edi: joy tugasa yoki brauzer yozishga
+     ruxsat bermasa, xato JIMGINA yutilardi. Ilova ishlayverardi, lekin
+     progress saqlanmasdi va foydalanuvchi buni bilmasdi — ya'ni butun
+     kun yo'qolishi mumkin edi.
+
+     Endi: xato turi aniqlanadi, bir marta qayta urinib ko'riladi, keyin
+     holat yozib qo'yiladi va tinglovchilarga xabar beriladi (app.js
+     ogohlantirish ko'rsatadi). Ilova baribir to'xtamaydi — xotiradagi
+     holat ishlayveradi, faqat endi bu YASHIRILMAYDI.                   */
+  var saveState = { ok: true, kind: null, at: 0, bytes: 0, failedAt: 0 };
+  var saveListeners = [];
+
+  function emitSave() {
+    saveListeners.forEach(function (fn) { try { fn(saveState); } catch (e) {} });
+  }
+
+  /* Brauzerlar kvota xatosini har xil ataydi: nomi, kodi yoki eski
+     Firefox'ning NS_ERROR_DOM_QUOTA_REACHED (1014) kodi bilan.        */
+  function kindOf(e) {
+    if (!e) return 'unknown';
+    var n = e.name || '', c = e.code;
+    if (n === 'QuotaExceededError' || n === 'NS_ERROR_DOM_QUOTA_REACHED' || c === 22 || c === 1014) return 'quota';
+    if (n === 'SecurityError' || n === 'NS_ERROR_FILE_ACCESS_DENIED') return 'blocked';
+    return 'unknown';
+  }
+
   function write() {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); }
-    catch (e) { /* privat rejim yoki joy tugagan — ilova baribir ishlaydi */ }
+    var json;
+    try { json = JSON.stringify(state); }
+    catch (e) {
+      saveState = { ok: false, kind: 'serialize', at: Date.now(), bytes: 0, failedAt: Date.now() };
+      emitSave();
+      listeners.forEach(function (fn) { try { fn(state); } catch (e2) {} });
+      return false;
+    }
+
+    var wrote = false;
+    try { localStorage.setItem(KEY, json); wrote = true; }
+    catch (e) {
+      /* Bir marta qayta urinamiz — ba'zan xato vaqtinchalik bo'ladi
+         (masalan boshqa tab ayni paytda yozayotgan bo'lsa).           */
+      try { localStorage.setItem(KEY, json); wrote = true; }
+      catch (e2) {
+        var was = saveState.ok;
+        saveState = { ok: false, kind: kindOf(e2), at: Date.now(), bytes: json.length, failedAt: Date.now() };
+        if (was) emitSave();          /* faqat holat o'zgarganda xabar — spam bo'lmasin */
+      }
+    }
+    if (wrote) {
+      var recovered = !saveState.ok;
+      saveState = { ok: true, kind: null, at: Date.now(), bytes: json.length, failedAt: saveState.failedAt };
+      if (recovered) emitSave();
+    }
     listeners.forEach(function (fn) { try { fn(state); } catch (e) {} });
+    return wrote;
   }
 
   /* --- sana yordamchilari (mahalliy vaqt bo'yicha) --------------------- */
@@ -315,6 +422,15 @@
     init: function () { state = read(); return state; },
     all: function () { return state; },
     onChange: function (fn) { listeners.push(fn); },
+    /* Saqlash muvaffaqiyatsiz bo'lsa (joy tugadi / brauzer bloklagan) —
+       shu orqali xabar beriladi. app.js ogohlantirish ko'rsatadi.      */
+    onSaveError: function (fn) { saveListeners.push(fn); },
+    saveStatus: function () {
+      return { ok: saveState.ok, kind: saveState.kind, at: saveState.at,
+               bytes: saveState.bytes, failedAt: saveState.failedAt };
+    },
+    /* Hozirgi holat necha bayt joy egallaydi — Data & Storage uchun ham */
+    bytes: function () { try { return JSON.stringify(state).length; } catch (e) { return 0; } },
 
     /* --- oddiy get/set --- */
     get: function (k) { return state ? state[k] : DEFAULTS[k]; },
@@ -700,6 +816,7 @@
       state = merge(DEFAULTS, obj || {});
       if (obj && (obj.v || 1) < 8) state = migrateEngRenumber(state);
       if (obj && (obj.v || 1) < 9) state = migrateCalendarReset(state, false);
+      if (obj && (obj.scheduleVersion || 1) < 3) state = migrateScheduleV3(state);
       state.v = SCHEMA;
       try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
       if (!silent) listeners.forEach(function (fn) { try { fn(state); } catch (e) {} });

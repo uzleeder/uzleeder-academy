@@ -36,7 +36,7 @@ window.ENG_READ_HIST_2 = [
   n: 8, tier: 'easy',
   title: 'The Storm from the East: 1219',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Chingizxonning Xorazmga yurishi — O'tror, Buxoro, Samarqand.", en: 'The Mongol invasion of Khwarazm.' },
+  note: { uz: "Çingizxonning Xorazmga yurişi — Ötror, Buxoro, Samarqand.", en: 'The Mongol invasion of Khwarazm.' },
   paras: [
     { id: 'A', t: "In 1218 a caravan of about four hundred and fifty merchants, sent by Genghis Khan, arrived at the city of Otrar on the Syr Darya, in the territory of the Khwarazm Shah, who ruled Central Asia and Persia. The governor of Otrar accused the merchants of spying, seized the goods and had the men killed. Genghis Khan sent envoys to demand that the governor be handed over. The Shah killed the chief envoy and sent the others back with their beards burned." },
     { id: 'B', t: "It was the most expensive insult in the history of the region. The next year the Mongol army — perhaps a hundred and fifty thousand men, every one of them a mounted archer — crossed the mountains. Otrar was taken after a siege of five months and the governor was executed, by one account with molten silver poured into his eyes." },
@@ -62,7 +62,7 @@ window.ENG_READ_HIST_2 = [
   n: 9, tier: 'easy',
   title: 'The Great Wall: Many Walls, Many Centuries',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Buyuk Xitoy devori — bitta devor emas, ko'p devorlar.", en: 'The Great Wall of China.' },
+  note: { uz: "Buyuk Xitoy devori — bitta devor emas, köp devorlar.", en: 'The Great Wall of China.' },
   paras: [
     { id: 'A', t: "The Great Wall is not one wall. It is a series of walls built over two thousand years by different dynasties along different lines, some of earth, some of stone, many now vanished. Added together, all the sections ever built stretch more than twenty thousand kilometres. The stone wall with towers that appears in photographs — the one tourists climb near Beijing — was built by the Ming dynasty between the fourteenth and seventeenth centuries and is about eight thousand kilometres long." },
     { id: 'B', t: "The first emperor of a united China, Qin Shi Huang, joined existing walls of earlier states into a single barrier in the third century BC, using hundreds of thousands of soldiers, prisoners and peasants. The work was so hated that it entered folk legend: the story of Meng Jiangnu, whose husband died building the wall and whose tears made a section collapse to reveal his bones, has been told for two thousand years. Almost nothing of the Qin wall survives; it was made of rammed earth and has washed away." },
@@ -88,7 +88,7 @@ window.ENG_READ_HIST_2 = [
   n: 10, tier: 'easy',
   title: 'Babur: The Prince Who Lost Everything and Won an Empire',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Zahiriddin Muhammad Bobur (1483–1530) — Andijondan Hindistongacha.", en: 'Babur (1483–1530), founder of the Mughal empire.' },
+  note: { uz: "Zahiriddin Muhammad Bobur (1483–1530) — Andijondan Hindistongaça.", en: 'Babur (1483–1530), founder of the Mughal empire.' },
   paras: [
     { id: 'A', t: "Babur was born in 1483 in Andijan, in the Fergana Valley, a descendant of Temur on his father's side and of Genghis Khan on his mother's. He became ruler of Fergana at eleven, when his father died falling from a dovecote. For the next twenty years he lost almost every battle that mattered. He took Samarkand twice and lost it twice, the second time to the Uzbek khan Shaybani, and by his early twenties he had no kingdom at all and was wandering the mountains with a few hundred followers." },
     { id: 'B', t: "In 1504 he took Kabul, and Kabul saved him. From its mountains he could raid, recover, and look south towards India, where the sultanate of Delhi was weak. He made several attempts before the decisive one. In 1526, at Panipat, with perhaps twelve thousand men, he faced an army several times larger with hundreds of war elephants. He had something they did not: cannon and matchlock guns, and a line of carts chained together to shelter them. The elephants panicked at the noise. By midday the sultan was dead and Delhi was Babur's." },
@@ -114,7 +114,7 @@ window.ENG_READ_HIST_2 = [
   n: 11, tier: 'easy',
   title: 'The Russian Conquest of Central Asia',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "1865–1876: Toshkent, Samarqand, Xiva, Qo'qon.", en: 'The Russian advance, 1865–1876.' },
+  note: { uz: "1865–1876: Toşkent, Samarqand, Xiva, Qöqon.", en: 'The Russian advance, 1865–1876.' },
   paras: [
     { id: 'A', t: "In the middle of the nineteenth century, Central Asia was divided among three states: the emirate of Bukhara, the khanate of Khiva and the khanate of Kokand, which held the Fergana Valley and Tashkent. All three were weak, quarrelled with each other, and had armies of the kind that had not changed much since Temur. To the north, the Russian empire had been moving south across the steppe for a century, building forts as it went." },
     { id: 'B', t: "In 1865 a Russian general named Chernyayev, acting against orders, attacked Tashkent with about two thousand men. The city had walls twenty kilometres around and perhaps thirty thousand defenders. He took it in two days, largely by surprise, and the government in St Petersburg, which had forbidden the attack, awarded him a medal. Tashkent became the capital of a new province called Turkestan." },
@@ -140,7 +140,7 @@ window.ENG_READ_HIST_2 = [
   n: 12, tier: 'easy',
   title: 'The Sea That Disappeared',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Orol dengizi — 1960-yillardan quriy boshlagan.", en: 'The Aral Sea.' },
+  note: { uz: "Orol dengizi — 1960-yillardan quriy boşlagan.", en: 'The Aral Sea.' },
   paras: [
     { id: 'A', t: "In 1960 the Aral Sea, between Uzbekistan and Kazakhstan, was the fourth largest lake in the world, about sixty-eight thousand square kilometres — bigger than Ireland. Fishing towns on its shore landed tens of thousands of tonnes of fish a year. The town of Muynak had a cannery, a harbour and a beach." },
     { id: 'B', t: "Two rivers fed it, the Amu Darya and the Syr Darya. In the 1960s Soviet planners decided that the water in those rivers was worth more on cotton fields than in a lake, and dug thousands of kilometres of canals to carry it away. The canals were unlined and leaked into the sand; much of the water never reached a field. The planners knew the sea would shrink and considered it an acceptable price." },
@@ -192,7 +192,7 @@ window.ENG_READ_HIST_2 = [
   n: 14, tier: 'easy',
   title: '1453: The Fall of Constantinople',
   level: 'IELTS 5.5–6.5',
-  note: { uz: "Konstantinopolning zabt etilishi — Mehmed Fotih, to'plar, kemalar quruqlikdan.", en: 'The Ottoman conquest of Constantinople.' },
+  note: { uz: "Konstantinopolning zabt etilişi — Mehmed Fotih, töplar, kemalar quruqlikdan.", en: 'The Ottoman conquest of Constantinople.' },
   paras: [
     { id: 'A', t: "By 1453 the Byzantine empire, which had once ruled from Italy to Syria, consisted of little more than one city. Constantinople still had the greatest walls in the world — a triple line of land walls that had stood for a thousand years and had never been taken by assault — but inside them lived perhaps fifty thousand people, and the emperor could raise fewer than eight thousand fighting men." },
     { id: 'B', t: "The Ottoman sultan, Mehmed II, was twenty-one years old. His army was around eighty thousand, and he had something no attacker of the city had ever had: cannon large enough to break the walls. The biggest, built by a Hungarian engineer named Orban, fired stone balls weighing more than half a tonne, took three hours to reload, and had to be dragged from the Ottoman capital by sixty oxen. The bombardment began in April and continued for seven weeks." },
@@ -246,7 +246,7 @@ window.ENG_READ_HIST_2 = [
   n: 16, tier: 'ielts',
   title: 'Herat and the Timurid Renaissance',
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Temuriylar uyg'onishi: Hirot, Behzod, Alisher Navoiy.", en: 'The Timurid Renaissance in Herat and Samarkand.' },
+  note: { uz: "Temuriylar uyğonişi: Hirot, Behzod, Alişer Navoiy.", en: 'The Timurid Renaissance in Herat and Samarkand.' },
   paras: [
     { id: 'A', t: "Temur died in 1405 and his empire immediately began to shrink, as the empires of conquerors do. What did not shrink, and in fact grew for a century, was the culture his capital had gathered. His son Shahrukh moved the seat of government to Herat, in what is now western Afghanistan, and left Samarkand to his own son Ulugh Beg. Between them the two cities produced, in the fifteenth century, one of the great flowerings of Islamic civilisation, which historians now call the Timurid Renaissance." },
     { id: 'B', t: "Shahrukh's wife, Gawharshad, was a patron on a scale unusual for any ruler, let alone a queen. She built a great mosque in Mashhad and a complex of mosque, madrasa and mausoleum in Herat, of which the surviving minarets, leaning and tiled in blue, are among the finest buildings of the age. She held political power for decades, outlived her husband, and was executed at the age of eighty by a great-grandson who found her still too influential." },
@@ -287,7 +287,7 @@ window.ENG_READ_HIST_2 = [
   n: 17, tier: 'ielts',
   title: 'The Mongol Post: Speed Across a Continent',
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Yom — Mo'g'ullar pochta tizimi va Pax Mongolica.", en: 'The yam relay system and the Pax Mongolica.' },
+  note: { uz: "Yom — Möğullar poçta tizimi va Pax Mongolica.", en: 'The yam relay system and the Pax Mongolica.' },
   paras: [
     { id: 'A', t: "An empire that stretched from Korea to Hungary had a problem no state had faced at that scale: information. An order from the Great Khan had to reach a governor five thousand kilometres away, and the governor's report had to come back, or the empire was a collection of provinces in name only. The Mongol answer was the yam — a network of relay stations, roughly every thirty to forty kilometres along the main routes, each keeping horses, food and lodging for official riders." },
     { id: 'B', t: "A messenger with the right credentials could ride into a station, take a fresh horse, and ride on, and the horse he left would be rested for the next rider. Riders on urgent business tied bells to their belts so that the station could have a horse saddled before they arrived, and wrapped their bodies in cloth to survive the pounding. Speeds of two hundred kilometres a day were routine, and more on the fastest routes. Nothing comparable existed until the railway." },
@@ -328,7 +328,7 @@ window.ENG_READ_HIST_2 = [
   n: 18, tier: 'ielts',
   title: 'Talas, 751: A Battle Remembered for Paper',
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Talas jangi — arablar va Tang Xitoyi; qog'ozning g'arbga yo'li.", en: 'The battle of Talas and the spread of paper.' },
+  note: { uz: "Talas jangi — arablar va Tang Xitoyi; qoğozning ğarbga yöli.", en: 'The battle of Talas and the spread of paper.' },
   paras: [
     { id: 'A', t: "In July 751, on the Talas river near the modern border of Kazakhstan and Kyrgyzstan, an army of the Abbasid caliphate met an army of Tang China. It was the only time the two greatest empires of the age fought each other directly. Both had been expanding into Central Asia for decades: the Arabs from the south-west, taking Bukhara and Samarkand; the Chinese from the east, receiving the submission of the small states of the Fergana Valley and beyond." },
     { id: 'B', t: "The immediate cause was a quarrel between two of those small states, one of which appealed to China and the other to the Arabs. The Chinese general, a Korean-born commander named Gao Xianzhi, marched west with perhaps thirty thousand men, including Turkic allies. The Arab governor of Samarkand sent a force to meet him. For several days the battle was undecided; then the Turkic allies changed sides, attacked the Chinese from behind, and the Tang army collapsed. Gao escaped with a few thousand men." },
@@ -369,7 +369,7 @@ window.ENG_READ_HIST_2 = [
   n: 19, tier: 'ielts',
   title: 'The Jadids: New Schools in an Old Emirate',
   level: 'IELTS 7–8',
-  note: { uz: "Jadidlar — Behbudiy, Fitrat, Cho'lpon; yangi usul maktablari.", en: 'The Jadid reform movement in Turkestan and Bukhara.' },
+  note: { uz: "Jadidlar — Behbudiy, Fitrat, Çölpon; yangi usul maktablari.", en: 'The Jadid reform movement in Turkestan and Bukhara.' },
   paras: [
     { id: 'A', t: "At the end of the nineteenth century, a boy in Bukhara or Tashkent learned to read by memorising the Qur'an in Arabic, a language he did not speak, in a school where understanding was not the point. He might spend years there and leave unable to write a letter. A generation of Muslim reformers across the Russian empire looked at these schools and at the modern schools of Russia and Europe and concluded that their communities were losing not because Islam was weak but because its education had stopped." },
     { id: 'B', t: "The movement took its name from a teaching method. Usul-i jadid, 'the new method', taught reading phonetically, by the sounds of letters, so that a child could read in months rather than years; it added arithmetic, geography, history and the child's own language to the curriculum; and it used desks, maps and printed textbooks. The first such schools in Turkestan opened in the 1890s, and by 1910 there were dozens, most of them small, private and unwelcome to both the Russian authorities and the traditional clergy." },
@@ -574,7 +574,7 @@ window.ENG_READ_HIST_2 = [
   n: 24, tier: 'ielts',
   title: 'Tashkent: A City Rebuilt Three Times',
   level: 'IELTS 6.5–7.5',
-  note: { uz: "Toshkent tarixi: Choch, 1865, 1966 zilzila, metro.", en: 'A short history of Tashkent.' },
+  note: { uz: "Toşkent tarixi: Çoç, 1865, 1966 zilzila, metro.", en: 'A short history of Tashkent.' },
   paras: [
     { id: 'A', t: "The city has been called Chach, Shash, Binkath and, since about the eleventh century, Tashkent — 'stone city' in Turkic — and it has existed in some form for more than two thousand years, an oasis on the Chirchik river where routes from the steppe met routes from the south. It was never the grandest city of Central Asia; Samarkand and Bukhara held that rank. It was the practical one: a market, a frontier post, a place where nomads and farmers traded. That practicality is why, three times in two centuries, it was rebuilt from almost nothing." },
     { id: 'B', t: "The first rebuilding followed 1865. When the Russians took the city it had about a hundred thousand people inside a wall with twelve gates, and it became the capital of their new province. Beside the old city they laid out a new one on a grid, with wide tree-lined streets, a railway station, a theatre and an observatory, separated from the mud-brick quarters by a canal. The two halves lived side by side and rarely mixed. By 1900 Tashkent was the largest city in Central Asia and it has never lost that position." },

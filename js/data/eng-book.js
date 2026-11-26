@@ -33,15 +33,15 @@ window.ENG_BOOK = {
   meta: {
     title: { uz: 'Kitoblar moduli', en: 'Books module' },
     lede: {
-      uz: "Uch manba kitob asosidagi kunlik mashq: 1 ta o'qish matni + IELTS savollari, 1 ta tinglash bo'limi (10 savol), 1 ta lug'at uniti (20 so'z).",
+      uz: "Uç manba kitob asosidagi kunlik maşq: 1 ta öqiş matni + IELTS savollari, 1 ta tinglaş bölimi (10 savol), 1 ta luğat uniti (20 söz).",
       en: 'Daily practice built on three source books: one reading passage with IELTS questions, one listening section (10 questions), and one vocabulary unit (20 words).'
     },
     copyright: {
-      uz: "Kitoblarning matni bu yerda ko'chirilmagan — ular mualliflik huquqi bilan himoyalangan. Platformada so'z ro'yxati (fakt), qaytadan yozilgan sinonimlar va shu mavzularda maxsus yozilgan IELTS matnlari bor. Kitoblardan o'zingiz o'qiysiz, platforma esa ularning yonida IELTS formatidagi mashqni beradi.",
+      uz: "Kitoblarning matni bu yerda köçirilmagan — ular mualliflik huquqi bilan himoyalangan. Platformada söz röyxati (fakt), qaytadan yozilgan sinonimlar va şu mavzularda maxsus yozilgan IELTS matnlari bor. Kitoblardan özingiz öqiysiz, platforma esa ularning yonida IELTS formatidagi maşqni beradi.",
       en: 'The books\' text is not reproduced here — both are copyrighted. The platform holds the word list (a fact), rewritten synonyms, and IELTS-level passages written specially on the same themes. You read from your own copies; the platform supplies the IELTS-format practice alongside.'
     },
     vocabRule: {
-      uz: "Lug'atda FAQAT sinonim beriladi, o'zbekcha tarjima yo'q. Sabab: tarjima orqali o'rganilgan so'z ikki bosqichda eslanadi (inglizcha → o'zbekcha → ma'no) va gapirishda sekinlashtiradi. Sinonim orqali o'rganilgan so'z to'g'ridan-to'g'ri inglizcha tarmoqqa ulanadi — bu IELTS paraphrase uchun ham aynan kerak narsa.",
+      uz: "Luğatda FAQAT sinonim beriladi, özbekça tarjima yöq. Sabab: tarjima orqali örganilgan söz ikki bosqiçda eslanadi (inglizça → özbekça → maʼno) va gapirişda sekinlaştiradi. Sinonim orqali örganilgan söz töğridan-töğri inglizça tarmoqqa ulanadi — bu IELTS paraphrase uçun ham aynan kerak narsa.",
       en: 'The vocabulary gives ONLY synonyms, no Uzbek translation. A word learned through translation is recalled in two steps (English → Uzbek → meaning), which slows speech. A word learned through synonyms connects straight into the English network — which is exactly what IELTS paraphrasing needs.'
     }
   },
@@ -54,7 +54,7 @@ window.ENG_BOOK = {
       author: 'Paul Nation',
       publisher: 'Compass Publishing',
       units: 30, perUnit: 20, total: 600,
-      role: { uz: "Lug'at — kuniga 1 unit (20 so'z)", en: 'Vocabulary — one unit (20 words) a day' },
+      role: { uz: "Luğat — kuniga 1 unit (20 söz)", en: 'Vocabulary — one unit (20 words) a day' },
       icon: 'book'
     },
     {
@@ -63,13 +63,13 @@ window.ENG_BOOK = {
       author: 'Nancy Douglas, David Bohlke',
       publisher: 'National Geographic Learning',
       units: 12, perUnit: 2, total: 24,
-      role: { uz: "O'qish — har mavzuga 2 matn, ustiga IELTS savollari", en: 'Reading — two passages per theme, with IELTS questions on top' },
+      role: { uz: "Öqiş — har mavzuga 2 matn, ustiga IELTS savollari", en: 'Reading — two passages per theme, with IELTS questions on top' },
       icon: 'doc'
     },
     {
       key: 'listening',
       title: 'IELTS Listening practice',
-      role: { uz: 'Tinglash — kuniga 1 bo\'lim, 10 savol', en: 'Listening — one section a day, 10 questions' },
+      role: { uz: 'Tinglaş — kuniga 1 bölim, 10 savol', en: 'Listening — one section a day, 10 questions' },
       icon: 'headphones'
     },
     /* 2026-09-20 dan ASOSIY lug'at kitobi — Destination B2 (ENG_DEST_B2).
@@ -80,7 +80,7 @@ window.ENG_BOOK = {
       author: 'Malcolm Mann, Steve Taylore-Knowles',
       publisher: 'Macmillan',
       units: 14, perUnit: 5, total: 2570,
-      role: { uz: "Lug'at — kuniga 1 bo'lim (unit 5 kunda), tarjima bilan", en: 'Vocabulary — one section a day (a unit in 5 days), with translation' },
+      role: { uz: "Luğat — kuniga 1 bölim (unit 5 kunda), tarjima bilan", en: 'Vocabulary — one section a day (a unit in 5 days), with translation' },
       icon: 'book'
     },
     /* Tinglash kitobi 2 — Target Listening with Dictation (ENG_DICT).
@@ -89,7 +89,7 @@ window.ENG_BOOK = {
       key: 'dict',
       title: 'Target Listening with Dictation — Practice Tests Book 1',
       units: 12, perUnit: 45, total: 540,
-      role: { uz: 'Tinglash — kuniga 6 diktant + 15 test savoli', en: 'Listening — 6 dictations + 15 test questions a day' },
+      role: { uz: 'Tinglaş — kuniga 6 diktant + 15 test savoli', en: 'Listening — 6 dictations + 15 test questions a day' },
       icon: 'headphones'
     }
   ],
@@ -101,7 +101,7 @@ window.ENG_BOOK = {
   readingUnits: [
     { n: 1,  page: 7,   theme: { uz: 'Sport va jismoniy tayyorgarlik', en: 'Sports and Fitness' },
       a: 'The World\'s Game', b: 'What Makes an Olympic Champion?' },
-    { n: 2,  page: 23,  theme: { uz: "Teri va go'zallik", en: 'Skin Deep' },
+    { n: 2,  page: 23,  theme: { uz: "Teri va gözallik", en: 'Skin Deep' },
       a: 'What Is Beauty?', b: 'Skin: The Body\'s Canvas' },
     { n: 3,  page: 39,  theme: { uz: 'Xavf ostidagi hayvonlar', en: 'Animals in Danger' },
       a: 'Racing to Rescue Koalas', b: 'Tracking the Snow Leopard' },
@@ -111,7 +111,7 @@ window.ENG_BOOK = {
       a: 'Land of Fire and Ice', b: 'The Perfect Beach' },
     { n: 6,  page: 89,  theme: { uz: 'Global odatlar', en: 'Global Addictions' },
       a: 'The World\'s Favorite Drug', b: 'Addicted to Distraction' },
-    { n: 7,  page: 105, theme: { uz: 'Energiya yechimlari', en: 'Energy Solutions' },
+    { n: 7,  page: 105, theme: { uz: 'Energiya yeçimlari', en: 'Energy Solutions' },
       a: 'Powering the Planet', b: 'City of the Future?' },
     { n: 8,  page: 121, theme: { uz: 'Ulkan muhandislik', en: 'Epic Engineering' },
       a: 'China\'s Grand Canal', b: 'Highway of Dreams' },
@@ -119,7 +119,7 @@ window.ENG_BOOK = {
       a: 'The Power of Virtual Reality', b: 'High-Flying Helpers' },
     { n: 10, page: 153, theme: { uz: 'Ong va tafakkur', en: 'All in the Mind' },
       a: 'What\'s on Your Mind?', b: 'Inside Animal Minds' },
-    { n: 11, page: 169, theme: { uz: 'Tasviriy san\'at kashshoflari', en: 'Visual Pioneers' },
+    { n: 11, page: 169, theme: { uz: 'Tasviriy sanʼat kaşşoflari', en: 'Visual Pioneers' },
       a: 'Van Gogh\'s World', b: 'Seeing the Light' },
     { n: 12, page: 187, theme: { uz: 'Koinot', en: 'Far Out' },
       a: 'Defying Gravity', b: 'The Ultimate Trip' }
@@ -129,15 +129,15 @@ window.ENG_BOOK = {
   qTypes: {
     tfng:       { uz: 'True / False / Not Given',  en: 'True / False / Not Given' },
     ynng:       { uz: 'Yes / No / Not Given',      en: 'Yes / No / Not Given' },
-    mcq:        { uz: 'Ko\'p variantli',           en: 'Multiple choice' },
-    headings:   { uz: 'Sarlavha moslashtirish',    en: 'Matching headings' },
-    completion: { uz: 'Gap to\'ldirish',           en: 'Sentence completion' },
-    summary:    { uz: 'Xulosa to\'ldirish',        en: 'Summary completion' },
-    matching:   { uz: 'Ma\'lumot moslashtirish',   en: 'Matching information' },
+    mcq:        { uz: 'Köp variantli',           en: 'Multiple choice' },
+    headings:   { uz: 'Sarlavha moslaştiriş',    en: 'Matching headings' },
+    completion: { uz: 'Gap töldiriş',           en: 'Sentence completion' },
+    summary:    { uz: 'Xulosa töldiriş',        en: 'Summary completion' },
+    matching:   { uz: 'Maʼlumot moslaştiriş',   en: 'Matching information' },
     short:      { uz: 'Qisqa javob',               en: 'Short answer' },
-    form:       { uz: 'Forma to\'ldirish',         en: 'Form completion' },
+    form:       { uz: 'Forma töldiriş',         en: 'Form completion' },
     map:        { uz: 'Xarita / sxema',            en: 'Map / plan labelling' },
-    table:      { uz: 'Jadval to\'ldirish',        en: 'Table completion' }
+    table:      { uz: 'Jadval töldiriş',        en: 'Table completion' }
   },
 
   /* LUG'AT REJASI — ikki bosqich (kalendar kuni bo'yicha, 1-kun = 20-sen):
@@ -155,11 +155,11 @@ window.ENG_BOOK = {
     readingSets: 24,
     listeningSets: 24,
     cbookNote: {
-      uz: "Birinchi 15 kun (20-sen → 4-okt): C-book. Kuniga 40 yangi so'z — o'zing daftarga yozasan: so'z turi (noun/verb/adj/adv), tarjima, sinonim, misol, talaffuz yozuvi. Kechqurun 5 soniya testi. 15 kunda 600 so'z.",
+      uz: "Birinçi 15 kun (20-sen → 4-okt): C-book. Kuniga 40 yangi söz — özing daftarga yozasan: söz turi (noun/verb/adj/adv), tarjima, sinonim, misol, talaffuz yozuvi. Keçqurun 5 soniya testi. 15 kunda 600 söz.",
       en: 'First 15 days (20 Sep → 4 Oct): the C-book. Forty new words a day — you write them into the copybook yourself: part of speech (noun/verb/adj/adv), translation, synonym, example, pronunciation recording. The 5-second test in the evening. 600 words in 15 days.'
     },
     reviewNote: {
-      uz: "16-kundan (5-okt): 4000 Essential Words 4 — kuniga 2 unit (40 so'z). 15 kunda 30 unit tugaydi, keyin takror sikli: har unit 15 kunda bir qaytadi. Bir marta ko'rilgan so'z yodda qolmaydi — takrorlangani qoladi.",
+      uz: "16-kundan (5-okt): 4000 Essential Words 4 — kuniga 2 unit (40 söz). 15 kunda 30 unit tugaydi, keyin takror sikli: har unit 15 kunda bir qaytadi. Bir marta körilgan söz yodda qolmaydi — takrorlangani qoladi.",
       en: 'From day 16 (5 Oct): 4000 Essential Words 4 — two units a day (40 words). Thirty units finish in 15 days, then the review cycle: every unit returns every 15 days. A word seen once is not retained; a word revisited is.'
     }
   },

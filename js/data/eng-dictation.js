@@ -31,7 +31,7 @@ window.ENG_DICT = {
     tests: 12, perTest: 15, qsPerTest: 30, tracksPerTest: 30,
     perDayDict: 6, perDayQ: 15,     // kunlik me'yor
     startState: { on: '2026-10-25', test: 1, dictDone: 0, testDone: 0 },   // 2026-10 reset: noldan
-    role: { uz: 'Tinglash — kuniga 6 diktant + 15 test savoli', en: 'Listening — 6 dictations + 15 test questions a day' }
+    role: { uz: 'Tinglaş — kuniga 6 diktant + 15 test savoli', en: 'Listening — 6 dictations + 15 test questions a day' }
   },
   /* Test savollari javob kaliti: harflar 1..30 */
   keys: {

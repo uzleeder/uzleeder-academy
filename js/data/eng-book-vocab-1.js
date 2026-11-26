@@ -22,7 +22,7 @@ window.ENG_BOOK_VOCAB_1 = [
 
 {
   n: 1,
-  theme: { uz: "Ta'm, hid va yetishtirish", en: 'Taste, smell and growing things' },
+  theme: { uz: "Taʼm, hid va yetiştiriş", en: 'Taste, smell and growing things' },
   words: [
     { w: 'aroma', pos: 'n', syn: ['scent', 'fragrance', 'smell', 'bouquet'], ex: 'The aroma of fresh coffee filled the whole apartment.' },
     { w: 'beverage', pos: 'n', syn: ['drink', 'refreshment'], ex: 'Hot beverages are served throughout the flight.' },
@@ -76,7 +76,7 @@ window.ENG_BOOK_VOCAB_1 = [
 
 {
   n: 3,
-  theme: { uz: 'Ovoz, ogohlantirish va idrok', en: 'Sound, warning and awareness' },
+  theme: { uz: 'Ovoz, ogohlantiriş va idrok', en: 'Sound, warning and awareness' },
   words: [
     { w: 'admonish', pos: 'v', syn: ['scold', 'reprimand', 'rebuke', 'warn'], ex: 'The teacher admonished them for arriving late.' },
     { w: 'audible', pos: 'adj', syn: ['hearable', 'perceptible', 'clear'], ex: 'Her voice was barely audible over the traffic.' },
@@ -103,7 +103,7 @@ window.ENG_BOOK_VOCAB_1 = [
 
 {
   n: 4,
-  theme: { uz: 'Qushlar, ob-havo va his-tuyg\'u', en: 'Birds, weather and feeling' },
+  theme: { uz: 'Quşlar, ob-havo va his-tuyğu', en: 'Birds, weather and feeling' },
   words: [
     { w: 'beak', pos: 'n', syn: ['bill'], ex: 'The bird carried a twig in its beak.' },
     { w: 'damp', pos: 'adj', syn: ['moist', 'humid', 'wet', 'clammy'], ex: 'The walls of the cellar were cold and damp.' },
@@ -157,7 +157,7 @@ window.ENG_BOOK_VOCAB_1 = [
 
 {
   n: 6,
-  theme: { uz: 'Uy, oshxona va mamnuniyat', en: 'Home, kitchen and pleasure' },
+  theme: { uz: 'Uy, oşxona va mamnuniyat', en: 'Home, kitchen and pleasure' },
   words: [
     { w: 'absolute', pos: 'adj', syn: ['complete', 'total', 'utter', 'unconditional'], ex: 'The room fell into absolute silence.' },
     { w: 'alas', pos: 'adv', syn: ['unfortunately', 'sadly', 'regrettably'], ex: 'Alas, the original building no longer stands.' },
@@ -211,7 +211,7 @@ window.ENG_BOOK_VOCAB_1 = [
 
 {
   n: 8,
-  theme: { uz: 'Texnika, nazorat va o\'zgarish', en: 'Machinery, control and change' },
+  theme: { uz: 'Texnika, nazorat va özgariş', en: 'Machinery, control and change' },
   words: [
     { w: 'access', pos: 'n', syn: ['entry', 'admission', 'availability'], ex: 'Rural areas still lack access to fast internet.' },
     { w: 'conduct', pos: 'v', syn: ['carry out', 'perform', 'run', 'lead'], ex: 'The team conducted a five-year study.' },
@@ -238,7 +238,7 @@ window.ENG_BOOK_VOCAB_1 = [
 
 {
   n: 9,
-  theme: { uz: 'Munosabat, kayfiyat va ish haqi', en: 'Attitude, mood and wages' },
+  theme: { uz: 'Munosabat, kayfiyat va iş haqi', en: 'Attitude, mood and wages' },
   words: [
     { w: 'alongside', pos: 'prep', syn: ['beside', 'next to', 'together with'], ex: 'She works alongside three other researchers.' },
     { w: 'appetite', pos: 'n', syn: ['hunger', 'desire', 'craving', 'taste'], ex: 'Illness had reduced his appetite.' },

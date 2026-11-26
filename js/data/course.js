@@ -7,32 +7,32 @@ window.COURSE = [
     "type": "topic",
     "unit": "Hafta 1 — Asoslar",
     "title": {
-      "uz": "O'zgaruvchilar va turlar",
+      "uz": "Özgaruvçilar va turlar",
       "en": "Variables & Types"
     },
     "intro": {
-      "uz": "Python sayohatimiz shu yerdan boshlanadi. O'zgaruvchi — ma'lumot saqlanadigan nomlangan quti. Bugun 4 ta asosiy ma'lumot turini o'rganamiz.",
+      "uz": "Python sayohatimiz şu yerdan boşlanadi. Özgaruvçi — maʼlumot saqlanadigan nomlangan quti. Bugun 4 ta asosiy maʼlumot turini örganamiz.",
       "en": "Our Python journey starts here. A variable is a named box that stores data. Today we learn the 4 basic data types."
     },
     "sections": [
       {
         "h": {
-          "uz": "O'zgaruvchi — nomlangan quti",
+          "uz": "Özgaruvçi — nomlangan quti",
           "en": "Variable — a named box"
         },
         "p": {
-          "uz": "O'zgaruvchiga nom berasan va ichiga qiymat solasan. `=` belgisi \"o'ngdagini chapga sol\" degani — matematik tenglik emas. Nom harfdan boshlanadi, bo'sh joysiz, katta-kichik harf farqlanadi.",
+          "uz": "Özgaruvçiga nom berasan va içiga qiymat solasan. `=` belgisi \"öngdagini çapga sol\" degani — matematik tenglik emas. Nom harfdan boşlanadi, böş joysiz, katta-kiçik harf farqlanadi.",
           "en": "You name a variable and put a value inside. The `=` sign means \"put the right side into the left\" — not mathematical equality. Names start with a letter, no spaces, case-sensitive."
         },
         "code": "name = \"Akbar\"\nage = 20\nheight = 1.75\nstudent = True\n\nprint(name, age)   # Akbar 20"
       },
       {
         "h": {
-          "uz": "4 ta ma'lumot turi",
+          "uz": "4 ta maʼlumot turi",
           "en": "The 4 data types"
         },
         "p": {
-          "uz": "Har qiymatning turi bor: int (butun son), float (kasr son), str (matn), bool (True/False). type() bilan tekshiriladi.",
+          "uz": "Har qiymatning turi bor: int (butun son), float (kasr son), str (matn), bool (True/False). type() bilan tekşiriladi.",
           "en": "Every value has a type: int (whole number), float (decimal), str (text), bool (True/False). Check with type()."
         },
         "code": "age = 20          # int\nprice = 19.99     # float\nname = \"Max\"      # str\nactive = True     # bool\n\nprint(type(age))    # <class 'int'>\nprint(type(price))  # <class 'float'>"
@@ -43,18 +43,18 @@ window.COURSE = [
           "en": "Most important: \"20\" ≠ 20"
         },
         "p": {
-          "uz": "Matn va son boshqa narsa. \"2\" + \"2\" matnlarni yopishtiradi (\"22\"), 2 + 2 sonlarni qo'shadi (4). int(), float(), str() bilan aylantiriladi.",
+          "uz": "Matn va son boşqa narsa. \"2\" + \"2\" matnlarni yopiştiradi (\"22\"), 2 + 2 sonlarni qöşadi (4). int(), float(), str() bilan aylantiriladi.",
           "en": "Text and number are different. \"2\" + \"2\" joins strings (\"22\"), 2 + 2 adds numbers (4). Convert with int(), float(), str()."
         },
         "code": "print(2 + 2)        # 4\nprint(\"2\" + \"2\")    # 22\n\ntext = \"25\"\nnum = int(text)     # convert to number\nprint(num + 5)      # 30"
       },
       {
         "h": {
-          "uz": "Kirish va chiqish + f-string",
+          "uz": "Kiriş va çiqiş + f-string",
           "en": "Input, output & f-string"
         },
         "p": {
-          "uz": "print() ekranga chiqaradi. input() foydalanuvchidan oladi — DOIM matn qaytaradi, son kerak bo'lsa int() bilan aylantir. f-string: matn ichiga o'zgaruvchini {} bilan qo'yasan.",
+          "uz": "print() ekranga çiqaradi. input() foydalanuvçidan oladi — DOIM matn qaytaradi, son kerak bölsa int() bilan aylantir. f-string: matn içiga özgaruvçini {} bilan qöyasan.",
           "en": "print() shows on screen. input() takes from the user — ALWAYS returns text, convert with int() if you need a number. f-string: put variables inside text with {}."
         },
         "code": "name = input(\"Name: \")\nage = int(input(\"Age: \"))\n\nprint(f\"Hello {name}! Next year you turn {age + 1}.\")"
@@ -62,23 +62,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "O'zing haqingda 4 ta o'zgaruvchi yoz (ism, yosh, shahar, student) va print() bilan chiqar.",
+        "uz": "Özing haqingda 4 ta özgaruvçi yoz (ism, yoş, şahar, student) va print() bilan çiqar.",
         "en": "Write 4 variables about yourself (name, age, city, student) and print them."
       },
       {
-        "uz": "type() bilan har birining turini chiqar.",
+        "uz": "type() bilan har birining turini çiqar.",
         "en": "Print each one's type with type()."
       },
       {
-        "uz": "input() bilan ism so'ra, f-string bilan salomlash.",
+        "uz": "input() bilan ism söra, f-string bilan salomlaş.",
         "en": "Ask for a name with input(), greet with an f-string."
       },
       {
-        "uz": "Ikkita sonni input() bilan ol, int() ga aylantir, yig'indisini chiqar.",
+        "uz": "Ikkita sonni input() bilan ol, int() ga aylantir, yiğindisini çiqar.",
         "en": "Take two numbers via input(), convert with int(), print the sum."
       },
       {
-        "uz": "Do'kon narxi 50000, chegirma 15%. Yangi narxni hisobla.",
+        "uz": "Dökon narxi 50000, çegirma 15%. Yangi narxni hisobla.",
         "en": "Shop price 50000, discount 15%. Compute the new price."
       }
     ],
@@ -216,7 +216,7 @@ window.COURSE = [
       "en": "Operators & expressions"
     },
     "intro": {
-      "uz": "Operatorlar — bu qiymatlar ustida amal bajaradigan belgilar: qo'shish, taqqoslash, mantiq. Sertifikat imtihonlarida operatorlar tartibi va natija turi ko'p so'raladi. Bugun barcha asosiy operatorlarni va ular qaytaradigan qiymatlarni chuqur o'rganamiz.",
+      "uz": "Operatorlar — bu qiymatlar ustida amal bajaradigan belgilar: qöşiş, taqqoslaş, mantiq. Sertifikat imtihonlarida operatorlar tartibi va natija turi köp söraladi. Bugun barça asosiy operatorlarni va ular qaytaradigan qiymatlarni çuqur örganamiz.",
       "en": "Operators act on values: arithmetic, comparison, logic. Certification exams test operator precedence and result types heavily."
     },
     "sections": [
@@ -226,18 +226,18 @@ window.COURSE = [
           "en": "Arithmetic operators"
         },
         "p": {
-          "uz": "+ - * / oddiy. Lekin uchtasi muhim: // butun bo'lish (kasrsiz), % qoldiq (modulo), ** daraja. Sertifikatda 7 // 2 = 3 va 7 % 2 = 1 kabi savollar ko'p. / doim float qaytaradi (10/2 = 5.0), // butun qaytaradi.",
+          "uz": "+ - * / oddiy. Lekin uçtasi muhim: // butun böliş (kasrsiz), % qoldiq (modulo), ** daraja. Sertifikatda 7 // 2 = 3 va 7 % 2 = 1 kabi savollar köp. / doim float qaytaradi (10/2 = 5.0), // butun qaytaradi.",
           "en": "+ - * / are basic. Three matter: // floor division, % modulo, ** power. / always returns float."
         },
         "code": "print(7 + 3)    # 10\nprint(7 / 2)    # 3.5  (float!)\nprint(7 // 2)   # 3    (butun bo'lish)\nprint(7 % 2)    # 1    (qoldiq)\nprint(2 ** 3)   # 8    (daraja)\nprint(10 / 2)   # 5.0  (/ doim float)"
       },
       {
         "h": {
-          "uz": "Taqqoslash operatorlari",
+          "uz": "Taqqoslaş operatorlari",
           "en": "Comparison operators"
         },
         "p": {
-          "uz": "== teng, != teng emas, > < >= <=. Natija DOIM bool (True/False). ENG MUHIM: = qiymat soladi, == tenglikni tekshiradi — bu ikkisini adashtirmaslik kerak. Taqqoslashni zanjir qilsa bo'ladi: 1 < x < 10.",
+          "uz": "== teng, != teng emas, > < >= <=. Natija DOIM bool (True/False). ENG MUHIM: = qiymat soladi, == tenglikni tekşiradi — bu ikkisini adaştirmaslik kerak. Taqqoslaşni zanjir qilsa böladi: 1 < x < 10.",
           "en": "==, !=, >, <, >=, <=. Result is ALWAYS bool. = assigns, == checks equality."
         },
         "code": "print(5 == 5)    # True\nprint(5 != 3)    # True\nprint(5 > 10)    # False\nx = 7\nprint(1 < x < 10)   # True (zanjir)\nprint(type(5 > 3))  # <class 'bool'>"
@@ -248,7 +248,7 @@ window.COURSE = [
           "en": "Logical: and or not"
         },
         "p": {
-          "uz": "and — ikkalasi True bo'lishi kerak. or — bittasi yetadi. not — teskarisi. Ular bool qiymatlar ustida ishlaydi. Sertifikatda 'qisqa tutashuv' (short-circuit) so'raladi: True or X da X tekshirilmaydi, False and X da ham X tekshirilmaydi.",
+          "uz": "and — ikkalasi True bölişi kerak. or — bittasi yetadi. not — teskarisi. Ular bool qiymatlar ustida işlaydi. Sertifikatda 'qisqa tutaşuv' (şort-circuit) söraladi: True or X da X tekşirilmaydi, False and X da ham X tekşirilmaydi.",
           "en": "and (both), or (either), not (flip). Short-circuit: True or X skips X; False and X skips X."
         },
         "code": "print(True and False)   # False\nprint(True or False)    # True\nprint(not True)         # False\n\n# Qisqa tutashuv:\nage = 20\nprint(age > 18 and age < 65)   # True\nprint(age < 10 or age > 15)    # True"
@@ -259,7 +259,7 @@ window.COURSE = [
           "en": "Operator precedence"
         },
         "p": {
-          "uz": "Python amallarni ma'lum tartibda bajaradi: avval ** , keyin * / // % , keyin + - , keyin taqqoslash, oxirida and/or/not. Qavs () tartibni o'zgartiradi. Sertifikatda 2 + 3 * 4 = 14 (14 emas 20) kabi savollar bor.",
+          "uz": "Python amallarni maʼlum tartibda bajaradi: avval ** , keyin * / // % , keyin + - , keyin taqqoslaş, oxirida and/or/not. Qavs () tartibni özgartiradi. Sertifikatda 2 + 3 * 4 = 14 (14 emas 20) kabi savollar bor.",
           "en": "Order: ** first, then * / // %, then + -, then comparisons, then not/and/or. Parentheses override."
         },
         "code": "print(2 + 3 * 4)      # 14 (* oldin)\nprint((2 + 3) * 4)    # 20 (qavs)\nprint(2 ** 3 ** 2)    # 512 (o'ngdan: 2**9)\nprint(10 - 2 - 3)     # 5  (chapdan)\nprint(True or False and False)  # True (and oldin)"
@@ -267,7 +267,7 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "// va % bilan: 17 ni 5 ga bo'lganda butun va qoldiqni chiqar.",
+        "uz": "// va % bilan: 17 ni 5 ga bölganda butun va qoldiqni çiqar.",
         "en": "17 // 5 and 17 % 5."
       },
       {
@@ -275,15 +275,15 @@ window.COURSE = [
         "en": "2 ** 10."
       },
       {
-        "uz": "Zanjir taqqoslash: 0 < yosh < 120 shartini sinab ko'r.",
+        "uz": "Zanjir taqqoslaş: 0 < yoş < 120 şartini sinab kör.",
         "en": "Chain comparison 0 < age < 120."
       },
       {
-        "uz": "and/or/not uchtasini bitta ifodada ishlat.",
+        "uz": "and/or/not uçtasini bitta ifodada işlat.",
         "en": "Combine and/or/not in one expression."
       },
       {
-        "uz": "2 + 3 * 4 va (2 + 3) * 4 farqini ko'r, sababini tushuntir.",
+        "uz": "2 + 3 * 4 va (2 + 3) * 4 farqini kör, sababini tuşuntir.",
         "en": "Compare 2+3*4 vs (2+3)*4."
       }
     ],
@@ -419,11 +419,11 @@ window.COURSE = [
     "type": "topic",
     "unit": "Hafta 1 — Asoslar",
     "title": {
-      "uz": "Kirish/chiqish va tur almashtirish",
+      "uz": "Kiriş/çiqiş va tur almaştiriş",
       "en": "Input/output & type conversion"
     },
     "intro": {
-      "uz": "Dastur foydalanuvchi bilan gaplashadi: print() bilan chiqaradi, input() bilan oladi. Lekin input() DOIM matn (string) qaytaradi — sertifikatda eng ko'p adashtiriladigan joy. Bugun kirish/chiqish va turlarni to'g'ri almashtirni chuqur o'rganamiz.",
+      "uz": "Dastur foydalanuvçi bilan gaplaşadi: print() bilan çiqaradi, input() bilan oladi. Lekin input() DOIM matn (string) qaytaradi — sertifikatda eng köp adaştiriladigan joy. Bugun kiriş/çiqiş va turlarni töğri almaştirni çuqur örganamiz.",
       "en": "print() outputs, input() reads. But input() ALWAYS returns a string — the most common exam trap."
     },
     "sections": [
@@ -433,7 +433,7 @@ window.COURSE = [
           "en": "print() and its parameters"
         },
         "p": {
-          "uz": "print() ekranga chiqaradi. Bir nechta qiymatni vergul bilan chiqarsa, orasiga bo'shliq qo'yadi. sep= ajratgichni, end= oxirini o'zgartiradi. Standart end='\\n' (yangi qator).",
+          "uz": "print() ekranga çiqaradi. Bir neçta qiymatni vergul bilan çiqarsa, orasiga böşliq qöyadi. sep= ajratgiçni, end= oxirini özgartiradi. Standart end='\\n' (yangi qator).",
           "en": "print() outputs. Multiple values separated by comma get a space. sep= and end= customize."
         },
         "code": "print(\"a\", \"b\", \"c\")           # a b c\nprint(\"a\", \"b\", sep=\"-\")        # a-b\nprint(\"Hello\", end=\" \")          # no newline\nprint(\"World\")                   # Hello World\nprint(1, 2, 3, sep=\", \")         # 1, 2, 3"
@@ -444,29 +444,29 @@ window.COURSE = [
           "en": "input() ALWAYS returns a string"
         },
         "p": {
-          "uz": "input() foydalanuvchidan matn oladi va DOIM string qaytaradi — hatto raqam yozsa ham. Shuning uchun son kerak bo'lsa int() yoki float() bilan aylantirish SHART. Bu sertifikat imtihonining klassik savoli.",
+          "uz": "input() foydalanuvçidan matn oladi va DOIM string qaytaradi — hatto raqam yozsa ham. Şuning uçun son kerak bölsa int() yoki float() bilan aylantiriş ŞART. Bu sertifikat imtihonining klassik savoli.",
           "en": "input() always returns a string, even for digits. Convert with int()/float() when you need a number."
         },
         "code": "age = input(\"Age: \")       # \"20\" (string!)\nprint(type(age))            # <class 'str'>\n\n# To'g'ri usul:\nage = int(input(\"Age: \"))   # 20 (int)\nprint(age + 1)              # 21 (ishlaydi)"
       },
       {
         "h": {
-          "uz": "Tur almashtirish funksiyalari",
+          "uz": "Tur almaştiriş funksiyalari",
           "en": "Type conversion functions"
         },
         "p": {
-          "uz": "int() butun songa, float() kasr songa, str() matnga, bool() mantiqga aylantiradi. Ehtiyot bo'l: int(\"abc\") xato beradi, int(\"3.5\") ham xato (avval float). int(3.9) = 3 (kesadi, yaxlitlamaydi).",
+          "uz": "int() butun songa, float() kasr songa, str() matnga, bool() mantiqga aylantiradi. Ehtiyot böl: int(\"abc\") xato beradi, int(\"3.5\") ham xato (avval float). int(3.9) = 3 (kesadi, yaxlitlamaydi).",
           "en": "int(), float(), str(), bool(). int('abc') errors; int(3.9)=3 (truncates)."
         },
         "code": "print(int(\"25\"))     # 25\nprint(float(\"3.14\")) # 3.14\nprint(str(100))      # \"100\"\nprint(int(3.9))      # 3 (kesadi!)\nprint(bool(0))       # False\nprint(bool(1))       # True"
       },
       {
         "h": {
-          "uz": "f-string bilan chiqarish",
+          "uz": "f-string bilan çiqariş",
           "en": "Output with f-string"
         },
         "p": {
-          "uz": "f-string — matn ichiga qiymat qo'yishning eng qulay usuli. f\"...\" oldiga f qo'yasan, {} ichiga o'zgaruvchi yoki ifoda. Sonlarni formatlash: {narx:.2f} ikki xona kasr, {son:5} kenglik.",
+          "uz": "f-string — matn içiga qiymat qöyişning eng qulay usuli. f\"...\" oldiga f qöyasan, {} içiga özgaruvçi yoki ifoda. Sonlarni formatlaş: {narx:.2f} ikki xona kasr, {son:5} kenglik.",
           "en": "f-strings embed values: f\"...{var}...\". Format numbers: {price:.2f}."
         },
         "code": "name = \"Max\"\nage = 20\nprint(f\"{name} is {age}\")       # Max is 20\nprint(f\"Sum: {5 + 3}\")          # Sum: 8\nprint(f\"Pi: {3.14159:.2f}\")     # Pi: 3.14\nprint(f\"{'hi':>5}\")             # '   hi' (o'ngga)"
@@ -474,23 +474,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "print() da sep va end parametrlarini sinab ko'r.",
+        "uz": "print() da sep va end parametrlarini sinab kör.",
         "en": "Try print() sep and end."
       },
       {
-        "uz": "input() bilan son ol, type() bilan string ekanini ko'r, keyin int() qil.",
+        "uz": "input() bilan son ol, type() bilan string ekanini kör, keyin int() qil.",
         "en": "input() → check type → convert."
       },
       {
-        "uz": "int(3.9) va int('3') ni sinab ko'r, farqni tushuntir.",
+        "uz": "int(3.9) va int('3') ni sinab kör, farqni tuşuntir.",
         "en": "int(3.9) vs int('3')."
       },
       {
-        "uz": "Ikki sonni input bilan olib, yig'indisini f-string bilan chiqar.",
+        "uz": "Ikki sonni input bilan olib, yiğindisini f-string bilan çiqar.",
         "en": "Sum two inputs, print with f-string."
       },
       {
-        "uz": "bool(0), bool(''), bool('a'), bool(5) natijalarini ko'r.",
+        "uz": "bool(0), bool(''), bool('a'), bool(5) natijalarini kör.",
         "en": "bool(0), bool(''), bool('a'), bool(5)."
       }
     ],
@@ -624,39 +624,39 @@ window.COURSE = [
     "unit": "Hafta 1 — Asoslar",
     "reviewOf": 3,
     "title": {
-      "uz": "Takrorlash: Asoslar",
+      "uz": "Takrorlaş: Asoslar",
       "en": "Review: Basics"
     },
     "intro": {
-      "uz": "Kecha o'rgangan mavzuni mustahkamlaymiz: qisqa takror, yangi mashqlar va kichik loyiha.",
+      "uz": "Keça örgangan mavzuni mustahkamlaymiz: qisqa takror, yangi maşqlar va kiçik loyiha.",
       "en": "Reinforce yesterday's topic: recap, new exercises and a mini-project."
     },
     "recap": {
-      "uz": "Eslatma: (1) o'zgaruvchi = nomlangan quti, 4 tur (int/float/str/bool). (2) operatorlar: // butun, % qoldiq, ** daraja; ==/!= bool qaytaradi. (3) input() DOIM string, int()/float() bilan aylantir. (4) f-string formatlash.",
+      "uz": "Eslatma: (1) özgaruvçi = nomlangan quti, 4 tur (int/float/str/bool). (2) operatorlar: // butun, % qoldiq, ** daraja; ==/!= bool qaytaradi. (3) input() DOIM string, int()/float() bilan aylantir. (4) f-string formatlaş.",
       "en": "Recap: variables & types; operators; input() returns str; f-strings."
     },
     "project": {
       "title": {
-        "uz": "Loyiha: Hisob-kitob mashinasi",
+        "uz": "Loyiha: Hisob-kitob maşinasi",
         "en": "Project: Calculator"
       },
       "desc": {
-        "uz": "Foydalanuvchidan ikki son olib (input+int), to'rt amalni (+, -, *, /) bajaradigan va natijani f-string bilan chiroyli chiqaradigan dastur. // va % ni ham qo'sh.",
+        "uz": "Foydalanuvçidan ikki son olib (input+int), tört amalni (+, -, *, /) bajaradigan va natijani f-string bilan çiroyli çiqaradigan dastur. // va % ni ham qöş.",
         "en": "Take two numbers, do 4 operations, print with f-string."
       },
       "starter": "a = float(input(\"Birinchi son: \"))\nb = float(input(\"Ikkinchi son: \"))\n\nprint(f\"{a} + {b} = {a + b}\")\nprint(f\"{a} - {b} = {a - b}\")\nprint(f\"{a} * {b} = {a * b}\")\nif b != 0:\n    print(f\"{a} / {b} = {a / b:.2f}\")\nelse:\n    print(\"Nolga bo'lib bo'lmaydi\")"
     },
     "practice": [
       {
-        "uz": "// va % bilan qoldiqli bo'lishni ko'rsat.",
+        "uz": "// va % bilan qoldiqli bölişni körsat.",
         "en": "Show floor division and modulo."
       },
       {
-        "uz": "input() bilan olingan qiymat turini tekshir.",
+        "uz": "input() bilan olingan qiymat turini tekşir.",
         "en": "Check input() type."
       },
       {
-        "uz": "f-string bilan narxni 2 xona kasr chiqar.",
+        "uz": "f-string bilan narxni 2 xona kasr çiqar.",
         "en": "Format price with f-string."
       }
     ],
@@ -784,11 +784,11 @@ window.COURSE = [
     "type": "topic",
     "unit": "Hafta 1 — Asoslar",
     "title": {
-      "uz": "Shartlar (conditionals)",
+      "uz": "Şartlar (conditionals)",
       "en": "Conditionals"
     },
     "intro": {
-      "uz": "AI'da har qaror — bu shart. \"Bu rasm mushukmi?\" → if. Bugun qaror qabul qilishni o'rganamiz.",
+      "uz": "AI'da har qaror — bu şart. \"Bu rasm muşukmi?\" → if. Bugun qaror qabul qilişni örganamiz.",
       "en": "In AI every decision is a condition. \"Is this a cat?\" → if. Today we learn to make decisions."
     },
     "sections": [
@@ -798,29 +798,29 @@ window.COURSE = [
           "en": "if / else"
         },
         "p": {
-          "uz": "if — \"agar\". Shart to'g'ri bo'lsa ichdagi kod ishlaydi. else — aks holda. Ikkisidan faqat bittasi ishlaydi.",
+          "uz": "if — \"agar\". Şart töğri bölsa içdagi kod işlaydi. else — aks holda. Ikkisidan faqat bittasi işlaydi.",
           "en": "if — \"if\". If the condition is true, the inner code runs. else — otherwise. Only one of the two runs."
         },
         "code": "age = 20\n\nif age >= 18:\n    print(\"Adult\")\nelse:\n    print(\"Minor\")"
       },
       {
         "h": {
-          "uz": "Solishtirish: = va == farqi",
+          "uz": "Soliştiriş: = va == farqi",
           "en": "Comparison: = vs =="
         },
         "p": {
-          "uz": "== teng, != teng emas, > < >= <=. ENG MUHIM: = qiymat soladi, == tenglikni tekshiradi. Natija True/False (bool).",
+          "uz": "== teng, != teng emas, > < >= <=. ENG MUHIM: = qiymat soladi, == tenglikni tekşiradi. Natija True/False (bool).",
           "en": "== equal, != not equal, > < >= <=. MOST IMPORTANT: = assigns, == checks equality. Result is True/False (bool)."
         },
         "code": "age = 18       # ONE =: assign\nprint(age == 18)   # True  (TWO ==: check)\nprint(age != 20)   # True\nprint(age > 18)    # False\nprint(age >= 18)   # True"
       },
       {
         "h": {
-          "uz": "elif — ko'p shart",
+          "uz": "elif — köp şart",
           "en": "elif — many conditions"
         },
         "p": {
-          "uz": "elif = else if. Python yuqoridan pastga tekshiradi, BIRINCHI to'g'ri shartda to'xtaydi. Tartib muhim: katta shartdan kichikka!",
+          "uz": "elif = else if. Python yuqoridan pastga tekşiradi, BIRINÇI töğri şartda töxtaydi. Tartib muhim: katta şartdan kiçikka!",
           "en": "elif = else if. Python checks top to bottom, STOPS at the FIRST true condition. Order matters: big to small!"
         },
         "code": "mark = 75\n\nif mark >= 90:\n    print(\"Excellent\")\nelif mark >= 70:\n    print(\"Good\")\nelif mark >= 60:\n    print(\"Pass\")\nelse:\n    print(\"Fail\")"
@@ -831,7 +831,7 @@ window.COURSE = [
           "en": "and / or / not"
         },
         "p": {
-          "uz": "and — ikkalasi ham True bo'lishi kerak. or — bittasi yetadi. not — teskarisiga. Natija doim True/False.",
+          "uz": "and — ikkalasi ham True bölişi kerak. or — bittasi yetadi. not — teskarisiga. Natija doim True/False.",
           "en": "and — both must be True. or — one is enough. not — flips it. Result is always True/False."
         },
         "code": "age = 25\nhas_pass = True\n\nif age >= 18 and has_pass:\n    print(\"Can travel\")\n\nday = \"sat\"\nif day == \"sat\" or day == \"sun\":\n    print(\"Weekend\")\n\nprint(True and False)   # False\nprint(True or False)    # True\nprint(not True)         # False"
@@ -839,23 +839,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "Yoshni tekshir: 18+ 'Voyaga yetgan', aks holda 'Yosh'.",
+        "uz": "Yoşni tekşir: 18+ 'Voyaga yetgan', aks holda 'Yoş'.",
         "en": "Check age: 18+ 'Adult', else 'Minor'."
       },
       {
-        "uz": "Baho darajasini elif bilan aniqla (90 A'lo, 70 Yaxshi, 60 O'rta, past Yiqildi).",
+        "uz": "Baho darajasini elif bilan aniqla (90 Aʼlo, 70 Yaxşi, 60 Örta, past Yiqildi).",
         "en": "Determine grade with elif (90 Excellent, 70 Good, 60 Pass, low Fail)."
       },
       {
-        "uz": "and bilan tekshir: yosh 18+ VA ishlaydi bo'lsa 'kredit'.",
+        "uz": "and bilan tekşir: yoş 18+ VA işlaydi bölsa 'kredit'.",
         "en": "Check with and: age 18+ AND employed → 'credit'."
       },
       {
-        "uz": "or bilan: shanba yoki yakshanba bo'lsa 'dam olish'.",
+        "uz": "or bilan: şanba yoki yakşanba bölsa 'dam oliş'.",
         "en": "With or: saturday or sunday → 'weekend'."
       },
       {
-        "uz": "True and False, True or False, not True natijalarini chiqar.",
+        "uz": "True and False, True or False, not True natijalarini çiqar.",
         "en": "Print True and False, True or False, not True."
       }
     ],
@@ -993,28 +993,28 @@ window.COURSE = [
       "en": "Lists"
     },
     "intro": {
-      "uz": "Bitta quti — bitta qiymat edi. List — bitta nomda ko'p qiymat. Dataset shu yerdan boshlanadi.",
+      "uz": "Bitta quti — bitta qiymat edi. List — bitta nomda köp qiymat. Dataset şu yerdan boşlanadi.",
       "en": "One box held one value. A list holds many values under one name. Datasets start here."
     },
     "sections": [
       {
         "h": {
-          "uz": "List yaratish va indexing",
+          "uz": "List yaratiş va indexing",
           "en": "Creating lists & indexing"
         },
         "p": {
-          "uz": "Kvadrat qavs [] ichida, vergul bilan. Har element index'da — 0 dan boshlanadi! [-1] oxirgi element. len() uzunlikni beradi.",
+          "uz": "Kvadrat qavs [] içida, vergul bilan. Har element indexʼda — 0 dan boşlanadi! [-1] oxirgi element. len() uzunlikni beradi.",
           "en": "Square brackets [], comma-separated. Each element has an index — starting from 0! [-1] is the last. len() gives length."
         },
         "code": "fruits = [\"apple\", \"banana\", \"cherry\"]\n#           0        1         2\n\nprint(fruits[0])    # apple\nprint(fruits[-1])   # cherry (last)\nprint(len(fruits))  # 3"
       },
       {
         "h": {
-          "uz": "Slicing — bo'lak olish",
+          "uz": "Slicing — bölak oliş",
           "en": "Slicing — taking a slice"
         },
         "p": {
-          "uz": "[start:stop] — stop KIRMAYDI! Nechta element: stop − start. Uchinchi raqam qadam: [::2] har ikkinchisi.",
+          "uz": "[start:stop] — stop KIRMAYDI! Neçta element: stop − start. Uçinçi raqam qadam: [::2] har ikkinçisi.",
           "en": "[start:stop] — stop is EXCLUDED! Count: stop − start. Third number is step: [::2] every second."
         },
         "code": "nums = [10, 20, 30, 40, 50]\n\nprint(nums[1:3])   # [20, 30]\nprint(nums[:3])    # [10, 20, 30]\nprint(nums[-2:])   # [40, 50]\nprint(nums[::2])   # [10, 30, 50]"
@@ -1025,7 +1025,7 @@ window.COURSE = [
           "en": "Methods"
         },
         "p": {
-          "uz": "append() oxiriga qo'shadi, insert() joyga qo'shadi, remove() qiymatni o'chiradi, pop() o'chiradi va qaytaradi, sort() tartiblaydi.",
+          "uz": "append() oxiriga qöşadi, insert() joyga qöşadi, remove() qiymatni öçiradi, pop() öçiradi va qaytaradi, sort() tartiblaydi.",
           "en": "append() adds to end, insert() adds at position, remove() deletes by value, pop() removes and returns, sort() orders."
         },
         "code": "fruits = [\"apple\", \"banana\"]\nfruits.append(\"cherry\")   # add to end\nfruits.insert(0, \"mango\")  # add at index 0\nfruits.remove(\"banana\")   # remove by value\nlast = fruits.pop()        # remove & return last\nfruits.sort()              # alphabetical"
@@ -1036,7 +1036,7 @@ window.COURSE = [
           "en": "Stats on a list"
         },
         "p": {
-          "uz": "len(), sum(), max(), min() — listda ishlaydi. sum()/len() = o'rtacha (mean). Bu — ML'ning birinchi qadami, NumPy'da .mean().",
+          "uz": "len(), sum(), max(), min() — listda işlaydi. sum()/len() = örtaça (mean). Bu — MLʼning birinçi qadami, NumPy'da .mean().",
           "en": "len(), sum(), max(), min() work on lists. sum()/len() = average (mean). This is ML's first step, .mean() in NumPy."
         },
         "code": "marks = [5, 4, 3, 5, 4]\n\nprint(len(marks))   # 5\nprint(sum(marks))   # 21\nprint(max(marks))   # 5\naverage = sum(marks) / len(marks)\nprint(average)      # 4.2"
@@ -1044,23 +1044,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "3 ta list yarat (matn, son, aralash). len() bilan chiqar.",
+        "uz": "3 ta list yarat (matn, son, aralaş). len() bilan çiqar.",
         "en": "Create 3 lists (text, numbers, mixed). Print with len()."
       },
       {
-        "uz": "5 shaharlik list. [0], [2], [-1] ni chiqar, keyin [10] bilan xatoni ko'r.",
+        "uz": "5 şaharlik list. [0], [2], [-1] ni çiqar, keyin [10] bilan xatoni kör.",
         "en": "5-city list. Print [0], [2], [-1], then see the error with [10]."
       },
       {
-        "uz": "6 elementli list. [1:4], [:3], [::2] ni bashorat qil, keyin tekshir.",
+        "uz": "6 elementli list. [1:4], [:3], [::2] ni başorat qil, keyin tekşir.",
         "en": "6-element list. Predict [1:4], [:3], [::2], then verify."
       },
       {
-        "uz": "append, insert, remove, pop, sort — beshtasini sinab ko'r.",
+        "uz": "append, insert, remove, pop, sort — beştasini sinab kör.",
         "en": "Try all five: append, insert, remove, pop, sort."
       },
       {
-        "uz": "Baholar listidan len, sum, max, min va o'rtachani hisobla.",
+        "uz": "Baholar listidan len, sum, max, min va örtaçani hisobla.",
         "en": "From a marks list compute len, sum, max, min and average."
       }
     ],
@@ -1197,24 +1197,24 @@ window.COURSE = [
     "unit": "Hafta 1 — Asoslar",
     "reviewOf": 6,
     "title": {
-      "uz": "Takrorlash: Shart va list",
+      "uz": "Takrorlaş: Şart va list",
       "en": "Review: Conditions & lists"
     },
     "intro": {
-      "uz": "Kecha o'rgangan mavzuni mustahkamlaymiz: qisqa takror, yangi mashqlar va kichik loyiha.",
+      "uz": "Keça örgangan mavzuni mustahkamlaymiz: qisqa takror, yangi maşqlar va kiçik loyiha.",
       "en": "Reinforce yesterday's topic: recap, new exercises and a mini-project."
     },
     "recap": {
-      "uz": "Eslatma: (1) if/elif/else — qaror, = soladi == tekshiradi. (2) and/or/not — bool. (3) list: index 0 dan, [-1] oxirgi, slicing [start:stop]. (4) append/remove/sort. (5) sum()/len()=o'rtacha.",
+      "uz": "Eslatma: (1) if/elif/else — qaror, = soladi == tekşiradi. (2) and/or/not — bool. (3) list: index 0 dan, [-1] oxirgi, slicing [start:stop]. (4) append/remove/sort. (5) sum()/len()=örtaça.",
       "en": "Recap: if/elif/else; and/or/not; lists, indexing, slicing, methods."
     },
     "project": {
       "title": {
-        "uz": "Haftalik loyiha: Baholar tahlilchisi",
+        "uz": "Haftalik loyiha: Baholar tahlilçisi",
         "en": "Weekly project: Grade analyzer"
       },
       "desc": {
-        "uz": "Baholar listini olib, loop va if bilan o'rtacha, eng yuqori, eng past va o'tganlar sonini (60+) hisoblaydigan dastur. Birinchi haftaning hamma narsasi birga.",
+        "uz": "Baholar listini olib, loop va if bilan örtaça, eng yuqori, eng past va ötganlar sonini (60+) hisoblaydigan dastur. Birinçi haftaning hamma narsasi birga.",
         "en": "Analyze a grades list: average, max, min, count passing."
       },
       "starter": "grades = [85, 45, 92, 78, 63, 95, 55, 88]\n\ntotal = sum(grades)\naverage = total / len(grades)\npassed = 0\nfor g in grades:\n    if g >= 60:\n        passed += 1\n\nprint(f\"O'rtacha: {average:.1f}\")\nprint(f\"Eng yuqori: {max(grades)}, eng past: {min(grades)}\")\nprint(f\"O'tganlar: {passed} / {len(grades)}\")"
@@ -1225,11 +1225,11 @@ window.COURSE = [
         "en": "Grade to letter with if/elif."
       },
       {
-        "uz": "Listning teskarisini [::-1] bilan chiqar.",
+        "uz": "Listning teskarisini [::-1] bilan çiqar.",
         "en": "Reverse a list."
       },
       {
-        "uz": "and bilan ikki shartni birga tekshir.",
+        "uz": "and bilan ikki şartni birga tekşir.",
         "en": "Combine two conditions with and."
       }
     ],
@@ -1358,21 +1358,21 @@ window.COURSE = [
     "type": "topic",
     "unit": "Hafta 2 — Boshqaruv va strukturalar",
     "title": {
-      "uz": "Loops (takrorlash)",
+      "uz": "Loops (takrorlaş)",
       "en": "Loops"
     },
     "intro": {
-      "uz": "sum() Python berdi. Endi QANDAY hisoblaganini o'zing yozasan. Loop'siz AI yo'q.",
+      "uz": "sum() Python berdi. Endi QANDAY hisoblaganini özing yozasan. Loopʼsiz AI yöq.",
       "en": "sum() came from Python. Now you write HOW it computes. No AI without loops."
     },
     "sections": [
       {
         "h": {
-          "uz": "for — list bo'ylab aylanish",
+          "uz": "for — list böylab aylaniş",
           "en": "for — iterating a list"
         },
         "p": {
-          "uz": "for har elementni navbatma-navbat oladi. 2 ta majburiy: oxirida :, ichki qator surilgan (indentation).",
+          "uz": "for har elementni navbatma-navbat oladi. 2 ta majburiy: oxirida :, içki qator surilgan (indentation).",
           "en": "for takes each element in turn. 2 mandatory things: : at the end, indented inner line (indentation)."
         },
         "code": "fruits = [\"apple\", \"banana\", \"cherry\"]\n\nfor fruit in fruits:\n    print(fruit)\n\n# apple / banana / cherry"
@@ -1383,7 +1383,7 @@ window.COURSE = [
           "en": "range() — number sequence"
         },
         "p": {
-          "uz": "range() sonlar yasaydi. 0 dan boshlaydi, oxiri kirmaydi (slicing'dagidek). range(0,10,2) qadam bilan.",
+          "uz": "range() sonlar yasaydi. 0 dan boşlaydi, oxiri kirmaydi (slicinğdagidek). range(0,10,2) qadam bilan.",
           "en": "range() makes numbers. Starts from 0, end excluded (like slicing). range(0,10,2) with step."
         },
         "code": "for i in range(5):\n    print(i)          # 0 1 2 3 4\n\nfor i in range(1, 6):\n    print(i)          # 1 2 3 4 5\n\nfor i in range(0, 10, 2):\n    print(i)          # 0 2 4 6 8"
@@ -1394,7 +1394,7 @@ window.COURSE = [
           "en": "Computing with loops + while"
         },
         "p": {
-          "uz": "Bo'sh idishdan boshlab, har element qo'shiladi — bu sum() ichida bo'layotgan ish. while shart to'g'ri bo'lguncha aylanadi — son += 1 ni unutma, aks holda cheksiz loop!",
+          "uz": "Böş idişdan boşlab, har element qöşiladi — bu sum() içida bölayotgan iş. while şart töğri bölgunça aylanadi — son += 1 ni unutma, aks holda çeksiz loop!",
           "en": "Start from empty, add each element — this is what happens inside sum(). while loops while a condition is true — don't forget son += 1 or it's an infinite loop!"
         },
         "code": "nums = [5, 4, 3]\ntotal = 0\nfor n in nums:\n    total += n\nprint(total)          # 12\n\ncount = 1\nwhile count <= 3:\n    print(count)\n    count += 1        # important!"
@@ -1405,7 +1405,7 @@ window.COURSE = [
           "en": "break and continue"
         },
         "p": {
-          "uz": "break loopni butunlay to'xtatadi. continue faqat shu aylanishni o'tkazadi.",
+          "uz": "break loopni butunlay töxtatadi. continue faqat şu aylanişni ötkazadi.",
           "en": "break stops the loop entirely. continue skips just this iteration."
         },
         "code": "for i in range(10):\n    if i == 5:\n        break         # stop at 5\n    print(i)          # 0 1 2 3 4\n\nfor i in range(5):\n    if i == 2:\n        continue      # skip 2\n    print(i)          # 0 1 3 4"
@@ -1413,23 +1413,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "5 shaharlik listni for bilan aylantirib chiqar.",
+        "uz": "5 şaharlik listni for bilan aylantirib çiqar.",
         "en": "Iterate and print a 5-city list with for."
       },
       {
-        "uz": "range(5), range(1,6), range(0,10,2) ni sinab ko'r.",
+        "uz": "range(5), range(1,6), range(0,10,2) ni sinab kör.",
         "en": "Try range(5), range(1,6), range(0,10,2)."
       },
       {
-        "uz": "Baholar yig'indisini LOOP bilan hisobla (sum() ishlatmasdan).",
+        "uz": "Baholar yiğindisini LOOP bilan hisobla (sum() işlatmasdan).",
         "en": "Compute a marks sum with a LOOP (without sum())."
       },
       {
-        "uz": "while bilan 1 dan 5 gacha chiqar. count += 1 ni unutma!",
+        "uz": "while bilan 1 dan 5 gaça çiqar. count += 1 ni unutma!",
         "en": "Print 1 to 5 with while. Don't forget count += 1!"
       },
       {
-        "uz": "break: 5 da to'xta. continue: 2 ni o'tkaz.",
+        "uz": "break: 5 da töxta. continue: 2 ni ötkaz.",
         "en": "break: stop at 5. continue: skip 2."
       }
     ],
@@ -1571,7 +1571,7 @@ window.COURSE = [
       "en": "Loops: while, break, continue"
     },
     "intro": {
-      "uz": "for ma'lum sonli takror uchun edi. while esa SHART to'g'ri bo'lguncha aylanadi — necha marta ekani oldindan noma'lum. Bu foydalanuvchi to'g'ri javob berguncha so'rash kabi holatlar uchun. Sertifikatda cheksiz loop va break/continue ko'p so'raladi.",
+      "uz": "for maʼlum sonli takror uçun edi. while esa ŞART töğri bölgunça aylanadi — neça marta ekani oldindan nomaʼlum. Bu foydalanuvçi töğri javob bergunça söraş kabi holatlar uçun. Sertifikatda çeksiz loop va break/continue köp söraladi.",
       "en": "while loops while a condition is true — count unknown in advance. Exams test infinite loops and break/continue."
     },
     "sections": [
@@ -1581,40 +1581,40 @@ window.COURSE = [
           "en": "while basics"
         },
         "p": {
-          "uz": "while shart: — shart True bo'lguncha ichidagi kod takrorlanadi. ENG MUHIM: ichida shartni o'zgartiradigan narsa bo'lishi kerak (masalan count += 1), aks holda CHEKSIZ loop — dastur qotadi. Bu klassik xato.",
+          "uz": "while şart: — şart True bölgunça içidagi kod takrorlanadi. ENG MUHIM: içida şartni özgartiradigan narsa bölişi kerak (masalan count += 1), aks holda ÇEKSIZ loop — dastur qotadi. Bu klassik xato.",
           "en": "while condition: repeats while true. MUST change the condition inside (count += 1) or infinite loop."
         },
         "code": "count = 1\nwhile count <= 5:\n    print(count)\n    count += 1     # MUHIM! aks holda cheksiz\n\n# Chiqishi: 1 2 3 4 5"
       },
       {
         "h": {
-          "uz": "break — loopni to'xtatish",
+          "uz": "break — loopni töxtatiş",
           "en": "break — stop the loop"
         },
         "p": {
-          "uz": "break loopni BUTUNLAY to'xtatadi va undan chiqadi. Ko'pincha while True: (cheksiz) bilan birga ishlatiladi — ma'lum shart bajarilganda break bilan chiqiladi. Bu 'to'g'ri javob kelguncha so'rash' uchun ideal.",
+          "uz": "break loopni BUTUNLAY töxtatadi va undan çiqadi. Köpinça while True: (çeksiz) bilan birga işlatiladi — maʼlum şart bajarilganda break bilan çiqiladi. Bu 'töğri javob kelgunça söraş' uçun ideal.",
           "en": "break stops the loop entirely. Often used with while True: and an exit condition."
         },
         "code": "while True:\n    answer = input(\"Parol: \")\n    if answer == \"1234\":\n        print(\"To'g'ri!\")\n        break         # loopdan chiqadi\n    print(\"Xato, qayta urin\")"
       },
       {
         "h": {
-          "uz": "continue — o'tkazib yuborish",
+          "uz": "continue — ötkazib yuboriş",
           "en": "continue — skip iteration"
         },
         "p": {
-          "uz": "continue joriy aylanishni to'xtatib, KEYINGISIGA o'tadi (loopdan chiqmaydi). Masalan faqat juft sonlarni chiqarish uchun toqlarni continue bilan o'tkazasan. break va continue farqini sertifikat ko'p so'raydi.",
+          "uz": "continue joriy aylanişni töxtatib, KEYINGISIGA ötadi (loopdan çiqmaydi). Masalan faqat juft sonlarni çiqariş uçun toqlarni continue bilan ötkazasan. break va continue farqini sertifikat köp söraydi.",
           "en": "continue skips the rest of this iteration, moves to the NEXT (doesn't exit the loop)."
         },
         "code": "for i in range(1, 6):\n    if i == 3:\n        continue      # 3 ni o'tkazadi\n    print(i)          # 1 2 4 5 (3 yo'q)\n\n# break bo'lsa edi: 1 2 (3 da to'xtardi)"
       },
       {
         "h": {
-          "uz": "while + else va sanash",
+          "uz": "while + else va sanaş",
           "en": "while + else and counting"
         },
         "p": {
-          "uz": "while da ham else bo'ladi: loop NORMAL tugaganda (break'siz) ishlaydi. Agar break bilan chiqilsa, else ishlamaydi. while ko'pincha sanash, yig'ish, foydalanuvchi kiritishini tekshirish uchun ishlatiladi.",
+          "uz": "while da ham else böladi: loop NORMAL tugaganda (breakʼsiz) işlaydi. Agar break bilan çiqilsa, else işlamaydi. while köpinça sanaş, yiğiş, foydalanuvçi kiritişini tekşiriş uçun işlatiladi.",
           "en": "while can have else: runs when loop ends normally (no break). Skipped if break exits."
         },
         "code": "n = 5\nwhile n > 0:\n    print(n)\n    n -= 1\nelse:\n    print(\"Tugadi!\")   # normal tugadi\n\n# Chiqishi: 5 4 3 2 1 Tugadi!"
@@ -1622,23 +1622,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "while bilan 1 dan 10 gacha chiqar (count += 1 ni unutma).",
+        "uz": "while bilan 1 dan 10 gaça çiqar (count += 1 ni unutma).",
         "en": "Print 1-10 with while."
       },
       {
-        "uz": "while True + break bilan 'sonni top' o'yini yoz.",
+        "uz": "while True + break bilan 'sonni top' öyini yoz.",
         "en": "Guess game with while True + break."
       },
       {
-        "uz": "continue bilan 1-10 orasida faqat toq sonlarni chiqar.",
+        "uz": "continue bilan 1-10 orasida faqat toq sonlarni çiqar.",
         "en": "Print odd numbers with continue."
       },
       {
-        "uz": "while bilan sonlar yig'indisini hisobla (0 kiritilguncha).",
+        "uz": "while bilan sonlar yiğindisini hisobla (0 kiritilgunça).",
         "en": "Sum inputs until 0."
       },
       {
-        "uz": "break va continue farqini bir loopda ko'rsat.",
+        "uz": "break va continue farqini bir loopda körsat.",
         "en": "Show break vs continue difference."
       }
     ],
@@ -1771,39 +1771,39 @@ window.COURSE = [
     "unit": "Hafta 2 — Boshqaruv va strukturalar",
     "reviewOf": 9,
     "title": {
-      "uz": "Takrorlash: Loops",
+      "uz": "Takrorlaş: Loops",
       "en": "Review: Loops"
     },
     "intro": {
-      "uz": "Kecha o'rgangan mavzuni mustahkamlaymiz: qisqa takror, yangi mashqlar va kichik loyiha.",
+      "uz": "Keça örgangan mavzuni mustahkamlaymiz: qisqa takror, yangi maşqlar va kiçik loyiha.",
       "en": "Reinforce yesterday's topic: recap, new exercises and a mini-project."
     },
     "recap": {
-      "uz": "Eslatma: (1) for element in list/range. (2) range(n) 0 dan, oxiri kirmaydi. (3) while shart: — count += 1 ni unutma (cheksiz!). (4) break to'xtatadi, continue o'tkazadi. (5) total += n — yig'ish.",
+      "uz": "Eslatma: (1) for element in list/range. (2) range(n) 0 dan, oxiri kirmaydi. (3) while şart: — count += 1 ni unutma (çeksiz!). (4) break töxtatadi, continue ötkazadi. (5) total += n — yiğiş.",
       "en": "Recap: for/range; while + change condition; break/continue."
     },
     "project": {
       "title": {
-        "uz": "Loyiha: Sonni top o'yini",
+        "uz": "Loyiha: Sonni top öyini",
         "en": "Project: Guess the number"
       },
       "desc": {
-        "uz": "Kompyuter 1-20 orasida son o'ylaydi. while True + break bilan foydalanuvchi topguncha so'raydi, 'katta'/'kichik' deb yo'l ko'rsatadi.",
+        "uz": "Kompyuter 1-20 orasida son öylaydi. while True + break bilan foydalanuvçi topgunça söraydi, 'katta'/'kiçik' deb yöl körsatadi.",
         "en": "Guess game with while True + break."
       },
       "starter": "import random\nsecret = random.randint(1, 20)\nattempts = 0\n\nwhile True:\n    guess = int(input(\"Son (1-20): \"))\n    attempts += 1\n    if guess == secret:\n        print(f\"Topdingiz! {attempts} urinishda.\")\n        break\n    elif guess < secret:\n        print(\"Kattaroq!\")\n    else:\n        print(\"Kichikroq!\")"
     },
     "practice": [
       {
-        "uz": "for + range bilan ko'paytirish jadvali.",
+        "uz": "for + range bilan köpaytiriş jadvali.",
         "en": "Multiplication table."
       },
       {
-        "uz": "while bilan 0 kiritilguncha sonlar yig'indisi.",
+        "uz": "while bilan 0 kiritilgunça sonlar yiğindisi.",
         "en": "Sum until 0."
       },
       {
-        "uz": "continue bilan faqat juftlarni chiqar.",
+        "uz": "continue bilan faqat juftlarni çiqar.",
         "en": "Print evens with continue."
       }
     ],
@@ -1934,17 +1934,17 @@ window.COURSE = [
       "en": "Tuples & Sets"
     },
     "intro": {
-      "uz": "List — o'zgaruvchan ketma-ketlik. Lekin Python'da yana ikki muhim struktura bor: tuple (o'zgarmas ketma-ketlik) va set (takrorlanmas to'plam). Sertifikatda ularning farqi va qachon ishlatilishi ko'p so'raladi. Bugun ikkalasini chuqur o'rganamiz.",
+      "uz": "List — özgaruvçan ketma-ketlik. Lekin Python'da yana ikki muhim struktura bor: tuple (özgarmas ketma-ketlik) va set (takrorlanmas töplam). Sertifikatda ularning farqi va qaçon işlatilişi köp söraladi. Bugun ikkalasini çuqur örganamiz.",
       "en": "Beyond lists: tuple (immutable sequence) and set (unique collection). Exams test their differences."
     },
     "sections": [
       {
         "h": {
-          "uz": "Tuple — o'zgarmas ketma-ketlik",
+          "uz": "Tuple — özgarmas ketma-ketlik",
           "en": "Tuple — immutable sequence"
         },
         "p": {
-          "uz": "Tuple listga o'xshaydi, lekin () qavs bilan va O'ZGARMAS — yaratilgach elementini o'zgartirib, qo'shib yoki o'chirib bo'lmaydi. Index, slicing, len() ishlaydi. Nega kerak? Xavfsiz ma'lumot (koordinatalar, sozlamalar) uchun.",
+          "uz": "Tuple listga öxşaydi, lekin () qavs bilan va ÖZGARMAS — yaratilgaç elementini özgartirib, qöşib yoki öçirib bölmaydi. Index, slicing, len() işlaydi. Nega kerak? Xavfsiz maʼlumot (koordinatalar, sozlamalar) uçun.",
           "en": "Tuple is like a list but with () and IMMUTABLE — can't change after creation. Indexing works."
         },
         "code": "point = (3, 5)\nprint(point[0])     # 3\nprint(len(point))   # 2\n\n# O'zgartirib bo'lmaydi:\n# point[0] = 10   # XATO! TypeError\n\ncolors = (\"red\", \"green\", \"blue\")\nprint(colors[1])    # green"
@@ -1955,29 +1955,29 @@ window.COURSE = [
           "en": "Tuple unpacking & single-element"
         },
         "p": {
-          "uz": "Tuple'ni bir vaqtda o'zgaruvchilarga bo'lish mumkin — 'unpacking'. Bu funksiyadan bir necha qiymat qaytarishda juda foydali. Diqqat: bir elementli tuple uchun vergul SHART: (5,) — tuple, (5) — oddiy son.",
+          "uz": "Tuple'ni bir vaqtda özgaruvçilarga böliş mumkin — 'unpackinğ. Bu funksiyadan bir neça qiymat qaytarişda juda foydali. Diqqat: bir elementli tuple uçun vergul ŞART: (5,) — tuple, (5) — oddiy son.",
           "en": "Tuple unpacking: a, b = (1, 2). Single-element needs a comma: (5,) is a tuple, (5) is a number."
         },
         "code": "a, b = (1, 2)\nprint(a, b)       # 1 2\n\nx, y, z = 10, 20, 30   # qavssiz ham\nprint(y)          # 20\n\nsingle = (5,)     # tuple (vergul SHART)\nnot_tuple = (5)   # oddiy int\nprint(type(single), type(not_tuple))"
       },
       {
         "h": {
-          "uz": "Set — takrorlanmas to'plam",
+          "uz": "Set — takrorlanmas töplam",
           "en": "Set — unique collection"
         },
         "p": {
-          "uz": "Set {} qavs bilan, TAKRORLANMAS elementlar to'plami — bir xil qiymat faqat bir marta bo'ladi. Tartibsiz (index yo'q). add() qo'shadi, remove() o'chiradi. Nega kerak? Takrorlarni olib tashlash uchun eng tez usul.",
+          "uz": "Set {} qavs bilan, TAKRORLANMAS elementlar töplami — bir xil qiymat faqat bir marta böladi. Tartibsiz (index yöq). add() qöşadi, remove() öçiradi. Nega kerak? Takrorlarni olib taşlaş uçun eng tez usul.",
           "en": "Set uses {} with UNIQUE elements — duplicates auto-removed. Unordered (no index). add()/remove()."
         },
         "code": "nums = {1, 2, 2, 3, 3, 3}\nprint(nums)        # {1, 2, 3} (takror yo'q!)\n\nnums.add(4)\nnums.add(2)        # allaqachon bor, o'zgarmaydi\nprint(nums)        # {1, 2, 3, 4}\n\n# Listdan takrorlarni olib tashlash:\nlst = [1, 1, 2, 3, 3]\nprint(list(set(lst)))   # [1, 2, 3]"
       },
       {
         "h": {
-          "uz": "Set amallari: birlashma, kesishma",
+          "uz": "Set amallari: birlaşma, kesişma",
           "en": "Set operations"
         },
         "p": {
-          "uz": "Set'lar ustida matematik amallar: | birlashma (union), & kesishma (intersection), - ayirma (difference). Bu ikki to'plamni solishtirishda juda foydali — masalan umumiy do'stlar, farqli elementlar.",
+          "uz": "Set'lar ustida matematik amallar: | birlaşma (union), & kesişma (intersection), - ayirma (difference). Bu ikki töplamni soliştirişda juda foydali — masalan umumiy döstlar, farqli elementlar.",
           "en": "Set math: | union, & intersection, - difference. Useful for comparing two collections."
         },
         "code": "a = {1, 2, 3, 4}\nb = {3, 4, 5, 6}\n\nprint(a | b)   # {1,2,3,4,5,6} birlashma\nprint(a & b)   # {3, 4} kesishma\nprint(a - b)   # {1, 2} a da bor, b da yo'q\n\nprint(3 in a)  # True (tekshirish tez)"
@@ -1985,23 +1985,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "Tuple yarat, elementini o'zgartirishga urinib, xatoni ko'r.",
+        "uz": "Tuple yarat, elementini özgartirişga urinib, xatoni kör.",
         "en": "Create a tuple, try to modify it, see the error."
       },
       {
-        "uz": "Tuple unpacking bilan 3 ta o'zgaruvchini bir qatorda o'rnat.",
+        "uz": "Tuple unpacking bilan 3 ta özgaruvçini bir qatorda örnat.",
         "en": "Unpack a tuple into 3 variables."
       },
       {
-        "uz": "Bir elementli tuple yarat (vergul bilan), type() bilan tekshir.",
+        "uz": "Bir elementli tuple yarat (vergul bilan), type() bilan tekşir.",
         "en": "Single-element tuple with comma."
       },
       {
-        "uz": "Set bilan listdagi takrorlarni olib tashla.",
+        "uz": "Set bilan listdagi takrorlarni olib taşla.",
         "en": "Remove duplicates with set."
       },
       {
-        "uz": "Ikki set'ning kesishmasi va birlashmasini top.",
+        "uz": "Ikki set'ning kesişmasi va birlaşmasini top.",
         "en": "Union and intersection of two sets."
       }
     ],
@@ -2140,28 +2140,28 @@ window.COURSE = [
       "en": "Dictionaries"
     },
     "intro": {
-      "uz": "List index bilan ishlaydi (0,1,2). Dictionary NOM bilan ishlaydi (key). Real datasetlar (JSON) shu strukturada keladi.",
+      "uz": "List index bilan işlaydi (0,1,2). Dictionary NOM bilan işlaydi (key). Real datasetlar (JSON) şu strukturada keladi.",
       "en": "Lists work by index (0,1,2). A dictionary works by NAME (key). Real datasets (JSON) come in this structure."
     },
     "sections": [
       {
         "h": {
-          "uz": "Dictionary yaratish",
+          "uz": "Dictionary yaratiş",
           "en": "Creating a dictionary"
         },
         "p": {
-          "uz": "Jingalak qavs {} ichida key: value juftliklari. Key odatda matn, value istalgan tur. Qiymatga key bilan murojaat qilinadi.",
+          "uz": "Jingalak qavs {} içida key: value juftliklari. Key odatda matn, value istalgan tur. Qiymatga key bilan murojaat qilinadi.",
           "en": "Curly braces {} with key: value pairs. Key is usually text, value any type. Access a value by its key."
         },
         "code": "student = {\n    \"name\": \"Max\",\n    \"age\": 20,\n    \"active\": True\n}\n\nprint(student[\"name\"])   # Max\nprint(student[\"age\"])    # 20"
       },
       {
         "h": {
-          "uz": "Qo'shish va o'zgartirish",
+          "uz": "Qöşiş va özgartiriş",
           "en": "Adding and changing"
         },
         "p": {
-          "uz": "Yangi key: dict[key] = value. Mavjud key ustiga yozsa — o'zgaradi. del bilan o'chiriladi.",
+          "uz": "Yangi key: dict[key] = value. Mavjud key ustiga yozsa — özgaradi. del bilan öçiriladi.",
           "en": "New key: dict[key] = value. Writing over an existing key changes it. Delete with del."
         },
         "code": "student = {\"name\": \"Max\"}\nstudent[\"age\"] = 20        # add\nstudent[\"name\"] = \"Akbar\"  # change\ndel student[\"age\"]         # delete\nprint(student)"
@@ -2172,18 +2172,18 @@ window.COURSE = [
           "en": "Methods: keys, values, get"
         },
         "p": {
-          "uz": "keys() barcha kalitlar, values() barcha qiymatlar, get() xavfsiz olish (yo'q key uchun xato bermaydi).",
+          "uz": "keys() barça kalitlar, values() barça qiymatlar, get() xavfsiz oliş (yöq key uçun xato bermaydi).",
           "en": "keys() all keys, values() all values, get() safe access (no error for a missing key)."
         },
         "code": "student = {\"name\": \"Max\", \"age\": 20}\n\nprint(student.keys())    # dict_keys(['name', 'age'])\nprint(student.values())  # dict_values(['Max', 20])\nprint(student.get(\"city\", \"Unknown\"))  # Unknown"
       },
       {
         "h": {
-          "uz": "Dictionary bo'ylab loop",
+          "uz": "Dictionary böylab loop",
           "en": "Looping a dictionary"
         },
         "p": {
-          "uz": "for key in dict — kalitlar bo'ylab. items() bilan key va value birga olinadi. Bu datasetni qayta ishlashning asosi.",
+          "uz": "for key in dict — kalitlar böylab. items() bilan key va value birga olinadi. Bu datasetni qayta işlaşning asosi.",
           "en": "for key in dict — over keys. items() gives key and value together. This is the basis of processing a dataset."
         },
         "code": "student = {\"name\": \"Max\", \"age\": 20}\n\nfor key in student:\n    print(key, \"=\", student[key])\n\nfor key, value in student.items():\n    print(f\"{key}: {value}\")"
@@ -2191,23 +2191,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "O'zing haqingda dictionary yarat (name, age, city, student).",
+        "uz": "Özing haqingda dictionary yarat (name, age, city, student).",
         "en": "Create a dictionary about yourself (name, age, city, student)."
       },
       {
-        "uz": "Yangi key qo'sh, mavjudini o'zgartir, bittasini o'chir.",
+        "uz": "Yangi key qöş, mavjudini özgartir, bittasini öçir.",
         "en": "Add a new key, change an existing one, delete one."
       },
       {
-        "uz": "keys(), values(), get() ni sinab ko'r.",
+        "uz": "keys(), values(), get() ni sinab kör.",
         "en": "Try keys(), values(), get()."
       },
       {
-        "uz": "Dictionary bo'ylab items() bilan loop qil.",
+        "uz": "Dictionary böylab items() bilan loop qil.",
         "en": "Loop over a dictionary with items()."
       },
       {
-        "uz": "Talaba: bahosini dictionary'da saqla (fan: baho), o'rtachani hisobla.",
+        "uz": "Talaba: bahosini dictionaryʼda saqla (fan: baho), örtaçani hisobla.",
         "en": "Student: store grades in a dict (subject: grade), compute the average."
       }
     ],
@@ -2347,50 +2347,50 @@ window.COURSE = [
       "en": "Nested data structures"
     },
     "intro": {
-      "uz": "Haqiqiy ma'lumot ko'pincha ichma-ich joylashadi: list ichida list, list ichida dictionary. Masalan talabalar ro'yxati — har biri dictionary. Bu JSON ma'lumotining tuzilishi. Sertifikatda ichki elementga murojaat qilish ko'p so'raladi.",
+      "uz": "Haqiqiy maʼlumot köpinça içma-iç joylaşadi: list içida list, list içida dictionary. Masalan talabalar röyxati — har biri dictionary. Bu JSON maʼlumotining tuzilişi. Sertifikatda içki elementga murojaat qiliş köp söraladi.",
       "en": "Real data nests: lists of dicts, dicts of lists. This is how JSON is structured. Exams test nested access."
     },
     "sections": [
       {
         "h": {
-          "uz": "List ichida list (matritsa)",
+          "uz": "List içida list (matritsa)",
           "en": "List of lists (matrix)"
         },
         "p": {
-          "uz": "List ichida list — jadval yoki matritsa. Ichki elementga IKKI index bilan murojaat: matrix[qator][ustun]. Birinchi index qatorni, ikkinchisi ustunni beradi. Bu o'yin taxtalari, jadvallar uchun.",
+          "uz": "List içida list — jadval yoki matritsa. Içki elementga IKKI index bilan murojaat: matrix[qator][ustun]. Birinçi index qatorni, ikkinçisi ustunni beradi. Bu öyin taxtalari, jadvallar uçun.",
           "en": "List of lists = a grid. Access with two indices: matrix[row][col]."
         },
         "code": "matrix = [[1, 2, 3],\n          [4, 5, 6],\n          [7, 8, 9]]\n\nprint(matrix[0])       # [1, 2, 3] (birinchi qator)\nprint(matrix[1][2])    # 6 (2-qator, 3-ustun)\nprint(matrix[2][0])    # 7"
       },
       {
         "h": {
-          "uz": "List ichida dictionary",
+          "uz": "List içida dictionary",
           "en": "List of dictionaries"
         },
         "p": {
-          "uz": "Eng ko'p uchraydigan struktura: har element bir dictionary. Masalan talabalar ro'yxati — har biri {ism, yosh}. Loop bilan har birini olib, key bilan murojaat qilasan. Bu API va JSON ma'lumotining odatiy shakli.",
+          "uz": "Eng köp uçraydigan struktura: har element bir dictionary. Masalan talabalar röyxati — har biri {ism, yosh}. Loop bilan har birini olib, key bilan murojaat qilasan. Bu API va JSON maʼlumotining odatiy şakli.",
           "en": "Most common: a list where each element is a dict. Loop through, access by key."
         },
         "code": "students = [\n    {\"name\": \"Ali\", \"age\": 20},\n    {\"name\": \"Vali\", \"age\": 22}\n]\n\nprint(students[0][\"name\"])   # Ali\n\nfor s in students:\n    print(f\"{s['name']}: {s['age']}\")"
       },
       {
         "h": {
-          "uz": "Dictionary ichida list/dictionary",
+          "uz": "Dictionary içida list/dictionary",
           "en": "Dict containing list/dict"
         },
         "p": {
-          "uz": "Dictionary value'si list yoki boshqa dictionary bo'lishi mumkin. Masalan bir odam ma'lumoti: ismi (string), hobbi'lari (list), manzili (dictionary). Ichkariga zanjir bilan murojaat: person['address']['city'].",
+          "uz": "Dictionary valueʼsi list yoki boşqa dictionary bölişi mumkin. Masalan bir odam maʼlumoti: ismi (string), hobbiʼlari (list), manzili (dictionary). Içkariga zanjir bilan murojaat: person['address']['city'].",
           "en": "A dict value can be a list or another dict. Access by chaining: person['address']['city']."
         },
         "code": "person = {\n    \"name\": \"Max\",\n    \"hobbies\": [\"coding\", \"chess\"],\n    \"address\": {\"city\": \"Tashkent\", \"zip\": \"100000\"}\n}\n\nprint(person[\"hobbies\"][0])       # coding\nprint(person[\"address\"][\"city\"])  # Tashkent"
       },
       {
         "h": {
-          "uz": "Nested loop bilan aylanish",
+          "uz": "Nested loop bilan aylaniş",
           "en": "Iterating with nested loops"
         },
         "p": {
-          "uz": "Ichma-ich strukturani nested loop (loop ichida loop) bilan aylantiriladi. Tashqi loop qatorlarni, ichki loop ustunlarni oladi. Sertifikatda nested loop necha marta ishlashi (3×3=9) ko'p so'raladi.",
+          "uz": "Içma-iç strukturani nested loop (loop içida loop) bilan aylantiriladi. Taşqi loop qatorlarni, içki loop ustunlarni oladi. Sertifikatda nested loop neça marta işlaşi (3×3=9) köp söraladi.",
           "en": "Nested loops iterate nested structures. Outer=rows, inner=columns. Exams ask iteration count."
         },
         "code": "matrix = [[1, 2], [3, 4], [5, 6]]\n\nfor row in matrix:\n    for value in row:\n        print(value, end=\" \")\n    print()   # yangi qator\n# Chiqishi:\n# 1 2\n# 3 4\n# 5 6"
@@ -2398,23 +2398,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "3×3 matritsa yasab, o'rtadagi elementni (matrix[1][1]) chiqar.",
+        "uz": "3×3 matritsa yasab, örtadagi elementni (matrix[1][1]) çiqar.",
         "en": "3x3 matrix, print center."
       },
       {
-        "uz": "Talabalar listini (dict) yasab, loop bilan ismlarni chiqar.",
+        "uz": "Talabalar listini (dict) yasab, loop bilan ismlarni çiqar.",
         "en": "List of student dicts, print names."
       },
       {
-        "uz": "Person dictionary yasab (list va dict ichida), shahrini chiqar.",
+        "uz": "Person dictionary yasab (list va dict içida), şahrini çiqar.",
         "en": "Nested person dict, print city."
       },
       {
-        "uz": "Nested loop bilan matritsaning barcha elementlarini chiqar.",
+        "uz": "Nested loop bilan matritsaning barça elementlarini çiqar.",
         "en": "Print all matrix elements with nested loops."
       },
       {
-        "uz": "List ichidagi dictionary'lardan yosh o'rtachasini hisobla.",
+        "uz": "List içidagi dictionaryʼlardan yoş örtaçasini hisobla.",
         "en": "Average age from list of dicts."
       }
     ],
@@ -2549,15 +2549,15 @@ window.COURSE = [
     "unit": "Hafta 2 — Boshqaruv va strukturalar",
     "reviewOf": 13,
     "title": {
-      "uz": "Takrorlash: Data strukturalari",
+      "uz": "Takrorlaş: Data strukturalari",
       "en": "Review: Data structures"
     },
     "intro": {
-      "uz": "Kecha o'rgangan mavzuni mustahkamlaymiz: qisqa takror, yangi mashqlar va kichik loyiha.",
+      "uz": "Keça örgangan mavzuni mustahkamlaymiz: qisqa takror, yangi maşqlar va kiçik loyiha.",
       "en": "Reinforce yesterday's topic: recap, new exercises and a mini-project."
     },
     "recap": {
-      "uz": "Eslatma: (1) tuple () o'zgarmas, set {} takrorlanmas. (2) dict {key:value}, get() xavfsiz. (3) nested: matrix[qator][ustun], students[0]['name']. (4) nested loop.",
+      "uz": "Eslatma: (1) tuple () özgarmas, set {} takrorlanmas. (2) dict {key:value}, get() xavfsiz. (3) nested: matrix[qator][ustun], students[0]['name']. (4) nested loop.",
       "en": "Recap: tuple/set; dict; nested access; nested loops."
     },
     "project": {
@@ -2566,22 +2566,22 @@ window.COURSE = [
         "en": "Weekly project: Contact book"
       },
       "desc": {
-        "uz": "Kontaktlarni saqlaydigan dastur: har kontakt dictionary (ism, tel), hammasi listda. Qo'shish, ko'rish, qidirish. List + dict + loop birga.",
+        "uz": "Kontaktlarni saqlaydigan dastur: har kontakt dictionary (ism, tel), hammasi listda. Qöşiş, köriş, qidiriş. List + dict + loop birga.",
         "en": "Contact book: list of dicts, add/view/search."
       },
       "starter": "contacts = []\n\ndef add(name, phone):\n    contacts.append({\"name\": name, \"phone\": phone})\n\ndef show_all():\n    for c in contacts:\n        print(f\"{c['name']} — {c['phone']}\")\n\nadd(\"Max\", \"998901234567\")\nadd(\"Ali\", \"998907654321\")\nshow_all()"
     },
     "practice": [
       {
-        "uz": "Set bilan listdagi takrorlarni olib tashla.",
+        "uz": "Set bilan listdagi takrorlarni olib taşla.",
         "en": "Dedup with set."
       },
       {
-        "uz": "Tuple unpacking bilan qiymatlarni bo'l.",
+        "uz": "Tuple unpacking bilan qiymatlarni böl.",
         "en": "Tuple unpacking."
       },
       {
-        "uz": "List ichida dict'lardan ma'lumot ol.",
+        "uz": "List içida dict'lardan maʼlumot ol.",
         "en": "Access list of dicts."
       }
     ],
@@ -2715,17 +2715,17 @@ window.COURSE = [
       "en": "Functions"
     },
     "intro": {
-      "uz": "Bir marta yozib, ko'p marta ishlatiladigan kod. print(), len() — bular funksiya. Bugun o'zingnikini yasaysan.",
+      "uz": "Bir marta yozib, köp marta işlatiladigan kod. print(), len() — bular funksiya. Bugun özingnikini yasaysan.",
       "en": "Code written once, used many times. print(), len() are functions. Today you make your own."
     },
     "sections": [
       {
         "h": {
-          "uz": "def va chaqirish",
+          "uz": "def va çaqiriş",
           "en": "def and calling"
         },
         "p": {
-          "uz": "def funksiyani yaratadi (retsept). Chaqirmaguncha ishlamaydi — faqat tayyor turadi. def() bilan chaqiriladi.",
+          "uz": "def funksiyani yaratadi (retsept). Çaqirmagunça işlamaydi — faqat tayyor turadi. def() bilan çaqiriladi.",
           "en": "def creates a function (recipe). It doesn't run until called — it just waits. Call it with name()."
         },
         "code": "def greet():\n    print(\"Hello!\")\n    print(\"Welcome!\")\n\ngreet()   # call it — NOW it runs\ngreet()   # can call again"
@@ -2736,29 +2736,29 @@ window.COURSE = [
           "en": "Parameters"
         },
         "p": {
-          "uz": "Funksiya tashqaridan ma'lumot oladi — parametr. Har chaqirganda boshqa qiymat berasan. Tartib muhim.",
+          "uz": "Funksiya taşqaridan maʼlumot oladi — parametr. Har çaqirganda boşqa qiymat berasan. Tartib muhim.",
           "en": "A function takes data from outside — a parameter. You pass a different value each call. Order matters."
         },
         "code": "def greet(name):\n    print(f\"Hello, {name}!\")\n\ngreet(\"Max\")    # Hello, Max!\ngreet(\"Ali\")    # Hello, Ali!\n\ndef intro(name, age):\n    print(f\"{name}, {age}\")\nintro(\"Max\", 20)"
       },
       {
         "h": {
-          "uz": "return — natija qaytarish",
+          "uz": "return — natija qaytariş",
           "en": "return — returning a result"
         },
         "p": {
-          "uz": "print faqat ko'rsatadi. return qiymatni QAYTARADI — keyin ishlatsa bo'ladi. Bu eng muhim farq. return'dan keyingi kod ishlamaydi.",
+          "uz": "print faqat körsatadi. return qiymatni QAYTARADI — keyin işlatsa böladi. Bu eng muhim farq. returnʼdan keyingi kod işlamaydi.",
           "en": "print only shows. return RETURNS a value — you can use it later. This is the key difference. Code after return doesn't run."
         },
         "code": "def add(a, b):\n    return a + b\n\nresult = add(3, 5)\nprint(result)        # 8\nprint(add(10, 20) * 2)   # 60 — used the result!"
       },
       {
         "h": {
-          "uz": "Default qiymat + funksiya funksiyani chaqiradi",
+          "uz": "Default qiymat + funksiya funksiyani çaqiradi",
           "en": "Default values + functions calling functions"
         },
         "p": {
-          "uz": "Parametrga oldindan qiymat berish mumkin (default). Funksiyalar bir-birini chaqirishi mumkin — katta dasturlarning asosi.",
+          "uz": "Parametrga oldindan qiymat beriş mumkin (default). Funksiyalar bir-birini çaqirişi mumkin — katta dasturlarning asosi.",
           "en": "You can give a parameter a preset (default). Functions can call each other — the basis of big programs."
         },
         "code": "def greet(name, msg=\"Hi\"):\n    print(f\"{msg}, {name}!\")\ngreet(\"Max\")             # Hi, Max!\ngreet(\"Ali\", \"Hello\")    # Hello, Ali!\n\ndef square(x):\n    return x * x\ndef sum_sq(a, b):\n    return square(a) + square(b)\nprint(sum_sq(3, 4))      # 25"
@@ -2766,23 +2766,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "Parametrsiz greet() funksiya yoz, ikki marta chaqir.",
+        "uz": "Parametrsiz greet() funksiya yoz, ikki marta çaqir.",
         "en": "Write a parameterless greet() function, call it twice."
       },
       {
-        "uz": "Ism va yosh oladigan intro(name, age) funksiya yoz.",
+        "uz": "Ism va yoş oladigan intro(name, age) funksiya yoz.",
         "en": "Write intro(name, age) taking name and age."
       },
       {
-        "uz": "add(a, b) return bilan yoz, natijani * 2 qilib chiqar.",
+        "uz": "add(a, b) return bilan yoz, natijani * 2 qilib çiqar.",
         "en": "Write add(a, b) with return, print result * 2."
       },
       {
-        "uz": "average(nums) funksiya — listni olib o'rtachani qaytaradi.",
+        "uz": "average(nums) funksiya — listni olib örtaçani qaytaradi.",
         "en": "average(nums) function — takes a list, returns the average."
       },
       {
-        "uz": "square va sum_squares — biri ikkinchisini chaqiradi.",
+        "uz": "square va sum_squares — biri ikkinçisini çaqiradi.",
         "en": "square and sum_squares — one calls the other."
       }
     ],
@@ -2924,7 +2924,7 @@ window.COURSE = [
       "en": "Functions: default, *args, scope"
     },
     "intro": {
-      "uz": "Kecha funksiya asoslarini o'rgandik. Bugun ilg'or imkoniyatlar: standart qiymatlar, cheksiz argumentlar (*args, **kwargs), va scope (o'zgaruvchi ko'rinish sohasi). Bular sertifikat imtihonining muhim mavzulari — ayniqsa scope va default qiymatlar.",
+      "uz": "Keça funksiya asoslarini örgandik. Bugun ilğor imkoniyatlar: standart qiymatlar, çeksiz argumentlar (*args, **kwargs), va scope (özgaruvçi köriniş sohasi). Bular sertifikat imtihonining muhim mavzulari — ayniqsa scope va default qiymatlar.",
       "en": "Advanced functions: defaults, *args/**kwargs, and scope. Key exam topics."
     },
     "sections": [
@@ -2934,18 +2934,18 @@ window.COURSE = [
           "en": "Default values"
         },
         "p": {
-          "uz": "Parametrga oldindan qiymat berish mumkin: def greet(name, msg='Salom'). Agar chaqirganda qiymat berilmasa, standart ishlatiladi. MUHIM: default parametrlar oddiylaridan KEYIN kelishi shart, aks holda xato.",
+          "uz": "Parametrga oldindan qiymat beriş mumkin: def greet(name, msg='Salom'). Agar çaqirganda qiymat berilmasa, standart işlatiladi. MUHIM: default parametrlar oddiylaridan KEYIN kelişi şart, aks holda xato.",
           "en": "Parameters can have defaults: def f(x, y=10). Defaults must come AFTER non-default params."
         },
         "code": "def greet(name, msg=\"Salom\"):\n    print(f\"{msg}, {name}!\")\n\ngreet(\"Max\")            # Salom, Max!\ngreet(\"Ali\", \"Hi\")      # Hi, Ali!\n\n# def f(x=1, y):  # XATO! default oldin bo'lmaydi\ndef f(x, y=2):          # to'g'ri\n    return x + y"
       },
       {
         "h": {
-          "uz": "*args — cheksiz argumentlar",
+          "uz": "*args — çeksiz argumentlar",
           "en": "*args — variable arguments"
         },
         "p": {
-          "uz": "*args funksiyaga istalgancha argument berishga imkon beradi — ular tuple sifatida yig'iladi. Masalan sum_all(1,2,3,4) hammasini qo'shadi. Bu qancha argument kelishini oldindan bilmaganda ishlatiladi.",
+          "uz": "*args funksiyaga istalgança argument berişga imkon beradi — ular tuple sifatida yiğiladi. Masalan sum_all(1,2,3,4) hammasini qöşadi. Bu qança argument kelişini oldindan bilmaganda işlatiladi.",
           "en": "*args accepts any number of positional args, collected as a tuple."
         },
         "code": "def sum_all(*args):\n    total = 0\n    for n in args:\n        total += n\n    return total\n\nprint(sum_all(1, 2, 3))       # 6\nprint(sum_all(1, 2, 3, 4, 5)) # 15\nprint(sum_all())              # 0"
@@ -2956,18 +2956,18 @@ window.COURSE = [
           "en": "**kwargs — keyword arguments"
         },
         "p": {
-          "uz": "**kwargs nomli argumentlarni dictionary sifatida yig'adi. Masalan info(name='Max', age=20). Bu moslashuvchan funksiyalar (masalan sozlamalar) uchun. args va kwargs birga ham ishlatilsa bo'ladi.",
+          "uz": "**kwargs nomli argumentlarni dictionary sifatida yiğadi. Masalan info(name='Max', age=20). Bu moslaşuvçan funksiyalar (masalan sozlamalar) uçun. args va kwargs birga ham işlatilsa böladi.",
           "en": "**kwargs collects keyword arguments as a dict: info(name='Max', age=20)."
         },
         "code": "def info(**kwargs):\n    for key, value in kwargs.items():\n        print(f\"{key}: {value}\")\n\ninfo(name=\"Max\", age=20)\n# name: Max\n# age: 20\n\ndef mix(a, *args, **kwargs):\n    print(a, args, kwargs)"
       },
       {
         "h": {
-          "uz": "Scope — o'zgaruvchi ko'rinishi",
+          "uz": "Scope — özgaruvçi körinişi",
           "en": "Scope — variable visibility"
         },
         "p": {
-          "uz": "Funksiya ICHIDA yaratilgan o'zgaruvchi faqat o'sha funksiyada ko'rinadi (local). Tashqarida yaratilgani hamma joyda ko'rinadi (global). Funksiya ichida global'ni o'zgartirish uchun global kalit so'zi kerak. Sertifikatda scope savoli ko'p.",
+          "uz": "Funksiya IÇIDA yaratilgan özgaruvçi faqat öşa funksiyada körinadi (local). Taşqarida yaratilgani hamma joyda körinadi (global). Funksiya içida globalʼni özgartiriş uçun global kalit sözi kerak. Sertifikatda scope savoli köp.",
           "en": "Variables inside a function are local (only visible there). Outside = global. Use 'global' to modify globals."
         },
         "code": "x = 10          # global\n\ndef test():\n    y = 5       # local (faqat shu yerda)\n    print(x)    # global'ni o'qiy oladi: 10\n    print(y)    # 5\n\ntest()\n# print(y)     # XATO! y faqat funksiya ichida"
@@ -2975,23 +2975,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "Default qiymatli funksiya yoz, ham qiymat bilan ham qiymatsiz chaqir.",
+        "uz": "Default qiymatli funksiya yoz, ham qiymat bilan ham qiymatsiz çaqir.",
         "en": "Function with default, call both ways."
       },
       {
-        "uz": "*args bilan istalgancha son qabul qilib, ko'paytmasini qaytar.",
+        "uz": "*args bilan istalgança son qabul qilib, köpaytmasini qaytar.",
         "en": "*args product function."
       },
       {
-        "uz": "**kwargs bilan ma'lumot qabul qilib, chiroyli chiqar.",
+        "uz": "**kwargs bilan maʼlumot qabul qilib, çiroyli çiqar.",
         "en": "**kwargs info printer."
       },
       {
-        "uz": "Local va global o'zgaruvchi farqini ko'rsat.",
+        "uz": "Local va global özgaruvçi farqini körsat.",
         "en": "Show local vs global."
       },
       {
-        "uz": "global kalit so'zi bilan funksiya ichidan global'ni o'zgartir.",
+        "uz": "global kalit sözi bilan funksiya içidan globalʼni özgartir.",
         "en": "Modify a global with 'global'."
       }
     ],
@@ -3124,15 +3124,15 @@ window.COURSE = [
     "unit": "Hafta 3 — Funksiya va string",
     "reviewOf": 16,
     "title": {
-      "uz": "Takrorlash: Funksiyalar",
+      "uz": "Takrorlaş: Funksiyalar",
       "en": "Review: Functions"
     },
     "intro": {
-      "uz": "Kecha o'rgangan mavzuni mustahkamlaymiz: qisqa takror, yangi mashqlar va kichik loyiha.",
+      "uz": "Keça örgangan mavzuni mustahkamlaymiz: qisqa takror, yangi maşqlar va kiçik loyiha.",
       "en": "Reinforce yesterday's topic: recap, new exercises and a mini-project."
     },
     "recap": {
-      "uz": "Eslatma: (1) def yaratadi, name() chaqiradi. (2) return qaytaradi (ishlatsa bo'ladi), print ko'rsatadi. (3) default: def f(x, y=5). (4) *args tuple, **kwargs dict. (5) local vs global scope.",
+      "uz": "Eslatma: (1) def yaratadi, name() çaqiradi. (2) return qaytaradi (işlatsa böladi), print körsatadi. (3) default: def f(x, y=5). (4) *args tuple, **kwargs dict. (5) local vs global scope.",
       "en": "Recap: def/return; defaults; *args/**kwargs; scope."
     },
     "project": {
@@ -3141,22 +3141,22 @@ window.COURSE = [
         "en": "Project: Text stats functions"
       },
       "desc": {
-        "uz": "Bir necha funksiya yoz: count_words(text), count_chars(text), longest_word(text). Har biri return bilan natija qaytarsin, keyin birga ishlat.",
+        "uz": "Bir neça funksiya yoz: count_words(text), count_çars(text), longest_word(text). Har biri return bilan natija qaytarsin, keyin birga işlat.",
         "en": "Functions for text stats using return."
       },
       "starter": "def count_words(text):\n    return len(text.split())\n\ndef longest_word(text):\n    words = text.split()\n    longest = \"\"\n    for w in words:\n        if len(w) > len(longest):\n            longest = w\n    return longest\n\ntext = input(\"Matn: \")\nprint(f\"So'zlar: {count_words(text)}\")\nprint(f\"Eng uzun: {longest_word(text)}\")"
     },
     "practice": [
       {
-        "uz": "*args bilan istalgancha son qo'shadigan funksiya.",
+        "uz": "*args bilan istalgança son qöşadigan funksiya.",
         "en": "*args sum function."
       },
       {
-        "uz": "default qiymatli funksiyani ikki xil chaqir.",
+        "uz": "default qiymatli funksiyani ikki xil çaqir.",
         "en": "Call default function two ways."
       },
       {
-        "uz": "local va global farqini ko'rsat.",
+        "uz": "local va global farqini körsat.",
         "en": "Show local vs global."
       }
     ],
@@ -3288,7 +3288,7 @@ window.COURSE = [
       "en": "Strings & methods"
     },
     "intro": {
-      "uz": "String — matn, dasturlashda eng ko'p ishlatiladigan turlardan biri. Ismlar, xabarlar, fayllar — hammasi string. Sertifikatda string metodlari (upper, split, replace, strip) va indexing juda ko'p so'raladi. Bugun ularni chuqur o'rganamiz.",
+      "uz": "String — matn, dasturlaşda eng köp işlatiladigan turlardan biri. Ismlar, xabarlar, fayllar — hammasi string. Sertifikatda string metodlari (upper, split, replace, strip) va indexing juda köp söraladi. Bugun ularni çuqur örganamiz.",
       "en": "Strings are text — everywhere in code. Exams heavily test string methods and indexing."
     },
     "sections": [
@@ -3298,18 +3298,18 @@ window.COURSE = [
           "en": "String indexing & slicing"
         },
         "p": {
-          "uz": "String — belgilar ketma-ketligi. Har belgi index'da (0 dan). [0] birinchi, [-1] oxirgi. Slicing [start:stop] — stop kirmaydi (listdagidek). MUHIM: string O'ZGARMAS — s[0]='x' xato beradi.",
+          "uz": "String — belgilar ketma-ketligi. Har belgi indexʼda (0 dan). [0] birinçi, [-1] oxirgi. Slicing [start:stop] — stop kirmaydi (listdagidek). MUHIM: string ÖZGARMAS — s[0]='x' xato beradi.",
           "en": "Strings are character sequences. Index from 0, [-1] last. Slicing [start:stop]. Strings are IMMUTABLE."
         },
         "code": "s = \"Python\"\nprint(s[0])      # P\nprint(s[-1])     # n\nprint(s[0:3])    # Pyt\nprint(s[2:])     # thon\nprint(s[::-1])   # nohtyP (teskari)\nprint(len(s))    # 6"
       },
       {
         "h": {
-          "uz": "Katta-kichik va tozalash metodlari",
+          "uz": "Katta-kiçik va tozalaş metodlari",
           "en": "Case & cleaning methods"
         },
         "p": {
-          "uz": "upper() katta, lower() kichik, title() har so'z bosh harfi, capitalize() birinchi harf. strip() atrofdagi bo'shliqni tozalaydi. MUHIM: metodlar YANGI string qaytaradi, asl string o'zgarmaydi (o'zgarmas).",
+          "uz": "upper() katta, lower() kiçik, title() har söz boş harfi, capitalize() birinçi harf. strip() atrofdagi böşliqni tozalaydi. MUHIM: metodlar YANGI string qaytaradi, asl string özgarmaydi (özgarmas).",
           "en": "upper/lower/title/capitalize; strip() removes surrounding whitespace. Methods return NEW strings."
         },
         "code": "s = \"  Hello World  \"\nprint(s.upper())      # '  HELLO WORLD  '\nprint(s.lower())      # '  hello world  '\nprint(s.strip())      # 'Hello World'\nprint(\"python\".title())  # Python\nprint(s.strip().upper()) # 'HELLO WORLD'"
@@ -3320,18 +3320,18 @@ window.COURSE = [
           "en": "split() and join()"
         },
         "p": {
-          "uz": "split() stringni listga bo'ladi (bo'shliq yoki berilgan belgi bo'yicha). join() listni stringga birlashtiradi. Bu ikkalasi matnni so'zlarga bo'lish va qayta yig'ishda eng ko'p ishlatiladi. Sertifikatda klassik juftlik.",
+          "uz": "split() stringni listga böladi (böşliq yoki berilgan belgi böyiça). join() listni stringga birlaştiradi. Bu ikkalasi matnni sözlarga böliş va qayta yiğişda eng köp işlatiladi. Sertifikatda klassik juftlik.",
           "en": "split() → list, join() → string. The classic pair for text processing."
         },
         "code": "text = \"a,b,c,d\"\nparts = text.split(\",\")     # ['a','b','c','d']\nprint(len(parts))            # 4\n\nwords = \"men kod yozaman\".split()  # bo'shliq bo'yicha\nprint(words)                 # ['men','kod','yozaman']\n\nprint(\"-\".join([\"x\",\"y\",\"z\"]))  # x-y-z"
       },
       {
         "h": {
-          "uz": "Qidirish va tekshirish metodlari",
+          "uz": "Qidiriş va tekşiriş metodlari",
           "en": "Search & check methods"
         },
         "p": {
-          "uz": "in — string ichida bor-yo'qligini tekshiradi (True/False). replace() almashtiradi. find() index topadi (yo'q bo'lsa -1). count() nechta borligini sanaydi. startswith()/endswith() boshi/oxirini tekshiradi.",
+          "uz": "in — string içida bor-yöqligini tekşiradi (True/False). replace() almaştiradi. find() index topadi (yöq bölsa -1). count() neçta borligini sanaydi. startswith()/endswith() boşi/oxirini tekşiradi.",
           "en": "'in' checks membership; replace(); find() returns index or -1; count(); startswith/endswith."
         },
         "code": "s = \"hello world\"\nprint(\"world\" in s)         # True\nprint(s.replace(\"o\", \"0\"))  # hell0 w0rld\nprint(s.count(\"o\"))         # 2\nprint(s.find(\"world\"))      # 6\nprint(s.startswith(\"hello\"))# True"
@@ -3339,23 +3339,23 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "String slicing bilan [::-1] teskari yozuvni chiqar.",
+        "uz": "String slicing bilan [::-1] teskari yozuvni çiqar.",
         "en": "Reverse a string with [::-1]."
       },
       {
-        "uz": "upper, lower, strip, title metodlarini bir stringda sinab ko'r.",
+        "uz": "upper, lower, strip, title metodlarini bir stringda sinab kör.",
         "en": "Try upper/lower/strip/title."
       },
       {
-        "uz": "Gapni split() bilan so'zlarga bo'lib, sanab chiqar.",
+        "uz": "Gapni split() bilan sözlarga bölib, sanab çiqar.",
         "en": "Split a sentence, count words."
       },
       {
-        "uz": "replace() bilan matndagi belgini almashtir.",
+        "uz": "replace() bilan matndagi belgini almaştir.",
         "en": "Replace a character."
       },
       {
-        "uz": "in bilan so'z bor-yo'qligini, count bilan nechtaligini tekshir.",
+        "uz": "in bilan söz bor-yöqligini, count bilan neçtaligini tekşir.",
         "en": "Check membership and count."
       }
     ],
@@ -3489,11 +3489,11 @@ window.COURSE = [
     "type": "topic",
     "unit": "Hafta 3 — Funksiya va string",
     "title": {
-      "uz": "String formatlash va escape",
+      "uz": "String formatlaş va escape",
       "en": "String formatting & escape"
     },
     "intro": {
-      "uz": "Ma'lumotni chiroyli chiqarish uchun formatlash kerak: sonlarni yaxlitlash, ustunlarga tekislash, maxsus belgilar. f-string bu ishning zamonaviy usuli. Sertifikatda format spetsifikatorlari va escape belgilari so'raladi.",
+      "uz": "Maʼlumotni çiroyli çiqariş uçun formatlaş kerak: sonlarni yaxlitlaş, ustunlarga tekislaş, maxsus belgilar. f-string bu işning zamonaviy usuli. Sertifikatda format spetsifikatorlari va escape belgilari söraladi.",
       "en": "Formatting makes output clean: rounding, alignment, special characters. f-strings are the modern way."
     },
     "sections": [
@@ -3503,29 +3503,29 @@ window.COURSE = [
           "en": "f-string basics & expressions"
         },
         "p": {
-          "uz": "f\"...\" ichida {} orasiga o'zgaruvchi yoki HATTO ifoda qo'yiladi. {5+3} hisoblanadi, {name.upper()} metod ishlaydi. Bu eng o'qiladigan va tez usul — Python 3.6+ da.",
+          "uz": "f\"...\" içida {} orasiga özgaruvçi yoki HATTO ifoda qöyiladi. {5+3} hisoblanadi, {name.upper()} metod işlaydi. Bu eng öqiladigan va tez usul — Python 3.6+ da.",
           "en": "f-strings embed variables or expressions in {}. {5+3} computes, {name.upper()} calls methods."
         },
         "code": "name = \"Max\"\nage = 20\nprint(f\"{name} is {age}\")        # Max is 20\nprint(f\"Next: {age + 1}\")        # Next: 21\nprint(f\"{name.upper()}\")         # MAX\nprint(f\"{'yes' if age >= 18 else 'no'}\")  # yes"
       },
       {
         "h": {
-          "uz": "Sonlarni formatlash",
+          "uz": "Sonlarni formatlaş",
           "en": "Formatting numbers"
         },
         "p": {
-          "uz": "{son:.2f} — 2 xona kasr (float). {son:,} — mingliklarni vergul bilan ajratadi. {son:.0%} — foiz. {son:05d} — 5 xona, nol bilan to'ldirish. Bu hisobotlar va pul chiqarishda juda muhim.",
+          "uz": "{son:.2f} — 2 xona kasr (float). {son:,} — mingliklarni vergul bilan ajratadi. {son:.0%} — foiz. {son:05d} — 5 xona, nol bilan töldiriş. Bu hisobotlar va pul çiqarişda juda muhim.",
           "en": "{x:.2f} 2 decimals, {x:,} thousands separator, {x:.0%} percent, {x:05d} zero-padded."
         },
         "code": "price = 1234.5678\nprint(f\"{price:.2f}\")      # 1234.57\nprint(f\"{price:,.2f}\")     # 1,234.57\nprint(f\"{0.85:.0%}\")       # 85%\nprint(f\"{42:05d}\")         # 00042\nprint(f\"{3.14159:.3f}\")    # 3.142"
       },
       {
         "h": {
-          "uz": "Tekislash va kenglik",
+          "uz": "Tekislaş va kenglik",
           "en": "Alignment & width"
         },
         "p": {
-          "uz": "{matn:>10} o'ngga, {matn:<10} chapga, {matn:^10} markazga tekislaydi (10 — kenglik). To'ldirish belgisini qo'shsa bo'ladi: {x:*^10}. Bu jadval kabi chiroyli chiqarishda ishlatiladi.",
+          "uz": "{matn:>10} öngga, {matn:<10} çapga, {matn:^10} markazga tekislaydi (10 — kenglik). Töldiriş belgisini qöşsa böladi: {x:*^10}. Bu jadval kabi çiroyli çiqarişda işlatiladi.",
           "en": "{s:>10} right, {s:<10} left, {s:^10} center align, with width 10. Fill char: {s:*^10}."
         },
         "code": "print(f\"{'hi':>10}|\")    # '        hi|'\nprint(f\"{'hi':<10}|\")    # 'hi        |'\nprint(f\"{'hi':^10}|\")    # '    hi    |'\nprint(f\"{'hi':*^10}\")    # ****hi****"
@@ -3536,7 +3536,7 @@ window.COURSE = [
           "en": "Escape characters"
         },
         "p": {
-          "uz": "Ba'zi belgilar maxsus: \\n yangi qator, \\t tab, \\\\ teskari chiziq, \\\" qo'shtirnoq. Raw string r\"...\" da escape ishlamaydi (fayl yo'llari uchun). Sertifikatda \\n va \\t ko'p so'raladi.",
+          "uz": "Baʼzi belgilar maxsus: \\n yangi qator, \\t tab, \\\\ teskari çiziq, \\\" qöştirnoq. Raw string r\"...\" da escape işlamaydi (fayl yöllari uçun). Sertifikatda \\n va \\t köp söraladi.",
           "en": "Escapes: \\n newline, \\t tab, \\\\ backslash, \\\" quote. Raw strings r\"...\" ignore escapes."
         },
         "code": "print(\"Line1\\nLine2\")     # ikki qator\nprint(\"A\\tB\\tC\")          # tab bilan\nprint(\"He said \\\"Hi\\\"\")   # He said \"Hi\"\nprint(r\"C:\\new\\folder\")   # raw: \\n oddiy"
@@ -3544,15 +3544,15 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "f-string ichida ifoda hisobla ({5*3}).",
+        "uz": "f-string içida ifoda hisobla ({5*3}).",
         "en": "Compute an expression in f-string."
       },
       {
-        "uz": "Narxni 2 xona kasr va minglik vergul bilan chiqar.",
+        "uz": "Narxni 2 xona kasr va minglik vergul bilan çiqar.",
         "en": "Format price with 2 decimals and comma."
       },
       {
-        "uz": "0.75 ni foiz ko'rinishida chiqar.",
+        "uz": "0.75 ni foiz körinişida çiqar.",
         "en": "Format 0.75 as a percent."
       },
       {
@@ -3560,7 +3560,7 @@ window.COURSE = [
         "en": "Align text with >, <, ^."
       },
       {
-        "uz": "\\n va \\t bilan formatlangan jadval chiqar.",
+        "uz": "\\n va \\t bilan formatlangan jadval çiqar.",
         "en": "Print a table with \\n and \\t."
       }
     ],
@@ -3693,24 +3693,24 @@ window.COURSE = [
     "unit": "Hafta 3 — Funksiya va string",
     "reviewOf": 19,
     "title": {
-      "uz": "Takrorlash: Stringlar",
+      "uz": "Takrorlaş: Stringlar",
       "en": "Review: Strings"
     },
     "intro": {
-      "uz": "Kecha o'rgangan mavzuni mustahkamlaymiz: qisqa takror, yangi mashqlar va kichik loyiha.",
+      "uz": "Keça örgangan mavzuni mustahkamlaymiz: qisqa takror, yangi maşqlar va kiçik loyiha.",
       "en": "Reinforce yesterday's topic: recap, new exercises and a mini-project."
     },
     "recap": {
-      "uz": "Eslatma: (1) index 0 dan, [-1] oxirgi, slicing, [::-1] teskari. String o'zgarmas. (2) upper/lower/strip/split/join/replace. (3) f-string: {x:.2f}, tekislash > < ^. (4) \\n \\t escape.",
+      "uz": "Eslatma: (1) index 0 dan, [-1] oxirgi, slicing, [::-1] teskari. String özgarmas. (2) upper/lower/strip/split/join/replace. (3) f-string: {x:.2f}, tekislaş > < ^. (4) \\n \\t escape.",
       "en": "Recap: string indexing/slicing; methods; f-string formatting; escapes."
     },
     "project": {
       "title": {
-        "uz": "Loyiha: Matn tozalovchi",
+        "uz": "Loyiha: Matn tozalovçi",
         "en": "Project: Text cleaner"
       },
       "desc": {
-        "uz": "Foydalanuvchi kiritgan iflos matnni tozalaydigan dastur: bo'shliqlarni olib tashlash (strip), katta harf (title), va so'zlar sonini hisoblash. String metodlari birga.",
+        "uz": "Foydalanuvçi kiritgan iflos matnni tozalaydigan dastur: böşliqlarni olib taşlaş (strip), katta harf (title), va sözlar sonini hisoblaş. String metodlari birga.",
         "en": "Clean messy text: strip, title, count words."
       },
       "starter": "text = input(\"Matn: \")\n\ncleaned = text.strip().title()\nword_count = len(text.split())\nchar_count = len(text.replace(\" \", \"\"))\n\nprint(f\"Tozalangan: {cleaned}\")\nprint(f\"So'zlar: {word_count}\")\nprint(f\"Harflar: {char_count}\")"
@@ -3721,7 +3721,7 @@ window.COURSE = [
         "en": "Reverse with [::-1]."
       },
       {
-        "uz": "split() va join() bilan matn qayta yig'.",
+        "uz": "split() va join() bilan matn qayta yiğ.",
         "en": "split then join."
       },
       {
@@ -3860,7 +3860,7 @@ window.COURSE = [
       "en": "List comprehension"
     },
     "intro": {
-      "uz": "List comprehension — Python'ning eng chiroyli imkoniyati: bitta qatorda yangi list yasash. Loop va shartni siqib, o'qiladigan kod yozasan. Sertifikatda va real kodda juda ko'p uchraydi. Bugun uni chuqur o'rganamiz.",
+      "uz": "List comprehension — Python'ning eng çiroyli imkoniyati: bitta qatorda yangi list yasaş. Loop va şartni siqib, öqiladigan kod yozasan. Sertifikatda va real kodda juda köp uçraydi. Bugun uni çuqur örganamiz.",
       "en": "List comprehension builds a list in one line, compressing loop and condition. Common on exams."
     },
     "sections": [
@@ -3870,29 +3870,29 @@ window.COURSE = [
           "en": "Basic comprehension"
         },
         "p": {
-          "uz": "Sintaksis: [ifoda for element in ketma-ketlik]. Bu loop bilan list yasashning qisqa shakli. Masalan har sonning kvadratini olish. O'ngdan chapga o'qi: 'har x uchun, x*x ol'.",
+          "uz": "Sintaksis: [ifoda for element in ketma-ketlik]. Bu loop bilan list yasaşning qisqa şakli. Masalan har sonning kvadratini oliş. Öngdan çapga öqi: 'har x uçun, x*x ol'.",
           "en": "[expression for item in sequence]. Short form of building a list with a loop."
         },
         "code": "# Oddiy loop:\nsquares = []\nfor x in range(5):\n    squares.append(x ** 2)\n\n# Comprehension (bir qator):\nsquares = [x ** 2 for x in range(5)]\nprint(squares)   # [0, 1, 4, 9, 16]"
       },
       {
         "h": {
-          "uz": "Shart bilan comprehension",
+          "uz": "Şart bilan comprehension",
           "en": "Comprehension with condition"
         },
         "p": {
-          "uz": "Oxiriga if qo'shib, faqat shartga mos elementlarni olasan: [x for x in ... if shart]. Masalan faqat juft sonlar. Bu filter va map'ni birga qiladi — juda kuchli.",
+          "uz": "Oxiriga if qöşib, faqat şartga mos elementlarni olasan: [x for x in ... if şart]. Masalan faqat juft sonlar. Bu filter va mapʼni birga qiladi — juda kuçli.",
           "en": "Add if to filter: [x for x in ... if condition]. Keeps only matching elements."
         },
         "code": "# Faqat juft sonlar:\nevens = [x for x in range(10) if x % 2 == 0]\nprint(evens)   # [0, 2, 4, 6, 8]\n\n# Faqat uzun so'zlar:\nwords = [\"cat\", \"elephant\", \"dog\", \"tiger\"]\nlong = [w for w in words if len(w) > 3]\nprint(long)    # ['elephant', 'tiger']"
       },
       {
         "h": {
-          "uz": "Ifoda bilan o'zgartirish",
+          "uz": "Ifoda bilan özgartiriş",
           "en": "Transforming with expression"
         },
         "p": {
-          "uz": "Element ustida amal bajarib list yasaysan: har harfni katta qilish, har sonni ikkilash, string uzunligini olish. Ifoda qismi (boshidagi) elementni qanday o'zgartirishni belgilaydi.",
+          "uz": "Element ustida amal bajarib list yasaysan: har harfni katta qiliş, har sonni ikkilaş, string uzunligini oliş. Ifoda qismi (boşidagi) elementni qanday özgartirişni belgilaydi.",
           "en": "Transform each element: uppercase, double, get length. The expression defines the transformation."
         },
         "code": "words = [\"hi\", \"bye\", \"ok\"]\nupper = [w.upper() for w in words]\nprint(upper)   # ['HI', 'BYE', 'OK']\n\nlengths = [len(w) for w in words]\nprint(lengths) # [2, 3, 2]\n\ndoubled = [n * 2 for n in [1, 2, 3]]\nprint(doubled) # [2, 4, 6]"
@@ -3903,7 +3903,7 @@ window.COURSE = [
           "en": "if-else & nested"
         },
         "p": {
-          "uz": "if-else ni ifoda oldiga qo'yish mumkin: [x if shart else y for ...]. Bu har elementni ikki holatdan biriga aylantiradi. Nested (ichma-ich) ham bo'ladi, lekin o'qish qiyinlashadi — ehtiyot bo'l.",
+          "uz": "if-else ni ifoda oldiga qöyiş mumkin: [x if şart else y for ...]. Bu har elementni ikki holatdan biriga aylantiradi. Nested (içma-iç) ham böladi, lekin öqiş qiyinlaşadi — ehtiyot böl.",
           "en": "if-else before the expression: [x if cond else y for ...]. Transforms each into one of two."
         },
         "code": "nums = [1, 2, 3, 4, 5]\n# Juft/toq belgilash:\nlabels = [\"juft\" if n % 2 == 0 else \"toq\" for n in nums]\nprint(labels)  # ['toq','juft','toq','juft','toq']\n\n# Dictionary comprehension ham bor:\nsquares = {x: x**2 for x in range(4)}\nprint(squares) # {0:0, 1:1, 2:4, 3:9}"
@@ -3919,7 +3919,7 @@ window.COURSE = [
         "en": "Filter numbers > 5."
       },
       {
-        "uz": "Har so'zni katta harf qiladigan comprehension yoz.",
+        "uz": "Har sözni katta harf qiladigan comprehension yoz.",
         "en": "Uppercase each word."
       },
       {
@@ -4059,24 +4059,24 @@ window.COURSE = [
     "unit": "Hafta 3 — Funksiya va string",
     "reviewOf": 21,
     "title": {
-      "uz": "Takrorlash: Funksiya, string, comprehension",
+      "uz": "Takrorlaş: Funksiya, string, comprehension",
       "en": "Review: Functions, strings, comprehension"
     },
     "intro": {
-      "uz": "Kecha o'rgangan mavzuni mustahkamlaymiz: qisqa takror, yangi mashqlar va kichik loyiha.",
+      "uz": "Keça örgangan mavzuni mustahkamlaymiz: qisqa takror, yangi maşqlar va kiçik loyiha.",
       "en": "Reinforce yesterday's topic: recap, new exercises and a mini-project."
     },
     "recap": {
-      "uz": "Eslatma: (1) funksiya: def/return, *args/**kwargs. (2) string metodlari va formatlash. (3) comprehension: [ifoda for x in seq if shart]. Uch mavzu birga real loyihada.",
+      "uz": "Eslatma: (1) funksiya: def/return, *args/**kwargs. (2) string metodlari va formatlaş. (3) comprehension: [ifoda for x in seq if şart]. Uç mavzu birga real loyihada.",
       "en": "Recap: functions; strings; comprehension — combined."
     },
     "project": {
       "title": {
-        "uz": "Haftalik loyiha: So'z chastotasi hisoblagichi",
+        "uz": "Haftalik loyiha: Söz çastotasi hisoblagiçi",
         "en": "Weekly project: Word frequency counter"
       },
       "desc": {
-        "uz": "Matnni olib, har so'z necha marta kelganini dictionary'da sanaydigan dastur. split(), dict, loop, va comprehension birga. Bu NLP'ning eng oddiy ko'rinishi.",
+        "uz": "Matnni olib, har söz neça marta kelganini dictionaryʼda sanaydigan dastur. split(), dict, loop, va comprehension birga. Bu NLPʼning eng oddiy körinişi.",
         "en": "Count word frequency with dict + comprehension."
       },
       "starter": "text = input(\"Matn: \").lower()\nwords = text.split()\n\nfreq = {}\nfor word in words:\n    freq[word] = freq.get(word, 0) + 1\n\n# Comprehension bilan uzun so'zlar:\nlong_words = [w for w in words if len(w) > 4]\n\nprint(\"Chastota:\")\nfor word, count in freq.items():\n    print(f\"  {word}: {count}\")\nprint(f\"Uzun so'zlar: {long_words}\")"
@@ -4091,7 +4091,7 @@ window.COURSE = [
         "en": "Function + string methods."
       },
       {
-        "uz": "if bilan comprehension'da filtrla.",
+        "uz": "if bilan comprehensionʼda filtrla.",
         "en": "Filter with comprehension."
       }
     ],
@@ -4218,11 +4218,11 @@ window.COURSE = [
     "type": "topic",
     "unit": "Hafta 4 — Ilg'or asoslar",
     "title": {
-      "uz": "Xatolarni tutish (try/except)",
+      "uz": "Xatolarni tutiş (try/except)",
       "en": "Error handling"
     },
     "intro": {
-      "uz": "Dasturlar xato qiladi: foydalanuvchi harf o'rniga son kiritadi, fayl topilmaydi, nolga bo'linadi. try/except bu xatolarni ushlab, dasturni yiqilishdan saqlaydi. Sertifikatda xato turlari (ValueError, TypeError) va try/except/finally tuzilishi ko'p so'raladi.",
+      "uz": "Dasturlar xato qiladi: foydalanuvçi harf örniga son kiritadi, fayl topilmaydi, nolga bölinadi. try/except bu xatolarni uşlab, dasturni yiqilişdan saqlaydi. Sertifikatda xato turlari (ValueError, TypeError) va try/except/finally tuzilişi köp söraladi.",
       "en": "Programs error: bad input, missing files, division by zero. try/except catches these. Exams test error types."
     },
     "sections": [
@@ -4232,7 +4232,7 @@ window.COURSE = [
           "en": "try / except basics"
         },
         "p": {
-          "uz": "try blokiga 'xato bo'lishi mumkin' kod yoziladi. Xato chiqsa, dastur yiqilmaydi — except bloki ishlaydi. Bu foydalanuvchi noto'g'ri ma'lumot kiritganda juda muhim.",
+          "uz": "try blokiga 'xato bölişi mumkin' kod yoziladi. Xato çiqsa, dastur yiqilmaydi — except bloki işlaydi. Bu foydalanuvçi notöğri maʼlumot kiritganda juda muhim.",
           "en": "try holds risky code. On error, except runs instead of crashing."
         },
         "code": "try:\n    age = int(input(\"Yosh: \"))\n    print(age + 1)\nexcept:\n    print(\"Xato: son kiriting!\")\n\n# 'yigirma' yozsa — yiqilmaydi, except ishlaydi"
@@ -4243,7 +4243,7 @@ window.COURSE = [
           "en": "Specific error types"
         },
         "p": {
-          "uz": "Har xatoning nomi bor: ValueError (noto'g'ri qiymat, int('abc')), TypeError (noto'g'ri tur, '5'+5), ZeroDivisionError (10/0), IndexError (yo'q index), KeyError (yo'q key). Aniq turni ushlash yaxshiroq — har xatoga boshqacha javob.",
+          "uz": "Har xatoning nomi bor: ValueError (notöğri qiymat, int('abc')), TypeError (notöğri tur, '5'+5), ZeroDivisionError (10/0), IndexError (yöq index), KeyError (yöq key). Aniq turni uşlaş yaxşiroq — har xatoga boşqaça javob.",
           "en": "Error types: ValueError, TypeError, ZeroDivisionError, IndexError, KeyError. Catch specific types."
         },
         "code": "try:\n    x = int(input(\"Son: \"))\n    print(10 / x)\nexcept ValueError:\n    print(\"Bu son emas!\")\nexcept ZeroDivisionError:\n    print(\"Nolga bo'lib bo'lmaydi!\")"
@@ -4254,7 +4254,7 @@ window.COURSE = [
           "en": "except ... as e"
         },
         "p": {
-          "uz": "except Turi as e — xatoning matnini beradi (nima bo'lganini ko'rish uchun). Bir except da bir necha turni ushlash: except (ValueError, TypeError). Bu debugging va foydalanuvchiga aniq xabar berishda foydali.",
+          "uz": "except Turi as e — xatoning matnini beradi (nima bölganini köriş uçun). Bir except da bir neça turni uşlaş: except (ValueError, TypeError). Bu debugging va foydalanuvçiga aniq xabar berişda foydali.",
           "en": "except Type as e gives the error message. Catch multiple: except (ValueError, TypeError)."
         },
         "code": "try:\n    x = int(\"abc\")\nexcept ValueError as e:\n    print(f\"Xato: {e}\")\n    # Xato: invalid literal for int()\n\n# Bir necha tur:\ntry:\n    pass\nexcept (ValueError, TypeError) as e:\n    print(e)"
@@ -4265,7 +4265,7 @@ window.COURSE = [
           "en": "else and finally"
         },
         "p": {
-          "uz": "else — xato BO'LMAGANDA ishlaydi ('hammasi joyida, davom et'). finally — xato bo'ldimi yo'qmi, HAR DOIM ishlaydi (tozalash uchun: fayl yopish). Sertifikatda finally har doim ishlashi ko'p so'raladi.",
+          "uz": "else — xato BÖLMAGANDA işlaydi ('hammasi joyida, davom et'). finally — xato böldimi yöqmi, HAR DOIM işlaydi (tozalaş uçun: fayl yopiş). Sertifikatda finally har doim işlaşi köp söraladi.",
           "en": "else runs when NO error; finally runs ALWAYS (cleanup). Exams test that finally always runs."
         },
         "code": "try:\n    x = int(\"5\")\nexcept ValueError:\n    print(\"Xato\")\nelse:\n    print(f\"OK: {x}\")    # xato yo'q → ishlaydi\nfinally:\n    print(\"Har doim\")    # HAR DOIM ishlaydi\n# Chiqishi: OK: 5 / Har doim"
@@ -4273,7 +4273,7 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "int(input()) ni try/except bilan o'ra, harf kiritilsa xabar chiqsin.",
+        "uz": "int(input()) ni try/except bilan öra, harf kiritilsa xabar çiqsin.",
         "en": "Guard int(input())."
       },
       {
@@ -4281,15 +4281,15 @@ window.COURSE = [
         "en": "Guard division by zero."
       },
       {
-        "uz": "except ... as e bilan xato matnini chiqar.",
+        "uz": "except ... as e bilan xato matnini çiqar.",
         "en": "Print error message with as e."
       },
       {
-        "uz": "try/except/else/finally to'rttasini birga ishlat.",
+        "uz": "try/except/else/finally törttasini birga işlat.",
         "en": "Use all four together."
       },
       {
-        "uz": "Bir except da ikki xato turini ushla.",
+        "uz": "Bir except da ikki xato turini uşla.",
         "en": "Catch two error types in one except."
       }
     ],
@@ -4421,43 +4421,43 @@ window.COURSE = [
     "type": "topic",
     "unit": "Hafta 4 — Ilg'or asoslar",
     "title": {
-      "uz": "Fayllar bilan ishlash",
+      "uz": "Fayllar bilan işlaş",
       "en": "Working with files"
     },
     "intro": {
-      "uz": "Dastur tugagach ma'lumot yo'qoladi. Fayllar buni hal qiladi — ma'lumotni diskka saqlab, keyin o'qiysan. Sertifikatda fayl rejimlari (r/w/a), with bloki va o'qish usullari so'raladi. Bugun fayl yozish va o'qishni chuqur o'rganamiz.",
+      "uz": "Dastur tugagaç maʼlumot yöqoladi. Fayllar buni hal qiladi — maʼlumotni diskka saqlab, keyin öqiysan. Sertifikatda fayl rejimlari (r/w/a), with bloki va öqiş usullari söraladi. Bugun fayl yoziş va öqişni çuqur örganamiz.",
       "en": "Files persist data to disk. Exams test file modes (r/w/a), with blocks, and reading methods."
     },
     "sections": [
       {
         "h": {
-          "uz": "Fayl ochish: open() va rejimlar",
+          "uz": "Fayl oçiş: open() va rejimlar",
           "en": "open() and modes"
         },
         "p": {
-          "uz": "open(nom, rejim) faylni ochadi. Rejimlar: 'r' o'qish (default), 'w' yozish (eskisini O'CHIRADI!), 'a' qo'shish (append, oxiriga). Fayl ishlatib bo'lgach yopish shart — aks holda ma'lumot saqlanmasligi mumkin.",
+          "uz": "open(nom, rejim) faylni oçadi. Rejimlar: 'r' öqiş (default), 'w' yoziş (eskisini ÖÇIRADI!), 'a' qöşiş (append, oxiriga). Fayl işlatib bölgaç yopiş şart — aks holda maʼlumot saqlanmasligi mumkin.",
           "en": "open(name, mode): 'r' read, 'w' write (ERASES!), 'a' append. Must close after use."
         },
         "code": "# Yozish ('w' — eskisini o'chiradi):\nf = open(\"data.txt\", \"w\")\nf.write(\"Salom\\n\")\nf.close()   # yopish SHART\n\n# Qo'shish ('a' — oxiriga):\nf = open(\"data.txt\", \"a\")\nf.write(\"Yana\\n\")\nf.close()"
       },
       {
         "h": {
-          "uz": "with bloki — eng yaxshi usul",
+          "uz": "with bloki — eng yaxşi usul",
           "en": "with block — best practice"
         },
         "p": {
-          "uz": "with open(...) as f: — faylni AVTOMATIK yopadi, hatto xato bo'lsa ham. close() ni unutmaslikning eng yaxshi usuli. Sertifikat va professional kod doim with ishlatadi. Blok tugagach fayl yopiladi.",
+          "uz": "with open(...) as f: — faylni AVTOMATIK yopadi, hatto xato bölsa ham. close() ni unutmaslikning eng yaxşi usuli. Sertifikat va professional kod doim with işlatadi. Blok tugagaç fayl yopiladi.",
           "en": "with open(...) as f: auto-closes the file, even on error. The recommended way."
         },
         "code": "with open(\"data.txt\", \"w\") as f:\n    f.write(\"Birinchi\\n\")\n    f.write(\"Ikkinchi\\n\")\n# fayl avtomatik yopildi\n\nwith open(\"data.txt\", \"r\") as f:\n    content = f.read()\nprint(content)"
       },
       {
         "h": {
-          "uz": "O'qish usullari",
+          "uz": "Öqiş usullari",
           "en": "Reading methods"
         },
         "p": {
-          "uz": "read() butun faylni bitta string qilib o'qiydi. readline() bitta qator. readlines() qatorlar listini beradi. Eng yaxshi: for line in f — qator-qator (katta fayllarda tejamli). strip() ortiqcha \\n ni oladi.",
+          "uz": "read() butun faylni bitta string qilib öqiydi. readline() bitta qator. readlines() qatorlar listini beradi. Eng yaxşi: for line in f — qator-qator (katta fayllarda tejamli). strip() ortiqça \\n ni oladi.",
           "en": "read() whole file, readline() one line, readlines() list of lines. Best: for line in f."
         },
         "code": "with open(\"data.txt\", \"r\") as f:\n    for line in f:\n        print(line.strip())   # \\n ni oladi\n\n# Yoki:\nwith open(\"data.txt\", \"r\") as f:\n    lines = f.readlines()   # list\n    print(len(lines))       # qatorlar soni"
@@ -4468,7 +4468,7 @@ window.COURSE = [
           "en": "Files with error handling"
         },
         "p": {
-          "uz": "Mavjud bo'lmagan faylni 'r' bilan ochsa — FileNotFoundError. Buni try/except bilan ushlash kerak. Fayl bilan ishlaganda xato himoyasi professional kodning majburiy qismi.",
+          "uz": "Mavjud bölmagan faylni 'r' bilan oçsa — FileNotFoundError. Buni try/except bilan uşlaş kerak. Fayl bilan işlaganda xato himoyasi professional kodning majburiy qismi.",
           "en": "Opening a missing file with 'r' raises FileNotFoundError. Guard with try/except."
         },
         "code": "try:\n    with open(\"yoq.txt\", \"r\") as f:\n        print(f.read())\nexcept FileNotFoundError:\n    print(\"Fayl topilmadi\")\n\n# Ro'yxatni saqlash:\ntasks = [\"a\", \"b\", \"c\"]\nwith open(\"tasks.txt\", \"w\") as f:\n    for t in tasks:\n        f.write(t + \"\\n\")"
@@ -4476,15 +4476,15 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "Faylga 3 qator yoz ('w'), keyin o'qib chiqar.",
+        "uz": "Faylga 3 qator yoz ('w'), keyin öqib çiqar.",
         "en": "Write 3 lines, then read."
       },
       {
-        "uz": "'a' rejimi bilan mavjud faylga qo'sh.",
+        "uz": "'a' rejimi bilan mavjud faylga qöş.",
         "en": "Append with 'a' mode."
       },
       {
-        "uz": "with bloki bilan faylni o'qib, qator-qator chiqar.",
+        "uz": "with bloki bilan faylni öqib, qator-qator çiqar.",
         "en": "Read line-by-line with with."
       },
       {
@@ -4492,7 +4492,7 @@ window.COURSE = [
         "en": "Count lines with readlines()."
       },
       {
-        "uz": "Yo'q faylni ochib, FileNotFoundError ni ushla.",
+        "uz": "Yöq faylni oçib, FileNotFoundError ni uşla.",
         "en": "Catch FileNotFoundError."
       }
     ],
@@ -4626,15 +4626,15 @@ window.COURSE = [
     "unit": "Hafta 4 — Ilg'or asoslar",
     "reviewOf": 24,
     "title": {
-      "uz": "Takrorlash: Xato va fayl",
+      "uz": "Takrorlaş: Xato va fayl",
       "en": "Review: Errors & files"
     },
     "intro": {
-      "uz": "Kecha o'rgangan mavzuni mustahkamlaymiz: qisqa takror, yangi mashqlar va kichik loyiha.",
+      "uz": "Keça örgangan mavzuni mustahkamlaymiz: qisqa takror, yangi maşqlar va kiçik loyiha.",
       "en": "Reinforce yesterday's topic: recap, new exercises and a mini-project."
     },
     "recap": {
-      "uz": "Eslatma: (1) try/except — xatoni ushlaydi (ValueError, TypeError, ZeroDivisionError). (2) else xatosiz, finally har doim. (3) with open(nom, rejim) 'r'/'w'/'a'. (4) read/readlines/for line in f.",
+      "uz": "Eslatma: (1) try/except — xatoni uşlaydi (ValueError, TypeError, ZeroDivisionError). (2) else xatosiz, finally har doim. (3) with open(nom, rejim) 'r'/'w'/'a'. (4) read/readlines/for line in f.",
       "en": "Recap: try/except/finally; file modes; reading."
     },
     "project": {
@@ -4643,7 +4643,7 @@ window.COURSE = [
         "en": "Project: Safe task manager"
       },
       "desc": {
-        "uz": "Vazifalarni faylda saqlaydigan dastur: qo'shish (append), ko'rish. Fayl bilan saqlaydi, try/except bilan xatolarni ushlaydi. Fayl + xato + funksiya birga.",
+        "uz": "Vazifalarni faylda saqlaydigan dastur: qöşiş (append), köriş. Fayl bilan saqlaydi, try/except bilan xatolarni uşlaydi. Fayl + xato + funksiya birga.",
         "en": "File-backed task manager with try/except."
       },
       "starter": "def add_task(task):\n    with open(\"tasks.txt\", \"a\") as f:\n        f.write(task + \"\\n\")\n    print(\"Qo'shildi!\")\n\ndef show_tasks():\n    try:\n        with open(\"tasks.txt\", \"r\") as f:\n            for i, line in enumerate(f):\n                print(f\"{i+1}. {line.strip()}\")\n    except FileNotFoundError:\n        print(\"Hali vazifa yo'q\")\n\nadd_task(\"Python o'rganish\")\nshow_tasks()"
@@ -4654,11 +4654,11 @@ window.COURSE = [
         "en": "Guard int(input())."
       },
       {
-        "uz": "Faylga yozib, o'qib tekshir.",
+        "uz": "Faylga yozib, öqib tekşir.",
         "en": "Write then read a file."
       },
       {
-        "uz": "FileNotFoundError ni ushla.",
+        "uz": "FileNotFoundError ni uşla.",
         "en": "Catch FileNotFoundError."
       }
     ],
@@ -4791,17 +4791,17 @@ window.COURSE = [
       "en": "Modules & import"
     },
     "intro": {
-      "uz": "Modul — boshqalar yozgan tayyor kod to'plami. import bilan uni chaqirasan. math, random, datetime — Python bilan keladi. AI'da NumPy, Pandas ham import qilinadi. O'zing ham modul yasashing mumkin.",
+      "uz": "Modul — boşqalar yozgan tayyor kod töplami. import bilan uni çaqirasan. math, random, datetime — Python bilan keladi. AI'da NumPy, Pandas ham import qilinadi. Özing ham modul yasaşing mumkin.",
       "en": "A module is ready-made code. You call it with import. NumPy, Pandas are imported too."
     },
     "sections": [
       {
         "h": {
-          "uz": "import — modulni chaqirish",
+          "uz": "import — modulni çaqiriş",
           "en": "import"
         },
         "p": {
-          "uz": "import moduleName butun modulni oladi. Keyin modul.funksiya() bilan ishlatasan. Python'da minglab tayyor modul bor.",
+          "uz": "import moduleName butun modulni oladi. Keyin modul.funksiya() bilan işlatasan. Python'da minglab tayyor modul bor.",
           "en": "import moduleName, then module.function()."
         },
         "code": "import math\n\nprint(math.sqrt(16))    # 4.0\nprint(math.pi)          # 3.14159...\nprint(math.ceil(4.2))   # 5\nprint(math.floor(4.8))  # 4"
@@ -4812,7 +4812,7 @@ window.COURSE = [
           "en": "random"
         },
         "p": {
-          "uz": "random tasodifiy qiymatlar beradi: randint(a,b) butun son, choice(list) tasodifiy element, shuffle(list) aralashtiradi. O'yin va simulyatsiyalarda ishlatiladi.",
+          "uz": "random tasodifiy qiymatlar beradi: randint(a,b) butun son, çoice(list) tasodifiy element, şuffle(list) aralaştiradi. Öyin va simulyatsiyalarda işlatiladi.",
           "en": "random: randint, choice, shuffle."
         },
         "code": "import random\n\nprint(random.randint(1, 6))          # 1-6\nprint(random.choice([\"a\",\"b\",\"c\"]))  # tasodifiy\n\nnums = [1, 2, 3, 4, 5]\nrandom.shuffle(nums)\nprint(nums)"
@@ -4823,18 +4823,18 @@ window.COURSE = [
           "en": "from ... import"
         },
         "p": {
-          "uz": "Faqat kerakli funksiyani olish: from math import sqrt. Keyin modul nomsiz sqrt(16) deb ishlatasan. import ... as bilan qisqa nom beriladi.",
+          "uz": "Faqat kerakli funksiyani oliş: from math import sqrt. Keyin modul nomsiz sqrt(16) deb işlatasan. import ... as bilan qisqa nom beriladi.",
           "en": "from math import sqrt; import x as y."
         },
         "code": "from math import sqrt, pi\n\nprint(sqrt(25))   # 5.0\nprint(pi)         # 3.14159\n\nimport random as r\nprint(r.randint(1, 10))"
       },
       {
         "h": {
-          "uz": "O'z modulingni yasash",
+          "uz": "Öz modulingni yasaş",
           "en": "Your own module"
         },
         "p": {
-          "uz": "Har .py fayl — modul. Bir faylda funksiya yozib, boshqasidan import qilsang bo'ladi. Katta loyihani bo'laklarga bo'lish uchun.",
+          "uz": "Har .py fayl — modul. Bir faylda funksiya yozib, boşqasidan import qilsang böladi. Katta loyihani bölaklarga böliş uçun.",
           "en": "Every .py file is a module you can import."
         },
         "code": "# tools.py:\ndef greet(name):\n    return f\"Salom, {name}!\"\n\n# main.py:\nimport tools\nprint(tools.greet(\"Max\"))\n\nfrom tools import greet\nprint(greet(\"Ali\"))"
@@ -4842,15 +4842,15 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "math bilan sqrt, pi, ceil, floor ni sinab ko'r.",
+        "uz": "math bilan sqrt, pi, ceil, floor ni sinab kör.",
         "en": "Try math functions."
       },
       {
-        "uz": "random.randint bilan zar tashlash o'yini yoz.",
+        "uz": "random.randint bilan zar taşlaş öyini yoz.",
         "en": "Dice with randint."
       },
       {
-        "uz": "random.choice bilan tasodifiy tanlov qil.",
+        "uz": "random.çoice bilan tasodifiy tanlov qil.",
         "en": "Random choice."
       },
       {
@@ -4993,17 +4993,17 @@ window.COURSE = [
       "en": "Classes (OOP basics)"
     },
     "intro": {
-      "uz": "Klass ma'lumot va amalni birlashtiradi — o'z ma'lumoti va amallari bo'lgan 'obyekt' yaratadi. AI kutubxonalari (NumPy, PyTorch) klasslar ustiga qurilgan.",
+      "uz": "Klass maʼlumot va amalni birlaştiradi — öz maʼlumoti va amallari bölgan 'obyekt' yaratadi. AI kutubxonalari (NumPy, PyTorch) klasslar ustiga qurilgan.",
       "en": "A class bundles data and behavior into objects. ML libraries are built on classes."
     },
     "sections": [
       {
         "h": {
-          "uz": "Klass — obyekt shabloni",
+          "uz": "Klass — obyekt şabloni",
           "en": "Class — a template"
         },
         "p": {
-          "uz": "class shablon yaratadi (masalan 'Mashina' tushunchasi). Obyekt — shu shablondan yasalgan aniq narsa. Nom katta harf bilan boshlanadi.",
+          "uz": "class şablon yaratadi (masalan 'Maşina' tuşunçasi). Obyekt — şu şablondan yasalgan aniq narsa. Nom katta harf bilan boşlanadi.",
           "en": "class defines a template; object is an instance."
         },
         "code": "class Dog:\n    def bark(self):\n        print(\"Vov-vov!\")\n\nmy_dog = Dog()\nmy_dog.bark()   # Vov-vov!"
@@ -5014,7 +5014,7 @@ window.COURSE = [
           "en": "__init__ and self"
         },
         "p": {
-          "uz": "__init__ — konstruktor, obyekt yaratilganda avtomatik ishlaydi. self — 'shu obyektning o'zi'. Har metodning birinchi parametri self.",
+          "uz": "__init__ — konstruktor, obyekt yaratilganda avtomatik işlaydi. self — 'şu obyektning özi'. Har metodning birinçi parametri self.",
           "en": "__init__ runs on creation; self is the object itself."
         },
         "code": "class Student:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\ns = Student(\"Max\", 20)\nprint(s.name)   # Max\nprint(s.age)    # 20"
@@ -5025,7 +5025,7 @@ window.COURSE = [
           "en": "Attributes"
         },
         "p": {
-          "uz": "Atribut — obyektning ma'lumoti (self.name). obyekt.atribut orqali murojaat. Har obyektning o'z atributlari bor.",
+          "uz": "Atribut — obyektning maʼlumoti (self.name). obyekt.atribut orqali murojaat. Har obyektning öz atributlari bor.",
           "en": "Attributes hold object data; each object has its own."
         },
         "code": "class Car:\n    def __init__(self, brand, speed):\n        self.brand = brand\n        self.speed = speed\n\ncar1 = Car(\"Toyota\", 180)\ncar2 = Car(\"BMW\", 220)\nprint(car1.brand)   # Toyota\nprint(car2.speed)   # 220"
@@ -5036,7 +5036,7 @@ window.COURSE = [
           "en": "Methods"
         },
         "p": {
-          "uz": "Metod — klass ichidagi funksiya, obyektning amali. self orqali atributlardan foydalanadi. Ma'lumot va amalni birga saqlashning kuchi.",
+          "uz": "Metod — klass içidagi funksiya, obyektning amali. self orqali atributlardan foydalanadi. Maʼlumot va amalni birga saqlaşning kuçi.",
           "en": "Methods are functions inside a class using self."
         },
         "code": "class Student:\n    def __init__(self, name, grade):\n        self.name = name\n        self.grade = grade\n    def introduce(self):\n        print(f\"Men {self.name}, bahom {self.grade}\")\n    def is_passing(self):\n        return self.grade >= 60\n\ns = Student(\"Ali\", 75)\ns.introduce()\nprint(s.is_passing())   # True"
@@ -5056,7 +5056,7 @@ window.COURSE = [
         "en": "Car class."
       },
       {
-        "uz": "Ikki obyekt yarat, atributlari har xil ekanini ko'r.",
+        "uz": "Ikki obyekt yarat, atributlari har xil ekanini kör.",
         "en": "Two objects."
       },
       {
@@ -5194,50 +5194,50 @@ window.COURSE = [
       "en": "OOP: attributes & inheritance"
     },
     "intro": {
-      "uz": "Kecha klass asoslarini o'rgandik. Bugun ilg'or OOP: bir nechta metod, va inheritance (meros) — klass boshqasidan atribut va metod olishi. Bu kodni takrorlamaslikning kuchli usuli. Sertifikatda inheritance va super() so'raladi.",
+      "uz": "Keça klass asoslarini örgandik. Bugun ilğor OOP: bir neçta metod, va inheritance (meros) — klass boşqasidan atribut va metod olişi. Bu kodni takrorlamaslikning kuçli usuli. Sertifikatda inheritance va super() söraladi.",
       "en": "Advanced OOP: multiple methods and inheritance — a class taking attributes/methods from another. Exams test super()."
     },
     "sections": [
       {
         "h": {
-          "uz": "Bir nechta metodli klass",
+          "uz": "Bir neçta metodli klass",
           "en": "Class with multiple methods"
         },
         "p": {
-          "uz": "Klass ichida ko'p metod bo'ladi, ular self orqali bir-birini ham chaqira oladi. Har metod obyektning bir amali. Bu obyektni to'liq 'tirik' qiladi — o'z ma'lumoti va amallari bilan.",
+          "uz": "Klass içida köp metod böladi, ular self orqali bir-birini ham çaqira oladi. Har metod obyektning bir amali. Bu obyektni töliq 'tirik' qiladi — öz maʼlumoti va amallari bilan.",
           "en": "A class can have many methods; they call each other via self."
         },
         "code": "class Circle:\n    def __init__(self, r):\n        self.r = r\n    def area(self):\n        return 3.14 * self.r ** 2\n    def describe(self):\n        print(f\"Yuza: {self.area()}\")\n\nc = Circle(5)\nc.describe()   # metod metodni chaqirdi"
       },
       {
         "h": {
-          "uz": "Inheritance — meros olish",
+          "uz": "Inheritance — meros oliş",
           "en": "Inheritance"
         },
         "p": {
-          "uz": "class Bola(Ota): — Bola klass Ota klassning barcha atribut va metodlarini MEROS oladi, keyin o'ziga xos narsa qo'shadi. Bu umumiy kodni bir marta yozib, ko'p klassda ishlatish imkonini beradi.",
+          "uz": "class Bola(Ota): — Bola klass Ota klassning barça atribut va metodlarini MEROS oladi, keyin öziga xos narsa qöşadi. Bu umumiy kodni bir marta yozib, köp klassda işlatiş imkonini beradi.",
           "en": "class Child(Parent): inherits all of Parent's attributes and methods, then adds its own."
         },
         "code": "class Animal:\n    def __init__(self, name):\n        self.name = name\n    def eat(self):\n        print(f\"{self.name} ovqatlanmoqda\")\n\nclass Dog(Animal):    # meros oladi\n    def bark(self):\n        print(\"Vov!\")\n\nd = Dog(\"Rex\")\nd.eat()    # meros: Rex ovqatlanmoqda\nd.bark()   # o'ziniki: Vov!"
       },
       {
         "h": {
-          "uz": "super() — ota klassni chaqirish",
+          "uz": "super() — ota klassni çaqiriş",
           "en": "super()"
         },
         "p": {
-          "uz": "Bola klassda ham __init__ kerak bo'lsa, super().__init__() bilan ota konstruktorini chaqirasan — umumiy atributlarni qayta yozmaslik uchun. Keyin o'ziga xos atribut qo'shasan. Sertifikatda super() klassik savol.",
+          "uz": "Bola klassda ham __init__ kerak bölsa, super().__init__() bilan ota konstruktorini çaqirasan — umumiy atributlarni qayta yozmaslik uçun. Keyin öziga xos atribut qöşasan. Sertifikatda super() klassik savol.",
           "en": "super().__init__() calls the parent constructor, avoiding rewriting shared attributes."
         },
         "code": "class Animal:\n    def __init__(self, name):\n        self.name = name\n\nclass Dog(Animal):\n    def __init__(self, name, breed):\n        super().__init__(name)  # ota init\n        self.breed = breed      # o'ziniki\n\nd = Dog(\"Rex\", \"Lab\")\nprint(d.name, d.breed)  # Rex Lab"
       },
       {
         "h": {
-          "uz": "Override — metodni qayta yozish",
+          "uz": "Override — metodni qayta yoziş",
           "en": "Method override"
         },
         "p": {
-          "uz": "Bola klass ota metodini bir xil nom bilan qayta yozishi mumkin — 'override'. Masalan har hayvon boshqacha ovoz chiqaradi: umumiy speak() ni har klass o'zicha yozadi. Bu 'polimorfizm' asosi.",
+          "uz": "Bola klass ota metodini bir xil nom bilan qayta yozişi mumkin — 'override'. Masalan har hayvon boşqaça ovoz çiqaradi: umumiy speak() ni har klass öziça yozadi. Bu 'polimorfizm' asosi.",
           "en": "A child can override a parent method with the same name. Basis of polymorphism."
         },
         "code": "class Animal:\n    def speak(self):\n        print(\"...\")\n\nclass Cat(Animal):\n    def speak(self):        # override\n        print(\"Miyov!\")\n\nclass Cow(Animal):\n    def speak(self):\n        print(\"Mo'o!\")\n\nfor a in [Cat(), Cow()]:\n    a.speak()   # har biri o'zicha!"
@@ -5245,15 +5245,15 @@ window.COURSE = [
     ],
     "practice": [
       {
-        "uz": "Ko'p metodli klass yoz (area, perimeter, describe).",
+        "uz": "Köp metodli klass yoz (area, perimeter, describe).",
         "en": "Class with 3 methods."
       },
       {
-        "uz": "Animal'dan Dog meros oldirib, bark() qo'sh.",
+        "uz": "Animalʼdan Dog meros oldirib, bark() qöş.",
         "en": "Dog inherits Animal, add bark()."
       },
       {
-        "uz": "super().__init__() bilan bola klassga atribut qo'sh.",
+        "uz": "super().__init__() bilan bola klassga atribut qöş.",
         "en": "Add attribute with super()."
       },
       {
@@ -5394,11 +5394,11 @@ window.COURSE = [
     "unit": "Hafta 4 — Ilg'or asoslar",
     "reviewOf": 28,
     "title": {
-      "uz": "Takrorlash: Modul va OOP",
+      "uz": "Takrorlaş: Modul va OOP",
       "en": "Review: Modules & OOP"
     },
     "intro": {
-      "uz": "Kecha o'rgangan mavzuni mustahkamlaymiz: qisqa takror, yangi mashqlar va kichik loyiha.",
+      "uz": "Keça örgangan mavzuni mustahkamlaymiz: qisqa takror, yangi maşqlar va kiçik loyiha.",
       "en": "Reinforce yesterday's topic: recap, new exercises and a mini-project."
     },
     "recap": {
@@ -5411,7 +5411,7 @@ window.COURSE = [
         "en": "Project: Bank account system"
       },
       "desc": {
-        "uz": "BankAccount klassi (owner, balance) va undan SavingsAccount meros oladi (foiz qo'shadi). deposit, withdraw metodlari, super() bilan meros. OOP + inheritance birga.",
+        "uz": "BankAccount klassi (owner, balance) va undan SavingsAccount meros oladi (foiz qöşadi). deposit, withdraw metodlari, super() bilan meros. OOP + inheritance birga.",
         "en": "BankAccount + SavingsAccount with inheritance."
       },
       "starter": "class BankAccount:\n    def __init__(self, owner, balance=0):\n        self.owner = owner\n        self.balance = balance\n    def deposit(self, amount):\n        self.balance += amount\n        print(f\"Balans: {self.balance}\")\n    def withdraw(self, amount):\n        if amount > self.balance:\n            print(\"Mablag' yetarli emas!\")\n        else:\n            self.balance -= amount\n\nclass SavingsAccount(BankAccount):\n    def __init__(self, owner, balance=0, rate=0.05):\n        super().__init__(owner, balance)\n        self.rate = rate\n    def add_interest(self):\n        self.balance += self.balance * self.rate\n\nacc = SavingsAccount(\"Max\", 100)\nacc.deposit(50)\nacc.add_interest()\nprint(f\"Yakuniy: {acc.balance}\")"
@@ -5560,27 +5560,27 @@ window.COURSE = [
       "en": "Graduation: Certification prep"
     },
     "intro": {
-      "uz": "Tabriklayman, Max! 30 kunda Python asoslarini to'liq o'rganding: turlar, operatorlar, boshqaruv, funksiyalar, strukturalar, string, xato, fayl, OOP. Endi sertifikat imtihoniga (PCEP va boshqalar) tayyorsan. Bu — kuchli poydevor.",
+      "uz": "Tabriklayman, Max! 30 kunda Python asoslarini töliq örganding: turlar, operatorlar, boşqaruv, funksiyalar, strukturalar, string, xato, fayl, OOP. Endi sertifikat imtihoniga (PCEP va boşqalar) tayyorsan. Bu — kuçli poydevor.",
       "en": "Congratulations! You've covered all Python essentials — ready for certification."
     },
     "recap": {
-      "uz": "To'liq safar: (1) Asoslar — turlar, operatorlar, kirish/chiqish. (2) Boshqaruv — shart, loop, break/continue. (3) Strukturalar — list, tuple, set, dict, nested. (4) Funksiya — def, return, *args, scope. (5) String — metodlar, formatlash, comprehension. (6) Ilg'or — xato, fayl, modul, OOP, inheritance. Sen tayyorsan!",
+      "uz": "Töliq safar: (1) Asoslar — turlar, operatorlar, kiriş/çiqiş. (2) Boşqaruv — şart, loop, break/continue. (3) Strukturalar — list, tuple, set, dict, nested. (4) Funksiya — def, return, *args, scope. (5) String — metodlar, formatlaş, comprehension. (6) Ilğor — xato, fayl, modul, OOP, inheritance. Sen tayyorsan!",
       "en": "Full journey: types, operators, control flow, structures, functions, strings, errors, files, OOP."
     },
     "project": {
       "title": {
-        "uz": "Bitiruv loyihasi: To'liq Python dasturi",
+        "uz": "Bitiruv loyihasi: Töliq Python dasturi",
         "en": "Capstone: Complete Python program"
       },
       "desc": {
-        "uz": "Barcha bilimingni birlashtir: klass (OOP), fayl saqlash, xato himoyasi, funksiyalar, va string ishlash bilan to'liq dastur yoz — masalan talabalar boshqaruv tizimi. GitHub'ga joyla! Keyin sertifikat imtihoniga yozil (PCEP yoki freeCodeCamp).",
+        "uz": "Barça bilimingni birlaştir: klass (OOP), fayl saqlaş, xato himoyasi, funksiyalar, va string işlaş bilan töliq dastur yoz — masalan talabalar boşqaruv tizimi. GitHub'ga joyla! Keyin sertifikat imtihoniga yozil (PCEP yoki freeCodeCamp).",
         "en": "Combine everything into one program (e.g. student management). Put on GitHub, then take the cert exam."
       },
       "starter": "class Student:\n    def __init__(self, name, grade):\n        self.name = name\n        self.grade = grade\n    def is_passing(self):\n        return self.grade >= 60\n\ndef save_students(students):\n    with open(\"students.txt\", \"w\") as f:\n        for s in students:\n            f.write(f\"{s.name},{s.grade}\\n\")\n\nstudents = [Student(\"Ali\", 85), Student(\"Vali\", 45)]\nfor s in students:\n    status = \"o'tdi\" if s.is_passing() else \"yiqildi\"\n    print(f\"{s.name}: {s.grade} ({status})\")\n\nsave_students(students)\nprint(\"Saqlandi! GitHub'ga joylang.\")"
     },
     "practice": [
       {
-        "uz": "O'z loyihangni yoz (OOP + fayl + xato birga).",
+        "uz": "Öz loyihangni yoz (OOP + fayl + xato birga).",
         "en": "Write your own project (OOP+file+error)."
       },
       {

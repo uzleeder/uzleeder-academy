@@ -25,7 +25,9 @@
     python: function () {
       var pyTotal = COURSE.length, pyDone = Store.doneCount(), pyNext = App.firstOpenDay(), pyLesson = null;
       COURSE.forEach(function (c) { if (c.day === pyNext) pyLesson = c; });
+      var skipped = window.Placement ? Placement.skipDays().length : 0;
       var h = '';
+      h += '<div class="cp-wrap">';
       h += '<button class="cp-card py" data-go="python">' +
         '<div class="cp-top"><span class="cp-ic">' + IC.code + '</span>' +
           '<span class="cp-tag">' + esc(tr('coursesCodingTag')) + '</span></div>' +
@@ -34,11 +36,25 @@
         '<div class="cp-stats">' +
           '<span><b>' + pyDone + '</b>/' + pyTotal + ' ' + esc(tr('days')) + '</span>' +
           '<span><b>' + Math.round(pyDone / pyTotal * 100) + '%</b></span>' +
-          '<span>' + esc(tr('coursesSched')) + ': ' + esc(tr('coursesDaily')) + ' · 25-okt → 23-noy</span></div>' +
+          (skipped ? '<span>' + esc(tr('plSkippedN', { n: skipped })) + '</span>'
+                   : '<span>' + esc(tr('coursesSched')) + ': ' + esc(tr('coursesDaily')) + ' · 25-okt → 23-noy</span>') +
+          '</div>' +
         '<div class="bar"><i style="width:' + (pyDone / pyTotal * 100) + '%"></i></div>' +
-        (pyLesson ? '<div class="cp-next"><span>' + esc(tr('coursesNext')) + '</span><b>' + esc(tr('day')) + ' ' + pyNext + ' · ' + esc(L(pyLesson.title)) + '</b></div>' : '') +
+        /* Hamma kun bajarilgan yoki test bilan o'tkazilgan bo'lsa "keyingi
+           dars" ko'rsatish yolg'on bo'lardi — holatni ochiq aytamiz.    */
+        (pyDone + skipped >= pyTotal
+          ? '<div class="cp-next"><span>' + esc(tr('coursesNext')) + '</span><b>' + esc(tr('plAllCovered')) + '</b></div>'
+          : pyLesson ? '<div class="cp-next"><span>' + esc(tr('coursesNext')) + '</span><b>' + esc(tr('day')) + ' ' + pyNext + ' · ' + esc(L(pyLesson.title)) + '</b></div>' : '') +
         '<div class="cp-go">' + esc(tr('coursesEnter')) + IC.arrowR + '</div>' +
         '</button>';
+      /* "Men buni bilaman" — daraja testi. Kartaning ICHIDA emas, yonida:
+         karta butunlay bosiladigan tugma, ichiga ikkinchi tugma qo'yib
+         bo'lmaydi.                                                       */
+      h += '<button class="cp-skip" data-go="placement">' +
+        '<span>' + IC.target + esc(tr('plKnow')) + '</span>' +
+        '<b>' + esc(skipped ? tr('plSkipped', { n: skipped }) : tr('plTake')) + '</b>' +
+        '</button>';
+      h += '</div>';
       return h;
     },
     datacamp: function () {

@@ -263,7 +263,7 @@
     h += sec('example', t('4. Ishlaydigan misol va 5. izoh', '4. Worked example and 5. walkthrough'), codeBlock(Ls.example.code, 'Python') + '<ol class="py-walk">' + Ls.example.walk.map(function (w) { return '<li><b>' + t(w[0] + '-qator', 'line ' + w[0]) + ':</b> ' + md(w[1]) + '</li>'; }).join('') + '</ol>', IC.code);
     /* 6. Taxmin */
     var pk = id + ':predict';
-    h += sec('predict', t('6. Ishga tushirishdan oldin taxmin qiling', '6. Predict before running'), mcqBlock(pk, { q: { uz: 'Natija qanday bo\'ladi?', en: 'What happens?' }, opts: Ls.predict.opts, a: Ls.predict.a, why: Ls.predict.why }, { code: Ls.predict.code }), IC.brain);
+    h += sec('predict', t('6. Ishga tushirishdan oldin taxmin qiling', '6. Predict before running'), mcqBlock(pk, { q: { uz: 'Natija qanday böladi?', en: 'What happens?' }, opts: Ls.predict.opts, a: Ls.predict.a, why: Ls.predict.why }, { code: Ls.predict.code }), IC.brain);
     /* Keng tarqalgan xato */
     h += card(t('Keng tarqalgan xato', 'Common mistake'), '<div class="py-two">' + codeBlock(Ls.mistake.bad, t("Noto'g'ri", 'Wrong'), { runnable: false }) + codeBlock(Ls.mistake.good, t("To'g'ri", 'Right'), { runnable: false }) + '</div><p>' + md(Ls.mistake.why) + '</p>', IC.alert);
     /* 7–9. Mashqlar */
@@ -418,7 +418,14 @@
     h += card(t('Tozalash', 'Reset'), '<p class="hint">' + t("Faqat Python & AI yo'li progressi o'chadi (mahalliy zaxira saqlanadi). Eski Python kursi, ingliz tili va Mission ma'lumotlariga tegilmaydi.", 'Only the Python & AI path progress is cleared (a local backup is kept). The original Python course, English and Mission data are untouched.') + '</p><button class="btn btn-quiet btn-sm" id="pyReset">' + IC.trash + t('Progressni tozalash…', 'Reset progress…') + '</button>', IC.lock);
     MOUNT = function () {
       $('#pySet').addEventListener('submit', function (e) { e.preventDefault(); try { A().setSettings({ dailyMin: e.target.goal.value, ivls: e.target.iv.value.split(',').map(function (x) { return x.trim(); }).filter(Boolean) }); toast(t('Saqlandi', 'Saved'), 'ok'); App.render(); } catch (er) { toast(er.message === 'ivls' ? t("Oraliqlar: kamida 2 ta o'sib boruvchi son (1–90)", 'Intervals: at least 2 increasing numbers (1–90)') : t('Maqsad 10–480 daqiqa', 'Goal must be 10–480 minutes'), 'warn'); } });
-      $('#pyReset').addEventListener('click', function () { if (!confirm(t("Python & AI yo'li progressi o'chadi. Davom etasizmi?", 'The Python & AI path progress will be cleared. Continue?'))) return; if ((prompt(t('Tasdiqlash uchun PYAI deb yozing', 'Type PYAI to confirm')) || '').trim().toUpperCase() !== 'PYAI') return; A().reset(); toast(t('Tozalandi (zaxira saqlandi)', 'Reset (backup kept)'), 'ok'); App.go('pyai'); }); };
+      $('#pyReset').addEventListener('click', function () {
+        App.confirm({ text: t("Python & AI yo'li progressi o'chadi. Davom etasizmi?", 'The Python & AI path progress will be cleared. Continue?'), danger: true }, function () {
+          App.prompt({ text: t('Tasdiqlash uchun PYAI deb yozing', 'Type PYAI to confirm'), match: 'PYAI', placeholder: 'PYAI', danger: true }, function () {
+            A().reset(); toast(t('Tozalandi (zaxira saqlandi)', 'Reset (backup kept)'), 'ok'); App.go('pyai');
+          });
+        });
+      });
+    };
     return h + '</div>';
   };
 

@@ -18,8 +18,8 @@
   'use strict';
 
   var SERIES = [
-    { key: '6min',  title: '6 Minute English',    per: '6 daq', note: { uz: 'Har epizodda 1 savol + 6 ta so\'z. IELTS Section 3 tezligi.', en: 'One question + six words per episode. IELTS Section 3 pace.' } },
-    { key: 'speak', title: 'The English We Speak', per: '3 daq', note: { uz: 'Bitta ibora, so\'zlashuv tili — Speaking uchun.', en: 'One expression, spoken English — for Speaking.' } }
+    { key: '6min',  title: '6 Minute English',    per: '6 daq', note: { uz: 'Har epizodda 1 savol + 6 ta söz. IELTS Section 3 tezligi.', en: 'One question + six words per episode. IELTS Section 3 pace.' } },
+    { key: 'speak', title: 'The English We Speak', per: '3 daq', note: { uz: 'Bitta ibora, sözlaşuv tili — Speaking uçun.', en: 'One expression, spoken English — for Speaking.' } }
   ];
   var cache = {};
 
@@ -37,12 +37,12 @@
   }
 
   var STEPS = [
-    { n: 1, t: { uz: 'Bashorat — 1 daqiqa', en: 'Predict — 1 minute' }, d: { uz: "Faqat sarlavhaga qarab 5 ta so'z yoz: nima haqida bo'ladi? Tinglashdan OLDIN.", en: 'From the title alone write 5 words you expect. BEFORE listening.' } },
-    { n: 2, t: { uz: "1-tinglash — umumiy ma'no", en: 'First listen — gist' }, d: { uz: "To'xtatmasdan. 6 Minute English boshida savol beradi — javobini yoz. Asosiy fikr bir jumlada.", en: 'No pausing. 6 Minute English asks a question at the start — write the answer. Main point in one sentence.' } },
-    { n: 3, t: { uz: '2-tinglash — tafsilot', en: 'Second listen — detail' }, d: { uz: "Epizodda o'rgatilgan 6 so'zni yoz, har biriga O'Z ta'rifing (o'zbekcha emas — inglizcha sinonim).", en: 'Write the 6 words taught, each with YOUR definition (English synonym, no translation).' } },
-    { n: 4, t: { uz: 'Shadowing — 2 daqiqa', en: 'Shadowing — 2 minutes' }, d: { uz: "Istalgan 2 daqiqasini qo'yib, notiqdan yarim soniya orqada takrorla. Ohang va urg'u — so'zlar emas.", en: 'Play any 2 minutes and repeat half a second behind. Intonation and stress, not the words.' } },
-    { n: 5, t: { uz: 'Transkript bilan tekshir', en: 'Check with the transcript' }, d: { uz: "BBC sahifasidagi transkriptni och. Noto'g'ri eshitgan 3 joyni top — NEGA (tez? bog'langan tovush? notanish so'z?).", en: 'Open the transcript on the BBC page. Find 3 things you misheard — WHY (speed? linking? unknown word?).' } },
-    { n: 6, t: { uz: "Xulosa + og'zaki", en: 'Summary + spoken' }, d: { uz: "5 gapda xulosa yoz (pastga). Keyin telefonga 1 daqiqa qayta aytib ber — 6 so'zdan kamida 3 tasini ishlat.", en: 'Write a 5-sentence summary (below). Then retell it for 1 minute on your phone — use at least 3 of the 6 words.' } }
+    { n: 1, t: { uz: 'Başorat — 1 daqiqa', en: 'Predict — 1 minute' }, d: { uz: "Faqat sarlavhaga qarab 5 ta söz yoz: nima haqida böladi? Tinglaşdan OLDIN.", en: 'From the title alone write 5 words you expect. BEFORE listening.' } },
+    { n: 2, t: { uz: "1-tinglaş — umumiy maʼno", en: 'First listen — gist' }, d: { uz: "Töxtatmasdan. 6 Minute English boşida savol beradi — javobini yoz. Asosiy fikr bir jumlada.", en: 'No pausing. 6 Minute English asks a question at the start — write the answer. Main point in one sentence.' } },
+    { n: 3, t: { uz: '2-tinglaş — tafsilot', en: 'Second listen — detail' }, d: { uz: "Epizodda örgatilgan 6 sözni yoz, har biriga ÖZ taʼrifing (özbekça emas — inglizça sinonim).", en: 'Write the 6 words taught, each with YOUR definition (English synonym, no translation).' } },
+    { n: 4, t: { uz: 'Shadowing — 2 daqiqa', en: 'Shadowing — 2 minutes' }, d: { uz: "Istalgan 2 daqiqasini qöyib, notiqdan yarim soniya orqada takrorla. Ohang va urğu — sözlar emas.", en: 'Play any 2 minutes and repeat half a second behind. Intonation and stress, not the words.' } },
+    { n: 5, t: { uz: 'Transkript bilan tekşir', en: 'Check with the transcript' }, d: { uz: "BBC sahifasidagi transkriptni oç. Notöğri eşitgan 3 joyni top — NEGA (tez? boğlangan tovuş? notaniş söz?).", en: 'Open the transcript on the BBC page. Find 3 things you misheard — WHY (speed? linking? unknown word?).' } },
+    { n: 6, t: { uz: "Xulosa + oğzaki", en: 'Summary + spoken' }, d: { uz: "5 gapda xulosa yoz (pastga). Keyin telefonga 1 daqiqa qayta aytib ber — 6 sözdan kamida 3 tasini işlat.", en: 'Write a 5-sentence summary (below). Then retell it for 1 minute on your phone — use at least 3 of the 6 words.' } }
   ];
 
   window.PageBBC = function (series) {

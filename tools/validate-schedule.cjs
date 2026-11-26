@@ -2,127 +2,127 @@
    tools/validate-schedule.cjs — jadval validatori (deployga kirmaydi)
    --------------------------------------------------------------------------
        node tools/validate-schedule.cjs          qisqa hisobot
-       node tools/validate-schedule.cjs --full   har variant bo'yicha jadval
+       node tools/validate-schedule.cjs --full   har kun bo'yicha jadval
+       node tools/validate-schedule.cjs --day 2026-12-21   bitta kun
 
-   15 qoida (HabitPlan.validate, js/habit.js):
-     1  imkonsiz vaqt oralig'i yo'q
-     2  haqiqiy to'qnashuv yo'q
-     3  bir-birini istisno qiluvchi shartli variantlar RUXSAT etilgan
-     4  OG'IR yuk ≤ 240 daq (yakka ish; tashqi dars hisobga kirmaydi)
-     5  yadro bloklari ≤ 6
-     6  yadro bloki ≥ 45 daq (shortOk — ataylab ruxsat etilgan istisno)
-     7  tushdan keyin ≤ 1 OG'IR blok
-     8  har yadro blokida `w` majburiy (hard | med | light)
-     9  kun 1440 daqiqa
-     10 dublikat majburiy blok yo'q
-     11 ichma-ich blok yo'q
-     12 noto'g'ri shartli kombinatsiya yo'q (firstOnly+notFirst, dcOnly+noDc)
-     13 id siz blok yo'q
-     14 dublikat id yo'q
-     15 noma'lum `kind` yo'q
+   Jadval QAT'IY emas — har kuni namoz vaqtlaridan hisoblanadi, shuning
+   uchun validator MARAFONNING HAR KUNINI tekshiradi (108 kun × 4 shablon).
+   Prayer moduli haqiqiy: js/prayer.js yuklanadi, stub emas.
+
+   16 qoida — HabitPlan.validate (js/habit.js) ustidagi izohda.
    ========================================================================== */
 'use strict';
 const path = require('path'), fs = require('fs');
 global.window = global;
-global.Store = { setting: () => null, shiftDays: () => '', dateKey: () => '2026-09-21', habitBlock: () => false, habitAll: () => ({}) };
-global.Prayer = { CITIES: [], DEFAULTS: {}, ORDER: [], times: () => ({}), NAMES: {}, inRange: () => [] };
-global.tr = k => k; global.L = o => (o && o.uz) || o;
-const root = path.join(__dirname, '..');
-new Function(fs.readFileSync(path.join(root, 'js/data/habit.js'), 'utf8'))();
-new Function(fs.readFileSync(path.join(root, 'js/habit.js'), 'utf8'))();
 
-const full = process.argv.includes('--full');
-const r = global.HabitPlan.validate();
-const L = global.HabitPlan.LIMITS;
-const rep = r.report;
-const h = m => (m / 60).toFixed(1) + ' h';
+const root = path.join(__dirname, '..');
+const load = f => new Function(fs.readFileSync(path.join(root, f), 'utf8'))();
+
+const shift = (k, n) => {
+  const d = new Date(k + 'T00:00:00'); d.setDate(d.getDate() + n);
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+};
+
+global.Store = {
+  setting: () => null,
+  shiftDays: shift,
+  dateKey: () => '2026-10-26',
+  readGet: () => null,
+  habitBlock: () => false,
+  habitAll: () => ({})
+};
+global.L = o => (o && (o.uz || o.en)) || o;
+global.tr = k => k;
+
+load('js/prayer.js');                       // HAQIQIY namoz kalkulyatori
+load('js/data/habit.js');
+global.COURSE = Array.from({ length: 30 }, (_, i) => ({ day: i + 1 }));
+global.ENGLISH = { meta: { start: '2026-10-26', days: 108, orientation: { from: '2026-10-22' }, classDays: [2, 4, 6] } };
+global.SPEAK30 = { meta: { days: 30 } };
+load('js/habit.js');
+
+const argv = process.argv.slice(2);
+const full = argv.includes('--full');
+const oneIdx = argv.indexOf('--day');
+const oneDay = oneIdx >= 0 ? argv[oneIdx + 1] : null;
+const DOW = ['Yak', 'Du', 'Se', 'Chor', 'Pay', 'Ju', 'Sha'];
 const pad = (s, n) => String(s).padEnd(n);
 const num = (s, n) => String(s).padStart(n);
 
-console.log('UZLEEDER ACADEMY — SCHEDULE VALIDATION');
-console.log('='.repeat(64));
+function printDay(key) {
+  const p = global.HabitPlan.forDate(key);
+  console.log('');
+  console.log(p.type.toUpperCase() + ' · ' + key + ' [' + DOW[p.dow] + ']   ' +
+    'Bomdod ' + p.prayer.fajr.str + ' · Peshin ' + p.prayer.dhuhr.str + ' · Asr ' + p.prayer.asr.str +
+    ' · Shom ' + p.prayer.maghrib.str + ' · Xufton ' + p.prayer.isha.str);
+  console.log('   yotish ' + p.bedStr + ' · uyqu ' + p.sleep.main + ' + qayta ' + p.sleep.re +
+    ' = ' + p.sleep.total + ' daq' + (p.type === 'gibrid' ? ' · 3-pora ' + (p.juzEvening ? 'kechqurun' : 'ertalab') : ''));
+  console.log('   ' + '-'.repeat(70));
+  p.blocks.forEach(b => {
+    console.log('   ' + b.fromStr + '–' + b.toStr + num(b.min, 5) + ' daq  ' +
+      (b.injected ? '· ' : b.core ? '▸ ' : '  ') + global.L(b.t) +
+      (b.juz ? '  [' + b.book + ']' : '') +
+      (b.core && b.w ? '  [' + b.w + ']' : '') +
+      (b.inside ? '  ← ' + global.L(b.insideOf) + ' ichida' : ''));
+  });
+  p.warnings.forEach(w => console.log('   ! ' + (w.text ? global.L(w.text) : JSON.stringify(w))));
+}
+
+if (oneDay) { printDay(oneDay); process.exit(0); }
+
+const r = global.HabitPlan.validate();
+const rep = r.report;
+const h = m => (m / 60).toFixed(1) + ' h';
+
+console.log('UZLEEDER ACADEMY — SCHEDULE VALIDATION (Uzlat & Ribat)');
+console.log('='.repeat(72));
+console.log('Oyna: ' + global.HABIT.meta.from + ' → ' + global.HABIT.meta.to + '   (' + rep.days + ' kun)');
+console.log('Chorcho\'ba: Tahajjud ' + global.HABIT.meta.tahajjud + ' · ' + global.HABIT.meta.juzPerDay +
+  ' pora × ' + global.HABIT.meta.juz + ' daq · uyqu ' + global.HABIT.meta.sleepMin + ' daq');
 console.log('');
 
-/* --- Har variant --- */
+console.log('SHABLON BO\'YICHA');
+console.log('-'.repeat(72));
+console.log(pad('shablon', 12) + num('kun', 5) + num('yadro', 8) + num('eng kam', 10) + num('eng ko\'p', 10) + num('OG\'IR', 8));
+Object.keys(rep.byType).forEach(k => {
+  const a = rep.byType[k];
+  console.log(pad(k, 12) + num(a.n, 5) + num(a.avg, 8) + num(a.min, 10) + num(a.max, 10) + num(a.avgHard, 8));
+});
+console.log('');
+console.log('Haftalik yadro: ' + rep.week + ' daq = ' + h(rep.week) +
+  '   (2 gibrid + 3 lc + 1 oddiy + 1 tiklanish)');
+console.log('Haftalik Qur\'on: ' + (global.HABIT.meta.juz * global.HABIT.meta.juzPerDay * 7) + ' daq = ' +
+  h(global.HABIT.meta.juz * global.HABIT.meta.juzPerDay * 7) + ' (' + (global.HABIT.meta.juzPerDay * 7) + ' pora)');
+console.log('Haftalik uyqu: ' + h(global.HABIT.meta.sleepMin * 7));
+console.log('');
+
+console.log('CHEGARALAR (HabitPlan.LIMITS)');
+console.log('-'.repeat(72));
+const LIM = global.HabitPlan.LIMITS;
+Object.keys(LIM).forEach(k => console.log('  ' + pad(k, 14) + LIM[k]));
+console.log('  gibrid shabloni: pmHardMax ' + (global.HABIT.gibrid.limits || {}).pmHardMax +
+  ' — oshxona ertalabni egallaydi, Tech tushdan keyin ikki qismda (ataylab)');
+console.log('');
+
 if (full) {
-  console.log(pad('VARIANT', 30) + num('blk', 4) + num('core', 6) + num('hard', 6) + num('med', 5) + num('light', 6) + num('min', 5) + num('day', 6));
-  console.log('-'.repeat(68));
-  rep.variants.forEach(v => {
-    console.log(pad(v.name, 30) + num(v.blocks, 4) + num(v.core, 6) + num(v.hard, 6) +
-      num(v.med, 5) + num(v.light, 6) + num(v.minBlock, 5) + num(v.day, 6));
-  });
+  let k = global.HABIT.meta.from, n = 0;
+  while (k <= global.HABIT.meta.to && n++ < 400) { printDay(k); k = shift(k, 1); }
   console.log('');
 }
 
-/* --- Qoida bo'yicha xulosa (oddiy kunlar) --- */
-const plain = rep.variants.filter(v => !v.work && /notFirst\/noDc/.test(v.name));
-console.log('KUNLAR (oddiy variant)');
-console.log('-'.repeat(64));
-plain.forEach(v => {
-  console.log('  ' + pad(v.type, 8) + num(v.blocks, 2) + ' blok · yadro ' + num(v.core, 4) + ' daq' +
-    '  (og\'ir ' + num(v.hard, 3) + ' · o\'rta ' + num(v.med, 3) + ' · yengil ' + num(v.light, 3) + ')' +
-    '  eng qisqa ' + num(v.minBlock, 3) + ' daq');
-});
-console.log('');
-console.log('  Haftalik yadro: ' + h(rep.week) + ' (' + rep.week + ' daq) — og\'ir ' +
-  rep.weekParts.heavy + ' × 3 · LC ' + rep.weekParts.class + ' × 3 · yakshanba ' + rep.weekParts.rest);
-console.log('');
-
-/* --- Chegaralar --- */
-console.log('CHEGARALAR');
-console.log('-'.repeat(64));
-const worstHard = Math.max(...rep.variants.map(v => v.soloHard));
-const worstBlocks = Math.max(...rep.variants.map(v => v.blocks));
-const worstMin = Math.min(...rep.variants.filter(v => v.blocks).map(v => v.minBlock));
-const worstPm = Math.max(...rep.variants.map(v => v.pmHard));
-const line = (name, actual, limit, okc) =>
-  '  ' + (okc ? 'PASS' : 'FAIL') + '  ' + pad(name, 34) + num(actual, 5) + '  (chegara ' + limit + ')';
-console.log(line("OG'IR yuk (yakka ish)", worstHard, L.hardMax, worstHard <= L.hardMax));
-console.log(line('Yadro bloklari soni', worstBlocks, L.maxBlocks, worstBlocks <= L.maxBlocks));
-console.log(line('Eng qisqa yadro bloki', worstMin, L.minCore, worstMin >= L.minCore));
-console.log(line("Tushdan keyingi OG'IR bloklar", worstPm, L.pmHardMax, worstPm <= L.pmHardMax));
-console.log('');
-
-/* --- Shartli variantlar --- */
-console.log('SHARTLI VARIANTLAR (to\'qnashuv emas)');
-console.log('-'.repeat(64));
-['heavy', 'class', 'rest'].forEach(t => {
-  const pairs = (global.HABIT[t].blocks || []).filter(b => b.dcOnly || b.noDc || b.firstOnly || b.notFirst);
-  if (!pairs.length) return;
-  const byAt = {};
-  pairs.forEach(b => { (byAt[b.at] = byAt[b.at] || []).push(b); });
-  Object.keys(byAt).sort().forEach(at => {
-    const g = byAt[at];
-    console.log('  ' + pad(t, 7) + at + '  ' + g.map(b =>
-      b.id + ' (' + (b.dcOnly ? 'dcOnly' : b.noDc ? 'noDc' : b.firstOnly ? 'firstOnly' : 'notFirst') + ')').join('  ‖  '));
-  });
-});
-console.log('');
-
-/* --- Migratsiya holati --- */
-const storeSrc = fs.readFileSync(path.join(root, 'js/store.js'), 'utf8');
-const mv = (storeSrc.match(/SCHEDULE_VERSION\s*=\s*(\d+)/) || [])[1];
-console.log('MIGRATSIYA');
-console.log('-'.repeat(64));
-console.log('  scheduleVersion (store.js): ' + (mv || "topilmadi"));
-console.log('  test: node tools/schedule-migration-test.cjs');
-console.log('');
-
-/* --- Natija --- */
-console.log('='.repeat(64));
+console.log('='.repeat(72));
 if (r.ok) {
-  console.log('PASS — 15 qoida, ' + rep.variants.length + ' variant tekshirildi, xato yo\'q.');
+  console.log('PASS — ' + rep.days + '/' + rep.days + ' kun, 16 qoida, xato yo\'q.');
 } else {
-  console.log('FAIL — ' + r.findings.length + ' ta muammo:');
-  console.log('');
-  r.findings.forEach(f => {
-    console.log('  SCHEDULE ERROR');
-    console.log('    Kun:      ' + f.day);
-    console.log('    Qoida:    ' + f.rule);
-    if (f.actual !== undefined) console.log('    Hozirgi:  ' + f.actual);
-    if (f.limit !== undefined) console.log('    Chegara:  ' + f.limit);
-    console.log('    Tafsilot: ' + f.msg);
+  console.log('FAIL — ' + r.findings.length + ' topilma:');
+  const byRule = {};
+  r.findings.forEach(f => { (byRule[f.rule] = byRule[f.rule] || []).push(f); });
+  Object.keys(byRule).forEach(rule => {
+    const list = byRule[rule];
     console.log('');
+    console.log('  ' + rule + '  (' + list.length + ' ta)');
+    list.slice(0, 6).forEach(f => console.log('    ' + f.day + '  ' + f.msg));
+    if (list.length > 6) console.log('    … va yana ' + (list.length - 6) + ' ta');
   });
+  process.exit(1);
 }
-process.exit(r.ok ? 0 : 1);

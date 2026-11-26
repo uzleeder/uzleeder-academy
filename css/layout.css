@@ -131,7 +131,14 @@
   overflow-y: auto; overscroll-behavior: contain;
   padding-right: var(--sp-2);
   display: flex; flex-direction: column; gap: var(--sp-5);
+  /* Yon paneldagi matn BELGILANMAYDI. Aks holda bosganda barmoq yoki
+     sichqoncha bir-ikki piksel surilsa brauzer matnni ajratadi, bosish
+     esa umuman o'tmaydi — "bo'lim ochilmayapti" shundan kelib chiqadi.
+     Telefonda uzoq bosish ham matn tanlashga o'tib ketadi.             */
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
+.sidebar button, .sidebar a { -webkit-user-select: none; user-select: none; }
 
 /* Bo'limlar navigatsiyasi */
 .nav-group { display: flex; flex-direction: column; gap: 2px; }
@@ -146,6 +153,17 @@
 .nav-label svg { width: 13px; height: 13px; transition: transform var(--t-base) var(--ease); }
 .nav-group .nav-items { display: flex; flex-direction: column; gap: 2px; }
 .nav-group.collapsed .nav-label svg { transform: rotate(-90deg); }
+/* Yopiq guruh: ichida nechta bo'lim borligi ko'rinib tursin. Aks holda
+   sarlavha oddiy matn kabi ko'rinadi va bo'limlar "yo'qolgan" deb
+   o'ylanadi — ayniqsa "Home" guruhida (Dashboard, Today, Muhosaba ...). */
+.nav-count {
+  margin-left: auto; margin-right: 6px; min-width: 16px; padding: 0 5px;
+  font-size: 9px; font-weight: 800; line-height: 15px; text-align: center;
+  color: var(--muted); background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: 999px;
+}
+.nav-group.collapsed .nav-label { color: var(--muted); }
+.nav-group.collapsed .nav-label:hover .nav-count { color: var(--text); border-color: var(--muted); }
 .nav-group.collapsed .nav-items { display: none; }
 .nav-group.collapsed.has-on .nav-items { display: flex; }
 .nav-group.collapsed.has-on .nav-item:not(.on) { display: none; }
@@ -397,7 +415,17 @@ body.is-offline .brand-text small::after { content: ' / OFFLINE'; color: var(--r
 /* --- Qurilmalar: telefon / planshet / desktop (iOS Safari, Android Chrome, Windows, macOS) --- */
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
-button, [role="button"], .nav-item, .opt, .hb-check, .td-check { touch-action: manipulation; }
+/* Bosiladigan elementlarda matn BELGILANMAYDI. Sabab: bosganda barmoq yoki
+   sichqoncha bir-ikki piksel surilsa, brauzer bosish o'rniga yozuvni ajratadi
+   va `click` umuman yuzaga kelmaydi — tugma "ishlamayapti" bo'lib tuyuladi.
+   Telefonda uzoq bosish ham matn tanlashga o'tib ketadi. Avval bu faqat yon
+   panelga qo'yilgan edi, lekin tuzoq tepadagi UZ/EN, mavzu va profil
+   tugmalarida ham bor edi.                                                  */
+button, [role="button"], .nav-item, .opt, .hb-check, .td-check {
+  touch-action: manipulation;
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
 @media (max-width: 768px) {
   input, select, textarea { font-size: max(16px, 1em); }   /* iOS: 16px dan kichik input fokusda sahifani kattalashtiradi */
 }

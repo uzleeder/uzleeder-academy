@@ -484,8 +484,8 @@
   /* ====================== WRITING STUDIO =============================== */
   var BANDS = [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9];
   var GUIDE = {
-    1: { uz: "Tuzilma: 1) kirish — savolni parafraz; 2) overview — 1–2 asosiy tendensiya (raqamsiz); 3–4) tafsilotlar — guruhlab, raqamlar bilan taqqoslash. 150+ so'z, ~20 daqiqa. Fikr bildirmang.", en: 'Structure: 1) introduction — paraphrase the question; 2) overview — 1–2 main trends (no figures); 3–4) details — grouped, compared with figures. 150+ words, ~20 minutes. No opinions.' },
-    2: { uz: "Tuzilma: 1) kirish — parafraz + aniq pozitsiya; 2–3) har abzats: topic sentence → tushuntirish → misol → bog'lash; 4) xulosa — pozitsiyani qayta aytish. 250+ so'z, ~40 daqiqa. Savolning HAR qismiga javob.", en: 'Structure: 1) introduction — paraphrase + clear position; 2–3) each paragraph: topic sentence → explanation → example → link back; 4) conclusion — restate the position. 250+ words, ~40 minutes. Answer EVERY part of the question.' }
+    1: { uz: "Tuzilma: 1) kiriş — savolni parafraz; 2) overview — 1–2 asosiy tendensiya (raqamsiz); 3–4) tafsilotlar — guruhlab, raqamlar bilan taqqoslaş. 150+ söz, ~20 daqiqa. Fikr bildirmang.", en: 'Structure: 1) introduction — paraphrase the question; 2) overview — 1–2 main trends (no figures); 3–4) details — grouped, compared with figures. 150+ words, ~20 minutes. No opinions.' },
+    2: { uz: "Tuzilma: 1) kiriş — parafraz + aniq pozitsiya; 2–3) har abzats: topic sentence → tuşuntiriş → misol → boğlaş; 4) xulosa — pozitsiyani qayta aytiş. 250+ söz, ~40 daqiqa. Savolning HAR qismiga javob.", en: 'Structure: 1) introduction — paraphrase + clear position; 2–3) each paragraph: topic sentence → explanation → example → link back; 4) conclusion — restate the position. 250+ words, ~40 minutes. Answer EVERY part of the question.' }
   };
   function pickPrompt(task) {
     var used = {}; M().studio.list().forEach(function (p) { if (p.promptId) used[p.promptId] = 1; });
@@ -590,7 +590,7 @@
       });
       var cm = $('#wCmp'); if (cm) cm.addEventListener('change', function () { R.cmpA = Number(cm.value); App.render(); });
       $('#wExt').addEventListener('submit', function (e) { e.preventDefault(); if (!e.target.band.value) return; M().studio.external(id, e.target.band.value, e.target.note.value); toast(t('Saqlandi', 'Saved'), 'ok'); App.render(); });
-      $('#wDel').addEventListener('click', function () { if (confirm(t("Bu ishni o'chirasizmi? Xatolar bankidagi belgilar qoladi.", 'Delete this piece? Its marks in the error bank are kept.'))) { M().studio.del(id); App.go('mission/writing'); } });
+      $('#wDel').addEventListener('click', function () { App.confirm({ text: t("Bu ishni o'chirasizmi? Xatolar bankidagi belgilar qoladi.", 'Delete this piece? Its marks in the error bank are kept.'), danger: true }, function () { M().studio.del(id); App.go('mission/writing'); }); });
       if ((p.self || []).length) U.markTask('grammar');
     });
     return h + '</div>';
@@ -682,7 +682,7 @@
         if (!Object.keys(self).length) { toast(t('Kamida bitta mezonni baholang', 'Rate at least one criterion'), 'warn'); return; }
         M().speaking.assess(id, self, refl); toast(t('Saqlandi (o\'z bahosi)', 'Saved (self-assessment)'), 'ok'); App.render(); U.markTask('speaking');
       });
-      $('#spDel').addEventListener('click', function () { if (confirm(t("Sessiyani o'chirasizmi?", 'Delete this session?'))) { MissionMedia.del('spk:' + id); M().speaking.del(id); App.go('mission/speaking'); } });
+      $('#spDel').addEventListener('click', function () { App.confirm({ text: t("Sessiyani o'chirasizmi?", 'Delete this session?'), danger: true }, function () { MissionMedia.del('spk:' + id); M().speaking.del(id); App.go('mission/speaking'); }); });
       if (s.self) U.markTask('speaking');
     });
     return h + '</div>';

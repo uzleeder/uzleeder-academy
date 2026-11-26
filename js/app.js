@@ -20,6 +20,7 @@
     habit:      { render: function () { return PageHabit(); },      nav: 'habit', mount: function () { PageHabit.mount(); } },
     course:     { render: function () { return PageCourses(); },    nav: 'course' },   // kurslar markazi: Coding | English
     python:     { render: function () { return PageCourse(); },     nav: 'course' },   // Python kursining o'zi
+    placement:  { render: function () { return PagePlacement(); },  nav: 'course', mount: function () { PagePlacement.mount(); } },   // "men buni bilaman" - daraja testi
     english:    { render: function () { return PageEnglish(); },    nav: 'course' },
     speaking:   { render: function () { return PageSpeaking(); },   nav: 'course', mount: function () { PageSpeaking.mount(); } },   // 30 kunlik fluency treki
     writing:    { render: function () { return PageWriting(); },    nav: 'course', mount: function () { PageWriting.mount(); } },
@@ -41,8 +42,9 @@
     movies:     { render: function () { return PageMovies(); },     nav: 'movies',   mount: function () { PageMovies.mount(); } },
   };
 
-  function parseRoute() {
-    var h = (location.hash || '').replace(/^#\/?/, '');
+  /* src berilsa (classic/… ichidan) o'sha yo'l tahlil qilinadi */
+  function parseRoute(src) {
+    var h = src != null ? src : (location.hash || '').replace(/^#\/?/, '');
     if (!h) return { name: 'dashboard' };
     var parts = h.split('/');
     if (parts[0] === 'lesson') return { name: 'lesson', day: Number(parts[1]) || 1 };
@@ -123,8 +125,12 @@
     // #/mission/... — IELTS Mission (yo'l va so'rov qatori o'zi tahlil qiladi) · #/pyai/... — Python & AI yo'li
     if (parts[0] === 'mission') return { name: 'mission', path: h.slice(8) };
     if (parts[0] === 'pyai') return { name: 'pyai', path: h.slice(5) };
+    /* Personal OS manzillari: #/center, #/planner/today, #/studio/ielts … */
+    if (window.OS && OS.NAV && OS.NAV.ROUTE_KEYS.indexOf(parts[0]) >= 0) {
+      return { name: 'os', head: parts[0], tab: parts[1] || '', sub: parts[2] || '', path: h };
+    }
     if (ROUTES[parts[0]]) return { name: parts[0] };
-    return { name: 'dashboard' };
+    return { name: window.OS && OS.NAV ? 'os' : 'dashboard', head: 'center', tab: '', sub: '', path: 'center' };
   }
 
   window.App = {
@@ -137,8 +143,13 @@
       return Store.isDone(day - 1);
     },
     firstOpenDay: function () {
+      /* Daraja testi bilan o'tkazib yuborilgan kunlar ham tashlab ketiladi:
+         ular "bajarilgan" emas, lekin keyingi dars ulardan keyin boshlanadi
+         (js/pages/placement.js).                                          */
+      var skip = window.Placement ? Placement.skipDays() : [];
       for (var i = 0; i < COURSE.length; i++) {
-        if (!Store.isDone(COURSE[i].day)) return COURSE[i].day;
+        var d = COURSE[i].day;
+        if (!Store.isDone(d) && skip.indexOf(d) < 0) return d;
       }
       return COURSE[COURSE.length - 1].day;
     },
@@ -156,6 +167,11 @@
        Bold Red — rasmiy identitet va standart; qolganlari qo'llanmadagi
        shablonlar. id, qorong'imi, ko'rsatkich ranglari (fon, aksent).      */
     THEMES: [
+      /* Personal OS (2026-11) — yangi rasmiy identitet: tinch navy + ko'k amal.
+         Bold Red saqlanib qoldi: eski ko'rinishni Vault > Ko'rinish dan tanlash
+         mumkin, rasmiy hujjatlar (sertifikat) esa doim Bold Red.            */
+      { id: 'os',       dark: true,  sw: ['#0B1220', '#477DFF'] },  /* Personal OS · qorong'i */
+      { id: 'os-light', dark: false, sw: ['#F5F7FB', '#2F62DC'] },  /* Personal OS · yorug' */
       { id: 'dark',    dark: true,  sw: ['#07090d', '#f0384e'] },   /* Bold Red · rasmiy */
       { id: 'light',   dark: false, sw: ['#f6f7f9', '#e01e37'] },   /* Bold Red · qog'oz */
       { id: 'navy',    dark: true,  sw: ['#0b1f3a', '#c9a227'] },
@@ -215,11 +231,16 @@
     /* Progressni o'chirish — kuchli tasdiq: avval zaxira taklifi, keyin "OCHIR" so'zini yozish.
        Bulutdagi nusxa ham keyingi sinxronda bo'shaydi — shuning uchun tasodifan bosib bo'lmasin. */
     resetProgress: function () {
-      if (!confirm(tr('resetConfirm'))) return;
-      var typed = prompt(tr('resetType', { w: 'OCHIR' }));
-      if (typed === null) return;
-      if (typed.trim().toUpperCase() !== 'OCHIR') { toast(tr('resetCancel'), 'warn'); return; }
-      Store.resetAll(); toast(tr('resetDone'), 'ok'); App.render();
+      /* Ikki qadam: avval tasdiq, keyin OCHIR deb yozish. Ikkalasi ham
+         saytning o'z oynasida — brauzerning tepadagi oynasida emas.    */
+      App.confirm({ text: tr('resetConfirm'), danger: true }, function () {
+        App.prompt({
+          text: tr('resetType', { w: 'OCHIR' }), match: 'OCHIR',
+          ok: tr('askOk'), danger: true, placeholder: 'OCHIR'
+        }, function () {
+          Store.resetAll(); toast(tr('resetDone'), 'ok'); App.render();
+        });
+      });
     },
     /* "?" — klaviatura qisqartmalari oynasi (bir marta yaratiladi) */
     kbdHelp: function (open) {
@@ -245,6 +266,99 @@
       }
       ov.classList.toggle('show', o);
       if (o) { var x = ov.querySelector('[data-kbdx]'); if (x) x.focus(); }
+    },
+    /* ====================== SAYT ICHIDAGI SO'ROV OYNASI =================
+       Brauzerning o'z confirm() / prompt() oynasi sahifaning TEPASIDA
+       chiqadi, sayt uslubiga aloqasi yo'q va mobil qurilmada "sayt javob
+       bermayapti" degan taassurot qoldiradi. Shuning uchun o'chirish va
+       boshqa qaytarib bo'lmaydigan amallar saytning O'Z oynasida
+       so'raladi — mavjud .overlay / .modal uslubida.
+
+       Chaqirish (kod uslubi: callback, va'da emas):
+         App.confirm("Shu o'chirilsinmi?", function () { … });
+         App.confirm({ text: …, title: …, ok: …, danger: true }, fn);
+         App.prompt({ text: …, value: …, match: 'OCHIR' }, function (v) { … });
+
+       `danger: true` — tasdiq tugmasi qizil (o'chirish uchun).
+       `match` — faqat shu so'z yozilgandagina tasdiq tugmasi ishlaydi.
+       Esc va fon bosilsa — bekor qilinadi, callback CHAQIRILMAYDI.       */
+    ask: function (o, onOk) {
+      if (typeof o === 'string') o = { text: o };
+      o = o || {};
+      var ov = $('#askOverlay');
+      if (!ov) { if (onOk) onOk(o.value || true); return; }   /* oyna yo'q bo'lsa to'xtatmaymiz */
+      var isPrompt = o.prompt === true;
+      var okTxt = o.ok || tr(isPrompt ? 'askSave' : 'askOk');
+      var prev = document.activeElement;
+
+      ov.innerHTML = '<div class="modal ask" role="alertdialog" aria-modal="true">' +
+        (o.title ? '<div class="modal-head"><h3>' + esc(o.title) + '</h3></div>' : '') +
+        '<p class="ask-text">' + esc(o.text || '') + '</p>' +
+        (isPrompt
+          ? '<div class="field"><input class="input" id="askInput" value="' + esc(o.value == null ? '' : String(o.value)) + '"' +
+            (o.placeholder ? ' placeholder="' + esc(o.placeholder) + '"' : '') +
+            (o.match ? ' autocomplete="off" spellcheck="false"' : '') + '></div>'
+          : '') +
+        '<div class="modal-foot ask-foot">' +
+          '<button class="btn" data-askno>' + esc(o.cancel || tr('askCancel')) + '</button>' +
+          '<button class="btn primary' + (o.danger ? ' danger' : '') + '" data-askyes>' + esc(okTxt) + '</button>' +
+        '</div></div>';
+      ov.classList.add('show');
+
+      var inp = ov.querySelector('#askInput');
+      var yes = ov.querySelector('[data-askyes]');
+      /* `match` berilgan bo'lsa: aynan o'sha so'z yozilmaguncha tasdiq o'chiq */
+      function sync() {
+        if (!o.match) return;
+        var v = (inp.value || '').trim().toUpperCase();
+        yes.disabled = v !== String(o.match).toUpperCase();
+      }
+      function close() {
+        ov.classList.remove('show');
+        ov.innerHTML = '';
+        document.removeEventListener('keydown', onKey, true);
+        if (prev && prev.focus) { try { prev.focus(); } catch (e) {} }
+      }
+      function onKey(e) {
+        if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(); }
+        else if (e.key === 'Enter' && !yes.disabled && (!isPrompt || e.target === inp)) {
+          e.preventDefault(); e.stopPropagation(); done();
+        }
+      }
+      function done() {
+        var v = isPrompt ? (inp ? inp.value : '') : true;
+        close();
+        if (onOk) onOk(v);
+      }
+      document.addEventListener('keydown', onKey, true);
+      yes.addEventListener('click', function () { if (!yes.disabled) done(); });
+      ov.querySelector('[data-askno]').addEventListener('click', close);
+      ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+      if (inp) inp.addEventListener('input', sync);
+      sync();
+      if (inp) { inp.focus(); inp.select(); } else { yes.focus(); }
+    },
+    /* Tasdiq: faqat "ha" bosilganda callback ishlaydi */
+    confirm: function (o, onYes) { App.ask(o, function () { if (onYes) onYes(); }); },
+    /* Matn so'rash: bekor qilinsa callback CHAQIRILMAYDI (prompt() null qaytargani kabi) */
+    prompt: function (o, onValue) {
+      if (typeof o === 'string') o = { text: o };
+      o = o || {}; o.prompt = true;
+      App.ask(o, function (v) { if (onValue) onValue(v); });
+    },
+    /* Progressni JSON qilib yuklab olish. Sozlamalar sahifasidagi
+       tugma ham, saqlash xatosi ogohlantirishi ham shuni chaqiradi —
+       ikki joyda ikki xil kod bo'lmasin.                                */
+    exportProgress: function () {
+      try {
+        var blob = new Blob([Store.exportJSON()], { type: 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'uzleeder-academy-progress-' + Store.dateKey() + '.json';
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+        toast(tr('exportOk'), 'ok');
+      } catch (e) { toast(tr('importFail'), 'warn'); }
     },
     /* Tepadagi tugma: qorong'i ↔ yorug' (oxirgi tanlangan variantni eslaydi) */
     toggleTheme: function () {
@@ -272,7 +386,19 @@
     },
 
     render: function () {
-      var r = parseRoute();
+      /* Personal OS: eski YUQORI darajadagi manzil yangisiga ko'chadi.
+         Chuqur sahifalar (dars, kitob, mission ichi) tegilmaydi — ular
+         OS.NAV.KEEP ro'yxatida va o'z joyida ishlaydi (audit §10.5).   */
+      var rawHash = (location.hash || '').replace(/^#\/?/, '');
+      /* `classic/<marshrut>` — ataylab ESKI sahifani ochish yo'li.
+         Yangi studiyalar va kutubxona kurs sahifalarini shu bilan ochadi,
+         shuning uchun ular yo'naltirishga tushib qolmaydi.             */
+      var isClassic = /^classic\//.test(rawHash);
+      if (!isClassic && window.OS && OS.NAV) {
+        var to = OS.NAV.redirectFor(rawHash);
+        if (to) { location.replace('#/' + to); return; }
+      }
+      var r = parseRoute(isClassic ? rawHash.slice(8) : undefined);
       var prevRoute = currentRoute;
       currentRoute = r.name === 'lesson' ? 'lesson/' + r.day
         : r.name === 'englishDay' ? 'english/' + r.day
@@ -309,10 +435,20 @@
         : r.name === 'bookListening' ? 'books/l' + r.num
         : r.name === 'mission' ? 'mission' + (r.path ? '/' + r.path : '')
         : r.name === 'pyai' ? 'pyai' + (r.path ? '/' + r.path : '')
+        : r.name === 'os' ? r.path
         : r.name;
 
       var content = $('#content');
-      if (r.name === 'lesson') {
+      if (r.name === 'os' && window.OS && OS.pages) {
+        var page = OS.pages[r.head];
+        if (page) {
+          content.innerHTML = page.render(r.tab, r.sub);
+          if (page.mount) page.mount(r.tab, r.sub);
+        } else {
+          content.innerHTML = OS.pages.center.render('', '');
+          if (OS.pages.center.mount) OS.pages.center.mount('', '');
+        }
+      } else if (r.name === 'lesson') {
         content.innerHTML = PageLesson(r.day);
         PageLesson.mount(r.day);
       } else if (r.name === 'englishDay') {
@@ -435,15 +571,14 @@
         content.innerHTML = route.render();
         if (route.mount) route.mount();
       }
-      /* Coding — Python, DataCamp va Python & AI — Job Ready dasturi ichida: qaytish havolasi */
-      if (/^((python|datacamp|pyai)(\/|$)|lesson\/)/.test(currentRoute) && window.PageJobReady) {
-        var pg = content.querySelector('.page');
-        if (pg) pg.insertAdjacentHTML('afterbegin', '<button class="link-btn jr-crumb" data-go="jobready">← Job Ready: Python & AI Engineer</button>');
-      }
-      /* English, Speaking, BBC, Writing, Quick Repeat — IELTS Mission ichida: qaytish havolasi */
-      if (/^((english|speaking|writing|bbc|quick)(\/|$)|eng-skill\/)/.test(currentRoute) && window.PageMission) {
-        var pgE = content.querySelector('.page');
-        if (pgE) pgE.insertAdjacentHTML('afterbegin', '<button class="link-btn jr-crumb" data-go="mission">← IELTS Mission</button>');
+      /* Chuqur sahifa tepasida: qaysi studiyaga tegishli bo'lsa, o'shanga
+         qaytish havolasi (OS.NAV.CRUMB). Eski ikki qoida shuning ichida. */
+      if (r.name !== 'os' && window.OS && OS.shell) {
+        var cr = OS.shell.crumb(currentRoute);
+        if (cr) {
+          var pg = content.querySelector('.page');
+          if (pg) pg.insertAdjacentHTML('afterbegin', cr);
+        }
       }
 
       App.refreshChrome();
@@ -556,6 +691,10 @@
   }
 
   function renderNav() {
+    /* Personal OS yoqilgan bo'lsa — 8 manzilli yangi menyu (js/os/shell.js).
+       Eski 16 yozuvli menyu kodi pastda turibdi: OS o'chirilsa qaytadi.   */
+    if (window.OS && OS.shell && OS.shell.renderNav(currentRoute)) return;
+
     var openMis = Store.openMistakes().length;
     var noteN = Store.notesList().length;
 
@@ -636,10 +775,17 @@
           (item[3] ? '<span class="badge' + (item[4] ? ' hot' : '') + '">' + esc(item[3]) + '</span>' : '') +
           '</button>';
       });
-      /* Yig'ilgan guruh: sarlavha + (agar faol sahifa shu guruhda bo'lsa) faqat o'sha element */
+      /* Yig'ilgan guruh: sarlavha + (agar faol sahifa shu guruhda bo'lsa) faqat o'sha element.
+         Guruh butunlay yopiq bo'lsa (faol sahifa ichida yo'q) ichidagi bo'limlar
+         soni ko'rsatiladi — aks holda foydalanuvchi ularni YO'Q deb o'ylaydi va
+         sarlavhani bosish kerakligini bilmaydi. */
+      var hidden = isCol && !anyOn ? g[2].length : 0;
       html += '<div class="nav-group' + (isCol ? ' collapsed' : '') + (anyOn ? ' has-on' : '') + '">' +
-        '<button class="nav-label" data-navgroup="' + g[0] + '" aria-expanded="' + !isCol + '">' +
-          '<span>' + esc(g[1]) + '</span>' + IC.chevron + '</button>' +
+        '<button class="nav-label" data-navgroup="' + g[0] + '" aria-expanded="' + !isCol + '"' +
+          ' title="' + esc(tr(isCol ? 'navExpand' : 'navCollapse')) + '">' +
+          '<span>' + esc(g[1]) + '</span>' +
+          (hidden ? '<span class="nav-count" aria-hidden="true">' + hidden + '</span>' : '') +
+          IC.chevron + '</button>' +
         '<div class="nav-items">' + items + '</div></div>';
     });
     $('#navGroups').innerHTML = html;
@@ -865,6 +1011,8 @@
   /* ====================== ISHGA TUSHIRISH ============================== */
   function boot() {
     Store.init();
+    /* Personal OS: saqlangan maqsadlar markaziy sozlamaga qo'llanadi */
+    if (window.OS && OS.applySaved) OS.applySaved();
     /* ?lang=en&theme=navy — havola orqali til/mavzu (demo, video, ulashish uchun) */
     try {
       var qp = new URLSearchParams(location.search);
@@ -950,6 +1098,24 @@
     if (window.Ctrl) Ctrl.init();                            // nazorat sessiyasi / chat (faqat Vercel'da faol)
     if (window.Clock) Clock.init();                          // tepadagi soat + flip clock
     Store.onChange(function () { Search.invalidate(); });   // daftar/xato o'zgarsa indeks qayta quriladi
+
+    /* Saqlash muvaffaqiyatsiz bo'lsa — JIM QOLMAYMIZ. Avval xato yutilardi
+       va o'quvchi butun kunini yo'qotishi mumkin edi (js/store.js write()).
+       Bu yerda bir marta jiddiy oyna chiqadi va darhol zaxira taklif
+       qilinadi; takror ogohlantirish 10 daqiqada bir martadan ko'p emas.  */
+    if (Store.onSaveError) Store.onSaveError(function (st) {
+      if (st.ok) { toast(tr('saveBack'), 'ok'); return; }
+      var now = Date.now();
+      if (App._lastSaveWarn && now - App._lastSaveWarn < 600000) return;
+      App._lastSaveWarn = now;
+      var kb = Math.round((st.bytes || 0) / 1024);
+      var text = st.kind === 'quota' ? tr('saveFullQ', { kb: kb })
+               : st.kind === 'blocked' ? tr('saveBlockedQ')
+               : tr('saveFailQ');
+      toast(tr('saveFail'), 'warn');
+      App.confirm({ text: text, title: tr('saveFailT'), ok: tr('saveExport'), danger: true },
+        function () { App.exportProgress(); });
+    });
     App.render();
     if (window.UZ_APP_READY) UZ_APP_READY();                // intro: 100% — ilova chizildi (real tayyorlik)
 

@@ -1,0 +1,467 @@
+/* ==========================================================================
+   Personal OS — dizayn tizimi va qobiq
+   Personal OS — design system and shell
+   --------------------------------------------------------------------------
+   Yangi identitet: tinch, aniq, premium. Qizil Bold Red o'rniga chuqur
+   navy fon + ko'k amal rangi + bosiq oltin urg'u (brief 6-bo'lim).
+
+   Qoidalar (brief):
+     • ortiqcha gradient yo'q        • ortiqcha shisha effekt yo'q
+     • bezak uchun katta karta yo'q  • keraksiz animatsiya yo'q
+     • ma'nosiz grafik yo'q          • bir xil bo'shliq va tipografiya
+     • klaviatura bilan yurish mumkin • kontrast yetarli
+
+   Eski mavzular (Bold Red va boshqalar) o'chirilmadi — Vault > Ko'rinish
+   dan tanlash mumkin. Standart — "os".
+   ========================================================================== */
+
+/* ---------- 1. Semantik tokenlar: Personal OS · QORONG'I ---------------- */
+[data-theme="os"] {
+  --bg:          #0B1220;   /* asosiy fon */
+  --bg-tint-1:   rgba(71, 125, 255, .10);
+  --bg-tint-2:   rgba(16, 26, 43, .60);
+
+  --surface:     #101A2B;   /* ikkilamchi fon */
+  --surface-2:   #152238;   /* karta foni */
+  --surface-3:   #1C2D49;   /* hover, chip */
+
+  --ink:         #F4F6FA;   /* asosiy matn */
+  --ink-soft:    #C5D0E0;
+  --muted:       #9AA9BF;   /* ikkilamchi matn */
+  --faint:       #6B7B93;
+
+  --line:        #1E2C44;   /* nozik navy-kulrang chegara */
+  --line-soft:   #16213444;
+
+  --brand:       #477DFF;   /* asosiy ko'k — AMAL */
+  --brand-hi:    #6D97FF;
+  --brand-lo:    #2F62DC;
+  --on-brand:    #FFFFFF;
+
+  --gold:        #D6B56D;   /* bosiq oltin — e'tibor, bayram emas */
+  --green:       #4CAF8E;
+  --red:         #E26A6A;
+
+  --code-bg:     #080E1A;
+  --code-ink:    #E8ECF4;
+  --code-cmt:    #6B7B93;
+  --code-kw:     #7FA6FF;
+  --code-str:    #7FD1AE;
+  --code-num:    #D6B56D;
+  --code-fn:     #86C5F0;
+  --code-call:   #9FB4FF;
+  --code-op:     #C3A9F5;
+
+  --shadow-1: 0 1px 2px rgba(3, 8, 18, .5);
+  --shadow-2: 0 8px 24px rgba(3, 8, 18, .45);
+  --shadow-3: 0 20px 56px rgba(3, 8, 18, .55);
+  --ring: 0 0 0 1px rgba(71, 125, 255, .35), 0 8px 28px rgba(71, 125, 255, .14);
+
+  color-scheme: dark;
+}
+
+/* ---------- 2. Semantik tokenlar: Personal OS · YORUG' ------------------ */
+[data-theme="os-light"] {
+  --bg:          #F5F7FB;
+  --bg-tint-1:   rgba(47, 98, 220, .07);
+  --bg-tint-2:   rgba(16, 26, 43, .04);
+
+  --surface:     #FFFFFF;
+  --surface-2:   #FFFFFF;
+  --surface-3:   #EDF1F8;
+
+  --ink:         #0B1220;
+  --ink-soft:    #2C3A50;
+  --muted:       #5A6A82;
+  --faint:       #8694A8;
+
+  --line:        #DDE4EF;
+  --line-soft:   #EBEFF6;
+
+  --brand:       #2F62DC;
+  --brand-hi:    #477DFF;
+  --brand-lo:    #22499F;
+  --on-brand:    #FFFFFF;
+
+  --gold:        #9A7B2E;
+  --green:       #2E7D63;
+  --red:         #C0504A;
+
+  --code-bg:     #0B1220;
+  --code-ink:    #E8ECF4;
+  --code-cmt:    #6B7B93;
+  --code-kw:     #7FA6FF;
+  --code-str:    #7FD1AE;
+  --code-num:    #D6B56D;
+  --code-fn:     #86C5F0;
+  --code-call:   #9FB4FF;
+  --code-op:     #C3A9F5;
+
+  --shadow-1: 0 1px 2px rgba(11, 18, 32, .06);
+  --shadow-2: 0 8px 24px rgba(11, 18, 32, .08);
+  --shadow-3: 0 20px 50px rgba(11, 18, 32, .12);
+  --ring: 0 0 0 1px rgba(47, 98, 220, .25), 0 10px 30px rgba(47, 98, 220, .12);
+
+  color-scheme: light;
+}
+
+/* Personal OS mavzusida brend belgisi plitasi fonga mos bo'lsin */
+[data-theme="os"] .brand-mark,
+[data-theme="os-light"] .brand-mark { background: var(--surface-3); }
+[data-theme="os"] .brand-text b i,
+[data-theme="os-light"] .brand-text b i { color: var(--brand); }
+
+/* ==========================================================================
+   3. QOBIQ — yon panel (yig'iladigan), mobil pastki panel
+   ========================================================================== */
+
+/* Yig'ilgan yon panel: faqat belgilar. Kenglik tokenda — kontent grid
+   o'zi moslashadi (layout.css .shell grid-template-columns).            */
+body.os-rail { --sidebar-w: 76px; }
+body.os-rail .os-nav-item span { display: none; }
+body.os-rail .os-nav-item { justify-content: center; padding-left: 0; padding-right: 0; }
+body.os-rail .os-nav-sec { display: none; }
+body.os-rail .os-nav-badge { position: absolute; top: 6px; right: 10px; }
+
+.os-nav { display: flex; flex-direction: column; gap: 2px; padding: var(--sp-3) var(--sp-3) var(--sp-6); }
+
+.os-nav-sec {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--faint);
+  padding: var(--sp-5) var(--sp-3) var(--sp-2);
+}
+
+.os-nav-item {
+  position: relative;
+  display: flex; align-items: center; gap: 11px;
+  width: 100%; padding: 10px 12px;
+  border: 0; border-radius: var(--r-md);
+  background: transparent; color: var(--ink-soft);
+  font: inherit; font-size: 14px; font-weight: 600; text-align: left;
+  cursor: pointer; transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.os-nav-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: .85; }
+.os-nav-item:hover { background: var(--surface-3); color: var(--ink); }
+.os-nav-item:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.os-nav-item.on { background: var(--surface-3); color: var(--ink); }
+.os-nav-item.on svg { color: var(--brand); opacity: 1; }
+/* Faol manzil chap chetida ingichka ko'k chiziq — bezak emas, joy ko'rsatkichi */
+.os-nav-item.on::before {
+  content: ""; position: absolute; left: -12px; top: 9px; bottom: 9px;
+  width: 3px; border-radius: 0 3px 3px 0; background: var(--brand);
+}
+.os-nav-item small {
+  display: block; font-size: 11px; font-weight: 500; color: var(--faint);
+  margin-top: 1px; letter-spacing: 0;
+}
+.os-nav-badge {
+  margin-left: auto; min-width: 20px; height: 18px; padding: 0 6px;
+  border-radius: var(--r-pill); display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+  background: var(--surface-3); color: var(--muted);
+}
+.os-nav-badge.hot { background: color-mix(in srgb, var(--brand) 22%, transparent); color: var(--brand-hi); }
+
+/* Yon panel tagidagi yig'ish tugmasi */
+.os-rail-btn {
+  margin: var(--sp-2) var(--sp-3) 0;
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border: 0; border-radius: var(--r-md);
+  background: transparent; color: var(--faint);
+  font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
+}
+.os-rail-btn:hover { background: var(--surface-3); color: var(--ink-soft); }
+.os-rail-btn svg { width: 16px; height: 16px; }
+
+/* ---------- Mobil pastki panel ----------------------------------------- */
+.os-tabbar { display: none; }
+@media (max-width: 900px) {
+  .os-tabbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-topbar);
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+    gap: 2px; padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+    border-top: 1px solid var(--line);
+  }
+  .os-tab {
+    display: grid; justify-items: center; gap: 3px;
+    padding: 7px 2px 5px; border: 0; border-radius: var(--r-md);
+    background: transparent; color: var(--faint);
+    font: inherit; font-size: 10px; font-weight: 600; cursor: pointer;
+    min-height: 48px;   /* barmoq uchun */
+  }
+  .os-tab svg { width: 20px; height: 20px; }
+  .os-tab.on { color: var(--brand); }
+  .os-tab:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+  /* Pastki panel kontentni to'smasin */
+  .content { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+  .site-foot { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+}
+
+/* ==========================================================================
+   4. SAHIFA KOMPONENTLARI
+   ========================================================================== */
+
+.os-page { max-width: var(--page-max); margin: 0 auto; }
+
+/* Sahifa sarlavhasi: nom + izoh + o'ng tomonda amal */
+.os-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: var(--sp-4); flex-wrap: wrap;
+  padding-bottom: var(--sp-5); margin-bottom: var(--sp-5);
+  border-bottom: 1px solid var(--line);
+}
+.os-head h1 {
+  font-family: var(--font-display); font-weight: 700; font-size: 26px;
+  letter-spacing: -.02em; margin: 0; line-height: 1.15;
+}
+.os-head p { margin: 6px 0 0; color: var(--muted); font-size: 14px; max-width: 62ch; }
+.os-head-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+
+/* Eyebrow — bo'lim nomi (kichik, mono) */
+.os-eyebrow {
+  font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--faint);
+  margin: 0 0 var(--sp-3);
+}
+
+/* Tablar (bo'lim ichidagi) */
+.os-tabs {
+  display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
+  margin-bottom: var(--sp-5); padding-bottom: 2px;
+}
+.os-tabs::-webkit-scrollbar { display: none; }
+.os-tabs button {
+  flex-shrink: 0; padding: 8px 14px; border: 1px solid transparent;
+  border-radius: var(--r-pill); background: transparent; color: var(--muted);
+  font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.os-tabs button:hover { background: var(--surface-3); color: var(--ink-soft); }
+.os-tabs button.on { background: var(--surface-3); color: var(--ink); border-color: var(--line); }
+.os-tabs button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* Grid — barcha sahifalarda bir xil */
+.os-grid { display: grid; gap: var(--sp-4); }
+.os-grid.c2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.os-grid.c3 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.os-grid.c4 { grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); }
+
+/* Karta — bitta uslub, hamma joyda */
+.os-card {
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: var(--sp-5);
+}
+.os-card.pad-sm { padding: var(--sp-4); }
+.os-card h2, .os-card h3 {
+  font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em;
+  margin: 0 0 var(--sp-3); font-size: 16px;
+}
+.os-card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-3); margin-bottom: var(--sp-4);
+}
+.os-card-head h2, .os-card-head h3 { margin: 0; }
+
+/* Bosiladigan karta */
+button.os-card, a.os-card {
+  display: block; width: 100%; text-align: left; font: inherit; color: inherit;
+  cursor: pointer; text-decoration: none;
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+button.os-card:hover, a.os-card:hover { border-color: var(--brand); background: var(--surface-3); }
+button.os-card:focus-visible, a.os-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* Ko'rsatkich plitasi — raqam + nom + izoh. Bezak diagramma yo'q. */
+.os-stat { display: grid; gap: 4px; }
+.os-stat .k {
+  font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--faint);
+}
+.os-stat .v {
+  font-family: var(--font-display); font-weight: 700; font-size: 28px;
+  letter-spacing: -.02em; line-height: 1.05; color: var(--ink);
+}
+.os-stat .v small { font-size: 14px; font-weight: 600; color: var(--muted); margin-left: 3px; }
+.os-stat .s { font-size: 12.5px; color: var(--muted); }
+.os-stat.accent .v { color: var(--brand); }
+.os-stat.gold .v { color: var(--gold); }
+
+/* Ingichka ko'rsatkich chizig'i */
+.os-meter { height: 6px; border-radius: var(--r-pill); background: var(--surface-3); overflow: hidden; }
+.os-meter > i { display: block; height: 100%; border-radius: inherit; background: var(--brand); transition: width var(--t-base) var(--ease); }
+.os-meter.gold > i { background: var(--gold); }
+.os-meter.green > i { background: var(--green); }
+
+/* Ro'yxat qatori */
+.os-row {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: 11px 0; border-bottom: 1px solid var(--line-soft);
+}
+.os-row:last-child { border-bottom: 0; }
+.os-row .os-row-main { flex: 1; min-width: 0; }
+.os-row .os-row-main b { display: block; font-size: 14px; font-weight: 600; }
+.os-row .os-row-main span { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.os-row time { font-family: var(--font-mono); font-size: 12px; color: var(--faint); flex-shrink: 0; }
+
+/* Holat belgisi */
+.os-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px; border-radius: var(--r-pill);
+  background: var(--surface-3); color: var(--muted);
+  font-size: 11.5px; font-weight: 600; white-space: nowrap;
+}
+.os-chip.on   { background: color-mix(in srgb, var(--green) 18%, transparent); color: var(--green); }
+.os-chip.now  { background: color-mix(in srgb, var(--brand) 20%, transparent); color: var(--brand-hi); }
+.os-chip.warn { background: color-mix(in srgb, var(--gold) 20%, transparent); color: var(--gold); }
+.os-chip.off  { background: var(--surface-3); color: var(--faint); }
+
+/* Holat nuqtasi — rangga qo'shimcha SHAKL (faqat rangga tayanmaymiz) */
+.os-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+/* Tugmalar — mavjud .btn ustiga OS variantlari */
+.os-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 15px; border-radius: var(--r-md);
+  border: 1px solid var(--line); background: var(--surface-2); color: var(--ink);
+  font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.os-btn svg { width: 16px; height: 16px; }
+.os-btn:hover { background: var(--surface-3); border-color: var(--brand); }
+.os-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.os-btn.primary { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.os-btn.primary:hover { background: var(--brand-hi); border-color: var(--brand-hi); }
+.os-btn.ghost { background: transparent; }
+.os-btn.danger { color: var(--red); border-color: color-mix(in srgb, var(--red) 40%, var(--line)); }
+.os-btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* ---------- 5. Holatlar: bo'sh, yuklanmoqda, xato, muvaffaqiyat -------- */
+.os-empty {
+  display: grid; justify-items: center; gap: var(--sp-3);
+  padding: var(--sp-10) var(--sp-5); text-align: center;
+  border: 1px dashed var(--line); border-radius: var(--r-lg);
+  color: var(--muted);
+}
+.os-empty svg { width: 28px; height: 28px; color: var(--faint); }
+.os-empty b { font-size: 14.5px; color: var(--ink-soft); font-weight: 600; }
+.os-empty p { margin: 0; font-size: 13px; max-width: 46ch; }
+
+.os-skel {
+  border-radius: var(--r-md); background: var(--surface-3);
+  animation: osPulse 1.4s ease-in-out infinite;
+}
+@keyframes osPulse { 0%, 100% { opacity: 1 } 50% { opacity: .5 } }
+
+.os-note {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 14px; border-radius: var(--r-md);
+  border: 1px solid var(--line); background: var(--surface);
+  font-size: 13px; color: var(--ink-soft);
+}
+.os-note svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; }
+.os-note.info { border-color: color-mix(in srgb, var(--brand) 35%, var(--line)); }
+.os-note.info svg { color: var(--brand); }
+.os-note.warn { border-color: color-mix(in srgb, var(--gold) 40%, var(--line)); }
+.os-note.warn svg { color: var(--gold); }
+.os-note.ok { border-color: color-mix(in srgb, var(--green) 40%, var(--line)); }
+.os-note.ok svg { color: var(--green); }
+.os-note.err { border-color: color-mix(in srgb, var(--red) 45%, var(--line)); }
+.os-note.err svg { color: var(--red); }
+
+/* ---------- 6. Vaqt chizig'i (kunlik jadval) --------------------------- */
+.os-timeline { display: grid; gap: 6px; }
+.os-block {
+  display: grid; grid-template-columns: 60px 4px 1fr auto; align-items: center;
+  gap: var(--sp-3); padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+.os-block time { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.os-block .bar { align-self: stretch; border-radius: var(--r-pill); background: var(--line); }
+.os-block .bd { min-width: 0; }
+.os-block .bd b { display: block; font-size: 13.5px; font-weight: 600; }
+.os-block .bd span { display: block; font-size: 12px; color: var(--muted); margin-top: 1px; }
+.os-block.now { border-color: var(--brand); background: color-mix(in srgb, var(--brand) 8%, var(--surface-2)); }
+.os-block.now .bar { background: var(--brand); }
+.os-block.done .bar { background: var(--green); }
+.os-block.done .bd b { color: var(--muted); }
+.os-block.partial .bar { background: var(--gold); }
+.os-block.skipped { opacity: .62; }
+.os-block.skipped .bar { background: var(--faint); }
+
+/* ---------- 7. Kalendar to'ri ------------------------------------------ */
+.os-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.os-cal .dow {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--faint);
+  text-align: center; padding-bottom: 4px;
+}
+.os-day {
+  position: relative; aspect-ratio: 1; min-height: 38px;
+  display: grid; place-items: center; gap: 2px;
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--surface-2); color: var(--ink-soft);
+  font-family: var(--font-mono); font-size: 12px; cursor: pointer;
+}
+.os-day:hover { border-color: var(--brand); }
+.os-day:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+.os-day.off { opacity: .35; cursor: default; }
+.os-day.today { border-color: var(--brand); color: var(--ink); font-weight: 700; }
+.os-day.exam { border-color: var(--gold); color: var(--gold); font-weight: 700; }
+.os-day i { position: absolute; bottom: 5px; width: 4px; height: 4px; border-radius: 50%; background: var(--brand); }
+.os-day.p-prelaunch { background: color-mix(in srgb, var(--gold) 9%, var(--surface-2)); }
+.os-day.p-main      { background: color-mix(in srgb, var(--brand) 9%, var(--surface-2)); }
+.os-day.p-final     { background: color-mix(in srgb, var(--green) 9%, var(--surface-2)); }
+
+@media (max-width: 560px) {
+  .os-day { min-height: 34px; font-size: 11px; }
+  .os-head h1 { font-size: 21px; }
+  .os-card { padding: var(--sp-4); }
+  .os-stat .v { font-size: 23px; }
+}
+
+/* ---------- 8. Jadval (mobilda ham o'qiladi) --------------------------- */
+.os-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.os-table th {
+  text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--faint);
+}
+.os-table td { padding: 11px 10px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+.os-table tr:last-child td { border-bottom: 0; }
+.os-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+@media (max-width: 680px) {
+  .os-table, .os-table tbody, .os-table tr, .os-table td { display: block; width: 100%; }
+  .os-table thead { display: none; }
+  .os-table tr { border: 1px solid var(--line); border-radius: var(--r-md); margin-bottom: 8px; padding: 4px 2px; }
+  .os-table td { border: 0; padding: 7px 11px; }
+  .os-table td::before {
+    content: attr(data-l); display: block;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-bottom: 3px;
+  }
+}
+
+/* ---------- 9. Tez yozib qo'yish (quick capture) ----------------------- */
+.os-capture { display: flex; gap: var(--sp-2); }
+.os-capture input {
+  flex: 1; min-width: 0; padding: 10px 13px;
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  background: var(--surface); color: var(--ink); font: inherit; font-size: 13.5px;
+}
+.os-capture input::placeholder { color: var(--faint); }
+.os-capture input:focus { outline: 2px solid var(--brand); outline-offset: -1px; border-color: transparent; }
+
+/* ---------- 10. Harakatni kamaytirish ---------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .os-skel { animation: none; }
+  .os-meter > i, .os-nav-item, .os-btn, .os-card { transition: none; }
+}
+
+/* ---------- 11. Chop etish --------------------------------------------- */
+@media print {
+  .os-tabbar, .os-tabs, .os-head-actions, .os-rail-btn { display: none !important; }
+  .os-card { border-color: #ccc; break-inside: avoid; }
+}

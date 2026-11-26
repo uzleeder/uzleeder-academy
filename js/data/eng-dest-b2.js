@@ -23,13 +23,13 @@ window.ENG_DEST_B2 = {
     publisher: 'Macmillan',
     translation: "Shaxzod To'rayev, Gulhayo Xo'jamqulova (t.me/new_vocabulary)",
     daysPerUnit: 5,
-    role: { uz: "Lug'at — kuniga 1 bo'lim (unit 5 kunda)", en: 'Vocabulary — one section a day (a unit in 5 days)' },
+    role: { uz: "Luğat — kuniga 1 bölim (unit 5 kunda)", en: 'Vocabulary — one section a day (a unit in 5 days)' },
     secs: [
-      { k: 'topic',     name: 'Topic vocabulary',         uz: "Mavzu lug'ati" },
-      { k: 'phrasal',   name: 'Phrasal verbs',            uz: "Frazeologik fe'llar" },
+      { k: 'topic',     name: 'Topic vocabulary',         uz: "Mavzu luğati" },
+      { k: 'phrasal',   name: 'Phrasal verbs',            uz: "Frazeologik feʼllar" },
       { k: 'phrases',   name: 'Phrases and collocations', uz: 'Iboralar va kollokatsiyalar' },
-      { k: 'patterns',  name: 'Word patterns',            uz: "So'z qoliplari" },
-      { k: 'formation', name: 'Word formation',           uz: "So'z yasalishi" }
+      { k: 'patterns',  name: 'Word patterns',            uz: "Söz qoliplari" },
+      { k: 'formation', name: 'Word formation',           uz: "Söz yasalişi" }
     ]
   },
   units: [

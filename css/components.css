@@ -323,6 +323,23 @@ pre.code::-webkit-scrollbar-thumb { background: #3a2a1f; }
 .modal-head h3 { font-size: 19px; }
 .modal-foot { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-top: var(--sp-5); }
 
+/* ---------- SO'ROV OYNASI (brauzer confirm() o'rniga) -------------------
+   O'chirish va boshqa qaytarib bo'lmaydigan amallar shu yerda so'raladi:
+   sahifaning tepasida emas, saytning o'z uslubida.                        */
+.modal.ask { max-width: 420px; }
+.ask-text { font-size: 15px; line-height: 1.6; color: var(--text); margin: 0; }
+.modal.ask .modal-head { margin-bottom: var(--sp-3); }
+.modal.ask .field { margin-top: var(--sp-4); margin-bottom: 0; }
+.ask-foot { justify-content: flex-end; }
+.ask-foot .btn { min-width: 104px; justify-content: center; }
+.btn.danger { background: var(--bad, #c0392b); border-color: var(--bad, #c0392b); color: #fff; }
+.btn.danger:hover { filter: brightness(1.08); }
+.ask-foot .btn[disabled] { opacity: .45; cursor: not-allowed; filter: none; }
+@media (max-width: 480px) {
+  .ask-foot { flex-direction: column-reverse; }
+  .ask-foot .btn { width: 100%; }
+}
+
 /* ---------- FORMALAR ----------------------------------------------------- */
 .field { margin-bottom: var(--sp-4); }
 .field label { display: block; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }

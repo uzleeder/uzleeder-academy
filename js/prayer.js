@@ -107,10 +107,10 @@
     /* Namoz nomlari — o'zbekcha (mahalliy) va arabcha */
     NAMES: {
       fajr:    { uz: 'Bomdod',  en: 'Fajr',    ar: 'الفجر' },
-      sunrise: { uz: 'Quyosh',  en: 'Sunrise', ar: 'الشروق' },
-      dhuhr:   { uz: 'Peshin',  en: 'Dhuhr',   ar: 'الظهر' },
+      sunrise: { uz: 'Quyoş',  en: 'Sunrise', ar: 'الشروق' },
+      dhuhr:   { uz: 'Peşin',  en: 'Dhuhr',   ar: 'الظهر' },
       asr:     { uz: 'Asr',     en: 'Asr',     ar: 'العصر' },
-      maghrib: { uz: 'Shom',    en: 'Maghrib', ar: 'المغرب' },
+      maghrib: { uz: 'Şom',    en: 'Maghrib', ar: 'المغرب' },
       isha:    { uz: 'Xufton',  en: 'Isha',    ar: 'العشاء' }
     },
     ORDER: ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'],

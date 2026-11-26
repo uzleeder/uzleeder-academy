@@ -7,3 +7,10 @@ brand/out/tour
 # Sirlar — deployga hech qachon yuklanmasin
 .env
 .env.*
+
+# Boshqa platforma va ichki narsalar — Vercel deployiga kerak emas.
+# dist/ build paytida qayta yasaladi.
+dist
+docs
+netlify
+.netlify
